@@ -1,7 +1,0 @@
-OK Sign
-<<<<<<< HEAD
-CSJ Recheck
-=======
-CSJ Check
-JHJ Check
->>>>>>> 6c344a0b961df337995917e2190df99e2e91b5bd
