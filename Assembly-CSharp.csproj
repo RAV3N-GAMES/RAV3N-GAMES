@@ -73,6 +73,7 @@
      <Compile Include="Assets\1.Script\Select\SlotInfo.cs" />
      <Compile Include="Assets\1.Script\Select\SlotManager.cs" />
      <Compile Include="Assets\1.Script\Select\SlotMove.cs" />
+     <Compile Include="Assets\1.Script\Trap\TrapAct.cs" />
      <Compile Include="Assets\LitJson\IJsonWrapper.cs" />
      <Compile Include="Assets\LitJson\JsonData.cs" />
      <Compile Include="Assets\LitJson\JsonException.cs" />
@@ -83,6 +84,8 @@
      <Compile Include="Assets\LitJson\Lexer.cs" />
      <Compile Include="Assets\LitJson\Netstandard15Polyfill.cs" />
      <Compile Include="Assets\LitJson\ParserToken.cs" />
+     <None Include="Assets\2.Pref\Animated Trap\SpriteSheets\Trap.txt" />
+     <None Include="Assets\2.Pref\Cartoon Textures\README.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
