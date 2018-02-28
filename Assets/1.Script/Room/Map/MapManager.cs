@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MapManager : MonoBehaviour { 
     public GameObject RoomPref;
     public Transform RoomParent;
+    public RoomManager roomManager;
 
     int Step; //이거 저장해놨다가 불러야함 //Step * Step 개의 방 사용
     List<GameObject> RoomList; //접근하는 인덱스 바꿔야함
@@ -22,10 +23,12 @@ public class MapManager : MonoBehaviour {
 
     const int STEP_MAX = 5;
     
-	void Start () {
+	void Awake () {
         Step = 2; 
         conRoom = 0;
         RoomList = new List<GameObject>();
+
+        SetRoomParentRect();
 
         isOpen = new Type[STEP_MAX][];
         for(int i = 0; i < STEP_MAX; i++)
@@ -38,6 +41,17 @@ public class MapManager : MonoBehaviour {
 
         InitMap();
 	}
+
+    void SetRoomParentRect()
+    {
+        RectTransform rect = GetComponent<RectTransform>();
+        float anchorY = rect.anchorMax.y - rect.anchorMin.y;
+
+        float rectY = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.y * anchorY * 0.9f;
+        float rectSize = Mathf.Sqrt(1/2f) * rectY;
+
+        RoomParent.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rectSize, rectSize);
+    }
 
     void InitRoomStatus(Type type, int Cnt)
     {
@@ -103,8 +117,10 @@ public class MapManager : MonoBehaviour {
         InitMap();
     }
 
-    public void MoveRoom(int idx)
+    public void MoveMapRoom(int idx)
     {
+        if (idx == -1)
+            idx = roomManager.CenterRoomIdx;
         if (isOpen[idx / STEP_MAX][idx % STEP_MAX] != Type.OPEN)
             return;
 
@@ -113,6 +129,13 @@ public class MapManager : MonoBehaviour {
         RoomList[roomIdx].GetComponent<UnityEngine.UI.Image>().color = new Color(255, 0, 0, 255);
 
         conRoom = roomIdx;
+    }
+    
+
+    public void MoveRoom(int idx)
+    {
+        MoveMapRoom(idx);   
+        roomManager.MoveRoom(idx);
     }
 
     public void OpenRoom(int idx)
@@ -126,8 +149,12 @@ public class MapManager : MonoBehaviour {
         if(isAllOpen())
         {
             isOpen[Step - 1][Step - 1] = Type.OPEN;
+            roomManager.OpenRoom((Step - 1) * (STEP_MAX + 1));
             InitMap();
         }
+
+        print("Open : Room" + idx);
+        roomManager.OpenRoom(idx);
     }
 
     void DestroyRoomPref()
@@ -160,7 +187,7 @@ public class MapManager : MonoBehaviour {
         return newRoom;
     }
 
-    void InitMap()//맵 창에 보이게 하기위함...실제 방은 미리 다 만들어놓고 활성화 여부를 변경해서 사용할 수 있도록 할꺼
+    void InitMap()//맵 창에 보이게 하기위함...실제 방은 미리 다 만들어놓고 활성화 여부를 변경해서 사용할 수 있도록 할것
     {
         DestroyRoomPref();
         float size = 1f / (float)Step;

@@ -6,6 +6,11 @@ using UnityEngine.UI;
 public class BoxManager : MonoBehaviour {
     public GameObject SlotPref;
 
+    void Start()
+    {
+        LoadSlot("Wall");
+    }
+
     Object[] LoadImage(string boxType)
     {
         Object[] loadImage = null;
@@ -49,6 +54,8 @@ public class BoxManager : MonoBehaviour {
     {
         GameObject Slot = Instantiate(SlotPref, transform);
         InitSlotRect(Slot.GetComponent<RectTransform>(), idx);
+
+        LoadImage.GetComponent<SlotInfo>().InitSlotInfo();
 
         Slot.GetComponent<SlotManager>().InitSlotInfo(LoadImage, GetComponent<CreateObject>());
     }

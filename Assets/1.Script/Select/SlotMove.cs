@@ -12,6 +12,8 @@ public class SlotMove : MonoBehaviour {
     {
         postX = preX = Input.mousePosition.x;
         isMove = true;
+
+        RoomManager.possibleDrag = false;
     }
 
     public void OnMove()
