@@ -52,13 +52,17 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\1.Script\Default\ResourceManager.cs" />
+     <Compile Include="Assets\1.Script\Display\ChangePopUp.cs" />
      <Compile Include="Assets\1.Script\Display\ClickSlot.cs" />
      <Compile Include="Assets\1.Script\Display\CreateObject.cs" />
-     <Compile Include="Assets\1.Script\Display\DisplayObject.cs" />
-     <Compile Include="Assets\1.Script\Display\ObjectColor.cs" />
-     <Compile Include="Assets\1.Script\Display\ObjectInfo.cs" />
-     <Compile Include="Assets\1.Script\Display\ObjectMove.cs" />
-     <Compile Include="Assets\1.Script\Display\PrefControl.cs" />
+     <Compile Include="Assets\1.Script\Display\CreatePopUp.cs" />
+     <Compile Include="Assets\1.Script\Display\Object\CheckTile.cs" />
+     <Compile Include="Assets\1.Script\Display\Object\ClickObject.cs" />
+     <Compile Include="Assets\1.Script\Display\Object\DisplayObject.cs" />
+     <Compile Include="Assets\1.Script\Display\Object\ObjectColor.cs" />
+     <Compile Include="Assets\1.Script\Display\Object\ObjectInfo.cs" />
+     <Compile Include="Assets\1.Script\Display\Object\ObjectMove.cs" />
+     <Compile Include="Assets\1.Script\Display\SaveObject.cs" />
      <Compile Include="Assets\1.Script\Display\TileManager.cs" />
      <Compile Include="Assets\1.Script\Display\TileObject.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapManager.cs" />
@@ -69,8 +73,16 @@
      <Compile Include="Assets\1.Script\Select\SlotInfo.cs" />
      <Compile Include="Assets\1.Script\Select\SlotManager.cs" />
      <Compile Include="Assets\1.Script\Select\SlotMove.cs" />
-     <Compile Include="Assets\1.Script\trashCan\ObjectControl.cs" />
-     <Compile Include="Assets\1.Script\trashCan\TileControl.cs" />
+     <Compile Include="Assets\LitJson\IJsonWrapper.cs" />
+     <Compile Include="Assets\LitJson\JsonData.cs" />
+     <Compile Include="Assets\LitJson\JsonException.cs" />
+     <Compile Include="Assets\LitJson\JsonMapper.cs" />
+     <Compile Include="Assets\LitJson\JsonMockWrapper.cs" />
+     <Compile Include="Assets\LitJson\JsonReader.cs" />
+     <Compile Include="Assets\LitJson\JsonWriter.cs" />
+     <Compile Include="Assets\LitJson\Lexer.cs" />
+     <Compile Include="Assets\LitJson\Netstandard15Polyfill.cs" />
+     <Compile Include="Assets\LitJson\ParserToken.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
