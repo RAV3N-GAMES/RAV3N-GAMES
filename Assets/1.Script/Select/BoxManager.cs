@@ -18,6 +18,8 @@ public class BoxManager : MonoBehaviour {
         switch (boxType)
         {
             case "Wall":
+                loadImage = Resources.LoadAll("Image/Wall");
+                break;
             case "Trap":
             case "Monster":
             case "Treasure":

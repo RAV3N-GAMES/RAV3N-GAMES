@@ -97,6 +97,8 @@ public class CheckTile : MonoBehaviour {
     public void OnCheckTile()
     {
         isPossible = isEnable();
+        print("isPossible: " + isPossible);
+        
         objectColor.OnColor(isPossible);
     }
 

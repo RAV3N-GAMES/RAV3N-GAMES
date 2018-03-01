@@ -17,7 +17,8 @@ public class DisplayObject : MonoBehaviour
 
     public void OnDisplay()
     {
-        Array();
+        print("ondisplay 실행");
+        Array();//pivot 중앙으로 카메라 정렬
         OnCheckButton();
     }
 
@@ -27,6 +28,7 @@ public class DisplayObject : MonoBehaviour
         Camera.main.transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z);
     }
 
+    //ObjectInfo의 coordinate는 최소 2이상
     int[] makeIdx()
     {
         if(lastCol == null)
@@ -58,7 +60,7 @@ public class DisplayObject : MonoBehaviour
     }
 
 
-
+    //check 버튼 활성화
     void OnCheckButton()
     {
         CreateButton.SetActive(true);

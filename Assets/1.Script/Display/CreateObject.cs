@@ -53,6 +53,7 @@ public class CreateObject : MonoBehaviour {
 
             SetBoxRect(BoxRect.anchorMin.y + 0.02f);
 
+            
             isCreate = true;
             id = "";
         }

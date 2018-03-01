@@ -1,9 +1,38 @@
 fileFormatVersion: 2
 guid: f0b941f098b8dbf47abd4b0037fa3a4a
-timeCreated: 18446744011573954816
+timeCreated: 281412841113856
 TextureImporter:
-  fileIDToRecycleName: {}
-  externalObjects: {}
+  fileIDToRecycleName:
+    21300000: Trap_0
+    21300002: Trap_1
+    21300004: Trap_2
+    21300006: Trap_3
+    21300008: Trap_4
+    21300010: Trap_5
+    21300012: Trap_6
+    21300014: Trap_7
+    21300016: Trap_8
+    21300018: Trap_9
+    21300020: Trap_10
+    21300022: Trap_11
+    21300024: Trap_12
+    21300026: Trap_13
+    21300028: Trap_14
+    21300030: Trap_15
+    21300032: Trap_16
+    21300034: Trap_17
+    21300036: Trap_18
+    21300038: Trap_19
+    21300040: Trap_20
+    21300042: Trap_21
+    21300044: Trap_22
+    21300046: Trap_23
+    21300048: Trap_24
+    21300050: Trap_25
+    21300052: Trap_26
+    21300054: Trap_27
+    21300056: Trap_28
+    21300058: Trap_29
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -12,8 +41,6 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
-    mipMapsPreserveCoverage: 0
-    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -29,13 +56,10 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    serializedVersion: 2
     filterMode: -1
     aniso: 1
     mipBias: -1
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -57,14 +81,12 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 1024
-    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -80,7 +102,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_1
@@ -94,7 +115,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_2
@@ -108,7 +128,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_3
@@ -122,7 +141,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_4
@@ -136,7 +154,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_5
@@ -150,7 +167,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_6
@@ -164,7 +180,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_7
@@ -178,7 +193,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_8
@@ -192,7 +206,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_9
@@ -206,7 +219,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_10
@@ -220,7 +232,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_11
@@ -234,7 +245,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_12
@@ -248,7 +258,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_13
@@ -262,7 +271,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_14
@@ -276,7 +284,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_15
@@ -290,7 +297,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_16
@@ -304,7 +310,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_17
@@ -318,7 +323,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_18
@@ -332,7 +336,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_19
@@ -346,7 +349,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_20
@@ -360,7 +362,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_21
@@ -374,7 +375,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_22
@@ -388,7 +388,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_23
@@ -402,7 +401,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_24
@@ -416,7 +414,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_25
@@ -430,7 +427,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_26
@@ -444,7 +440,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_27
@@ -458,7 +453,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_28
@@ -472,7 +466,6 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
       name: Trap_29
@@ -486,10 +479,8 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
       tessellationDetail: -1
     outline: []
-    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

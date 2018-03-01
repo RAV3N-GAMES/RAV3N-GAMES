@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour {
+    public Camera minimapCamera;
     public Transform RoomParent;
     List<GameObject> Room;
 
@@ -30,9 +31,9 @@ public class RoomManager : MonoBehaviour {
         }
     }
 
-    public void MoveRoom(int idx)
-    {
+    public void MoveRoom(int idx){
         Camera.main.transform.position = new Vector3(Room[idx].transform.position.x, Camera.main.transform.position.y, Room[idx].transform.position.z);
+        minimapCamera.transform.position= new Vector3(Room[idx].transform.position.x, minimapCamera.transform.position.y, Room[idx].transform.position.z);
     }
 
     public void OpenRoom(int idx)
