@@ -31,8 +31,6 @@ public class SecretManager : MonoBehaviour {
     private const int SecretLimit=5;//Maximum is 5
     public static int SecretCount;//The number of existing secrets
 
-    SecretActs hello = new SecretActs();    
-
     const string OriginalFilePath = "./Assets/1.Script/Secrets/SecretDetails.json";
     public static List<Data> Tbl = new List<Data>();
 
@@ -45,8 +43,7 @@ public class SecretManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+    }
 
     //설정파일(SecretDetails.json)을 읽어옴
     string ReadFile(string Path){

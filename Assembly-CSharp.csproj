@@ -73,6 +73,7 @@
      <Compile Include="Assets\1.Script\Select\SlotMove.cs" />
      <Compile Include="Assets\1.Script\Trap\HumanTrapAct.cs" />
      <Compile Include="Assets\1.Script\Trap\TrapInfo.cs" />
+     <Compile Include="Assets\1.Script\Utility\JsonReadWrite.cs" />
      <Compile Include="Assets\LitJson\IJsonWrapper.cs" />
      <Compile Include="Assets\LitJson\JsonData.cs" />
      <Compile Include="Assets\LitJson\JsonException.cs" />

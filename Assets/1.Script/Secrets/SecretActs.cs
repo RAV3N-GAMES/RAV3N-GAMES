@@ -15,6 +15,7 @@ public class SecretActs : MonoBehaviour {
             Destroy(this.gameObject);
         SecretData = SecretManager.Tbl;
         Chance = 0;
+        ResourceManager_Player.Gold = 10;
     }
 
     // Update is called once per frame
