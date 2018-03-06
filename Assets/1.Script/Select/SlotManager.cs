@@ -11,20 +11,22 @@ public class SlotManager : MonoBehaviour {
     GameObject PopUp;
 
     [HideInInspector]
-    public SlotInfo slotInfo;
+    public string id;
 
-    public void InitSlotInfo(GameObject slot, CreateObject createObject)
+    public void InitSlotInfo(string id, CreateObject createObject)
     {
-        slotInfo = slot.GetComponent<SlotInfo>();
+        this.id = id;
+        SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
 
-        slotImage.sprite = slotInfo.slotImage;
+        slotImage.sprite = JsonDataManager.slotImage[slotInfo.imageName];
+
         price.text = slotInfo.price.ToString();
-
+        
         GetComponent<ClickSlot>().id = slotInfo.id;
         GetComponent<ClickSlot>().createObject = createObject;
-
+        
         glassButton.onClick.AddListener(OnExplain);
-
+        
         PopUp = GameObject.Find("Canvas").transform.Find("PopUp").gameObject;
     }
 

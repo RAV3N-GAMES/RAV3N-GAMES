@@ -46,7 +46,9 @@ public class CheckTile : MonoBehaviour {
 
     public void UsingTile(int[] idx)
     {
-        tileManager.UsingTile(gameObject, idx);
+        if (isPossible)
+            tileManager.UsingTile(gameObject, idx);
+
     }
 
     public void DestryObj(int[] idx)
@@ -70,17 +72,100 @@ public class CheckTile : MonoBehaviour {
         return true;
     }
 
-    int[] makeObjIdx()
+    int[] makeIdx()
     {
-        int[] idx = new int[lastCol.Count * 2];
+        Transform pivot = findPivotCol();
+
+        int[] coordinate = GetComponent<ObjectInfo>().coordinate;
+        int[] idx = new int[coordinate.Length];
+
+        idx[0] = System.Int32.Parse(pivot.transform.parent.name);
+        idx[1] = System.Int32.Parse(pivot.name);
 
         for (int i = 0; i < idx.Length; i = i + 2)
         {
-            idx[i] = System.Int32.Parse(lastCol[i / 2].transform.parent.name);
-            idx[i + 1] = System.Int32.Parse(lastCol[i / 2].name);
+            idx[i] = idx[0] + coordinate[i];
+            idx[i + 1] = idx[1] + coordinate[i + 1];
         }
 
         return idx;
+    }
+
+    bool isBuilding_OMC()
+    {
+        Transform pivot = findPivotCol();
+
+        int row = System.Int32.Parse(pivot.transform.parent.name);
+        int col = System.Int32.Parse(pivot.name);
+
+        int[] displayTile = new int[4];
+
+        if (!objectInfo.isRotation)
+        {
+            displayTile[0] = row;
+            displayTile[1] = col - 1;
+            displayTile[2] = row;
+            displayTile[3] = col + 5;
+        }
+        else
+        {
+            displayTile[0] = row - 1;
+            displayTile[1] = col;
+            displayTile[2] = row + 5;
+            displayTile[3] = col;
+        }
+
+        return tileManager.isBuilding(displayTile);
+
+    }
+    bool isBuilding_SRF()
+    {
+        Transform pivot = findPivotCol();
+
+        int row = System.Int32.Parse(pivot.transform.parent.name);
+        int col = System.Int32.Parse(pivot.name);
+
+        int[] displayTile = new int[4];
+
+        if (!objectInfo.isRotation)
+        {
+            displayTile[0] = row;
+            displayTile[1] = col + 2;
+            displayTile[2] = row + 1;
+            displayTile[3] = col + 2;
+        }
+        else
+        {
+            displayTile[0] = row + 2;
+            displayTile[1] = col;
+            displayTile[2] = row + 2;
+            displayTile[3] = col + 1;
+        }
+
+        return tileManager.isBuilding(displayTile);
+    }
+
+    bool isBuilding_FTT()
+    {
+        Transform pivot = findPivotCol();
+
+        int row = System.Int32.Parse(pivot.transform.parent.name);
+        int col = System.Int32.Parse(pivot.name);
+
+        int[] displayTile = new int[2];
+
+        if (!objectInfo.isRotation)
+        {
+            displayTile[0] = row;
+            displayTile[1] = col + 1;
+        }
+        else
+        {
+            displayTile[0] = row + 1;
+            displayTile[1] = col;
+        }
+
+        return tileManager.isBuilding(displayTile);
     }
 
     bool isEnable()
@@ -88,12 +173,32 @@ public class CheckTile : MonoBehaviour {
         if (lastCol.Count == 0 || !isSameRoom() || lastCol.Count < TileCnt)
             return false;
 
-        int[] idx = makeObjIdx();
-
         tileManager = lastCol[0].transform.parent.parent.GetComponent<TileManager>();
+
+        int[] idx = makeIdx();
+
         return tileManager.isEnableTile(idx);
     }
 
+    public void OnDisplayCheckTile() //Rotation할때랑 내려놓았을때. 설치되는 경우에만 사용 (움직이는동안 사용 x)
+    {
+        bool isBuilding = true;
+        if (name == "ObstructMovementCurrent")
+        {
+            isBuilding = isBuilding_OMC();
+        }
+        else if(name == "SpaceVoiceRecordingFile")
+        {
+            isBuilding = isBuilding_SRF();
+        }
+        else if(name == "FlameThrowingTrap")
+        {
+            isBuilding = isBuilding_FTT();
+        }
+
+        isPossible = isEnable() & isBuilding;
+        objectColor.OnColor(isPossible);
+    }
     public void OnCheckTile()
     {
         isPossible = isEnable();
@@ -105,9 +210,6 @@ public class CheckTile : MonoBehaviour {
         if (col.gameObject.tag == "Tile")
         {
             lastCol.Add(col.gameObject);
-
-            if (!objectInfo.isDisplay)
-                OnCheckTile();
         }
     }
 
@@ -116,9 +218,6 @@ public class CheckTile : MonoBehaviour {
         if (col.gameObject.tag == "Tile")
         {
             lastCol.Remove(col.gameObject);
-
-            if (!objectInfo.isDisplay)
-                OnCheckTile();
         }
     }
 }

@@ -9,12 +9,18 @@ public class RoomManager : MonoBehaviour {
     [HideInInspector]
     public int CenterRoomIdx;
 
-    [HideInInspector]
     public static bool possibleDrag;
     bool isMove;
 
     Vector3 prePos;
     Vector3 conPos;
+
+    Touch touch0;
+    Touch touch1;
+
+    float touchDistance;
+
+    public static bool isTransparency;
 
     void Awake()
     {
@@ -67,6 +73,34 @@ public class RoomManager : MonoBehaviour {
         CenterRoomIdx = idx;
     }
 
+    public void ZoomInOut()
+    {
+        touch0 = Input.GetTouch(0);
+        touch1 = Input.GetTouch(1);
+
+        if(touch0.phase == TouchPhase.Moved || touch1.phase == TouchPhase.Moved)
+        {
+            float dis = Vector3.Distance(touch0.position, touch1.position);
+            Vector3 camPos = Camera.main.transform.position;
+
+            if (dis < touchDistance && camPos.y < 15)
+                Camera.main.transform.position = new Vector3(camPos.x, camPos.y + 0.1f , camPos.z);
+            else if(dis > touchDistance && camPos.y > 3)
+                Camera.main.transform.position = new Vector3(camPos.x, camPos.y - 0.1f, camPos.z);
+        }
+        touchDistance = Vector3.Distance(touch0.position, touch1.position);
+    }
+
+    public void OnTransparency()
+    {
+        isTransparency = !isTransparency;
+
+        for(int i = 0; i < Room.Count; i++)
+        {
+            Room[i].GetComponent<TileManager>().OnTransparency(isTransparency);
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && possibleDrag)
@@ -80,12 +114,20 @@ public class RoomManager : MonoBehaviour {
             MoveMapRoom();
         }
 
-        if(isMove && possibleDrag)
+        if (Input.touchCount == 2)
         {
-            conPos = GetRay();
-
-            Camera.main.transform.position += (prePos - conPos) * 10f;
-            prePos = conPos;
+            ZoomInOut();
         }
+        //else if (Input.touchCount == 1)
+        {
+            if (isMove && possibleDrag)
+            {
+                conPos = GetRay();
+
+                Camera.main.transform.position += (prePos - conPos) * 10f;
+                prePos = conPos;
+            }
+        }
+        
     }
 }

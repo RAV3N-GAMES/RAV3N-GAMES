@@ -12,12 +12,12 @@ public class MapManager : MonoBehaviour {
     List<GameObject> RoomList; //접근하는 인덱스 바꿔야함
     Type[][] isOpen;
 
-    public enum Type
-    {
-        OPEN,
-        CLOSE,
-        DISABLE
-    }
+public enum Type
+{
+    OPEN,
+    CLOSE,
+    DISABLE
+}
 
     int conRoom;
 

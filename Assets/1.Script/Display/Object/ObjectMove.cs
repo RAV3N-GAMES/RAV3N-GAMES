@@ -66,6 +66,11 @@ public class ObjectMove : MonoBehaviour
             Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
             transform.position += movePos;
 
+            yield return null;
+
+            if (!objectInfo.isDisplay)
+                checkTile.OnCheckTile();
+
             if (CameraMove())
                 Camera.main.transform.position += movePos;
         }

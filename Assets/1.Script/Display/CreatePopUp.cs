@@ -8,18 +8,23 @@ public class CreatePopUp : MonoBehaviour {
 
     public void CreatePref()
     {
-        Obj.GetComponent<ObjectInfo>().OnDisplay();
-        Obj.GetComponent<DisplayObject>().UsingTile();
+        if (Obj.GetComponent<CheckTile>().isPossible)
+        {
+            Obj.GetComponent<ObjectInfo>().OnDisplay();
+            Obj.GetComponent<DisplayObject>().UsingTile();
+        }
+        else
+            Destroy(Obj);
 
         gameObject.SetActive(false);
-
         PossibleDrag();
     }
 
     public void RotationPref()
     {
         Obj.GetComponent<ObjectInfo>().rotationObject();
-        PossibleDrag();
+        
+        Obj.GetComponent<CheckTile>().OnDisplayCheckTile();
     }
 
     public void CancelPref()

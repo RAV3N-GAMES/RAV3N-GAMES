@@ -13,4 +13,15 @@ public class TileObject {
         mRow = row;
         mCol = col;
     }
+
+    public void OnTransparency(bool isTransparency)
+    {
+        if (mObject.GetComponent<ObjectInfo>().type == 0)
+            mObject.GetComponent<ObjectColor>().OnTransparency(isTransparency);
+    }
+
+    public void SetOrderInLayer(string layer, int idx)
+    {
+        mObject.GetComponent<ObjectColor>().SetSortingOrder(layer, idx);
+    }
 }

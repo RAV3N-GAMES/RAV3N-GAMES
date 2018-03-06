@@ -19,7 +19,8 @@ public class ChangePopUp : MonoBehaviour {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
         levelText.text = objInfo.level.ToString();
         nameText.text = objInfo.id;
-        priceText.text = "";
+        
+        priceText.text = ((JsonDataManager.GetObjectInfo(objInfo.id, objInfo.level).Price / 2) * objInfo.presentHP / objInfo.totalHP).ToString();
         repairPriceText.text = "";
 
         ObjImage.sprite = null;

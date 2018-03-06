@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectInfo : MonoBehaviour
 {
     public string id;
+    public int type;
 
     public int level;
     public int presentHP;
@@ -15,56 +16,47 @@ public class ObjectInfo : MonoBehaviour
     public Transform pivotObject;
 
     public bool isDisplay;
-
-    void Awake()
-    {
-        SetPivotObject();
-    }
-
+    public bool isRotation;
+    
     public void InitObject(SaveObject objInfo)
     {
         id = objInfo.id;
         level = objInfo.level;
         presentHP = objInfo.presentHP;
         totalHP = objInfo.totalHP;
+        coordinate = objInfo.coordinate;
 
-
-        //회전시키고 나서 위치 안맞을수도 있겠다. 그건 맞춰주면 되고
-        while (objInfo.pivotObject != pivotObject.name)
+        if (objInfo.isRotation)
         {
-            for (int i = 0; i < coordinate.Length; i++)
-            {
-                if (coordinate[i] != objInfo.coordinate[i])
-                {
-                    rotationObject();
-                    break;
-                }
-            }
+            isRotation = !objInfo.isRotation;
+            Rotate();
         }
+
+        GetComponent<ObjectColor>().OffColor();
     }
     
-    void SetPivotObject()
+    void Rotate()
     {
-        pivotObject = transform.GetChild(0);
-        for (int i = 1; i < transform.childCount; i++)
+        isRotation = !isRotation;
+        int dir = 1;
+        if (isRotation)
         {
-            if (pivotObject.transform.position.y > transform.GetChild(i).position.y)
-            {
-                pivotObject = transform.GetChild(i);
-            }
+            dir = -1;
         }
+
+        transform.Rotate(new Vector3(dir * 180, 0, dir * 180));
     }
 
-    public void rotationObject() //회전 //함수 자체 수정해야 할 수 있음 //그냥 다
+    public void rotationObject()
     {
+        Rotate();
+
         for (int i = 0; i < coordinate.Length; i = i + 2)
         {
             int temp = coordinate[i];
             coordinate[i] = coordinate[i + 1];
             coordinate[i + 1] = temp;
         }
-        //실제로 오브젝트 위치 회전 시키는거 해야함
-        SetPivotObject();
     }
 
     public void RepairObject()
@@ -75,11 +67,19 @@ public class ObjectInfo : MonoBehaviour
     public void OnDisplay()
     {
         isDisplay = true;
+        //여기에서 ObjectInfo 로드
+
+        GetComponent<CheckTile>().OnCheckTile();
         GetComponent<ObjectColor>().OffColor();
     }
 
     public void LevelUp()
     {
         //id에 맞는 data 읽어오면 됨
+        level++;
+        MyObject myObject = JsonDataManager.GetObjectInfo(id, level);
+
+        presentHP = myObject.HP;
+        totalHP = myObject.HP;
     }
 }
