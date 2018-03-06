@@ -7,14 +7,12 @@ using LitJson;
 
 public class ResourceManager_Player : JsonReadWrite {
     
-    private const string Path = "./Assets/1.Script/Player/PlayerDetail.json";
+    private const string Path = "./Assets/Resources/Data/PlayerDetail.json";
     private static List<Data_SetupPlayer> Tbl_Player = new List<Data_SetupPlayer>();
 //    public enum Group_Palyer { fame, lvExperience, enemyClusterNumber, rewardA, rewardB};
 
     void Awake() {
         ReadMain(Path);
-        Debug.Log(Tbl_Player[0].fame+" "+Tbl_Player[0].lvExperience);
-        Debug.Log(Tbl_Player[10].fame + " " + Tbl_Player[10].lvExperience);
     }
 
     // Use this for initialization
@@ -39,5 +37,4 @@ public class ResourceManager_Player : JsonReadWrite {
             Tbl_Player.Add(tmp);
         }
     }
-
 }

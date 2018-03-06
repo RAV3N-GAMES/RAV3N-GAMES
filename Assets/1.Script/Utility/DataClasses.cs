@@ -54,19 +54,17 @@ public static class Data_Player
     public static void subExperience(int sub_e) { experience -= sub_e; }
     public static bool isEnough_G(int price) { return (gold >= price) ? true : false; }
 
-    public static void fameObserve()
-    {//update나 fixedupdate에서 실행. Experience에 따라 
-        if (experience < 0)
-        {
-            fame--;
-            experience = 0;
-            //lvExperience=Json에서 읽어온 fame에 따른 필요 경험치.
-        }
-        else if (experience >= lvExperience)
-        {
-
-        }
-    }
+    /*
+     * 차후 구현
+     * fame의 변화를 감지할 수 있어야 함
+     * 4 => 5(1개 방 추가 개방) 이후
+     * 5 => 4 => 5 순으로 fame이 오를 시 두 번째로 fame이 5가 되는 순간은 방 개방 X
+     * 이를 감지할 수 있어야 함
+     *  -> 1. 파일에 최대 진행한 fame을 써놓고 이보다 fame이 올라갈 경우에만 방/시설(벽, 함정, 기밀 등)을 개방한다.
+     *     2. 전략의 하나로 묵인하고 처리하지 않는다.
+     * 물어봅시다
+    */
+    
     /*
      * You can access the gold or fame by just using
      * Data_Player.Gold; or Data_Player.Fame;
@@ -82,19 +80,19 @@ public static class Data_Player
 public class Data_Secret
 {
     public int fame;
-    public float SecretSeizureChance_UfoCore, SecretSeizureChance_AlienStorageCapsule, SecretseizureChance_AlienBloodArchive, SecretseizureChance_AlienVoiceRecordingFile;
+    public float SecretSeizureChance_UFOCore, SecretSeizureChance_AlienStorageCapsule, SecretseizureChance_AlienBloodStorage, SecretseizureChance_SpaceVoiceRecordingFile;
     public int[] Price = new int[4];
     public Data_Secret()
     {
         fame = -1;
-        SecretSeizureChance_UfoCore = -1;
+        SecretSeizureChance_UFOCore = -1;
         SecretSeizureChance_AlienStorageCapsule = -1;
-        SecretseizureChance_AlienBloodArchive = -1;
-        SecretseizureChance_AlienVoiceRecordingFile = -1;
+        SecretseizureChance_AlienBloodStorage = -1;
+        SecretseizureChance_SpaceVoiceRecordingFile = -1;
 
         Price[(int)SecretManager.Group_Secret.UFOCore] = 5000;
         Price[(int)SecretManager.Group_Secret.AlienStorageCapsule] = 10000;
-        Price[(int)SecretManager.Group_Secret.AlienBloodArchive] = 15000;
-        Price[(int)SecretManager.Group_Secret.SecretseizureChance_AlienVoiceRecordingFile] = 20000;
+        Price[(int)SecretManager.Group_Secret.AlienBooldStorage] = 15000;
+        Price[(int)SecretManager.Group_Secret.SpaceVoiceRecordingFile] = 20000;
     }
 }
