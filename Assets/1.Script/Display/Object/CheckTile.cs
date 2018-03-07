@@ -209,15 +209,15 @@ public class CheckTile : MonoBehaviour {
     {
         if (col.gameObject.tag == "Tile")
         {
-            lastCol.Add(col.gameObject);
+            lastCol.Add(col.gameObject.transform.parent.gameObject);
         }
     }
 
     void OnCollisionExit(Collision col)
     {
-        if (col.gameObject.tag == "Tile")
-        {
-            lastCol.Remove(col.gameObject);
-        }
-    }
+		if (col.gameObject.tag == "Tile")
+		{
+			lastCol.Remove(col.gameObject.transform.parent.gameObject);
+		}
+	}
 }
