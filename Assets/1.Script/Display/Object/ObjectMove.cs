@@ -87,7 +87,6 @@ public class ObjectMove : MonoBehaviour
         {
             if (isMove)
             {
-                print("checkTile.isPossible: "+ checkTile.isPossible);
                 if (checkTile.isPossible)
                 {
                     isMove = false;

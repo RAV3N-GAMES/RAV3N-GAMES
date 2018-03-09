@@ -11,10 +11,12 @@ public class SecretActs : MonoBehaviour {
      * Chance는 Wave 시작 시 적군 AI 생성을 맡은 스크립트에서 참조하여 적을 생성한다.
      */
     private float Chance;//기밀이 목적인 적 출현 확률
+    public static bool secretSeizured;//기밀 탈취되었을 시 true => 이를 판단하는 스크립트 GameManager(가명)에서 판단
 
     // Use this for initialization
     void Start () {
         //현재 맵에 있는 Secret의 수를 1 늘린다. 최대치면 해당 gameObject를 삭제한다.
+        secretSeizured = false;
         checkCount();
         if (Data_Player.Fame >= 4)
             initChance(this.name);
@@ -27,13 +29,16 @@ public class SecretActs : MonoBehaviour {
 
     public float getChance() { return Chance; }
     public void setChance(float chance) { Chance = chance; }
+
     private void checkCount() {
-        if (++SecretManager.SecretCount >= SecretManager.GetSecretLimit())
+        if (SecretManager.SecretCount >= SecretManager.GetSecretLimit())
         {
-            SecretManager.SecretCount--;
             Destroy(this.gameObject);
+            SecretManager.SecretCount -= 1;
             Debug.Log("Destroy the gameobject in SecretActs.cs Because of it's too much");
         }
+        SecretManager.SecretCount += 1;
+        Debug.Log("SecretCount: " + SecretManager.SecretCount);
     }
     private void initChance(string name) {
         switch (name)
@@ -55,4 +60,11 @@ public class SecretActs : MonoBehaviour {
                 break;
         }
     }
+
+    void onCollisionEnter(Collision col) {//tag가 Secret_Enemy인 적이 닿을 시 감점
+        if (col.gameObject.tag == "Secret_Enemy") {
+            secretSeizured = true;
+        }
+     }
+
 }

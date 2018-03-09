@@ -17,7 +17,6 @@ public class DisplayObject : MonoBehaviour
 
     public void OnDisplay()
     {
-        print("ondisplay 실행");
         Array();//pivot 중앙으로 카메라 정렬
         OnCheckButton();
     }
