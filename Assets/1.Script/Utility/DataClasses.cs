@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Data : 기밀의 레벨에 따른 매혹도 저장
+//Data_SetupPlayer : 플레이어의 명성에 따른 레벨업 필요 경험치 및 집단 등장 수, 적 사살 시 보상, 적 집단 제압 시 보상을 저장.0
 public class Data_SetupPlayer
 {
     public int fame, lvExperience, enemyClusterNumber, rewardA, rewardB;
@@ -30,11 +30,26 @@ public class Data_SetupPlayer
  */
 public static class Data_Player
 {
+    /*
+     * Building ~ SecretTypes
+     *  - 각 항목 별로 존재하는 종류 수
+     *  ex) Building: Old, New, Functional, Core의 4종류
+     *  OurForces : Guard, Quick~, Chemistry, Researcher의 4종류
+     *  ...
+     */
+
+    const int BuildingTypes=4;
+    const int OurForcesTypes = 4;
+    const int TrapTypes = 4;
+
     private static int gold;
     [Range(1, 25)]
     private static int fame;
     private static int lvExperience;//레벨업에 필요한 경험치
     private static int experience;//플레이어가 현재 가지고 있는 경험치
+    public static int []BuildingLv=new int [BuildingTypes];
+    public static int[] OurForcesLv = new int[OurForcesTypes];
+    public static int[] TrapLv = new int[TrapTypes];
 
     public static int Gold { get; set; }
     public static int Fame { get; set; }
@@ -54,6 +69,15 @@ public static class Data_Player
     public static void subExperience(int sub_e) { experience -= sub_e; }
     public static bool isEnough_G(int price) { return (gold >= price) ? true : false; }
 
+    public static void initObjectLv() {//빌딩, 아군, 함정의 레벨 상태 초기화
+        int i = 0;
+        for (i = 0; i < BuildingTypes; i++)
+            BuildingLv[i] = 1;
+        for (i = 0; i < OurForcesTypes; i++)
+            OurForcesLv[i] = 1;
+        for (i = 0; i < TrapTypes; i++)
+            TrapLv[i] = 1;
+    }
     /*
      * 차후 구현
      * fame의 변화를 감지할 수 있어야 함
@@ -74,25 +98,4 @@ public static class Data_Player
      * other static functions below are same.
      * like Data_Player.addGold(30);
      */
-}
-
-//Data_Secret : 기밀의 레벨에 따른 매혹도 저장
-public class Data_Secret
-{
-    public int fame;
-    public float SecretSeizureChance_UFOCore, SecretSeizureChance_AlienStorageCapsule, SecretseizureChance_AlienBloodStorage, SecretseizureChance_SpaceVoiceRecordingFile;
-    public int[] Price = new int[4];
-    public Data_Secret()
-    {
-        fame = -1;
-        SecretSeizureChance_UFOCore = -1;
-        SecretSeizureChance_AlienStorageCapsule = -1;
-        SecretseizureChance_AlienBloodStorage = -1;
-        SecretseizureChance_SpaceVoiceRecordingFile = -1;
-
-        Price[(int)SecretManager.Group_Secret.UFOCore] = 5000;
-        Price[(int)SecretManager.Group_Secret.AlienStorageCapsule] = 10000;
-        Price[(int)SecretManager.Group_Secret.AlienBooldStorage] = 15000;
-        Price[(int)SecretManager.Group_Secret.SpaceVoiceRecordingFile] = 20000;
-    }
 }

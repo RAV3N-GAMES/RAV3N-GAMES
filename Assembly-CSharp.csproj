@@ -46,7 +46,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\1.Script\Default\BuildingManager.cs" />
+     <Compile Include="Assets\1.Script\Default\EnemyManager.cs" />
+     <Compile Include="Assets\1.Script\Default\MyObject.cs" />
+     <Compile Include="Assets\1.Script\Default\OurForcesManager.cs" />
      <Compile Include="Assets\1.Script\Default\ResourceManager.cs" />
+     <Compile Include="Assets\1.Script\Default\ResourceManager_Player.cs" />
+     <Compile Include="Assets\1.Script\Default\SecretManager.cs" />
+     <Compile Include="Assets\1.Script\Default\TrapManager.cs" />
      <Compile Include="Assets\1.Script\Display\ChangePopUp.cs" />
      <Compile Include="Assets\1.Script\Display\ClickSlot.cs" />
      <Compile Include="Assets\1.Script\Display\CreateObject.cs" />
@@ -60,21 +67,18 @@
      <Compile Include="Assets\1.Script\Display\SaveObject.cs" />
      <Compile Include="Assets\1.Script\Display\TileManager.cs" />
      <Compile Include="Assets\1.Script\Display\TileObject.cs" />
-     <Compile Include="Assets\1.Script\Player\ResourceManager_Player.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapManager.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />
      <Compile Include="Assets\1.Script\Room\RoomManager.cs" />
      <Compile Include="Assets\1.Script\Secrets\SecretActs.cs" />
-     <Compile Include="Assets\1.Script\Secrets\SecretManager.cs" />
      <Compile Include="Assets\1.Script\Select\BoxManager.cs" />
      <Compile Include="Assets\1.Script\Select\SlotArray.cs" />
      <Compile Include="Assets\1.Script\Select\SlotInfo.cs" />
      <Compile Include="Assets\1.Script\Select\SlotManager.cs" />
      <Compile Include="Assets\1.Script\Select\SlotMove.cs" />
-     <Compile Include="Assets\1.Script\Trap\HumanTrapAct.cs" />
-     <Compile Include="Assets\1.Script\Trap\TrapInfo.cs" />
      <Compile Include="Assets\1.Script\Utility\DataClasses.cs" />
      <Compile Include="Assets\1.Script\Utility\JsonReadWrite.cs" />
+     <Compile Include="Assets\1.Script\Wall\WallActs.cs" />
      <Compile Include="Assets\LitJson\IJsonWrapper.cs" />
      <Compile Include="Assets\LitJson\JsonData.cs" />
      <Compile Include="Assets\LitJson\JsonException.cs" />

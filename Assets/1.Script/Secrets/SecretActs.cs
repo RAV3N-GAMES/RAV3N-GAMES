@@ -10,7 +10,7 @@ public class SecretActs : MonoBehaviour {
      * 현재 플레이어의 명성에 따라 Chance를 변경한다.
      * Chance는 Wave 시작 시 적군 AI 생성을 맡은 스크립트에서 참조하여 적을 생성한다.
      */
-    private float Chance;//기밀이 목적인 적 출현 확률
+    private double Chance;//기밀이 목적인 적 출현 확률
     public static bool secretSeizured;//기밀 탈취되었을 시 true => 이를 판단하는 스크립트 GameManager(가명)에서 판단
 
     // Use this for initialization
@@ -27,8 +27,8 @@ public class SecretActs : MonoBehaviour {
 		
 	}
 
-    public float getChance() { return Chance; }
-    public void setChance(float chance) { Chance = chance; }
+    public double getChance() { return Chance; }
+    public void setChance(double chance) { Chance = chance; }
 
     private void checkCount() {
         if (SecretManager.SecretCount >= SecretManager.GetSecretLimit())
@@ -44,19 +44,19 @@ public class SecretActs : MonoBehaviour {
         switch (name)
         {
             case "UFOCore":
-                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame - 4].SecretSeizureChance_UFOCore;
+                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame - 4].SecretBanditsGenChance;
                 break;
             case "AlienBloodStorage":
-                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame - 4].SecretseizureChance_AlienBloodStorage;
+                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame + 18].SecretBanditsGenChance;
                 break;
             case "AlienStorageCapsule":
-                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame - 4].SecretSeizureChance_AlienStorageCapsule;
+                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame +40].SecretBanditsGenChance;
                 break;
             case "SpaceVoiceRecordingFile":
-                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame - 4].SecretseizureChance_SpaceVoiceRecordingFile;
+                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame +62].SecretBanditsGenChance;
                 break;
             default:
-                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame - 4].SecretSeizureChance_UFOCore;
+                Chance = SecretManager.Tbl_SecretSetup[Data_Player.Fame -4].SecretBanditsGenChance;
                 break;
         }
     }
