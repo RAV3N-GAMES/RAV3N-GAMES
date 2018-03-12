@@ -58,6 +58,10 @@ public class Enemy : MonoBehaviour {
 	}
 	public void Hit()
 	{
+        //Wall 타격도 생각해야됨
+
+
+
 		if (targetFriend == null)
 			return;
 
@@ -79,6 +83,7 @@ public class Enemy : MonoBehaviour {
 	}
 	public bool Health(int damage)
 	{
+        Debug.Log("Health Called in " + this);
 		UIEnemyHealth.ValueDecrease(damage);
 
 		if (Hp <= 10)

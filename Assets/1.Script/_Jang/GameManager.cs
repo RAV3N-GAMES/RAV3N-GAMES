@@ -9,7 +9,6 @@ public enum DIRECTION
 	LEFT,
 }
 
-
 public class GameManager : MonoBehaviour {
 	public static GameManager current;
 	public static float GameProgressTimer;
