@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveObject {
+public class SaveObject
+{
+    public int type;
     public string id;
+
 
     public int level;
     public int presentHP;
@@ -18,9 +21,12 @@ public class SaveObject {
 
     public string pos;
 
-    public SaveObject(Vector3 pos, string id, int level, int presentHP, int totalHP, int row, int col, int[] coordinate, string pivotObject)
+    public bool isRotation;
+
+    public SaveObject(Vector3 pos, int type, string id, int level, int presentHP, int totalHP, int row, int col, int[] coordinate, string pivotObject, bool isRotation)
     {
         this.pos = pos.x + "/" + pos.y + "/" + pos.z;
+        this.type = type;
         this.id = id;
         this.level = level;
         this.presentHP = presentHP;
@@ -31,5 +37,6 @@ public class SaveObject {
 
         this.coordinate = coordinate;
         this.pivotObject = pivotObject;
+        this.isRotation = isRotation;
     }
 }

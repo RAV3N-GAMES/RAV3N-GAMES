@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class ObjectColor : MonoBehaviour
 {
+    [Tooltip("0번에는 오브젝트 이미지를 넣으세요.")]
     public List<SpriteRenderer> sprite;
-    //색 알파값은 에디터에서 100으로 설정해 주세요
-    [Tooltip("초록색")]
-    public Color SuccessColor;//초록색
-    [Tooltip("빨간색")]
-    public Color FailColor;//빨간색
+
+    public Color SuccessColor;
+    public Color FailColor;
 
     void SetSpriteColor(Color _color)
     {
@@ -17,6 +16,27 @@ public class ObjectColor : MonoBehaviour
         {
             sprite[i].color = _color;
         }
+    }
+
+    public void SetSortingOrder(string layer, int idx)
+    {
+        for (int i = 0; i < sprite.Count; i++)
+        {
+            sprite[i].sortingLayerName = layer;
+            sprite[i].sortingOrder = idx;
+        }
+
+        sprite[0].sortingOrder = idx + 1;
+    }
+
+    public void OnTransparency(bool isTransparency)
+    {
+        if (isTransparency)
+        {
+            SetSpriteColor(new Color(1, 1, 1, 0.3f));
+        }
+        else
+            SetSpriteColor(new Color(1, 1, 1, 1));
     }
 
     public void OnColor(bool possible)
@@ -29,7 +49,16 @@ public class ObjectColor : MonoBehaviour
 
     public void OffColor()
     {
-        SetSpriteColor(new Color(255, 255, 255, 255));
+        float alpha = 1;
+        if (RoomManager.isTransparency && GetComponent<ObjectInfo>().type == 0)
+        {
+            alpha = 0.3f;
+            SetSpriteColor(new Color(1, 1, 1, 0.3f));
+        }
+        else
+            SetSpriteColor(new Color(1, 1, 1, 1));
+
+        sprite[0].color = new Color(1, 1, 1, alpha);
     }
 
 }

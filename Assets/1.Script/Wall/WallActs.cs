@@ -6,14 +6,24 @@ using UnityEngine;
 public class WallActs : MonoBehaviour {
     ObjectInfo thisObject;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake() {
         thisObject = GetComponent<ObjectInfo>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
+    public void Hit(int Damage)//Enemy에서 Wall 타격시 호출
+    {
+        thisObject.presentHP -= Damage;
+        if (thisObject.presentHP <= 0)
+            DestroyWall();
+    }
+    public void DestroyWall() {
+        DisplayObject thisDisplay = GetComponent<DisplayObject>();
+        thisDisplay.DestroyObj();
+        Destroy(this.gameObject);
+    }
 }

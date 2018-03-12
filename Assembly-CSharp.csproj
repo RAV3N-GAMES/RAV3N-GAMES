@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\1.Script\Default\BuildingManager.cs" />
      <Compile Include="Assets\1.Script\Default\EnemyManager.cs" />
+     <Compile Include="Assets\1.Script\Default\JsonDataManager.cs" />
      <Compile Include="Assets\1.Script\Default\MyObject.cs" />
      <Compile Include="Assets\1.Script\Default\OurForcesManager.cs" />
      <Compile Include="Assets\1.Script\Default\ResourceManager.cs" />

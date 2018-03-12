@@ -3,43 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BoxManager : MonoBehaviour {
+public class BoxManager : MonoBehaviour
+{
     public GameObject SlotPref;
 
     void Start()
     {
-        LoadSlot("Wall");
-    }
-
-    Object[] LoadImage(string boxType)
-    {
-        Object[] loadImage = null;
-
-        switch (boxType)
-        {
-            case "Wall":
-                loadImage = Resources.LoadAll("Image/Wall");
-                break;
-            case "Trap":
-            case "Monster":
-            case "Treasure":
-                loadImage = Resources.LoadAll("Image/" + boxType);
-                break;
-            default:
-                loadImage = Resources.LoadAll("Image/Wall");
-                break;
-        }
-
-        return loadImage;
+        LoadSlot(0);
     }
 
     void DestroySlot()
     {
         int Cnt = transform.childCount;
 
-        for(int i= 0; i < Cnt; i++)
+        for (int i = 0; i < Cnt; i++)
         {
-            Destroy(transform.GetChild(i).gameObject);            
+            Destroy(transform.GetChild(i).gameObject);
         }
     }
 
@@ -52,14 +31,12 @@ public class BoxManager : MonoBehaviour {
         SlotRect.offsetMin = Vector2.zero;
     }
 
-    void InitSlot(int idx, GameObject LoadImage)
+    void InitSlot(int idx, string id)
     {
         GameObject Slot = Instantiate(SlotPref, transform);
         InitSlotRect(Slot.GetComponent<RectTransform>(), idx);
 
-        LoadImage.GetComponent<SlotInfo>().InitSlotInfo();
-
-        Slot.GetComponent<SlotManager>().InitSlotInfo(LoadImage, GetComponent<CreateObject>());
+        Slot.GetComponent<SlotManager>().InitSlotInfo(id, GetComponent<CreateObject>());
     }
 
     void InitBox()
@@ -69,14 +46,27 @@ public class BoxManager : MonoBehaviour {
         GetComponent<RectTransform>().offsetMax = Vector2.zero;
     }
 
-    public void LoadSlot(string boxType)
+    List<string> GetSlotIdArray(int boxType)
+    {
+        List<string> slotId = new List<string>();
+
+        foreach (var slot in JsonDataManager.slotInfoList)
+        {
+            if (slot.Value.type == boxType)
+                slotId.Add(slot.Value.id);
+        }
+
+        return slotId;
+    }
+
+    public void LoadSlot(int boxType)
     {
         InitBox();
-        Object[] loadImage = LoadImage(boxType);
+        List<string> slotIdList = GetSlotIdArray(boxType);
 
-        for (int i = 0; i < loadImage.Length; i++)
+        for (int i = 0; i < slotIdList.Count; i++)
         {
-            InitSlot(i, loadImage[i] as GameObject);
+            InitSlot(i, slotIdList[i]);
         }
     }
 }
