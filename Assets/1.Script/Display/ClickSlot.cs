@@ -11,6 +11,9 @@ public class ClickSlot : MonoBehaviour, IPointerDownHandler {
 
     public void OnPointerDown(PointerEventData data)
     {
-        createObject.id = id;
+        if (JsonDataManager.slotInfoList[id].level != 0)
+            createObject.id = id;
+        else
+            createObject.id = "";
     }
 }

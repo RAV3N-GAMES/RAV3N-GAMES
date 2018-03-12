@@ -5,9 +5,10 @@ using LitJson;
 
 public class SlotInfo {
     //0 : 건물
-    //1 : 아군
-    //2 : 함정
-    //3 : 기밀
+    //1 : 적군
+    //2 : 아군
+    //3 : 함정
+    //4 : 기밀
     public int type;
 
     public string id;

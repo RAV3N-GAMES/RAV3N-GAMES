@@ -20,8 +20,14 @@ public class TileObject {
             mObject.GetComponent<ObjectColor>().OnTransparency(isTransparency);
     }
 
-    public void SetOrderInLayer(string layer, int idx)
+    public void SetOrderInLayer(string layer, int idx, int layerDepth)
     {
         mObject.GetComponent<ObjectColor>().SetSortingOrder(layer, idx);
+        SetLayerDepth(layerDepth);
+    }
+
+    public void SetLayerDepth(int layerDepth)
+    {
+        mObject.GetComponent<ObjectInfo>().layerDepth = layerDepth;
     }
 }

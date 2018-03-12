@@ -50,7 +50,7 @@ public class ObjectColor : MonoBehaviour
     public void OffColor()
     {
         float alpha = 1;
-        if (RoomManager.isTransparency)
+        if (RoomManager.isTransparency && GetComponent<ObjectInfo>().type == 0)
         {
             alpha = 0.3f;
             SetSpriteColor(new Color(1, 1, 1, 0.3f));

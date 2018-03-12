@@ -50,6 +50,7 @@ public class CreateObject : MonoBehaviour {
             newObj.name = id;
             newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
             newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+            newObj.GetComponent<ObjectInfo>().InitObject();
 
             SetBoxRect(BoxRect.anchorMin.y + 0.02f);
 

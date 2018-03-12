@@ -27,8 +27,6 @@ public class DisplayObject : MonoBehaviour
     {
         lastCol = checkTile.findPivotCol();
 
-        //여기에서 벽인지 확인 // 회전할때도 확인해야하는데
-
         Camera.main.transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z);
     }
 
@@ -51,7 +49,6 @@ public class DisplayObject : MonoBehaviour
 
         return idx;
     }
-
 
 
     public void DestroyObj()

@@ -18,21 +18,27 @@ public class ClickObject : MonoBehaviour
 
     void LongClick()
     {
+        print("longClick");
         if (objectInfo.isDisplay)
         {
+            print("last longclick");
             RoomManager.possibleDrag = false;
+
             ChangePopUp.SetActive(true);
             ChangePopUp.GetComponent<ChangePopUp>().Obj = gameObject;
+            ChangePopUp.GetComponent<ChangePopUp>().InitPopUp();
         }
     }
 
     public void OnMouseDown()
     {
+        print("mouseDown");
         Invoke("LongClick", clickTime);
     }
 
     public void OnMouseUp()
     {
+        print("mouseUp");
         CancelInvoke("LongClick");
     }
 }

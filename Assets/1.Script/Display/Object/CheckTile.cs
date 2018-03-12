@@ -53,7 +53,7 @@ public class CheckTile : MonoBehaviour {
 
     public void DestryObj(int[] idx)
     {
-        tileManager.DestroyObj(gameObject, idx);
+        tileManager.DestroyObj(GetComponent<ObjectInfo>().layerDepth, idx);
     }
 
     bool isSameRoom()
@@ -118,32 +118,32 @@ public class CheckTile : MonoBehaviour {
         return tileManager.isBuilding(displayTile);
 
     }
-    bool isBuilding_SRF()
-    {
-        Transform pivot = findPivotCol();
-
-        int row = System.Int32.Parse(pivot.transform.parent.name);
-        int col = System.Int32.Parse(pivot.name);
-
-        int[] displayTile = new int[4];
-
-        if (!objectInfo.isRotation)
-        {
-            displayTile[0] = row;
-            displayTile[1] = col + 2;
-            displayTile[2] = row + 1;
-            displayTile[3] = col + 2;
-        }
-        else
-        {
-            displayTile[0] = row + 2;
-            displayTile[1] = col;
-            displayTile[2] = row + 2;
-            displayTile[3] = col + 1;
-        }
-
-        return tileManager.isBuilding(displayTile);
-    }
+    //bool isBuilding_SRF()
+    //{
+    //    Transform pivot = findPivotCol();
+    //
+    //    int row = System.Int32.Parse(pivot.transform.parent.name);
+    //    int col = System.Int32.Parse(pivot.name);
+    //
+    //    int[] displayTile = new int[4];
+    //
+    //    if (!objectInfo.isRotation)
+    //    {
+    //        displayTile[0] = row;
+    //        displayTile[1] = col + 2;
+    //        displayTile[2] = row + 1;
+    //        displayTile[3] = col + 2;
+    //    }
+    //    else
+    //    {
+    //        displayTile[0] = row + 2;
+    //        displayTile[1] = col;
+    //        displayTile[2] = row + 2;
+    //        displayTile[3] = col + 1;
+    //    }
+    //
+    //    return tileManager.isBuilding(displayTile);
+    //}
 
     bool isBuilding_FTT()
     {
@@ -187,10 +187,10 @@ public class CheckTile : MonoBehaviour {
         {
             isBuilding = isBuilding_OMC();
         }
-        else if(name == "SpaceVoiceRecordingFile")
-        {
-            isBuilding = isBuilding_SRF();
-        }
+        //else if(name == "SpaceVoiceRecordingFile")
+        //{
+        //    isBuilding = isBuilding_SRF();
+        //}
         else if(name == "FlameThrowingTrap")
         {
             isBuilding = isBuilding_FTT();
@@ -199,25 +199,26 @@ public class CheckTile : MonoBehaviour {
         isPossible = isEnable() & isBuilding;
         objectColor.OnColor(isPossible);
     }
+
     public void OnCheckTile()
     {
         isPossible = isEnable();
         objectColor.OnColor(isPossible);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Tile")
         {
-            lastCol.Add(col.gameObject);
+            lastCol.Add(col.transform.parent.gameObject);
         }
     }
 
-    void OnCollisionExit(Collision col)
+    void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "Tile")
         {
-            lastCol.Remove(col.gameObject);
+            lastCol.Remove(col.transform.parent.gameObject);
         }
     }
 }

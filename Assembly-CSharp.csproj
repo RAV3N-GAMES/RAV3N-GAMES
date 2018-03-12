@@ -46,7 +46,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\1.Script\Default\JsonDataManager.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\BuildingManager.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\DataClasses.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\EnemyManager.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\JsonDataManager.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\MyObject.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\OurForcesManager.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\ResourceManager_Player.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\SecretManager.cs" />
+     <Compile Include="Assets\1.Script\Default\Json\TrapManager.cs" />
+     <Compile Include="Assets\1.Script\Default\JsonReadWrite.cs" />
      <Compile Include="Assets\1.Script\Default\ResourceManager.cs" />
      <Compile Include="Assets\1.Script\Display\ChangePopUp.cs" />
      <Compile Include="Assets\1.Script\Display\ClickSlot.cs" />
@@ -65,6 +74,7 @@
      <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />
      <Compile Include="Assets\1.Script\Room\RoomManager.cs" />
      <Compile Include="Assets\1.Script\Select\BoxManager.cs" />
+     <Compile Include="Assets\1.Script\Select\ObjInfoPopUp.cs" />
      <Compile Include="Assets\1.Script\Select\SlotArray.cs" />
      <Compile Include="Assets\1.Script\Select\SlotInfo.cs" />
      <Compile Include="Assets\1.Script\Select\SlotManager.cs" />

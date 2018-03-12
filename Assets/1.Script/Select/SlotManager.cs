@@ -10,28 +10,52 @@ public class SlotManager : MonoBehaviour {
 
     GameObject PopUp;
 
+    public GameObject BlockPanel;
+
     [HideInInspector]
     public string id;
 
     public void InitSlotInfo(string id, CreateObject createObject)
     {
         this.id = id;
-        SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
 
+        RefreshInfo();
+        SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
         slotImage.sprite = JsonDataManager.slotImage[slotInfo.imageName];
 
-        price.text = slotInfo.price.ToString();
-        
         GetComponent<ClickSlot>().id = slotInfo.id;
         GetComponent<ClickSlot>().createObject = createObject;
         
         glassButton.onClick.AddListener(OnExplain);
         
-        PopUp = GameObject.Find("Canvas").transform.Find("PopUp").gameObject;
+        PopUp = GameObject.Find("Canvas").transform.Find("PopUp").transform.Find("ObjInfo").gameObject;
     }
 
     public void OnExplain()
     {
+        ObjInfoPopUp objInfoPopUp = PopUp.GetComponent<ObjInfoPopUp>();
+        objInfoPopUp.id = id;
+        objInfoPopUp.slotManager = this;
+
         PopUp.SetActive(true);
+    }
+
+    public void OnActivationSlot()
+    {
+        BlockPanel.SetActive(false);
+
+        JsonDataManager.SetSlotInfo(JsonDataManager.slotInfoList[id].type, id, 1);
+        RefreshInfo();
+    }
+    
+    public void RefreshInfo()
+    {
+        SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
+        price.text = slotInfo.price.ToString();
+
+        if (JsonDataManager.slotInfoList[id].level == 0)
+            BlockPanel.SetActive(true);
+        else
+            BlockPanel.SetActive(false);
     }
 }

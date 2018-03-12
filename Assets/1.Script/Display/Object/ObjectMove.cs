@@ -46,7 +46,7 @@ public class ObjectMove : MonoBehaviour
                 isMouseMove = true;
             }
         }
-
+        
         return isMove & isMouseMove;
     }
 
@@ -92,16 +92,10 @@ public class ObjectMove : MonoBehaviour
         {
             if (isMove)
             {
-                if (checkTile.isPossible)
-                {
-                    isMove = false;
-                    GetComponent<DisplayObject>().OnDisplay();
-                }
-                else
-                {
-                    isMove = false;
-                    Destroy(gameObject);
-                }
+                isMove = false;
+                GetComponent<DisplayObject>().OnDisplay();
+
+                //GetComponent<ObjectInfo>().isDisplay = true;
             }
         }
     }

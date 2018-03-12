@@ -65,29 +65,46 @@ public class TileManager : MonoBehaviour {
     {
         for(int i = 0; i < idx.Length; i = i + 2)
         {
-            if (tileMatrix[idx[i]][idx[i + 1]] >= 0)
-                return false;
-            else if (idx[i] >= TILE_MAX || idx[i + 1] >= TILE_MAX || idx[i] < 0 || idx[i + 1] < 0)
-                return false;
+            try
+            {
+                if (tileMatrix[idx[i]][idx[i + 1]] >= 0)
+                    return false;
+                else if (idx[i] >= TILE_MAX || idx[i + 1] >= TILE_MAX || idx[i] < 0 || idx[i + 1] < 0)
+                    return false;
+
+            }
+            catch (System.IndexOutOfRangeException) { return false; }
         }
 
         return true;
     }
 
-    public void DestroyObj(GameObject Obj, int[] idx) //문제 있음
+    public void DestroyObj(int layerDepth, int[] idx)
     {
         for (int i = 0; i < idx.Length; i = i + 2)
         {
             tileMatrix[idx[i]][idx[i + 1]] = -1;
+            //print("DestroyIdx" + i + "," + i + 1 + " : " + idx[i] + "," + idx[i + 1]);
+        }
+        
+        objectList.RemoveAt(layerDepth);
+
+        for(int i = layerDepth; i < objectList.Count; i++)
+        {
+            objectList[i].SetLayerDepth(i);
         }
 
-        for (int i = 0; i < objectList.Count; i++)
+        for (int i = 0; i < saveObj.Count; i++)
         {
-            if (objectList[i].mObject == Obj)
+            //print("SaveObj" + " : " + saveObj[i].mRow + "," + saveObj[i].mCol);
+            if (saveObj[i].mRow == idx[0])
             {
-                objectList.RemoveAt(i);
-                saveObj.RemoveAt(i);
-                break;
+                if (saveObj[i].mCol == idx[1])
+                {
+                    saveObj.RemoveAt(i);
+                    //print("remove save obj");
+                    return;
+                }
             }
         }
     }
@@ -102,23 +119,42 @@ public class TileManager : MonoBehaviour {
             SetOrderInLayer();
             return;
         }
-        
 
         for (int i = 1; i < objectList.Count; i++)
         {
             TileObject tempTile = objectList[Size - i];
 
+            //if (tempTile.mRow < newObj.mRow)
+            //{
+            //    break;
+            //}
+            //else if (tempTile.mRow == newObj.mRow)
+            //{
+            //    if (tempTile.mCol < newObj.mCol)
+            //        break;
+            //}
+
+
+            //그냥 모든 인덱스 값에 대하여 해야할것같은 느낌적인 느낌... 매력적인느낌..
+
             if (tempTile.mRow < newObj.mRow)
             {
-                break;
+                if(tempTile.mCol <= newObj.mCol)
+                    break;
             }
             else if(tempTile.mRow == newObj.mRow)
             {
                 if (tempTile.mCol < newObj.mCol)
                     break;
             }
+            //else if( tempTile.mRow > newObj.mRow)
+            //{
+            //    if (tempTile.mCol == newObj.mCol)
+            //        break;
+            //}
             
             objectList[Size - i] = objectList[Size - i + 1];
+
             objectList[Size - i + 1] = tempTile;
         }
 
@@ -129,7 +165,7 @@ public class TileManager : MonoBehaviour {
     {
         for(int i = 0; i < objectList.Count; i++)
         {
-            objectList[i].SetOrderInLayer(name, (objectList.Count - i) * 2);
+            objectList[i].SetOrderInLayer(name, (objectList.Count - i) * 2, i);
         }
     }
 
@@ -142,12 +178,14 @@ public class TileManager : MonoBehaviour {
             tileMatrix[idx[i]][idx[i + 1]] = objInfo.type;
         }
 
+
         //여기에서 정렬하면서 추가 -> Layer 변경
         SetOrderInLayer(new TileObject(Obj, idx[0], idx[1]));
-        
+
         saveObj.Add(new SaveObject(Obj.transform.position, objInfo.type, objInfo.id, objInfo.level,
                                    objInfo.presentHP, objInfo.totalHP, idx[0], idx[1],
                                    objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation));
+
     }
 
     public void OnTransparency(bool isTransparency)

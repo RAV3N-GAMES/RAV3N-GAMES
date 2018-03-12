@@ -20,11 +20,19 @@ public class CreatePopUp : MonoBehaviour {
         PossibleDrag();
     }
 
+    IEnumerator CheckTile()
+    {
+        yield return null;
+        Obj.GetComponent<CheckTile>().OnDisplayCheckTile();
+
+        yield break;
+    }
+
     public void RotationPref()
     {
         Obj.GetComponent<ObjectInfo>().rotationObject();
-        
-        Obj.GetComponent<CheckTile>().OnDisplayCheckTile();
+
+        StartCoroutine("CheckTile");
     }
 
     public void CancelPref()
