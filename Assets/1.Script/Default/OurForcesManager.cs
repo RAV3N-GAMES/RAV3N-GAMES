@@ -11,7 +11,7 @@ using UnityEngine;
  * 200 ~ 299 : BiochemistryUnit
  * 300 ~ 399 : Researcher
  */
-
+ 
 public class OurForcesManager : JsonReadWrite {
     const string Path1 = "./Assets/Resources/Data/OurForces_Guard.json";
     const string Path2 = "./Assets/Resources/Data/OurForces_QuickReactionForce.json";
@@ -25,10 +25,16 @@ public class OurForcesManager : JsonReadWrite {
         ReadMain(Path2);
         ReadMain(Path3);
         ReadMain(Path4);
+        /* 입력값 확인용 코드입니다. 지우지 마세요.       
+                for (int i = 0; i < 400; i++)
+                {
+                    Debug.Log(i + "th index: " + Tbl_OurForceSetup[i].Level+" " + Tbl_OurForceSetup[i].HP + " " + Tbl_OurForceSetup[i].Attack + " " + Tbl_OurForceSetup[i].SkillCool + " " + Tbl_OurForceSetup[i].Price + " " + Tbl_OurForceSetup[i].UpgradeCost+ " " + Tbl_OurForceSetup[i].HealCost + " " + Tbl_OurForceSetup[i].id + " " + Tbl_OurForceSetup[i].Type + " " + Tbl_OurForceSetup[i].ActiveCost + " " + Tbl_OurForceSetup[i].AttackRange + " " + Tbl_OurForceSetup[i].AttackAngle + " " + Tbl_OurForceSetup[i].HitConstrain+ " " + Tbl_OurForceSetup[i].AttackCool+ " " + Tbl_OurForceSetup[i].EnemyRecognizeRangeHalf + " " + Tbl_OurForceSetup[i].MoveSpeed + " ");
+                }
+        */
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
     public override void ParsingJson(JsonData data)
@@ -44,7 +50,13 @@ public class OurForcesManager : JsonReadWrite {
             tmp.HealCost= double.Parse(data[i]["HealCost"].ToString());
             tmp.id = data[i]["id"].ToString();
             tmp.Type = int.Parse(data[i]["Type"].ToString());
-
+            tmp.ActiveCost= int.Parse(data[i]["ActiveCost"].ToString());
+            tmp.AttackRange= double.Parse(data[i]["AttackRange"].ToString());
+            tmp.AttackAngle = double.Parse(data[i]["AttackAngle"].ToString());
+            tmp.HitConstrain = int.Parse(data[i]["HitConstrain"].ToString());
+            tmp.AttackCool = double.Parse(data[i]["AttackCool"].ToString());
+            tmp.EnemyRecognizeRangeHalf = double.Parse(data[i]["EnemyRecognizeRangeHalf"].ToString());
+            tmp.MoveSpeed= double.Parse(data[i]["MoveSpeed"].ToString());
             Tbl_OurForceSetup.Add(tmp);
         }
     }

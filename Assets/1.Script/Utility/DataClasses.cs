@@ -42,32 +42,30 @@ public static class Data_Player
     const int OurForcesTypes = 4;
     const int TrapTypes = 4;
 
-    private static int gold;
-    [Range(1, 25)]
-    private static int fame;
     private static int lvExperience;//레벨업에 필요한 경험치
     private static int experience;//플레이어가 현재 가지고 있는 경험치
     public static int []BuildingLv=new int [BuildingTypes];
     public static int[] OurForcesLv = new int[OurForcesTypes];
     public static int[] TrapLv = new int[TrapTypes];
 
-    public static int Gold { get; set; }
-    public static int Fame { get; set; }
+    public static int Gold;
+    [Range(1, 25)]
+    public static int Fame;
     public static int LvExperience { get; set; }
     public static int Experience { get; set; }
-    public static void addGold(int add_g) { gold += add_g; }
-    public static void addFame(int add_f) { fame += add_f; }
-    public static void subGold(int sub_g) { gold -= sub_g; }
-    public static void subFame(int sub_f) { fame -= sub_f; }
+    public static void addGold(int add_g) { Gold += add_g; }
+    public static void addFame(int add_f) { Fame += add_f; }
+    public static void subGold(int sub_g) { Gold -= sub_g; }
+    public static void subFame(int sub_f) { Fame -= sub_f; }
     public static void addLvExperience(int add_le) { lvExperience += add_le; }
     public static void addExperience(int add_e)
     {//player level이 최대치면 경험치 오르지 않음.
-        if (fame < 25)
+        if (Fame < 25)
             experience += add_e;
     }
     public static void subLvExperience(int sub_le) { lvExperience -= sub_le; }
     public static void subExperience(int sub_e) { experience -= sub_e; }
-    public static bool isEnough_G(int price) { return (gold >= price) ? true : false; }
+    public static bool isEnough_G(int price) { return (Gold >= price) ? true : false; }
 
     public static void initObjectLv() {//빌딩, 아군, 함정의 레벨 상태 초기화
         int i = 0;

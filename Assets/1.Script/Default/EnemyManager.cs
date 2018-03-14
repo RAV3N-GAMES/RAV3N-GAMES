@@ -32,10 +32,16 @@ public class EnemyManager : JsonReadWrite
         ReadMain(Path4);
         ReadMain(Path5);
         ReadMain(Path6);
+        /*입력값 확인용 코드입니다. 지우지 마세요. 
+        for (int i = 0; i < 22*6; i++)
+        {
+            Debug.Log(i + "th index: " + Tbl_EnemySetup[i].Level+ " " + Tbl_EnemySetup[i].Fame+ " " + Tbl_EnemySetup[i].HP+ " " + Tbl_EnemySetup[i].Attack+ " " + Tbl_EnemySetup[i].BuildingAttack+ " " + Tbl_EnemySetup[i].Type+ " " + Tbl_EnemySetup[i].id+ " " + Tbl_EnemySetup[i].AttackRange+ " " + Tbl_EnemySetup[i].AttackAngle+ " " + Tbl_EnemySetup[i].HitConstrain+ " " + Tbl_EnemySetup[i].AttackCool+" " +Tbl_EnemySetup[i].MoveSpeed);
+        }
+        */
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
     public override void ParsingJson(JsonData data)
@@ -50,6 +56,11 @@ public class EnemyManager : JsonReadWrite
             tmp.BuildingAttack= int.Parse(data[i]["BuildingAttack"].ToString());
             tmp.id = data[i]["id"].ToString();
             tmp.Type = int.Parse(data[i]["Type"].ToString());
+            tmp.AttackRange= double.Parse(data[i]["AttackRange"].ToString());
+            tmp.AttackAngle= double.Parse(data[i]["AttackAngle"].ToString());
+            tmp.HitConstrain= int.Parse(data[i]["HitConstrain"].ToString());
+            tmp.AttackCool= double.Parse(data[i]["AttackCool"].ToString()); 
+            tmp.MoveSpeed= double.Parse(data[i]["MoveSpeed"].ToString());
             Tbl_EnemySetup.Add(tmp);
         }
     }

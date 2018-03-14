@@ -43,6 +43,7 @@ public class BuildingManager : JsonReadWrite
             tmp.Price = int.Parse(data[i]["Price"].ToString());
             tmp.UpgradeCost = int.Parse(data[i]["UpgradeCost"].ToString());
             tmp.RepairCost = int.Parse(data[i]["RepairCost"].ToString());
+            tmp.ActiveCost = int.Parse(data[i]["ActiveCost"].ToString());
             Tbl_BuildingSetup.Add(tmp);
         }
     }

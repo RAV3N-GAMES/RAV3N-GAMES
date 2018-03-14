@@ -29,6 +29,7 @@ public class Building : MyObject
     public int UpgradeCost;
     public int RepairCost;
     public int buildingCost;
+    public int ActiveCost;
 
     public Building() : base()
     {
@@ -57,6 +58,13 @@ public class OurForces : MyObject
     public int Price;
     public int UpgradeCost;
     public double HealCost;
+    public int ActiveCost;
+    public double AttackRange;
+    public double AttackAngle;
+    public int HitConstrain;
+    public double AttackCool;
+    public double EnemyRecognizeRangeHalf;
+    public double MoveSpeed;
 
     public OurForces() { }
     
@@ -93,7 +101,11 @@ public class Trap : MyObject
     public int Price;
     public int UpgradeCost;
     public double CoolTime;
-    public int DisassemblyTime;
+    public double DisassemblyTime;
+    public int SellPrice;
+    public int ActiveCost;
+    public double EffectContinuousTime;
+
     public Trap() {}
 
     public Trap(int Type, string id, int Level, int Price, int UpgradeCost, double CoolTime) : base(Type, id, Level)
@@ -110,6 +122,11 @@ public class Enemy : MyObject
     public int Fame;
     public int Attack;
     public int BuildingAttack;
+    public double AttackRange;
+    public double AttackAngle;
+    public int HitConstrain;
+    public double AttackCool;
+    public double MoveSpeed;
 
     public Enemy() { }
 
