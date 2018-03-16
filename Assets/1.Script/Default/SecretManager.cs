@@ -34,11 +34,12 @@ public class SecretManager : JsonReadWrite
         ReadMain(Path2);
         ReadMain(Path3);
         ReadMain(Path4);
-        for (int i = 0; i < 22 * 4; i++)
-        {
-            Debug.Log(i + "th index: " + Tbl_SecretSetup[i].Level + " " + Tbl_SecretSetup[i].Fame + " " + Tbl_SecretSetup[i].SecretBanditsGenChance + " " + Tbl_SecretSetup[i].Price+ " " + Tbl_SecretSetup[i].id+ " " + Tbl_SecretSetup[i].Type);
-        }
-        Debug.Log(SecretFame);
+        /*입력값 확인용 코드입니다. 지우지 마세요. 
+                for (int i = 0; i < 22 * 4; i++)
+                {
+                    Debug.Log(i + "th index: " + Tbl_SecretSetup[i].Level + " " + Tbl_SecretSetup[i].Fame + " " + Tbl_SecretSetup[i].SecretBanditsGenChance + " " + Tbl_SecretSetup[i].Price+ " " + Tbl_SecretSetup[i].id+ " " + Tbl_SecretSetup[i].Type);
+                }
+        */
     }
 
     // Update is called once per frame
