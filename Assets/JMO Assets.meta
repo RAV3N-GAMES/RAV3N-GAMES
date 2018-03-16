@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 777a84d71e6350442aa67b2dc69f0f41
 folderAsset: yes
 timeCreated: 1519799930
+=======
+guid: cd352316f247161479d75b63e135934d
+folderAsset: yes
+timeCreated: 1521179101
+>>>>>>> newJH
 licenseType: Free
 DefaultImporter:
   userData: 

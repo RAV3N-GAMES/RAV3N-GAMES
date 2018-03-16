@@ -49,11 +49,13 @@
      <Compile Include="Assets\JMO Assets\Shape FX\Editor\ShFX_EffectHandler_Editor.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Editor\ShFX_EffectLight_Editor.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Editor\ShFX_Variants_Editor.cs" />
+     <None Include="Assets\2.Pref\Animated Trap\SpriteSheets\Trap.txt" />
      <None Include="Assets\JMO Assets\Shape FX\ShapeFX Readme.txt" />
      <None Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShapeFX Demo Assets.txt" />
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle AddSoft.shader" />
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle AlphaBlendPremultiply.shader" />
      <None Include="Assets\JMO Assets\Shape FX\Documentation\Note.txt" />
+     <None Include="Assets\2.Pref\Cartoon Textures\README.txt" />
      <None Include="Assets\JMO Assets\!JMO Assets Readme.txt" />
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle Add.shader" />
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle Multiply.shader" />
@@ -127,10 +129,6 @@
  <Reference Include="UnityEditor.iOS.Extensions.Common">
  <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{89DE1756-DD99-95AE-9D84-0E61C8FE1A6E}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
