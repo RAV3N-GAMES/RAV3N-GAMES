@@ -1,0 +1,121 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySinger : Enemy {
+
+	WaitForSeconds healDelay = new WaitForSeconds(2f);
+	Enemy healTarget = null;
+	private bool isHeal = false;
+
+	private void Start()
+	{
+		effectType = EFFECT_TYPE.Heal;
+		StopDistance = 2;
+		isDie = false;
+	}
+	public override void EnemyInit()
+	{
+		Hp = 100;
+		Attack = 30;
+		MaxHp = 100;
+		base.EnemyInit();
+	}
+
+	private void Update()
+	{
+		if (isDie)
+			return;
+		if (GroupConductor.GetLessHpEnemy() != null)
+		{
+			if (healTarget != GroupConductor.GetLessHpEnemy())
+			{
+				healTarget = GroupConductor.GetLessHpEnemy();
+			}
+		}
+		if (healTarget != null)
+		{
+			if (HealingDirDisatnce() == true)
+			{
+				currentState = EnemyState.Idle;
+				enemyAI.enabled = false;
+				if (!isHeal)
+				{
+					isHeal = true;
+					StartCoroutine(GiveHeal());
+				}
+			}
+			else if(HealingDirDisatnce() == false)
+			{
+				enemyAI.enabled = true;
+				currentState = EnemyState.Walk;
+				enemyAI.SetDestination(healTarget.NavObj.position);
+			}
+		}
+		else
+		{
+			
+			OriginalDest();
+		}
+
+		ChangeAnimation();
+	}
+	private void OriginalDest()
+	{
+		dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
+		start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+		Distance = Vector3.Distance(start, dest);
+
+		if (Distance <= StopDistance)
+		{
+			if (enemyAI.enabled)
+			{
+				enemyAI.enabled = false;
+			}
+			currentState = EnemyState.Idle;
+		}
+		else if (Distance > StopDistance)
+		{
+			if (!enemyAI.enabled)
+			{
+				enemyAI.enabled = true;
+			}
+			currentState = EnemyState.Walk;
+			enemyAI.SetDestination(OriginalPoint.position);
+		}
+
+	}
+	private bool HealingDirDisatnce()
+	{
+		dest = new Vector3(healTarget.NavObj.position.x, 0, healTarget.NavObj.position.z);
+		start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+		Distance = Vector3.Distance(dest, start);
+
+		if (healTarget.NavObj.position.x > NavObj.position.x)
+			transform.localScale = new Vector3(-1, 1, 1);
+		else
+			transform.localScale = new Vector3(1, 1, 1);
+
+
+		if (Distance <= StopDistance)
+			return true;
+		else
+			return false;
+	}
+
+	IEnumerator GiveHeal()
+	{
+		if (healTarget == null)
+			yield break;
+		
+		healTarget.Hp += Attack;
+		healTarget.UIEnemyHealth.ValueIncrease(Attack);
+		GameManager.ParticleGenerate(effectType,
+			healTarget.NavObj.position);
+		
+		yield return healDelay;
+		isHeal = false;
+	}
+
+
+}
