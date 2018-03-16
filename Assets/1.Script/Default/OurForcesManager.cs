@@ -17,7 +17,7 @@ public class OurForcesManager : JsonReadWrite {
     const string Path2 = "./Assets/Resources/Data/OurForces_QuickReactionForce.json";
     const string Path3 = "./Assets/Resources/Data/OurForces_BiochemistryUnit.json";
     const string Path4 = "./Assets/Resources/Data/OurForces_Researcher.json";
-    public static List<OurForces> Tbl_OurForceSetup = new List<OurForces>();
+    public static List<OurForcesObject> Tbl_OurForceSetup = new List<OurForcesObject>();
 
     // Use this for initialization
     void Start () {
@@ -39,8 +39,8 @@ public class OurForcesManager : JsonReadWrite {
 	}
     public override void ParsingJson(JsonData data)
     {
-        for (int i = 0; i < data.Count; i++) { 
-            OurForces tmp = new OurForces();
+        for (int i = 0; i < data.Count; i++) {
+            OurForcesObject tmp = new OurForcesObject();
             tmp.Level = int.Parse(data[i]["Level"].ToString());
             tmp.HP = int.Parse(data[i]["HP"].ToString());
             tmp.Attack= int.Parse(data[i]["Attack"].ToString());

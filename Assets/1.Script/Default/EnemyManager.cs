@@ -22,7 +22,7 @@ public class EnemyManager : JsonReadWrite
     const string Path4 = "./Assets/Resources/Data/Enemy_IEDFarmer.json";
     const string Path5 = "./Assets/Resources/Data/Enemy_Meateater.json";
     const string Path6 = "./Assets/Resources/Data/Enemy_WanderingMinstrel.json";
-    public static List<Enemy> Tbl_EnemySetup = new List<Enemy>();
+    public static List<EnemyObject> Tbl_EnemySetup = new List<EnemyObject>();
 
     // Use this for initialization
     void Start () {
@@ -48,7 +48,7 @@ public class EnemyManager : JsonReadWrite
     {
         for (int i = 0; i < data.Count; i++)
         {
-            Enemy tmp = new Enemy();
+            EnemyObject tmp = new EnemyObject();
             tmp.Fame = int.Parse(data[i]["Fame"].ToString());
             tmp.Level = 1;
             tmp.HP= int.Parse(data[i]["HP"].ToString());

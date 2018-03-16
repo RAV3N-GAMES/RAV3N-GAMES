@@ -4,7 +4,6 @@ using UnityEngine;
 using System.IO;
 using LitJson;
 
-
 public class JsonDataManager : MonoBehaviour
 {
     public static Dictionary<string, SlotInfo> slotInfoList { get; private set; }   //현재까지 오브젝트 업데이트 정보및 슬롯관련 정보
@@ -74,7 +73,7 @@ public class JsonDataManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/Resources/Data/SlotInfo.json", newObj.ToString());
     }
 
-    public static Building GetBuildingInfo(string id, int level)
+    public static BuildingObject GetBuildingInfo(string id, int level)
     {
         for (int i = 0; i < BuildingManager.Tbl_BuildingSetup.Count; i++)
         {
@@ -88,7 +87,7 @@ public class JsonDataManager : MonoBehaviour
         return null;
     }
 
-    public static Enemy GetEnemyInfo(string id, int level)
+    public static EnemyObject GetEnemyInfo(string id, int level)
     {
         for (int i = 0; i < EnemyManager.Tbl_EnemySetup.Count; i++)
         {
@@ -102,7 +101,7 @@ public class JsonDataManager : MonoBehaviour
         return null;
     }
 
-    public static OurForces GetOurForcesInfo(string id, int level)
+    public static OurForcesObject GetOurForcesInfo(string id, int level)
     {
         for (int i = 0; i < OurForcesManager.Tbl_OurForceSetup.Count; i++)
         {
@@ -116,7 +115,7 @@ public class JsonDataManager : MonoBehaviour
         return null;
     }
 
-    public static Secret GetSecretInfo(string id, int level)
+    public static SecretObject GetSecretInfo(string id, int level)
     {
         for (int i = 0; i < SecretManager.Tbl_SecretSetup.Count; i++)
         {
@@ -130,7 +129,7 @@ public class JsonDataManager : MonoBehaviour
         return null;
     }
 
-    public static Trap GetTrapInfo(string id, int level)
+    public static TrapObject GetTrapInfo(string id, int level)
     {
         for (int i = 0; i < TrapManager.Tbl_TrapSetup.Count; i++)
         {

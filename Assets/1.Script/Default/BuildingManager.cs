@@ -16,7 +16,7 @@ public class BuildingManager : JsonReadWrite
     const string Path2 = "./Assets/Resources/Data/Building_New.json";
     const string Path3 = "./Assets/Resources/Data/Building_Functional.json";
     const string Path4 = "./Assets/Resources/Data/Building_Core.json";
-    public static List<Building> Tbl_BuildingSetup = new List<Building>();
+    public static List<BuildingObject> Tbl_BuildingSetup = new List<BuildingObject>();
 
     // Use this for initialization
     void Start () {
@@ -35,7 +35,7 @@ public class BuildingManager : JsonReadWrite
     {
         for (int i = 0; i < data.Count; i++)
         {
-            Building tmp = new Building();
+            BuildingObject tmp = new BuildingObject();
             tmp.Level = int.Parse(data[i]["Level"].ToString());
             tmp.Type = int.Parse(data[i]["Type"].ToString());
             tmp.id = data[i]["id"].ToString();

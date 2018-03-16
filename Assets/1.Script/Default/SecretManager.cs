@@ -21,7 +21,7 @@ public class SecretManager : JsonReadWrite
     const string Path2 = "./Assets/Resources/Data/Secret_AlienStorageCapsule.json";
     const string Path3 = "./Assets/Resources/Data/Secret_AlienBloodStorage.json";
     const string Path4 = "./Assets/Resources/Data/Secret_SpaceVoiceRecordingFile.json";
-    public static List<Secret> Tbl_SecretSetup = new List<Secret>();
+    public static List<SecretObject> Tbl_SecretSetup = new List<SecretObject>();
 
     public static Dictionary<string, int> SecretFame = new Dictionary<string, int>(); //첫 등장 Fame
 
@@ -51,7 +51,7 @@ public class SecretManager : JsonReadWrite
     {
         for (int i = 0; i < data.Count; i++)
         {
-            Secret tmp = new Secret();
+            SecretObject tmp = new SecretObject();
             tmp.Fame = int.Parse(data[i]["Fame"].ToString());
             tmp.Level = 1;
             tmp.SecretBanditsGenChance = double.Parse(data[i]["SecretBanditsGenChance"].ToString());

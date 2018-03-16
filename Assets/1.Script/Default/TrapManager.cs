@@ -16,7 +16,7 @@ public class TrapManager : JsonReadWrite
     const string Path2 = "./Assets/Resources/Data/Trap_Warp.json";
     const string Path3 = "./Assets/Resources/Data/Trap_FlameThrowingTrap.json";
     const string Path4 = "./Assets/Resources/Data/Trap_ObstructMovementCurrent.json";
-    public static List<Trap> Tbl_TrapSetup = new List<Trap>();
+    public static List<TrapObject> Tbl_TrapSetup = new List<TrapObject>();
 
     // Use this for initialization
     void Start () {
@@ -40,7 +40,7 @@ public class TrapManager : JsonReadWrite
     {
         for (int i = 0; i < data.Count; i++)
         {
-            Trap tmp = new Trap();
+            TrapObject tmp = new TrapObject();
             tmp.Level = int.Parse(data[i]["Level"].ToString());
             tmp.Attack = int.Parse(data[i]["Attack"].ToString());
             tmp.Price = int.Parse(data[i]["Price"].ToString());
