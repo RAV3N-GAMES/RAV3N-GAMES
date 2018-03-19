@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour {
 			return;
 
 		int roomindex = roomManager.CenterRoomIdx;
+        //roomindex 랑 roomIndex랑 차이점?? => 나중에 방 여러개 사용하게 함수 바꾸면 용도가 달라질지도?
 
 		if (!friendGroups[roomindex].enabled)
 			return;

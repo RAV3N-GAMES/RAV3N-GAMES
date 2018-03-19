@@ -11,8 +11,7 @@ public class HealthSystem : MonoBehaviour {
 	// Use this for initialization
 	private void Awake()
 	{
-		HpSlider = Instantiate(UIManager.current.UIBarPrefab).
-			GetComponent<Slider>();
+		HpSlider = Instantiate(UIManager.current.UIBarPrefab).GetComponent<Slider>();
 		HpSlider.transform.SetParent(UIManager.current.UIBarParent);
 		sliderRect = HpSlider.GetComponent<RectTransform>();
 		HpSlider.gameObject.SetActive(false);
