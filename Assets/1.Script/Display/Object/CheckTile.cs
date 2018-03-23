@@ -31,6 +31,7 @@ public class CheckTile : MonoBehaviour {
     public Transform findPivotCol()
     {
         int Cnt = lastCol.Count;
+
         GameObject tempPivot = lastCol[0];
 
         for (int i = 1; i < Cnt; i++)
@@ -44,16 +45,34 @@ public class CheckTile : MonoBehaviour {
         return tempPivot.transform;
     }
 
-    public void UsingTile(int[] idx)
+    public bool UsingTile(int[] idx)
     {
-        if (isPossible)
-            tileManager.UsingTile(gameObject, idx);
+        OnDisplayCheckTile();
 
+        if (isPossible) {
+            if (name == "ObstructMovementCurrent")
+            {
+                int[] omcIdx = DepencyTile_OMC();
+
+                tileManager.OnDependency(omcIdx[0], omcIdx[1]);
+                tileManager.OnDependency(omcIdx[2], omcIdx[3]);
+            }
+            else if (name == "FlameThrowingTrap")
+            {
+                int[] fttIdx = DepencyTile_FTT();
+
+                tileManager.OnDependency(fttIdx[0], fttIdx[1]);
+            }
+
+            tileManager.UsingTile(gameObject, idx);
+            return true;
+        }
+        return false;
     }
 
-    public void DestryObj(int[] idx)
+    public bool DestryObj(int[] idx)
     {
-        tileManager.DestroyObj(GetComponent<ObjectInfo>().layerDepth, idx);
+        return tileManager.DestroyObj(gameObject, idx);
     }
 
     bool isSameRoom()
@@ -72,7 +91,7 @@ public class CheckTile : MonoBehaviour {
         return true;
     }
 
-    int[] makeIdx()
+    public int[] makeIdx()
     {
         Transform pivot = findPivotCol();
 
@@ -90,8 +109,7 @@ public class CheckTile : MonoBehaviour {
 
         return idx;
     }
-
-    bool isBuilding_OMC()
+    public int[] DepencyTile_OMC()
     {
         Transform pivot = findPivotCol();
 
@@ -115,37 +133,15 @@ public class CheckTile : MonoBehaviour {
             displayTile[3] = col;
         }
 
-        return tileManager.isBuilding(displayTile);
-
+        return displayTile;
     }
-    //bool isBuilding_SRF()
-    //{
-    //    Transform pivot = findPivotCol();
-    //
-    //    int row = System.Int32.Parse(pivot.transform.parent.name);
-    //    int col = System.Int32.Parse(pivot.name);
-    //
-    //    int[] displayTile = new int[4];
-    //
-    //    if (!objectInfo.isRotation)
-    //    {
-    //        displayTile[0] = row;
-    //        displayTile[1] = col + 2;
-    //        displayTile[2] = row + 1;
-    //        displayTile[3] = col + 2;
-    //    }
-    //    else
-    //    {
-    //        displayTile[0] = row + 2;
-    //        displayTile[1] = col;
-    //        displayTile[2] = row + 2;
-    //        displayTile[3] = col + 1;
-    //    }
-    //
-    //    return tileManager.isBuilding(displayTile);
-    //}
 
-    bool isBuilding_FTT()
+    bool isBuilding_OMC()
+    {
+        return tileManager.isBuilding(DepencyTile_OMC());
+    }
+
+    public int[] DepencyTile_FTT()
     {
         Transform pivot = findPivotCol();
 
@@ -165,7 +161,12 @@ public class CheckTile : MonoBehaviour {
             displayTile[1] = col;
         }
 
-        return tileManager.isBuilding(displayTile);
+        return displayTile;
+    }
+
+    bool isBuilding_FTT()
+    {
+        return tileManager.isBuilding(DepencyTile_FTT());
     }
 
     bool isEnable()
@@ -211,6 +212,9 @@ public class CheckTile : MonoBehaviour {
         if (col.gameObject.tag == "Tile")
         {
             lastCol.Add(col.transform.parent.gameObject);
+
+            if (!objectInfo.isDisplay)
+                OnCheckTile();
         }
     }
 

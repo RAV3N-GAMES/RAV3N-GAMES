@@ -8,7 +8,8 @@ using LitJson;
 /*
  * JsonReadWrite를 MonoBehavior 대신 상속해서 쓰시면 됩니다.
  */
-public class JsonReadWrite: MonoBehaviour{
+public class JsonReadWrite : MonoBehaviour
+{
     /* ReadMain 함수
      * 가급적이면 Awake 함수 안에서 호출하시기 바랍니다.
      * 1. ParsingJson 함수는 override.
@@ -16,7 +17,8 @@ public class JsonReadWrite: MonoBehaviour{
      * 3. ReadMain 함수 호출
      * 순으로 사용하여 Json file을 읽을 수 있습니다.
      */
-    public void ReadMain(String Path) {
+    public void ReadMain(String Path)
+    {
         string OriginalFile = ReadFile(Path);
         JsonParse(OriginalFile);
     }
@@ -26,10 +28,12 @@ public class JsonReadWrite: MonoBehaviour{
      * ex) Sector\Assets\1.Script\Player\PlayerDetail.json을 읽고 싶을 경우
      * -> private const string Path="./Assets/1.Script/Player/PlayerDetail.json"
      */
-    public string ReadFile(string Path) {
+    public string ReadFile(string Path)
+    {
         return File.ReadAllText(Path);
     }
-    public void JsonParse(string File){
+    public void JsonParse(string File)
+    {
         StartCoroutine(LoadCo(File));
     }
 
@@ -65,11 +69,13 @@ public class JsonReadWrite: MonoBehaviour{
     }
 
 
-    public void WriteMain(String Path, List<JsonData> data) {
+    public void WriteMain(String Path, List<JsonData> data)
+    {
         WriteFile(Path, data);
     }
 
-    public void WriteFile(String Path, List<JsonData> data) {
+    public void WriteFile(String Path, List<JsonData> data)
+    {
         File.WriteAllText(Path, data.ToString());
     }
 }

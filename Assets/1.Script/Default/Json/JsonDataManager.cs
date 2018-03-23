@@ -14,7 +14,8 @@ public class JsonDataManager : MonoBehaviour {
     {
         slotInfoList = new Dictionary<string, SlotInfo>();
         slotImage = new Dictionary<string, Sprite>();
-        
+
+        Data_Player.addGold(10000);
 
         LoadData();
     }
@@ -73,7 +74,7 @@ public class JsonDataManager : MonoBehaviour {
         File.WriteAllText(Application.dataPath + "/Resources/Data/SlotInfo.json", newObj.ToString());
     }
     
-    public static Building GetBuildingInfo(string id, int level)
+    public static BuildingObject GetBuildingInfo(string id, int level)
     {
         for (int i = 0; i < BuildingManager.Tbl_BuildingSetup.Count; i++)
         {
@@ -87,7 +88,7 @@ public class JsonDataManager : MonoBehaviour {
         return null;
     }
 
-    public static Enemy GetEnemyInfo(string id, int level)
+    public static EnemyObject GetEnemyInfo(string id, int level)
     {
         for (int i = 0; i < EnemyManager.Tbl_EnemySetup.Count; i++)
         {
@@ -101,7 +102,7 @@ public class JsonDataManager : MonoBehaviour {
         return null;
     }
 
-    public static OurForces GetOurForcesInfo(string id, int level)
+    public static OurForcesObject GetOurForcesInfo(string id, int level)
     {
         for (int i = 0; i < OurForcesManager.Tbl_OurForceSetup.Count; i++)
         {
@@ -115,13 +116,13 @@ public class JsonDataManager : MonoBehaviour {
         return null;
     }
 
-    public static Secret GetSecretInfo(string id, int level)
+    public static SecretObject GetSecretInfo(string id, int fame)
     {
         for (int i = 0; i < SecretManager.Tbl_SecretSetup.Count; i++)
         {
             if (SecretManager.Tbl_SecretSetup[i].id == id)
             {
-                if (SecretManager.Tbl_SecretSetup[i].Level == level)
+                if (SecretManager.Tbl_SecretSetup[i].Fame == fame)
                     return SecretManager.Tbl_SecretSetup[i];
             }
         }
@@ -129,7 +130,7 @@ public class JsonDataManager : MonoBehaviour {
         return null;
     }
 
-    public static Trap GetTrapInfo(string id, int level)
+    public static TrapObject GetTrapInfo(string id, int level)
     {
         for (int i = 0; i < TrapManager.Tbl_TrapSetup.Count; i++)
         {

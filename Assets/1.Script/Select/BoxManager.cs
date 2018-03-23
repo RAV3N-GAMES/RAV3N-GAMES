@@ -4,68 +4,53 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BoxManager : MonoBehaviour {
-    public GameObject SlotPref;
+    public List<GameObject> SlotList;
+    int type;
 
     void Start()
     {
-        LoadSlot(0);
+        type = -1;
+        //LoadSlot(0);
     }
 
-    void DestroySlot()
+    void AllOffSlotList()
     {
-        int Cnt = transform.childCount;
-
-        for(int i= 0; i < Cnt; i++)
+        for (int i = 0; i < SlotList.Count; i++)
         {
-            Destroy(transform.GetChild(i).gameObject);            
+            SlotList[i].SetActive(false);
         }
     }
 
-    void InitSlotRect(RectTransform SlotRect, int idx)
+    void OnSlotList(int idx)
     {
-        SlotRect.anchorMin = new Vector2(idx, 0.1f);
-        SlotRect.anchorMax = new Vector2(idx + 1, 0.9f);
-
-        SlotRect.offsetMax = Vector2.zero;
-        SlotRect.offsetMin = Vector2.zero;
-    }
-
-    void InitSlot(int idx, string id)
-    {
-        GameObject Slot = Instantiate(SlotPref, transform);
-        InitSlotRect(Slot.GetComponent<RectTransform>(), idx);
-
-        Slot.GetComponent<SlotManager>().InitSlotInfo(id, GetComponent<CreateObject>());
-    }
-
-    void InitBox()
-    {
-        DestroySlot();
-        GetComponent<RectTransform>().offsetMin = Vector2.zero;
-        GetComponent<RectTransform>().offsetMax = Vector2.zero;
-    }
-
-    List<string> GetSlotIdArray(int boxType)
-    {
-        List<string> slotId = new List<string>();
-
-        foreach (var slot in JsonDataManager.slotInfoList)
-        {
-            if (slot.Value.type == boxType)
-                slotId.Add(slot.Value.id);
-        }
-
-        return slotId;
+        AllOffSlotList();
+        SlotList[idx].SetActive(true);
     }
 
     public void LoadSlot(int boxType)
     {
-        InitBox();
-        List<string> slotIdList = GetSlotIdArray(boxType);
-
-        for (int i = 0; i < slotIdList.Count; i++)
+        if (type == boxType)
         {
-            InitSlot(i, slotIdList[i]);
+            type = -1;
+            AllOffSlotList();
+            return;
+        }
+
+        type = boxType;
+        switch (boxType)
+        {
+            case 0:
+                OnSlotList(0);
+                break;
+            case 2:
+                OnSlotList(1);
+                break;
+            case 3:
+                OnSlotList(2);
+                break;
+            case 4:
+                OnSlotList(3);
+                break;
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour {
     public Transform RoomParent;
-    List<GameObject> Room;
+    public List<GameObject> Room { get; private set; }
 
     [HideInInspector]
     public int CenterRoomIdx;
@@ -21,6 +21,8 @@ public class RoomManager : MonoBehaviour {
     float touchDistance;
 
     public static bool isTransparency;
+
+    public MiniMapManager miniMapManager;
 
     void Awake()
     {
@@ -112,6 +114,8 @@ public class RoomManager : MonoBehaviour {
         {
             isMove = false;
             MoveMapRoom();
+
+            miniMapManager.MoveMapRoom(CenterRoomIdx);
         }
 
         if (Input.touchCount == 2)

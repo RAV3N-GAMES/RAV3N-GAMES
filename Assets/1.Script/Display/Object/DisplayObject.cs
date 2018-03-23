@@ -51,14 +51,14 @@ public class DisplayObject : MonoBehaviour
     }
 
 
-    public void DestroyObj()
+    public bool DestroyObj()
     {
-        checkTile.DestryObj(makeIdx());
+        return checkTile.DestryObj(makeIdx());
     }
 
-    public void UsingTile()
+    public bool UsingTile()
     {
-        checkTile.UsingTile(makeIdx());
+        return checkTile.UsingTile(makeIdx());
     }
 
     void OnCheckButton()

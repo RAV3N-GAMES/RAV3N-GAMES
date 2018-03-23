@@ -30,30 +30,53 @@ public class Data_SetupPlayer
  */
 public static class Data_Player
 {
-    private static int gold;
-    [Range(1, 25)]
-    private static int fame;
+    /*
+     * Building ~ SecretTypes
+     *  - 각 항목 별로 존재하는 종류 수
+     *  ex) Building: Old, New, Functional, Core의 4종류
+     *  OurForces : Guard, Quick~, Chemistry, Researcher의 4종류
+     *  ...
+     */
+
+    const int BuildingTypes = 4;
+    const int OurForcesTypes = 4;
+    const int TrapTypes = 4;
+
     private static int lvExperience;//레벨업에 필요한 경험치
     private static int experience;//플레이어가 현재 가지고 있는 경험치
+    public static int[] BuildingLv = new int[BuildingTypes];
+    public static int[] OurForcesLv = new int[OurForcesTypes];
+    public static int[] TrapLv = new int[TrapTypes];
 
-    public static int Gold { get; set; }
-    public static int Fame { get; set; }
+    public static int Gold;
+    [Range(1, 25)]
+    public static int Fame;
     public static int LvExperience { get; set; }
     public static int Experience { get; set; }
-    public static void addGold(int add_g) { gold += add_g; }
-    public static void addFame(int add_f) { fame += add_f; }
-    public static void subGold(int sub_g) { gold -= sub_g; }
-    public static void subFame(int sub_f) { fame -= sub_f; }
+    public static void addGold(int add_g) { Gold += add_g; Debug.Log("gold : " + Gold); }
+    public static void addFame(int add_f) { Fame += add_f; }
+    public static void subGold(int sub_g) { Gold -= sub_g; Debug.Log("gold : " + Gold); }
+    public static void subFame(int sub_f) { Fame -= sub_f; }
     public static void addLvExperience(int add_le) { lvExperience += add_le; }
     public static void addExperience(int add_e)
     {//player level이 최대치면 경험치 오르지 않음.
-        if (fame < 25)
+        if (Fame < 25)
             experience += add_e;
     }
     public static void subLvExperience(int sub_le) { lvExperience -= sub_le; }
     public static void subExperience(int sub_e) { experience -= sub_e; }
-    public static bool isEnough_G(int price) { return (gold >= price) ? true : false; }
+    public static bool isEnough_G(int price) { return (Gold >= price) ? true : false; }
 
+    public static void initObjectLv()
+    {//빌딩, 아군, 함정의 레벨 상태 초기화
+        int i = 0;
+        for (i = 0; i < BuildingTypes; i++)
+            BuildingLv[i] = 1;
+        for (i = 0; i < OurForcesTypes; i++)
+            OurForcesLv[i] = 1;
+        for (i = 0; i < TrapTypes; i++)
+            TrapLv[i] = 1;
+    }
     /*
      * 차후 구현
      * fame의 변화를 감지할 수 있어야 함
@@ -64,7 +87,7 @@ public static class Data_Player
      *     2. 전략의 하나로 묵인하고 처리하지 않는다.
      * 물어봅시다
     */
-    
+
     /*
      * You can access the gold or fame by just using
      * Data_Player.Gold; or Data_Player.Fame;

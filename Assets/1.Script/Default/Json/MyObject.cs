@@ -22,20 +22,21 @@ public class MyObject
     public virtual int getCost() { return Type; }
 }
 
-public class Building : MyObject
+public class BuildingObject : MyObject
 {
     public int HP;
     public int Price;
     public int UpgradeCost;
     public int RepairCost;
     public int buildingCost;
+    public int ActiveCost;
 
-    public Building() : base()
+    public BuildingObject() : base()
     {
 
     }
 
-    public Building(int Type, string id, int Level, int HP, int Price, int UpgradeCost, int RepairCost) : base(Type, id, Level)
+    public BuildingObject(int Type, string id, int Level, int HP, int Price, int UpgradeCost, int RepairCost) : base(Type, id, Level)
     {
         this.HP = HP;
         this.Price = Price;
@@ -49,7 +50,7 @@ public class Building : MyObject
     }
 }
 
-public class OurForces : MyObject
+public class OurForcesObject : MyObject
 {
     public int HP;
     public int Attack;
@@ -57,10 +58,17 @@ public class OurForces : MyObject
     public int Price;
     public int UpgradeCost;
     public double HealCost;
+    public int ActiveCost;
+    public double AttackRange;
+    public double AttackAngle;
+    public int HitConstrain;
+    public double AttackCool;
+    public double EnemyRecognizeRangeHalf;
+    public double MoveSpeed;
 
-    public OurForces() { }
-
-    public OurForces(int Type, string id, int Level, int HP, int Attack, int SkillCool, int Price, int UpgradeCost, double HealCost) : base(Type, id, Level)
+    public OurForcesObject() { }
+    
+    public OurForcesObject(int Type, string id, int Level, int HP, int Attack, int SkillCool, int Price, int UpgradeCost, double HealCost) : base(Type, id, Level)
     {
         this.HP = HP;
         this.Attack = Attack;
@@ -71,15 +79,15 @@ public class OurForces : MyObject
     }
 }
 
-public class Secret : MyObject
+public class SecretObject : MyObject
 {
     public int Fame;
     public double SecretBanditsGenChance;
     public int Price;
 
-    public Secret() { }
+    public SecretObject() { }
 
-    public Secret(int Type, string id, int Fame, double SecretBanditsGenChance, int Price) : base(Type, id, 1)
+    public SecretObject(int Type, string id, int Fame, double SecretBanditsGenChance, int Price) : base(Type, id, 1)
     {
         this.Fame = Fame;
         this.SecretBanditsGenChance = SecretBanditsGenChance;
@@ -87,16 +95,20 @@ public class Secret : MyObject
     }
 }
 
-public class Trap : MyObject
+public class TrapObject : MyObject
 {
     public int Attack;
     public int Price;
     public int UpgradeCost;
     public double CoolTime;
-    public int DisassemblyTime;
-    public Trap() { }
+    public double DisassemblyTime;
+    public int SellPrice;
+    public int ActiveCost;
+    public double EffectContinuousTime;
 
-    public Trap(int Type, string id, int Level, int Price, int UpgradeCost, double CoolTime) : base(Type, id, Level)
+    public TrapObject() {}
+
+    public TrapObject(int Type, string id, int Level, int Price, int UpgradeCost, double CoolTime) : base(Type, id, Level)
     {
         this.Price = Price;
         this.UpgradeCost = UpgradeCost;
@@ -104,19 +116,24 @@ public class Trap : MyObject
     }
 }
 
-public class Enemy : MyObject
+public class EnemyObject : MyObject
 {
     public int HP;
     public int Fame;
     public int Attack;
     public int BuildingAttack;
+    public double AttackRange;
+    public double AttackAngle;
+    public int HitConstrain;
+    public double AttackCool;
+    public double MoveSpeed;
 
-    public Enemy() { }
+    public EnemyObject() { }
 
-    public Enemy(int Type, string id, int HP, int Attack, int Fame) : base(Type, id, 1)
+    public EnemyObject(int Type, string id, int HP, int Attack, int Fame) : base(Type, id, 1)
     {
         this.HP = HP;
         this.Fame = Fame;
         this.Attack = Attack;
     }
-}
+}   

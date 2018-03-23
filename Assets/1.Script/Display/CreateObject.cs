@@ -25,6 +25,8 @@ public class CreateObject : MonoBehaviour {
     {
         BoxRect.anchorMax = new Vector2(BoxRect.anchorMax.x, maxY);
 
+        BoxRect.localPosition = Vector3.one;
+
         BoxRect.offsetMin = Vector2.zero;
         BoxRect.offsetMax = Vector2.zero;
     }
@@ -44,13 +46,14 @@ public class CreateObject : MonoBehaviour {
     {
         if (id != "" && Input.GetMouseButton(0))
         {
-            RoomManager.possibleDrag = false;
-            
             GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
             newObj.name = id;
             newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
             newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
             newObj.GetComponent<ObjectInfo>().InitObject();
+
+            RoomManager.possibleDrag = false;
+            ClickObject.isPossibleClick = false;
 
             SetBoxRect(BoxRect.anchorMin.y + 0.02f);
 

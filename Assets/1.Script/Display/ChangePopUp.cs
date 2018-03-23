@@ -16,31 +16,34 @@ public class ChangePopUp : MonoBehaviour {
 
     public Text HPText;
 
+    public GameObject LackOfCoin;
+    public GameObject DontDestroy;
+
     void InitBuilding(ObjectInfo objInfo)
     {
-        Building building = JsonDataManager.GetBuildingInfo(objInfo.id, objInfo.level);
-        priceText.text = building.Price.ToString();
+        BuildingObject building = JsonDataManager.GetBuildingInfo(objInfo.id, objInfo.level);
+        priceText.text = ((building.Price / 2) * objInfo.presentHP / objInfo.totalHP).ToString();
         repairPriceText.text = ((objInfo.totalHP - objInfo.presentHP) * building.RepairCost).ToString();
     }
 
     void InitOurForces(ObjectInfo objInfo)
     {
-        OurForces ourForces = JsonDataManager.GetOurForcesInfo(objInfo.id, objInfo.level);
-        priceText.text = ourForces.Price.ToString();
+        OurForcesObject ourForces = JsonDataManager.GetOurForcesInfo(objInfo.id, objInfo.level);
+        priceText.text = ((ourForces.Price / 2) * objInfo.presentHP / objInfo.totalHP).ToString();
         repairPriceText.text = ((objInfo.totalHP - objInfo.presentHP) * ourForces.HealCost).ToString();
     }
 
     void InitTrap(ObjectInfo objInfo)
     {
-        Trap trap = JsonDataManager.GetTrapInfo(objInfo.id, objInfo.level);
-        priceText.text = trap.Price.ToString();
+        TrapObject trap = JsonDataManager.GetTrapInfo(objInfo.id, objInfo.level);
+        priceText.text = (trap.Price / 2).ToString();
         repairPriceText.text = "0";
     }
 
     void InitSecret(ObjectInfo objInfo)
     {
-        Secret secret = JsonDataManager.GetSecretInfo(objInfo.id, objInfo.level);
-        priceText.text = secret.Price.ToString();
+        //Secret secret = JsonDataManager.GetSecretInfo(objInfo.id, Data_Player.Fame);
+        priceText.text = "0";
         repairPriceText.text = "0";
     }
 
@@ -53,7 +56,7 @@ public class ChangePopUp : MonoBehaviour {
         HPText.text = objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
 
         switch (objInfo.type)
-        { //가격은 임시 -> 계산하는걸로 바꿔야함
+        {
             case 0:
                 InitBuilding(objInfo);
                 break;
@@ -72,27 +75,43 @@ public class ChangePopUp : MonoBehaviour {
                 break;
         }
 
-        //ObjImage.sprite = null;
+        ObjImage.sprite = JsonDataManager.slotImage[objInfo.id];
     }
 
     public void RepairPref()
     {
-        Obj.GetComponent<ObjectInfo>().RepairObject();
-        InitPopUp();
-        PossibleDrag();
+        if (Data_Player.isEnough_G(int.Parse(priceText.text)))
+        {
+            Data_Player.subGold(int.Parse(repairPriceText.text));
+
+            Obj.GetComponent<ObjectInfo>().RepairObject();
+
+            InitPopUp();
+        }
+        else
+            LackOfCoin.SetActive(true);
     }
 
     public void DestroyPref()
     {
-        Obj.GetComponent<DisplayObject>().DestroyObj();
-        Destroy(Obj);
-        gameObject.SetActive(false);
+        bool isDestroy = Obj.GetComponent<DisplayObject>().DestroyObj();
 
-        PossibleDrag();
+        if (isDestroy)
+        {
+            Data_Player.addGold(int.Parse(priceText.text));
+
+            Destroy(Obj);
+            PossibleDrag();
+        }
+        else
+            DontDestroy.SetActive(true);
+
+        gameObject.SetActive(false);
     }
 
     public void PossibleDrag()
     {
         RoomManager.possibleDrag = true;
+        ClickObject.isPossibleClick = true;
     }
 }

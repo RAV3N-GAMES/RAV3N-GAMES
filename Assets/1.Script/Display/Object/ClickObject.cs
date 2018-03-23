@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ClickObject : MonoBehaviour
 {
+    public static bool isPossibleClick;
+
     float clickTime;
-    ObjectInfo objectInfo;
+    public ObjectInfo objectInfo;
 
     [HideInInspector]
     public GameObject ChangePopUp;
@@ -13,32 +15,33 @@ public class ClickObject : MonoBehaviour
     void Awake()
     {
         clickTime = 1.5f;
+        isPossibleClick = true;
+
         objectInfo = GetComponent<ObjectInfo>();
     }
 
     void LongClick()
     {
-        print("longClick");
         if (objectInfo.isDisplay)
         {
-            print("last longclick");
             RoomManager.possibleDrag = false;
 
             ChangePopUp.SetActive(true);
             ChangePopUp.GetComponent<ChangePopUp>().Obj = gameObject;
             ChangePopUp.GetComponent<ChangePopUp>().InitPopUp();
+
+            isPossibleClick = false;
         }
     }
 
     public void OnMouseDown()
     {
-        print("mouseDown");
-        Invoke("LongClick", clickTime);
+        if (isPossibleClick)
+            Invoke("LongClick", clickTime);
     }
 
     public void OnMouseUp()
     {
-        print("mouseUp");
         CancelInvoke("LongClick");
     }
 }

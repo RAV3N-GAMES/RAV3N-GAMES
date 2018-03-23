@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjectInfo : MonoBehaviour
 {
+    public GameObject ClickCollider;
+    public GameObject TileCollider;
+
     public string id;
     public int type;
     
@@ -19,6 +22,14 @@ public class ObjectInfo : MonoBehaviour
     public bool isRotation;
 
     public int layerDepth;
+
+    public int DontDestroy;
+
+
+    public void SetClickColliderPos(float z)
+    {
+        ClickCollider.transform.localPosition = new Vector3(0, 0, z);
+    }
 
     public void InitObject() //새로 생성할때
     {
@@ -51,6 +62,8 @@ public class ObjectInfo : MonoBehaviour
         presentHP = objInfo.presentHP;
         totalHP = objInfo.totalHP;
         coordinate = objInfo.coordinate;
+        DontDestroy = objInfo.DontDestroy;
+        
 
         if (objInfo.isRotation)
         {
@@ -58,7 +71,7 @@ public class ObjectInfo : MonoBehaviour
             Rotate();
         }
 
-        GetComponent<ObjectColor>().OffColor();
+        OnDisplay();
     }
     
     void Rotate()
@@ -83,8 +96,6 @@ public class ObjectInfo : MonoBehaviour
             coordinate[i] = coordinate[i + 1];
             coordinate[i + 1] = temp;
         }
-        
-
     }
 
     public void RepairObject()
@@ -98,12 +109,22 @@ public class ObjectInfo : MonoBehaviour
     public void OnDisplay()
     {
         isDisplay = true;
-        //여기에서 ObjectInfo 로드
 
-        GetComponent<CheckTile>().OnCheckTile();
+        ClickCollider.SetActive(true);
+        //TileCollider.SetActive(false);
+
         GetComponent<ObjectColor>().OffColor();
     }
 
+    public void OnDependency()
+    {
+        DontDestroy++;
+    }
+
+    public void OffDepency()
+    {
+        DontDestroy--;
+    }
     //public void LevelUp()
     //{
     //    //id에 맞는 data 읽어오면 됨

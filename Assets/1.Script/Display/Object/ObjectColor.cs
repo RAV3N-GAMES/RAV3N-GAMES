@@ -10,6 +10,13 @@ public class ObjectColor : MonoBehaviour
     public Color SuccessColor;
     public Color FailColor;
 
+    ObjectInfo objectInfo;
+
+    void Awake()
+    {
+        objectInfo = GetComponent<ObjectInfo>();
+    }
+
     void SetSpriteColor(Color _color)
     {
         for (int i = 0; i < sprite.Count; i++)
@@ -25,8 +32,9 @@ public class ObjectColor : MonoBehaviour
             sprite[i].sortingLayerName = layer;
             sprite[i].sortingOrder = idx;
         }
-
+        
         sprite[0].sortingOrder = idx + 1;
+        objectInfo.SetClickColliderPos(-(idx * 0.05f));
     }
 
     public void OnTransparency(bool isTransparency)
@@ -50,13 +58,10 @@ public class ObjectColor : MonoBehaviour
     public void OffColor()
     {
         float alpha = 1;
+        SetSpriteColor(new Color(1, 1, 1, 0));
+
         if (RoomManager.isTransparency && GetComponent<ObjectInfo>().type == 0)
-        {
             alpha = 0.3f;
-            SetSpriteColor(new Color(1, 1, 1, 0.3f));
-        }
-        else
-            SetSpriteColor(new Color(1, 1, 1, 1));
 
         sprite[0].color = new Color(1, 1, 1, alpha);
     }

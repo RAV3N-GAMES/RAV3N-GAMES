@@ -6,18 +6,32 @@ public class CreatePopUp : MonoBehaviour {
     [HideInInspector]
     public GameObject Obj;
 
+    public GameObject LackOfCoin;
+
     public void CreatePref()
     {
-        if (Obj.GetComponent<CheckTile>().isPossible)
+        int price = JsonDataManager.slotInfoList[Obj.GetComponent<ObjectInfo>().id].price;
+
+        if (Data_Player.isEnough_G(price))
         {
-            Obj.GetComponent<ObjectInfo>().OnDisplay();
-            Obj.GetComponent<DisplayObject>().UsingTile();
+            if (Obj.GetComponent<DisplayObject>().UsingTile())
+            {
+                Data_Player.subGold(price);
+
+                Obj.GetComponent<ObjectInfo>().OnDisplay();
+            }
+            else
+                Destroy(Obj);
+
+            PossibleDrag();
         }
         else
+        {
             Destroy(Obj);
+            LackOfCoin.SetActive(true);
+        }
 
         gameObject.SetActive(false);
-        PossibleDrag();
     }
 
     IEnumerator CheckTile()
@@ -30,6 +44,7 @@ public class CreatePopUp : MonoBehaviour {
 
     public void RotationPref()
     {
+        //코루틴 진행중이면 회전안하게 막아야지
         Obj.GetComponent<ObjectInfo>().rotationObject();
 
         StartCoroutine("CheckTile");
@@ -39,11 +54,13 @@ public class CreatePopUp : MonoBehaviour {
     {
         Destroy(Obj);
         gameObject.SetActive(false);
+
         PossibleDrag();
     }
 
     public void PossibleDrag()
     {
         RoomManager.possibleDrag = true;
+        ClickObject.isPossibleClick = true;
     }
 }

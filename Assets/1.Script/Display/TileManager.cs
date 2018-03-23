@@ -7,12 +7,26 @@ using System.IO;
 
 public class TileManager : MonoBehaviour {
     const int TILE_MAX = 20;
-    int[][] tileMatrix;            //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
+    int[][] tileMatrix;          //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
 
     List<TileObject> objectList;
     List<SaveObject> saveObj;
 
     GameObject ChangePopUp;
+
+
+    public List<SaveObject> GetOurForcesInfo()
+    {
+        List<SaveObject> ourForcesList = new List<SaveObject>();
+
+        for(int i = 0; i < saveObj.Count; i++)
+        {
+            if (saveObj[i].type == 2)
+                ourForcesList.Add(saveObj[i]); //깊은 복사를 해야하는가..
+        }
+
+        return ourForcesList;
+    }
 
 
     void Awake()
@@ -34,14 +48,38 @@ public class TileManager : MonoBehaviour {
         LoadTileObject();
     }
 
+    public int GetObjectCount()
+    {
+        if (objectList == null)
+            return 0;
+        return objectList.Count;
+    }
+
+    public float[] GetObjectInfo(int idx) //0 : row, 1 : col, 2 : type 
+    {
+        float[] info = new float[3];
+
+        float[] center = objectList[idx].CenterCoordinate();
+
+        info[0] = center[0];
+        info[1] = center[1];
+
+        info[2] = tileMatrix[objectList[idx].mRow][objectList[idx].mCol];
+
+        return info;
+    }
 
     void InitMatrix()
     {
+        int initNum = -1;
+        if (name.Equals("0"))
+            initNum = 5;
+
         for(int i = 0; i < TILE_MAX; i++)
         {
             for(int j = 0; j <TILE_MAX; j++)
             {
-                tileMatrix[i][j] = -1;
+                tileMatrix[i][j] = initNum;
             }
         }
     }
@@ -79,12 +117,38 @@ public class TileManager : MonoBehaviour {
         return true;
     }
 
-    public void DestroyObj(int layerDepth, int[] idx)
+    void OffDependency(GameObject Obj)
     {
+        ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
+
+        if (objInfo.id == "ObstructMovementCurrent")
+        {
+            int[] omcIdx = Obj.GetComponent<CheckTile>().DepencyTile_OMC();
+
+            OffDepency(omcIdx[0], omcIdx[1]);
+            OffDepency(omcIdx[2], omcIdx[3]);
+        }
+        else if (objInfo.id == "FlameThrowingTrap")
+        {
+            int[] fttIdx = Obj.GetComponent<CheckTile>().DepencyTile_FTT();
+
+            OffDepency(fttIdx[0], fttIdx[1]);
+        }
+    }
+
+    public bool DestroyObj(GameObject Obj, int[] idx)
+    {
+        ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
+        int layerDepth = objInfo.layerDepth;
+
+        if (objInfo.DontDestroy != 0)
+            return false;
+
+        OffDependency(Obj);
+
         for (int i = 0; i < idx.Length; i = i + 2)
         {
             tileMatrix[idx[i]][idx[i + 1]] = -1;
-            //print("DestroyIdx" + i + "," + i + 1 + " : " + idx[i] + "," + idx[i + 1]);
         }
         
         objectList.RemoveAt(layerDepth);
@@ -96,17 +160,42 @@ public class TileManager : MonoBehaviour {
 
         for (int i = 0; i < saveObj.Count; i++)
         {
-            //print("SaveObj" + " : " + saveObj[i].mRow + "," + saveObj[i].mCol);
             if (saveObj[i].mRow == idx[0])
             {
                 if (saveObj[i].mCol == idx[1])
                 {
                     saveObj.RemoveAt(i);
-                    //print("remove save obj");
-                    return;
+                    break;
                 }
             }
         }
+        return true;
+    }
+
+    bool ComparePosition(int[] tempIdx, int[] newIdx)
+    {
+        for(int i = 0; i < tempIdx.Length; i = i + 2)
+        {
+            for (int j = 0; j < newIdx.Length; j = j + 2)
+            {
+                if (tempIdx[i + 1] < newIdx[j + 1] && tempIdx[i] < newIdx[j])
+                {
+                    return true;
+                }
+                else if(tempIdx[i + 1] < newIdx[j + 1])
+                {
+                    if (tempIdx[i] == newIdx[j])
+                        return true;
+                }
+                else if (tempIdx[i ] < newIdx[j])
+                {
+                    if (tempIdx[i + 1] == newIdx[j + 1])
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     void SetOrderInLayer(TileObject newObj)
@@ -120,41 +209,15 @@ public class TileManager : MonoBehaviour {
             return;
         }
 
+        int[] newIdx = makeIdx(newObj.mRow, newObj.mCol, newObj.mObject.GetComponent<ObjectInfo>().coordinate);
         for (int i = 1; i < objectList.Count; i++)
         {
             TileObject tempTile = objectList[Size - i];
 
-            //if (tempTile.mRow < newObj.mRow)
-            //{
-            //    break;
-            //}
-            //else if (tempTile.mRow == newObj.mRow)
-            //{
-            //    if (tempTile.mCol < newObj.mCol)
-            //        break;
-            //}
+            if (ComparePosition(makeIdx(tempTile.mRow, tempTile.mCol, tempTile.mObject.GetComponent<ObjectInfo>().coordinate), newIdx))
+                break;
 
-
-            //그냥 모든 인덱스 값에 대하여 해야할것같은 느낌적인 느낌... 매력적인느낌..
-
-            if (tempTile.mRow < newObj.mRow)
-            {
-                if(tempTile.mCol <= newObj.mCol)
-                    break;
-            }
-            else if(tempTile.mRow == newObj.mRow)
-            {
-                if (tempTile.mCol < newObj.mCol)
-                    break;
-            }
-            //else if( tempTile.mRow > newObj.mRow)
-            //{
-            //    if (tempTile.mCol == newObj.mCol)
-            //        break;
-            //}
-            
             objectList[Size - i] = objectList[Size - i + 1];
-
             objectList[Size - i + 1] = tempTile;
         }
 
@@ -169,6 +232,57 @@ public class TileManager : MonoBehaviour {
         }
     }
 
+    void OffDepency(int row, int col)
+    {
+        int i = 0;
+        for (; i < objectList.Count; i++)
+        {
+            if (objectList[i].isTileBuilding(row, col))
+            {
+                objectList[i].OffDepency();
+                break;
+            }
+        }
+
+        for (int j = 0; j < saveObj.Count; j++)
+        {
+            if (saveObj[j].mRow == objectList[i].mRow)
+            {
+                if (saveObj[j].mCol == objectList[i].mCol)
+                {
+                    saveObj[j].DontDestroy--;
+                    break;
+                }
+            }
+        }
+    }
+
+    public void OnDependency(int row, int col)
+    {
+        int i = 0;
+
+        for (; i < objectList.Count; i++)
+        {
+            if(objectList[i].isTileBuilding(row, col))
+            {
+                objectList[i].OnDependency();
+                break;
+            }
+        }
+
+        for (int j = 0; j < saveObj.Count; j++)
+        {
+            if (saveObj[j].mRow == objectList[i].mRow)
+            {
+                if (saveObj[j].mCol == objectList[i].mCol)
+                {
+                    saveObj[j].DontDestroy++;
+                    break;
+                }
+            }
+        }
+    }
+
     public void UsingTile(GameObject Obj, int[] idx) //addSave안해도 될듯 0 Obj에 값 제대로 넣어서 만들어야함 애초에
     {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
@@ -178,15 +292,14 @@ public class TileManager : MonoBehaviour {
             tileMatrix[idx[i]][idx[i + 1]] = objInfo.type;
         }
 
-
         //여기에서 정렬하면서 추가 -> Layer 변경
         SetOrderInLayer(new TileObject(Obj, idx[0], idx[1]));
 
-        saveObj.Add(new SaveObject(Obj.transform.position, objInfo.type, objInfo.id, objInfo.level,
+        saveObj.Add(new SaveObject(Obj.transform.position, objInfo.DontDestroy, objInfo.type, objInfo.id, objInfo.level,
                                    objInfo.presentHP, objInfo.totalHP, idx[0], idx[1],
                                    objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation));
-
     }
+    
 
     public void OnTransparency(bool isTransparency)
     {
@@ -198,7 +311,7 @@ public class TileManager : MonoBehaviour {
     }
 
     GameObject InitObj(SaveObject objInfo, Vector3 pos)
-    {//함수 세분화해서 정리
+    {   //함수 세분화해서 정리
         GameObject newObj = Instantiate(Resources.Load("Object/" + objInfo.id) as GameObject);
         newObj.name = objInfo.id;
         newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
@@ -207,7 +320,6 @@ public class TileManager : MonoBehaviour {
         newObj.GetComponent<CheckTile>().tileManager = this;
 
         ObjectInfo newObjInfo = newObj.GetComponent<ObjectInfo>();
-        newObjInfo.isDisplay = true;
         newObjInfo.InitObject(objInfo);
 
         return newObj;
@@ -226,6 +338,9 @@ public class TileManager : MonoBehaviour {
     SaveObject GetSaveObject(JsonData data)
     {
         int type = int.Parse(data["type"].ToString());
+
+        int DontDestroy = int.Parse(data["DontDestroy"].ToString());
+
         string id = data["id"].ToString();
         int level = int.Parse(data["level"].ToString());
         int presentHP = int.Parse(data["presentHP"].ToString());
@@ -242,7 +357,7 @@ public class TileManager : MonoBehaviour {
             coordinate[j] = int.Parse(data["coordinate"][j].ToString());
         }
         
-        return new SaveObject(GetVector(data["pos"].ToString()), type, id, level, presentHP, totalHP, row, col, coordinate, pivotObject, isRotation);
+        return new SaveObject(GetVector(data["pos"].ToString()), DontDestroy, type, id, level, presentHP, totalHP, row, col, coordinate, pivotObject, isRotation);
     }
 
     int[] makeIdx(int mRow, int mCol, int[] coordinate)
@@ -272,6 +387,7 @@ public class TileManager : MonoBehaviour {
             {
                 SaveObject obj = GetSaveObject(displayObj[i]);
 
+                //saveObj 리스트에 순서가 문제가 될수도 있음
                 UsingTile(InitObj(obj, GetVector(obj.pos)), makeIdx(obj.mRow, obj.mCol, obj.coordinate));
             }
         }
