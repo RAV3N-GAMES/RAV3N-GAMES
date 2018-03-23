@@ -117,6 +117,7 @@
      <Compile Include="Assets\LitJson\Lexer.cs" />
      <Compile Include="Assets\LitJson\Netstandard15Polyfill.cs" />
      <Compile Include="Assets\LitJson\ParserToken.cs" />
+     <Compile Include="Assets\Utility\DataClasses.cs" />
      <Compile Include="Assets\Utility\JsonReadWrite.cs" />
      <None Include="Assets\JMO Assets\Shape FX\ShapeFX Readme.txt" />
      <None Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShapeFX Demo Assets.txt" />
