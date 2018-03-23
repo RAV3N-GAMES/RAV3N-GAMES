@@ -46,7 +46,7 @@ public class ObjectMove : MonoBehaviour
                 isMouseMove = true;
             }
         }
-        
+
         return isMove & isMouseMove;
     }
 
@@ -61,20 +61,25 @@ public class ObjectMove : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitUntil(isPossibleMove);
+            if (isPossibleMove())
+            {
+                //yield return new WaitUntil();
 
-            Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
+                Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
 
-            //movePos = new Vector3(movePos.x, 0, movePos.z);
-            transform.position += movePos;
+                //movePos = new Vector3(movePos.x, 0, movePos.z);
+                transform.position += movePos;
 
-            yield return null;
+                yield return null;
 
-            if (!objectInfo.isDisplay)
-                checkTile.OnCheckTile();
+                if (!objectInfo.isDisplay)
+                    checkTile.OnCheckTile();
 
-            if (CameraMove())
-                Camera.main.transform.position += movePos;
+                if (CameraMove())
+                    Camera.main.transform.position += movePos;
+            }
+            else
+                yield return null;
         }
     }
 

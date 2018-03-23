@@ -17,9 +17,16 @@ public class TrapManager : JsonReadWrite
     const string Path3 = "./Assets/Resources/Data/Trap_FlameThrowingTrap.json";
     const string Path4 = "./Assets/Resources/Data/Trap_ObstructMovementCurrent.json";
     public static List<TrapObject> Tbl_TrapSetup = new List<TrapObject>();
+    public static int[] TrapCount;
+    public static int TrapMax;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
+        TrapCount = new int[Trap.RoomMax];
+        for (int i = 0; i < Trap.RoomMax; i++)
+        {
+            TrapCount[i] = 0;
+        }
         ReadMain(Path1);
         ReadMain(Path2);
         ReadMain(Path3);

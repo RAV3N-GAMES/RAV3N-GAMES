@@ -209,8 +209,10 @@ public class CheckTile : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log("Before Enter");
         if (col.gameObject.tag == "Tile")
         {
+            Debug.Log("after Enter");
             lastCol.Add(col.transform.parent.gameObject);
 
             if (!objectInfo.isDisplay)

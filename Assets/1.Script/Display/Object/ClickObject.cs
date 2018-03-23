@@ -7,6 +7,7 @@ public class ClickObject : MonoBehaviour
     public static bool isPossibleClick;
 
     float clickTime;
+    [HideInInspector]
     public ObjectInfo objectInfo;
 
     [HideInInspector]

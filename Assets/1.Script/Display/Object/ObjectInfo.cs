@@ -6,6 +6,7 @@ public class ObjectInfo : MonoBehaviour
 {
     public GameObject ClickCollider;
     public GameObject TileCollider;
+    public GameObject ObjectCollider;
 
     public string id;
     public int type;
@@ -111,6 +112,7 @@ public class ObjectInfo : MonoBehaviour
         isDisplay = true;
 
         ClickCollider.SetActive(true);
+        ObjectCollider.SetActive(true);
         //TileCollider.SetActive(false);
 
         GetComponent<ObjectColor>().OffColor();
