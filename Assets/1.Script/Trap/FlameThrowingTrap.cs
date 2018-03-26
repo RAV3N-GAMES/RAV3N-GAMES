@@ -9,7 +9,6 @@ public class FlameThrowingTrap : Trap {
     public int AttackDamage;
     List<Enemy> EnemyList;
 
-
     // Use this for initialization
     void Start () {
         EnemyList = new List<Enemy>();
