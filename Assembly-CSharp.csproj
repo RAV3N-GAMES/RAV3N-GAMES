@@ -46,15 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\01_Script\Default\BuildingManager.cs" />
-     <Compile Include="Assets\01_Script\Default\EnemyManager.cs" />
-     <Compile Include="Assets\01_Script\Default\JsonDataManager.cs" />
-     <Compile Include="Assets\01_Script\Default\MyObject.cs" />
-     <Compile Include="Assets\01_Script\Default\OurForcesManager.cs" />
-     <Compile Include="Assets\01_Script\Default\ResourceManager.cs" />
-     <Compile Include="Assets\01_Script\Default\ResourceManager_Player.cs" />
-     <Compile Include="Assets\01_Script\Default\SecretManager.cs" />
-     <Compile Include="Assets\01_Script\Default\TrapManager.cs" />
      <Compile Include="Assets\01_Script\Display\ChangePopUp.cs" />
      <Compile Include="Assets\01_Script\Display\ClickSlot.cs" />
      <Compile Include="Assets\01_Script\Display\CreateObject.cs" />
@@ -75,11 +66,6 @@
      <Compile Include="Assets\01_Script\Select\SlotInfo.cs" />
      <Compile Include="Assets\01_Script\Select\SlotManager.cs" />
      <Compile Include="Assets\01_Script\Select\SlotMove.cs" />
-     <Compile Include="Assets\01_Script\Trap\FlameThrowingTrap.cs" />
-     <Compile Include="Assets\01_Script\Trap\HumanTrap.cs" />
-     <Compile Include="Assets\01_Script\Trap\Trap.cs" />
-     <Compile Include="Assets\01_Script\Trap\Warp_Enter.cs" />
-     <Compile Include="Assets\01_Script\Trap\Warp_Exit.cs" />
      <Compile Include="Assets\01_Script\_Jang\CameraMove.cs" />
      <Compile Include="Assets\01_Script\_Jang\CubeObject.cs" />
      <Compile Include="Assets\01_Script\_Jang\DoorObject.cs" />
