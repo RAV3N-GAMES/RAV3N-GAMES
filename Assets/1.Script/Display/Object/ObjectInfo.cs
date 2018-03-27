@@ -102,7 +102,7 @@ public class ObjectInfo : MonoBehaviour
     public void RepairObject()
     {
         print("repair");
-
+        
         presentHP = totalHP;
         //돈쓰기
     }
@@ -111,7 +111,7 @@ public class ObjectInfo : MonoBehaviour
     {
         isDisplay = true;
 
-        ClickCollider.SetActive(true);
+        ClickCollider.SetActive(!DayandNight.isDay);
         //ObjectCollider.SetActive(true);
         //TileCollider.SetActive(false);
 

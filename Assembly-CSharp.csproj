@@ -73,6 +73,7 @@
      <Compile Include="Assets\1.Script\Display\SaveObject.cs" />
      <Compile Include="Assets\1.Script\Display\TileManager.cs" />
      <Compile Include="Assets\1.Script\Display\TileObject.cs" />
+     <Compile Include="Assets\1.Script\Room\Map\DayandNight.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapManager.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />
      <Compile Include="Assets\1.Script\Room\MiniMapManager.cs" />

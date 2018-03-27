@@ -18,7 +18,6 @@ public class Trap : MonoBehaviour{
 	}   
 
     void OnTriggerEnter(Collider col) {
-        Debug.Log("Trigger Collision: " + col.transform.tag);
         if (col.CompareTag("Enemy"))
         {
             Acts(col);
