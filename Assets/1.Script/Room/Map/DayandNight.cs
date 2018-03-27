@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public enum OurForces_Sprite { Guard , QuickReactionForces , BiochemistryUnit , Researcher };
 public enum OurForces_Animation { Friendly_Guard, Friendly_Army, Friendly_ChemistryArmy, Friendly_ResearchStudent };
 public enum OurForces_Script { FriendlyGuard, FriendlyArmy, FriendlyChemistry , FriendlyResearcher};
+public enum Traps_body { Trap_H , Trap_Warp_E , Trap_W };
+public enum Traps_Script { HumanTrap , Warp_Enter , Warp_Exit};
 
 public class DayandNight : MonoBehaviour
 {
     public static bool isDay;
     public static bool DayTime;
     public CanvasRenderer curtain;
-    public const int EnumMax = (int)OurForces_Sprite.Researcher;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
+    public const int EnumMax_OurForces = (int)OurForces_Sprite.Researcher;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
+    public const int EnumMax_Traps = (int)Traps_body.Trap_W;
     //DayTime은 추후에 json 파일에서 읽어올 수 있음.
 
     // Use this for initialization
@@ -29,13 +32,12 @@ public class DayandNight : MonoBehaviour
         Debug.Log("Day: " + isDay);
         if (isDay) {
             curtain.transform.Rotate(0, 90, 0);
-            Debug.Log("Rotate: " + curtain.transform.rotation);
         }
         else {
             curtain.transform.Rotate(0, -90, 0);
-            Debug.Log("Rotate: " + curtain.transform.rotation);
         }
 
+        TrapEnable(isDay);
         CharacterEnable(isDay);
     }
 
@@ -52,7 +54,7 @@ public class DayandNight : MonoBehaviour
        for (int i = 0; i < OurForces.Length; i++) {
             try
             {
-                getObjects(OurForces[i], ref spriteObject, ref animationObject);
+                getOurForces(OurForces[i], ref spriteObject, ref animationObject);
                 if (Day)
                 {
                     if (spriteObject != null)
@@ -78,10 +80,42 @@ public class DayandNight : MonoBehaviour
         return CharacterEnabled;
     }
 
-    public void getObjects(GameObject OurForces, ref GameObject spriteObject, ref GameObject animationObject) {
+    public bool TrapEnable(bool Day)
+    {
+        bool TrapEnabled = false;
+        GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
+        GameObject trapObject = null;
+        for (int i = 0; i < Traps.Length; i++)
+        {
+            try
+            {
+                getTraps(Traps[i], ref trapObject);
+                if (Day)
+                {
+                    if (trapObject!= null)
+                    {
+                        trapObject.GetComponent<SphereCollider>().enabled = true;
+                        TrapEnabled = true;
+                    }
+                }
+                else
+                {
+                    if (trapObject != null)
+                    {
+                        trapObject.GetComponent<SphereCollider>().enabled = false;
+                        TrapEnabled = false;
+                    }
+                }
+            }
+            catch { }
+        }
+        return TrapEnabled;
+    }
+
+    public void getOurForces(GameObject OurForces, ref GameObject spriteObject, ref GameObject animationObject) {
         spriteObject = null;
         animationObject = null;
-        for (int i = 0; i <EnumMax;i++) {
+        for (int i = 0; i <EnumMax_OurForces;i++) {
             try
             {
                 spriteObject = OurForces.transform.FindChild(((OurForces_Sprite)i).ToString()).gameObject;
@@ -97,5 +131,22 @@ public class DayandNight : MonoBehaviour
 
     public void setOriginalPoint(ref GameObject animationObject, ref GameObject spriteObject) {
         animationObject.transform.FindChild("Human").GetComponent<Friendly>().OriginalPoint = spriteObject.transform;
+    }
+
+    public void getTraps(GameObject Traps, ref GameObject trapObject)
+    {
+        trapObject = null;
+        for (int i = 0; i < EnumMax_Traps; i++)
+        {
+            try
+            {
+                trapObject = Traps.transform.FindChild(((Traps_body)i).ToString()).gameObject;
+            }
+            catch { }
+            if (trapObject != null)
+            {
+                break;
+            }
+        }
     }
 }
