@@ -9,7 +9,6 @@ public enum DIRECTION
 	LEFT,
 }
 
-
 public class GameManager : MonoBehaviour {
 	public static GameManager current;
 	public delegate EnemyGroup GetEnemyGroup();
@@ -41,6 +40,10 @@ public class GameManager : MonoBehaviour {
 		else
 			Destroy(gameObject);
 
+        foreach (Transform i in GenPoint){
+            Vector3 pos = new Vector3(i.position.x, i.position.y, 0);
+            i.SetPositionAndRotation(pos, Quaternion.identity);
+        }
 
 		tileMask = LayerMask.GetMask("Tile");
 		GroupInit();
@@ -54,19 +57,20 @@ public class GameManager : MonoBehaviour {
 		
 		RayEvent();
 	}
-	private void EnemyGenerate()
+
+	public void EnemyGenerate()
 	{
 		if (EnemyGroupEvent().gameObject.activeSelf)
 		{
 			genGroup = EnemyGroupEvent();
-			if (!genGroup.isGenerate)
-			{
+			/*if (!genGroup.isGenerate)
+			{*/
 				if (genGroup.EnemyCount != 0)
 					return;
 
 				genGroup.isGenerate = true;
 				genGroup.GroupMemberInit();     //적 그룹을 생성하지않은 곳을 찾아 생성호출
-			}
+			//}
 		}
 	}
 	private void RayEvent()

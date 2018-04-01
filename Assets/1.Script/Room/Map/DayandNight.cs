@@ -38,6 +38,7 @@ public class DayandNight : MonoBehaviour
         }
 
         TrapEnable(isDay);
+        EnemyEnable();
         CharacterEnable(isDay);
     }
 
@@ -78,6 +79,13 @@ public class DayandNight : MonoBehaviour
             catch { }
         }
         return CharacterEnabled;
+    }
+
+    public bool EnemyEnable() {
+        bool EnemyEnabled = false;
+        for(int i=0;i<3;i++)   
+            GameManager.current.EnemyGenerate();
+        return EnemyEnabled;
     }
 
     public bool TrapEnable(bool Day)
