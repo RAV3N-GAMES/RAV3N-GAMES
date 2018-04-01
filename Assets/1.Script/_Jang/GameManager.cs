@@ -63,14 +63,14 @@ public class GameManager : MonoBehaviour {
 		if (EnemyGroupEvent().gameObject.activeSelf)
 		{
 			genGroup = EnemyGroupEvent();
-			/*if (!genGroup.isGenerate)
-			{*/
+			if (!genGroup.isGenerate)
+			{
 				if (genGroup.EnemyCount != 0)
 					return;
 
 				genGroup.isGenerate = true;
 				genGroup.GroupMemberInit();     //적 그룹을 생성하지않은 곳을 찾아 생성호출
-			//}
+			}
 		}
 	}
 	private void RayEvent()

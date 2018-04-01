@@ -83,8 +83,7 @@ public class DayandNight : MonoBehaviour
 
     public bool EnemyEnable() {
         bool EnemyEnabled = false;
-        for(int i=0;i<3;i++)   
-            GameManager.current.EnemyGenerate();
+        GameManager.current.EnemyGenerate();
         return EnemyEnabled;
     }
 
