@@ -13,6 +13,11 @@ public class DayandNight : MonoBehaviour
 {
     public static bool isDay;
     public static bool DayTime;
+    [HideInInspector]
+    public static List<Enemy> CreatedEnemy;
+    [HideInInspector]
+    public static List<Enemy> DeadEnemy;
+
     public CanvasRenderer curtain;
     public const int EnumMax_OurForces = (int)OurForces_Sprite.Researcher;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
     public const int EnumMax_Traps = (int)Traps_body.Trap_W;
@@ -20,6 +25,8 @@ public class DayandNight : MonoBehaviour
 
     // Use this for initialization
     void Awake () {
+        CreatedEnemy = new List<Enemy>();
+        DeadEnemy = new List<Enemy>();
         isDay = false;//밤부터 시작
 	}
 	
@@ -32,9 +39,19 @@ public class DayandNight : MonoBehaviour
         Debug.Log("Day: " + isDay);
         if (isDay) {
             curtain.transform.Rotate(0, 90, 0);
+            ClearEnemyData();
         }
         else {
             curtain.transform.Rotate(0, -90, 0);
+            try
+            {
+                foreach (Enemy i in CreatedEnemy) { 
+                    Debug.Log("Enemy data: "+i.name+" isdead: "+i.isDie);
+                }
+            }
+            catch {
+                Debug.Log("First Night");
+            }
         }
 
         TrapEnable(isDay);
@@ -45,6 +62,11 @@ public class DayandNight : MonoBehaviour
     IEnumerator DayCount(float a) {
         yield return new WaitForSeconds(a);
         changeState();
+    }
+
+    public void ClearEnemyData() {
+        CreatedEnemy.Clear();
+        DeadEnemy.Clear();
     }
 
     public bool CharacterEnable(bool Day) {

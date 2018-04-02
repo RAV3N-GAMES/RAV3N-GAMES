@@ -159,6 +159,7 @@ public class PoolManager : MonoBehaviour {
 			obj.SetActive(true);
 			obj.transform.SetParent(null);
 			EnemyPoolList[(int)type].RemoveAt(0);
+            DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());
 			return obj;
 		}
 		else if (EnemyPoolList[(int)type].Count <= 0)
@@ -167,7 +168,8 @@ public class PoolManager : MonoBehaviour {
 			obj.name = EnemyPrefabs[(int)type].name;
 			obj.transform.SetParent(null);
 			obj.SetActive(true);
-			return obj;
+            DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());
+            return obj;
 		}
 		return null;
 	}

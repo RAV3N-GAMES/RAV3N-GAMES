@@ -39,7 +39,7 @@ public class EnemyGroup : MonoBehaviour {
 			if (rand == 1 && i == 0)
 				rand = rand - 1;
 			GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
-
+            
 			obj.SetActive(false);
 			obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
 
@@ -49,13 +49,12 @@ public class EnemyGroup : MonoBehaviour {
 			obj.SetActive(true);
 
 			info = obj.GetComponentInChildren<Enemy>();
-            
 			info.OriginalPoint = GameManager.current.CommandPost;
 			info.GroupConductor = this;
 			info.UIEnemyHealth.HealthActvie(true);
 			info.EnemyInit();
 			enemyList.Add(info);
-		}
+        }
 	}
 
 	public void GroupMemberInit()
@@ -68,6 +67,7 @@ public class EnemyGroup : MonoBehaviour {
 	//적군이 죽었을 때 List에서 삭제
 	public void RemoveEnemy(Enemy enemy)
 	{
+        DayandNight.DeadEnemy.Add(enemy);
 		enemyList.Remove(enemy);
 		GameManager.current.friendGroups[GroupIndex]
 			.FriendTargetChange(enemy);
