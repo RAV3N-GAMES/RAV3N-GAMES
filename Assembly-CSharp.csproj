@@ -78,6 +78,7 @@
      <Compile Include="Assets\1.Script\PopUp\DamageReportPopUp.cs" />
      <Compile Include="Assets\1.Script\PopUp\EnemyGroupResult.cs" />
      <Compile Include="Assets\1.Script\PopUp\ResultPopUp.cs" />
+     <Compile Include="Assets\1.Script\Room\Map\CheckRoomIndex.cs" />
      <Compile Include="Assets\1.Script\Room\Map\DayandNight.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapManager.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />

@@ -2,47 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class HealthSystem : MonoBehaviour {
-
+public class HealthSystem : MonoBehaviour
+{
     Slider HpSlider;
-	RectTransform sliderRect;
-	Vector3 targetPos;
+    RectTransform sliderRect;
+    Vector3 targetPos;
 
-	// Use this for initialization
-	private void Awake()
-	{
-		HpSlider = Instantiate(UIManager.current.UIBarPrefab).GetComponent<Slider>();
-		HpSlider.transform.SetParent(UIManager.current.UIBarParent);
-		sliderRect = HpSlider.GetComponent<RectTransform>();
-		HpSlider.gameObject.SetActive(false);
-	}
+    bool isInitHPSlider = false;
 
-	private void Update()
-	{
-		if (!gameObject.activeSelf)
-			return;
+    // Use this for initialization
+    private void Start()
+    {
+        InitHPSlider();
+    }
 
-		targetPos = Camera.main.WorldToScreenPoint(transform.position);
-		sliderRect.position = targetPos + Vector3.up * 30;
-	}
-	public void ValueInit(int value)
-	{
-		HpSlider.minValue = 0;
-		HpSlider.maxValue = value;
-		HpSlider.value = value;
-	}
-	public void ValueDecrease(int damage)
-	{
-		HpSlider.value -= damage;
-	}
-	public void ValueIncrease(int heal)
-	{
-		HpSlider.value += heal;
-	}
-	public void HealthActvie(bool isActive)
-	{
-		HpSlider.gameObject.SetActive(isActive);
-	}
+    void InitHPSlider()
+    {
+        if (isInitHPSlider)
+            return;
 
+        HpSlider = Instantiate(UIManager.current.UIBarPrefab).GetComponent<Slider>();
+        HpSlider.transform.SetParent(UIManager.current.UIBarParent);
+        sliderRect = HpSlider.GetComponent<RectTransform>();
+        sliderRect.localScale = new Vector3(3, 2, 1);
+        HpSlider.gameObject.SetActive(false);
 
+        isInitHPSlider = true;
+    }
+
+    private void Update()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        targetPos = Camera.main.WorldToScreenPoint(transform.position);
+        sliderRect.position = targetPos + Vector3.up * 150;
+    }
+    public void ValueInit(int value)
+    {
+        HpSlider.minValue = 0;
+        HpSlider.maxValue = value;
+        HpSlider.value = value;
+    }
+    public void ValueDecrease(int damage)
+    {
+        HpSlider.value -= damage;
+    }
+    public void ValueIncrease(int heal)
+    {
+        HpSlider.value += heal;
+    }
+    public void HealthActvie(bool isActive)
+    {
+        if (HpSlider == null)
+            InitHPSlider();
+        HpSlider.gameObject.SetActive(isActive);
+    }
 }

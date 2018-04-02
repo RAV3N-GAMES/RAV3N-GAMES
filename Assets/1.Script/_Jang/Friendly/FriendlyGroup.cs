@@ -15,8 +15,6 @@ public class FriendlyGroup : MonoBehaviour {
 		List<Friendly> friendList = new List<Friendly>();
 	}
 	
-
-	
 	public void GroupInit(FRIEND_TYPE type, Transform pos)
 	{
 		GameObject obj = PoolManager.current.PopFriend(type);
@@ -32,7 +30,7 @@ public class FriendlyGroup : MonoBehaviour {
 		info.NavObj.position =
 			new Vector3(pos.position.x, info.NavObj.position.y, pos.position.z);
 		info.FriendlyInit();
-		friendList.Add(info);	
+		friendList.Add(info);
 	}
 	public void FriendTargetChange(Enemy enemy)
 	{

@@ -60,9 +60,13 @@ public class Enemy : MonoBehaviour {
 
 		if (targetFriend.Health(Attack))
 		{
-			targetFriend.Die();		
-			if(targetFriend.GroupConductor.GetOrderFriendly() != null)
-				targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
+			targetFriend.Die();
+            try
+            {
+                targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
+            }
+            catch { }
+				
 
 		}
 	}
@@ -196,6 +200,7 @@ public class Enemy : MonoBehaviour {
 		anime = GetComponent<Animator>();
 		UIEnemyHealth = GetComponentInParent<HealthSystem>();
 	}
+
 	private void Update()
 	{
 		if (isDie)
