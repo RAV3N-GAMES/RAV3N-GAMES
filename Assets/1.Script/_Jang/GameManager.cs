@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 
         foreach (Transform i in GenPoint){
-            Vector3 pos = new Vector3(i.position.x, i.position.y, 0);
+            Vector3 pos = new Vector3(i.position.x, 0, i.position.z);
             i.SetPositionAndRotation(pos, Quaternion.identity);
         }
 
