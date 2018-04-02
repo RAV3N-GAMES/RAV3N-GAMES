@@ -25,13 +25,15 @@ public class ClickObject : MonoBehaviour
     {
         if (objectInfo.isDisplay)
         {
-            RoomManager.possibleDrag = false;
+            if (!DayandNight.isDay) { 
+                RoomManager.possibleDrag = false;
 
-            ChangePopUp.SetActive(true);
-            ChangePopUp.GetComponent<ChangePopUp>().Obj = gameObject;
-            ChangePopUp.GetComponent<ChangePopUp>().InitPopUp();
+                ChangePopUp.SetActive(true);
+                ChangePopUp.GetComponent<ChangePopUp>().Obj = gameObject;
+                ChangePopUp.GetComponent<ChangePopUp>().InitPopUp();
 
-            isPossibleClick = false;
+                isPossibleClick = false;
+            }
         }
     }
 

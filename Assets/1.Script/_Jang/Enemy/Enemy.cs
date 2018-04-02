@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour {
 
 	protected NavMeshAgent enemyAI;			//NevMeshAgent 
 	protected Animator anime;				//애니메이션
-	protected SphereCollider collider;		//2D캐릭터에 붙어있는 콜라이더
+	protected SphereCollider scollider;		//2D캐릭터에 붙어있는 콜라이더
 	protected Vector3 dest;					//목적지 좌표
 	protected Vector3 start;				//시작 좌표
 	protected WaitForSeconds attackDelay;	//코루틴에서 
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour {
 	public virtual void EnemyInit()
 	{
 		anime.Play("idle");
-		collider.enabled = true;
+		scollider.enabled = true;
 		enemyAI.enabled = true;
 		isDie = false;
 		enemyAI.speed = Speed;
@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour {
 		isDie = true;
 		anime.SetTrigger("Die");
 		enemyAI.enabled = false;
-		collider.enabled = false;
+		scollider.enabled = false;
 		UIEnemyHealth.HealthActvie(false);
 		GroupConductor.RemoveEnemy(this);
 		StartCoroutine("DieEvent");
@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour {
 			}
 			currentState = EnemyState.Walk;
 			enemyAI.SetDestination(OriginalPoint.position);
-		}
+        }
 	}
 	private IEnumerator ShootEvent()
 	{
@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour {
 	private void Awake()
 	{
 		enemyAI = GetComponentInParent<NavMeshAgent>();
-		collider = GetComponent<SphereCollider>();
+		scollider = GetComponent<SphereCollider>();
 		NavObj = enemyAI.transform;
 		anime = GetComponent<Animator>();
 		UIEnemyHealth = GetComponentInParent<HealthSystem>();

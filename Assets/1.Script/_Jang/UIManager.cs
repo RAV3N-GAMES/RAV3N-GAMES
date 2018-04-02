@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-
 		if (current == null)
 			current = this;
 		else

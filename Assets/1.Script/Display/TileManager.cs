@@ -27,7 +27,7 @@ public class TileManager : MonoBehaviour {
             if (saveObj[i].type == 2)
                 ourForcesList.Add(saveObj[i]); //깊은 복사를 해야하는가..
         }
-
+        
         return ourForcesList;
     }
 

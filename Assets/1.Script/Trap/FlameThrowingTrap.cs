@@ -7,11 +7,9 @@ public class FlameThrowingTrap : Trap {
     public double CoolTime;
     public bool isCool;
     public int AttackDamage;
-    List<Enemy> EnemyList;
 
     // Use this for initialization
     void Start () {
-        EnemyList = new List<Enemy>();
         CoolTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame + 40].CoolTime;
         EffectContinuousTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame + 40].EffectContinuousTime;
         AttackDamage=TrapManager.Tbl_TrapSetup[Data_Player.Fame + 40].Attack;

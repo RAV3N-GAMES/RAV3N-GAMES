@@ -10,6 +10,9 @@ public class EnemyGroup : MonoBehaviour {
 
 	private List<Enemy> enemyList = new List<Enemy>();
 	private WaitForSeconds genDelay = new WaitForSeconds(0.7f);
+
+    private void Awake() {
+    }
 	private void OnEnable()
 	{
 		GameManager.EnemyGroupEvent += GetCurrentGroup;
@@ -28,7 +31,6 @@ public class EnemyGroup : MonoBehaviour {
 			EnemyCount = 4;
 
 		Enemy info = null;
-
 		Transform pos = GameManager.current.GenPoint[Random.Range(0, 2)];
 		for (int i = 0; i < EnemyCount; ++i)
 		{
@@ -36,9 +38,8 @@ public class EnemyGroup : MonoBehaviour {
 
 			if (rand == 1 && i == 0)
 				rand = rand - 1;
-
 			GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
-
+            
 			obj.SetActive(false);
 			obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
 
@@ -48,15 +49,12 @@ public class EnemyGroup : MonoBehaviour {
 			obj.SetActive(true);
 
 			info = obj.GetComponentInChildren<Enemy>();
-
-
 			info.OriginalPoint = GameManager.current.CommandPost;
 			info.GroupConductor = this;
 			info.UIEnemyHealth.HealthActvie(true);
 			info.EnemyInit();
 			enemyList.Add(info);
-
-		}
+        }
 	}
 
 	public void GroupMemberInit()
@@ -69,6 +67,7 @@ public class EnemyGroup : MonoBehaviour {
 	//적군이 죽었을 때 List에서 삭제
 	public void RemoveEnemy(Enemy enemy)
 	{
+        DayandNight.DeadEnemy.Add(enemy);
 		enemyList.Remove(enemy);
 		GameManager.current.friendGroups[GroupIndex]
 			.FriendTargetChange(enemy);

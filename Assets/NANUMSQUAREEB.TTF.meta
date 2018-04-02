@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 3d35195a12e1ca546b3dc5ca85db442d
 timeCreated: 1522569996
+=======
+guid: e10747305992e5044b1b88643e0c3847
+timeCreated: 1522650093
+>>>>>>> Trap
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -13,7 +18,11 @@ TrueTypeFontImporter:
   fontNames:
   - NanumSquare
   fallbackFontReferences:
+<<<<<<< HEAD
   - {fileID: 12800000, guid: 25e5937634e0b5145a89bfb71f256adf, type: 3}
+=======
+  - {fileID: 12800000, guid: 18920dab763f8644a8faaa8da3d16b74, type: 3}
+>>>>>>> Trap
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
