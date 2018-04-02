@@ -4,7 +4,6 @@ using UnityEngine;
 using LitJson;
 using System.IO;
 
-
 public class TileManager : MonoBehaviour {
     const int TILE_MAX = 20;
     int[][] tileMatrix;          //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
@@ -13,6 +12,10 @@ public class TileManager : MonoBehaviour {
     List<SaveObject> saveObj;
 
     GameObject ChangePopUp;
+    GameObject CreatePopUp;
+
+    int warpCol;
+    int warpRow;
 
 
     public List<SaveObject> GetOurForcesInfo()
@@ -42,10 +45,22 @@ public class TileManager : MonoBehaviour {
         saveObj = new List<SaveObject>();
 
         ChangePopUp = FindObjectOfType<CreateObject>().ChangePopUp;
+        CreatePopUp = FindObjectOfType<CreateObject>().CreatePopUp;
+
+        warpRow = -1;
+        warpCol = -1;
 
         InitMatrix();
 
         LoadTileObject();
+    }
+
+    public void SetMatrix(int[] idx, int type)
+    {
+        for(int i = 0; i < idx.Length; i = i + 2)
+        {
+            tileMatrix[idx[i]][idx[i + 1]] = type;
+        }
     }
 
     public int GetObjectCount()
@@ -294,10 +309,21 @@ public class TileManager : MonoBehaviour {
 
         //여기에서 정렬하면서 추가 -> Layer 변경
         SetOrderInLayer(new TileObject(Obj, idx[0], idx[1]));
+        
+        if(objInfo.id.Equals("Warp"))
+        {
+            warpRow = idx[0];
+            warpCol = idx[1];
+        }
+        else if(!objInfo.id.Equals("Warp_Exit"))
+        {
+            warpRow = -1;
+            warpCol = -1;
+        }
 
         saveObj.Add(new SaveObject(Obj.transform.position, objInfo.DontDestroy, objInfo.type, objInfo.id, objInfo.level,
                                    objInfo.presentHP, objInfo.totalHP, idx[0], idx[1],
-                                   objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation));
+                                   objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation, warpRow, warpCol));
     }
     
 
@@ -310,13 +336,37 @@ public class TileManager : MonoBehaviour {
             objectList[i].OnTransparency(isTransparency);
     }
 
+    GameObject GetParentWarp(int row, int col)
+    {
+        for(int i = 0; i < objectList.Count; i++)
+        {
+            if(objectList[i].mRow == row)
+            {
+                if (objectList[i].mCol == col)
+                    return objectList[i].mObject;
+            }
+        }
+
+        return null;
+    }
+
     GameObject InitObj(SaveObject objInfo, Vector3 pos)
     {   //함수 세분화해서 정리
-        GameObject newObj = Instantiate(Resources.Load("Object/" + objInfo.id) as GameObject);
+        GameObject newObj;
+
+        if (objInfo.id.Equals("Warp_Exit"))
+        {
+            newObj = GetParentWarp(objInfo.parentRow, objInfo.parentCol).transform.Find("Warp_Exit").gameObject;
+            newObj.SetActive(true);
+        }
+        else
+            newObj = Instantiate(Resources.Load("Object/" + objInfo.id) as GameObject);
+
         newObj.name = objInfo.id;
-        newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
         newObj.transform.position = pos;
 
+        newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+        newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
         newObj.GetComponent<CheckTile>().tileManager = this;
 
         ObjectInfo newObjInfo = newObj.GetComponent<ObjectInfo>();
@@ -350,14 +400,17 @@ public class TileManager : MonoBehaviour {
         int[] coordinate = new int[data["coordinate"].Count];
         string pivotObject = data["pivotObject"].ToString();
 
-        bool isRotation = bool.Parse(data["isRotation"].ToString());
+        int isRotation = int.Parse(data["isRotation"].ToString());
+
+        int parentRow = int.Parse(data["parentRow"].ToString());
+        int parentCol = int.Parse(data["parentCol"].ToString());
 
         for (int j = 0; j < coordinate.Length; j++)
         {
             coordinate[j] = int.Parse(data["coordinate"][j].ToString());
         }
-        
-        return new SaveObject(GetVector(data["pos"].ToString()), DontDestroy, type, id, level, presentHP, totalHP, row, col, coordinate, pivotObject, isRotation);
+
+        return new SaveObject(GetVector(data["pos"].ToString()), DontDestroy, type, id, level, presentHP, totalHP, row, col, coordinate, pivotObject, isRotation, parentRow, parentCol);
     }
 
     int[] makeIdx(int mRow, int mCol, int[] coordinate)

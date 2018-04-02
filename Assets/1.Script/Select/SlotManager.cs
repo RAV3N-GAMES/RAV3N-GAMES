@@ -67,9 +67,7 @@ public class SlotManager : MonoBehaviour {
     
     public void RefreshInfo()
     {
-        print(id);
         SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
-        print(slotInfo.price);
 
         price.text = slotInfo.price.ToString();
 

@@ -8,22 +8,37 @@ public class CreatePopUp : MonoBehaviour {
 
     public GameObject LackOfCoin;
 
+    void UsingTile(string id, int price)
+    {
+        if (!id.Equals("Warp"))
+        {
+            Data_Player.subGold(price);
+        }
+        else
+        {
+            if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
+                Data_Player.subGold(JsonDataManager.slotInfoList["Warp"].price);
+            else
+                Obj.transform.Find("Warp_Exit").gameObject.SetActive(true);
+        }
+
+        Obj.GetComponent<ObjectInfo>().OnDisplay();
+    }
+
     public void CreatePref()
     {
-        int price = JsonDataManager.slotInfoList[Obj.GetComponent<ObjectInfo>().id].price;
+        string id = Obj.GetComponent<ObjectInfo>().id;
 
+        if (id.Equals("Warp_Exit"))
+            id = "Warp";
+        int price = JsonDataManager.slotInfoList[id].price;
+        
         if (Data_Player.isEnough_G(price))
         {
             if (Obj.GetComponent<DisplayObject>().UsingTile())
-            {
-                Data_Player.subGold(price);
-
-                Obj.GetComponent<ObjectInfo>().OnDisplay();
-            }
+                UsingTile(id, price);
             else
-                Destroy(Obj);
-
-            PossibleDrag();
+                CancelPref();
         }
         else
         {
@@ -52,7 +67,16 @@ public class CreatePopUp : MonoBehaviour {
 
     public void CancelPref()
     {
-        Destroy(Obj);
+        if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
+        {
+            GameObject Warp = Obj.transform.parent.gameObject;
+            Warp.GetComponent<DisplayObject>().DestroyObj();
+
+            Destroy(Warp);
+        }
+        else
+            Destroy(Obj);
+
         gameObject.SetActive(false);
 
         PossibleDrag();

@@ -70,7 +70,7 @@ public class CheckTile : MonoBehaviour {
         return false;
     }
 
-    public bool DestryObj(int[] idx)
+    public bool DestroyObj(int[] idx)
     {
         return tileManager.DestroyObj(gameObject, idx);
     }
@@ -118,7 +118,7 @@ public class CheckTile : MonoBehaviour {
 
         int[] displayTile = new int[4];
 
-        if (!objectInfo.isRotation)
+        if (objectInfo.isRotation == 0)
         {
             displayTile[0] = row;
             displayTile[1] = col - 1;
@@ -150,15 +150,25 @@ public class CheckTile : MonoBehaviour {
 
         int[] displayTile = new int[2];
 
-        if (!objectInfo.isRotation)
+        if (objectInfo.isRotation == 0)
         {
             displayTile[0] = row;
             displayTile[1] = col + 1;
         }
-        else
+        else if(objectInfo.isRotation == 1)
         {
             displayTile[0] = row + 1;
             displayTile[1] = col;
+        }
+        else if(objectInfo.isRotation == 2)
+        {
+            displayTile[0] = row - 1;
+            displayTile[1] = col;
+        }
+        else if (objectInfo.isRotation == 3)
+        {
+            displayTile[0] = row;
+            displayTile[1] = col - 1;
         }
 
         return displayTile;
@@ -188,10 +198,6 @@ public class CheckTile : MonoBehaviour {
         {
             isBuilding = isBuilding_OMC();
         }
-        //else if(name == "SpaceVoiceRecordingFile")
-        //{
-        //    isBuilding = isBuilding_SRF();
-        //}
         else if(name == "FlameThrowingTrap")
         {
             isBuilding = isBuilding_FTT();
@@ -211,10 +217,11 @@ public class CheckTile : MonoBehaviour {
     {
         if (col.gameObject.tag == "Tile")
         {
-            lastCol.Add(col.transform.parent.gameObject);
-
             if (!objectInfo.isDisplay)
+            {
+                lastCol.Add(col.transform.parent.gameObject);
                 OnCheckTile();
+            }
         }
     }
 
@@ -222,7 +229,11 @@ public class CheckTile : MonoBehaviour {
     {
         if (col.gameObject.tag == "Tile")
         {
-            lastCol.Remove(col.transform.parent.gameObject);
+            if (!objectInfo.isDisplay)
+            {
+                lastCol.Remove(col.transform.parent.gameObject);
+            }
+
         }
     }
 }

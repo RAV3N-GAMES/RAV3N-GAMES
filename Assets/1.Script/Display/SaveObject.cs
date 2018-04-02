@@ -21,9 +21,14 @@ public class SaveObject {
 
     public string pos;
 
-    public bool isRotation;
+    public int isRotation;
 
-    public SaveObject(Vector3 pos, int DontDestroy, int type, string id, int level, int presentHP, int totalHP, int row, int col, int[] coordinate, string pivotObject, bool isRotation)
+    //Warp의 경우에만 사용
+    public int parentRow;
+    public int parentCol;
+
+    public SaveObject(Vector3 pos, int DontDestroy, int type, string id, int level, int presentHP, int totalHP, 
+                       int row, int col, int[] coordinate, string pivotObject, int isRotation, int parentRow, int parentCol)
     {
         this.DontDestroy = DontDestroy;
         this.pos = pos.x + "/" + pos.y + "/" + pos.z;
@@ -39,5 +44,8 @@ public class SaveObject {
         this.coordinate = coordinate;
         this.pivotObject = pivotObject;
         this.isRotation = isRotation;
+
+        this.parentRow = parentRow;
+        this.parentCol = parentCol;
     }
 }

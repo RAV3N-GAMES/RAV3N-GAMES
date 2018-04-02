@@ -7,10 +7,16 @@ public class ChangePopUp : MonoBehaviour {
     [HideInInspector]
     public GameObject Obj;
 
-    public Text levelText;
+    string id;
+
+    //public Text levelText;
+    int price;
+    int repairPrice;
+
     public Text nameText;
     public Text priceText;
     public Text repairPriceText;
+    public Text contentsText;
 
     public Image ObjImage;
 
@@ -19,25 +25,38 @@ public class ChangePopUp : MonoBehaviour {
     public GameObject LackOfCoin;
     public GameObject DontDestroy;
 
+    public GameObject MovePopUp;
+
     void InitBuilding(ObjectInfo objInfo)
     {
-        BuildingObject building = JsonDataManager.GetBuildingInfo(objInfo.id, objInfo.level);
-        priceText.text = ((building.Price / 2) * objInfo.presentHP / objInfo.totalHP).ToString();
-        repairPriceText.text = ((objInfo.totalHP - objInfo.presentHP) * building.RepairCost).ToString();
+        BuildingObject building = JsonDataManager.GetBuildingInfo(id, objInfo.level);
+        price = (building.Price / 2) * objInfo.presentHP / objInfo.totalHP;
+        priceText.text = price.ToString() + "/"+ Data_Player.Gold + "골드회수";
+
+        repairPrice = (objInfo.totalHP - objInfo.presentHP) * building.RepairCost;
+        repairPriceText.text = repairPrice.ToString() + "/" + Data_Player.Gold + "골드";
     }
 
     void InitOurForces(ObjectInfo objInfo)
     {
-        OurForcesObject ourForces = JsonDataManager.GetOurForcesInfo(objInfo.id, objInfo.level);
-        priceText.text = ((ourForces.Price / 2) * objInfo.presentHP / objInfo.totalHP).ToString();
-        repairPriceText.text = ((objInfo.totalHP - objInfo.presentHP) * ourForces.HealCost).ToString();
+        OurForcesObject ourForces = JsonDataManager.GetOurForcesInfo(id, objInfo.level);
+
+        price = (ourForces.Price / 2) * objInfo.presentHP / objInfo.totalHP;
+        priceText.text = price.ToString() + "/" + Data_Player.Gold + "골드회수";
+
+        repairPrice = (int)((objInfo.totalHP - objInfo.presentHP) * ourForces.HealCost);
+        repairPriceText.text = repairPrice.ToString() + "/" + Data_Player.Gold + "골드";
     }
 
     void InitTrap(ObjectInfo objInfo)
-    {
-        TrapObject trap = JsonDataManager.GetTrapInfo(objInfo.id, objInfo.level);
-        priceText.text = (trap.Price / 2).ToString();
-        repairPriceText.text = "0";
+    {        
+        TrapObject trap = JsonDataManager.GetTrapInfo(id, objInfo.level);
+
+        price = trap.Price / 2;
+        priceText.text = price.ToString() + "/" + Data_Player.Gold + " 골드회수";
+
+        repairPrice = 0;
+        repairPriceText.text = "0" + "/" + Data_Player.Gold + "골드";
     }
 
     void InitSecret(ObjectInfo objInfo)
@@ -51,9 +70,16 @@ public class ChangePopUp : MonoBehaviour {
     public void InitPopUp()
     {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
-        levelText.text = objInfo.level.ToString();
-        nameText.text = objInfo.id;
-        HPText.text = objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
+
+        if (objInfo.id.Equals("Warp_Exit"))
+            id = "Warp";
+        else
+            id = objInfo.id;
+
+        //levelText.text = objInfo.level.ToString();
+        nameText.text = id + " " + objInfo.level.ToString() + "단계";
+        HPText.text = "HP " + objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
+        contentsText.text = objInfo.level.ToString() +"단계의 " + id + "이다.";
 
         switch (objInfo.type)
         {
@@ -70,23 +96,40 @@ public class ChangePopUp : MonoBehaviour {
                 InitSecret(objInfo);
                 break;
             default:
+                price = 0;
+                repairPrice = 0;
+
                 priceText.text = "0";
                 repairPriceText.text = "0";
                 break;
         }
 
-        ObjImage.sprite = JsonDataManager.slotImage[objInfo.id];
+        ObjImage.sprite = JsonDataManager.slotImage[id];
+    }
+    
+    public void MovePref()
+    {
+        if (Obj.GetComponent<ObjectInfo>().DontDestroy == 0)
+        {
+            Obj.GetComponent<ObjectMove>().enabled = true;
+            Obj.GetComponent<ObjectMove>().changePos = true;
+
+            Obj.GetComponent<ObjectColor>().OnColor(true);
+            Obj.GetComponent<DisplayObject>().CreateButton = MovePopUp;
+        }
+        else
+            DontDestroy.SetActive(true);
     }
 
     public void RepairPref()
     {
-        if (Data_Player.isEnough_G(int.Parse(priceText.text)))
+        if (Data_Player.isEnough_G(price))
         {
-            Data_Player.subGold(int.Parse(repairPriceText.text));
-
+            Data_Player.subGold(repairPrice);
             Obj.GetComponent<ObjectInfo>().RepairObject();
 
-            InitPopUp();
+            InitPopUp(); //필요없을수 있음
+            PossibleDrag();
         }
         else
             LackOfCoin.SetActive(true);
@@ -98,7 +141,18 @@ public class ChangePopUp : MonoBehaviour {
 
         if (isDestroy)
         {
-            Data_Player.addGold(int.Parse(priceText.text));
+            if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))//Warp 자식일 경우 자기 부모 디스트로이
+            {
+                GameObject Warp = Obj.transform.parent.gameObject;
+                Warp.GetComponent<DisplayObject>().DestroyObj();
+
+                Destroy(Warp);
+            }
+            else if(Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
+            {
+                Obj.transform.Find("Warp_Exit").gameObject.GetComponent<DisplayObject>().DestroyObj();
+            }
+            Data_Player.addGold(price);
 
             Destroy(Obj);
             PossibleDrag();
@@ -106,6 +160,7 @@ public class ChangePopUp : MonoBehaviour {
         else
             DontDestroy.SetActive(true);
 
+        PossibleDrag();
         gameObject.SetActive(false);
     }
 

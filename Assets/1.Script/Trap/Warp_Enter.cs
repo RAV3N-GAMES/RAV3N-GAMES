@@ -13,7 +13,7 @@ public class Warp_Enter : Trap {
         //room Index 얻어올 방법?
         //checkCount(0);
         TrapManager.TrapCount[0]++;
-        newObj = Instantiate(Resources.Load("Object/Warp_Exit") as GameObject);
+        //newObj = Instantiate(Resources.Load("Object/Warp_Exit") as GameObject);
         CoolTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame +18].CoolTime;
         EffectContinuousTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame +18].EffectContinuousTime;
         isCool = false;

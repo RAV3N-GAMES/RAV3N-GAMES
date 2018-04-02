@@ -52,6 +52,14 @@ public class CreateObject : MonoBehaviour {
             newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
             newObj.GetComponent<ObjectInfo>().InitObject();
 
+            if(id.Equals("Warp"))
+            {
+                GameObject warp_Exit =  newObj.transform.Find("Warp_Exit").gameObject;
+                warp_Exit.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
+                warp_Exit.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+                warp_Exit.GetComponent<ObjectInfo>().InitObject();
+            }
+
             RoomManager.possibleDrag = false;
             ClickObject.isPossibleClick = false;
 

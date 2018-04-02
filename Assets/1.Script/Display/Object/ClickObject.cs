@@ -15,7 +15,7 @@ public class ClickObject : MonoBehaviour
 
     void Awake()
     {
-        clickTime = 1.5f;
+        clickTime = 1f;
         isPossibleClick = true;
 
         objectInfo = GetComponent<ObjectInfo>();
@@ -38,7 +38,9 @@ public class ClickObject : MonoBehaviour
     public void OnMouseDown()
     {
         if (isPossibleClick)
+        {
             Invoke("LongClick", clickTime);
+        }
     }
 
     public void OnMouseUp()

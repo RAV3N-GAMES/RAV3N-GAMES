@@ -25,6 +25,14 @@ public class ObjectColor : MonoBehaviour
         }
     }
 
+    public void SetSortingLayer(string layer)
+    {
+        for (int i = 0; i < sprite.Count; i++)
+        {
+            sprite[i].sortingLayerName = layer;
+        }
+    }
+
     public void SetSortingOrder(string layer, int idx)
     {
         for(int i = 0; i < sprite.Count; i++)
@@ -34,7 +42,7 @@ public class ObjectColor : MonoBehaviour
         }
         
         sprite[0].sortingOrder = idx + 1;
-        objectInfo.SetClickColliderPos(-(idx * 0.05f));
+        objectInfo.SetClickColliderPos(2f + (idx * 0.05f));
     }
 
     public void OnTransparency(bool isTransparency)

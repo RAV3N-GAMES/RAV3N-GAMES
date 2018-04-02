@@ -5,7 +5,6 @@ using UnityEngine;
 public class DisplayObject : MonoBehaviour
 {
     CheckTile checkTile;
-    [HideInInspector]
     public GameObject CreateButton;
 
     Transform lastCol;
@@ -53,7 +52,7 @@ public class DisplayObject : MonoBehaviour
 
     public bool DestroyObj()
     {
-        return checkTile.DestryObj(makeIdx());
+        return checkTile.DestroyObj(makeIdx());
     }
 
     public bool UsingTile()
@@ -66,7 +65,8 @@ public class DisplayObject : MonoBehaviour
         CreateButton.SetActive(true);
 
         CreatePopUp createPopUp = CreateButton.GetComponent<CreatePopUp>();
-        createPopUp.Obj = gameObject;
+        if (createPopUp != null)
+            createPopUp.Obj = gameObject;
     }
 
     void OffCheckButton()

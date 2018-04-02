@@ -15,11 +15,14 @@ public class ObjectMove : MonoBehaviour
     public Collider lastCol;
 
     ObjectInfo objectInfo;
+    
+    public bool changePos;
 
     void Start()
     {
         lastCol = null;
         isMove = true;
+        changePos = false;
 
         checkTile = GetComponent<CheckTile>();
 
@@ -50,9 +53,17 @@ public class ObjectMove : MonoBehaviour
         return isMove & isMouseMove;
     }
 
+
     IEnumerator OnMove()
     {
         yield return null;
+
+        if(changePos)
+        {
+            changePos = false;
+            GetComponent<ObjectInfo>().OffDisplay();
+        }
+
         if (GetComponent<ObjectInfo>().isDisplay)
         {
             this.enabled = false;
@@ -63,17 +74,11 @@ public class ObjectMove : MonoBehaviour
         {
             if (isPossibleMove())
             {
-                //yield return new WaitUntil();
-
                 Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
 
-                //movePos = new Vector3(movePos.x, 0, movePos.z);
                 transform.position += movePos;
 
                 yield return null;
-
-                if (!objectInfo.isDisplay)
-                    checkTile.OnCheckTile();
 
                 if (CameraMove())
                     Camera.main.transform.position += movePos;
@@ -95,7 +100,17 @@ public class ObjectMove : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (changePos)
+            {
+                isMove = true;
+                GetComponent<DisplayObject>().CreateButton.GetComponent<MovePopUp>().InitObject(gameObject);
+
+                StartCoroutine("OnMove");
+            }
+        }
+        else if (Input.GetMouseButtonUp(0))
         {
             if (isMove)
             {
