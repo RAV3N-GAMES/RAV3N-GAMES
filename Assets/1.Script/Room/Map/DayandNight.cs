@@ -28,7 +28,8 @@ public class DayandNight : MonoBehaviour
         CreatedEnemy = new List<Enemy>();
         DeadEnemy = new List<Enemy>();
         isDay = false;//밤부터 시작
-	}
+       
+    }
 	
 	// Update is called once per frame
 	void Update () {
