@@ -17,23 +17,21 @@ public class DayandNight : MonoBehaviour
     public static List<Enemy> CreatedEnemy;
     [HideInInspector]
     public static List<Enemy> DeadEnemy;
-
     public CanvasRenderer curtain;
     public const int EnumMax_OurForces = (int)OurForces_Sprite.Researcher;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
-    public const int EnumMax_Traps = (int)Traps_body.Trap_W;
+    public const int EnumMax_Traps = (int)Traps_body.Trap_W;//얘도 함정 추가되면 바꿔줘야됨
     //DayTime은 추후에 json 파일에서 읽어올 수 있음.
 
     // Use this for initialization
-    void Awake () {
+    void Awake() {
         CreatedEnemy = new List<Enemy>();
         DeadEnemy = new List<Enemy>();
         isDay = false;//밤부터 시작
-       
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
+
+    // Update is called once per frame
+    void Update() {
+    }
 
     public void changeState() {
         isDay = !isDay;
@@ -46,8 +44,8 @@ public class DayandNight : MonoBehaviour
             curtain.transform.Rotate(0, -90, 0);
             try
             {
-                foreach (Enemy i in CreatedEnemy) { 
-                    Debug.Log("Enemy data: "+i.name+" isdead: "+i.isDie);
+                foreach (Enemy i in CreatedEnemy) {
+                    Debug.Log("Enemy data: " + i.name + " isdead: " + i.isDie);
                 }
             }
             catch {
@@ -75,7 +73,7 @@ public class DayandNight : MonoBehaviour
         GameObject[] OurForces = GameObject.FindGameObjectsWithTag("Friendly");
         GameObject spriteObject=null;
         GameObject animationObject = null;
-       for (int i = 0; i < OurForces.Length; i++) {
+        for (int i = 0; i < OurForces.Length; i++) {
             try
             {
                 getOurForces(OurForces[i], ref spriteObject, ref animationObject);
@@ -83,8 +81,8 @@ public class DayandNight : MonoBehaviour
                 {
                     if (spriteObject != null)
                     {
-                        spriteObject.SetActive(false);
                         setOriginalPoint(ref animationObject, ref spriteObject);
+                        spriteObject.SetActive(false);
                         animationObject.SetActive(true);
                         CharacterEnabled = true;
                     }

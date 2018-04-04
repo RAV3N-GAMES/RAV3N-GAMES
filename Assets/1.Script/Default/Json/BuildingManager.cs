@@ -19,7 +19,7 @@ public class BuildingManager : JsonReadWrite
     public static List<BuildingObject> Tbl_BuildingSetup = new List<BuildingObject>();
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         ReadMain(Path1);
         ReadMain(Path2);
         ReadMain(Path3);

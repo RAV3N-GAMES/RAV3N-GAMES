@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 	public Friendly targetFriend;			//타겟의 정보를 가져오기 위한
 	public Transform OriginalPoint;			//기본 타겟을 저장하기위한
 
+    public int Level;
 	public int Hp;							//체력
 	public int Attack;						//공격력
 	public int MaxHp;						//최대 체력
@@ -60,9 +61,13 @@ public class Enemy : MonoBehaviour {
 
 		if (targetFriend.Health(Attack))
 		{
-			targetFriend.Die();		
-			if(targetFriend.GroupConductor.GetOrderFriendly() != null)
-				targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
+			targetFriend.Die();
+            try
+            {
+                targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
+            }
+            catch { }
+				
 
 		}
 	}
@@ -94,7 +99,7 @@ public class Enemy : MonoBehaviour {
 	private IEnumerator DieEvent()
 	{
 		yield return new WaitForSeconds(0.5f);
-		gameObject.SetActive(false);
+		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushEnemy(NavObj.gameObject);
 	}
 	private bool DirDistance()
@@ -196,6 +201,7 @@ public class Enemy : MonoBehaviour {
 		anime = GetComponent<Animator>();
 		UIEnemyHealth = GetComponentInParent<HealthSystem>();
 	}
+
 	private void Update()
 	{
 		if (isDie)

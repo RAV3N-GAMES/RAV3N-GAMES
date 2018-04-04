@@ -69,9 +69,9 @@ public class EnemyGroup : MonoBehaviour {
 	{
         DayandNight.DeadEnemy.Add(enemy);
 		enemyList.Remove(enemy);
-		GameManager.current.friendGroups[GroupIndex]
-			.FriendTargetChange(enemy);
-
+        GameManager.current.friendGroups[GroupIndex]
+            .GroupRouteCall(GroupFindEnemy());
+//			.FriendTargetChange(enemy);
 
 		if (enemyList.Count <= 0)
 		{

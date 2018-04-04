@@ -413,6 +413,57 @@ public class TileManager : MonoBehaviour {
         ObjectInfo newObjInfo = newObj.GetComponent<ObjectInfo>();
         newObjInfo.InitObject(objInfo);
 
+        GameObject obj;
+        Friendly fInfo;
+
+        try
+        {
+            
+            switch (objInfo.id) {
+                case "Guard":
+                    obj = newObj.transform.Find("Friendly_Guard/Human").gameObject;
+                    fInfo = obj.GetComponentInChildren<Friendly>(true);
+                    fInfo.Hp = objInfo.presentHP;
+                    fInfo.Level = objInfo.level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level-1].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].HP;
+                    fInfo.AttackEventMax= OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].SkillCool;
+                    fInfo.RoomIndex = int.Parse(newObj.GetComponentInChildren<SpriteRenderer>().sortingLayerName);
+                    break;
+                case "QuickReactionForces":
+                    obj = newObj.transform.Find("Friendly_Army/Human").gameObject;
+                    fInfo = obj.GetComponentInChildren<Friendly>(true);
+                    fInfo.Hp = objInfo.presentHP;
+                    fInfo.Level = objInfo.level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+99].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+99].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+99].SkillCool;
+                    fInfo.RoomIndex = int.Parse(newObj.GetComponentInChildren<SpriteRenderer>().sortingLayerName);
+                    break;
+                case "BiochemistryUnit":
+                    obj = newObj.transform.Find("Friendly_ChemistryArmy/Human").gameObject;
+                    fInfo = obj.GetComponentInChildren<Friendly>(true);
+                    fInfo.Hp = objInfo.presentHP;
+                    fInfo.Level = objInfo.level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+199].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].SkillCool;
+                    fInfo.RoomIndex = int.Parse(newObj.GetComponentInChildren<SpriteRenderer>().sortingLayerName);
+                    break;
+                case "Researcher":
+                    obj = newObj.transform.Find("Friendly_ResearchStudent/Human").gameObject;
+                    fInfo = obj.GetComponentInChildren<Friendly>(true);
+                    fInfo.Hp = objInfo.presentHP;
+                    fInfo.Level = objInfo.level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+299].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].SkillCool;
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch { }
         return newObj;
     }
 

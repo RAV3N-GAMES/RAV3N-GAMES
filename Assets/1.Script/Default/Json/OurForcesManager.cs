@@ -20,12 +20,12 @@ public class OurForcesManager : JsonReadWrite {
     public static List<OurForcesObject> Tbl_OurForceSetup = new List<OurForcesObject>();
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         ReadMain(Path1);
         ReadMain(Path2);
         ReadMain(Path3);
         ReadMain(Path4);
-        /* 입력값 확인용 코드입니다. 지우지 마세요.       
+        /* 입력값 확인용 코드입니다. 지우지 마세요.
                 for (int i = 0; i < 400; i++)
                 {
                     Debug.Log(i + "th index: " + Tbl_OurForceSetup[i].Level+" " + Tbl_OurForceSetup[i].HP + " " + Tbl_OurForceSetup[i].Attack + " " + Tbl_OurForceSetup[i].SkillCool + " " + Tbl_OurForceSetup[i].Price + " " + Tbl_OurForceSetup[i].UpgradeCost+ " " + Tbl_OurForceSetup[i].HealCost + " " + Tbl_OurForceSetup[i].id + " " + Tbl_OurForceSetup[i].Type + " " + Tbl_OurForceSetup[i].ActiveCost + " " + Tbl_OurForceSetup[i].AttackRange + " " + Tbl_OurForceSetup[i].AttackAngle + " " + Tbl_OurForceSetup[i].HitConstrain+ " " + Tbl_OurForceSetup[i].AttackCool+ " " + Tbl_OurForceSetup[i].EnemyRecognizeRangeHalf + " " + Tbl_OurForceSetup[i].MoveSpeed + " ");

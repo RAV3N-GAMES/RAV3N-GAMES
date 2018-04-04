@@ -25,7 +25,7 @@ public class EnemyManager : JsonReadWrite
     public static List<EnemyObject> Tbl_EnemySetup = new List<EnemyObject>();
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         ReadMain(Path1);
         ReadMain(Path2);
         ReadMain(Path3);

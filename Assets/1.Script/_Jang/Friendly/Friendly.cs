@@ -28,7 +28,8 @@ public class Friendly : MonoBehaviour
 	public float StopDistance;          //정지할 거리 설정값
 	public int DamageStack;
 	public int RoomIndex;
-	public int Hp;
+    public int Level;
+    public int Hp;
 	public int MaxHp;
 	public int AttackDamage;
 	public int AttackCount;
@@ -37,7 +38,7 @@ public class Friendly : MonoBehaviour
 	protected EFFECT_TYPE effectType;
 	protected Animator anime;
 	protected NavMeshAgent friendAi;
-	protected SphereCollider collider;
+	protected SphereCollider scollider;
 	protected Vector3 dest;
 	protected Vector3 start;
 	protected FriendlyState currentState;
@@ -72,13 +73,14 @@ public class Friendly : MonoBehaviour
 	{
 		anime = GetComponent<Animator>();
 		friendAi = GetComponentInParent<NavMeshAgent>();
-		collider = GetComponent<SphereCollider>();
+		scollider = GetComponent<SphereCollider>();
 		UiHealth = GetComponentInParent<HealthSystem>();
+        AttackCount = 0;
 		NavObj = friendAi.transform;		
 	}
 	private void OnEnable()
 	{
-		collider.enabled = true;
+		scollider.enabled = true;
 		friendAi.enabled = true;
 		anime.enabled = true;
 	}
@@ -155,7 +157,7 @@ public class Friendly : MonoBehaviour
 			return;
 
 		isDie = true;
-		collider.enabled = false;
+		scollider.enabled = false;
 		anime.enabled = false;
 		friendAi.enabled = false;
 		UiHealth.HealthActvie(false);
@@ -177,7 +179,7 @@ public class Friendly : MonoBehaviour
 	private IEnumerator DieEvent()              
 	{
 		yield return new WaitForSeconds(0.5f);
-		gameObject.SetActive(false);
+		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushFriend(NavObj.gameObject);
 	}
 	private IEnumerator ShootEvent()
@@ -269,5 +271,18 @@ public class Friendly : MonoBehaviour
 			return false;
 		}
 	}
+    private void OnTriggerEnter(Collider col) {
+        if (col.CompareTag("Tile")) {
+            List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
 
+            if (!list.Find(
+                delegate (Friendly f) {
+                    return f == this;
+                })) {
+                list.Add(this);
+                GroupConductor = col.GetComponentInParent<FriendlyGroup>();
+            }
+            
+        }
+    }
 }

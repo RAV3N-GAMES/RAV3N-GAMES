@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class HealthSystem : MonoBehaviour {
+
+public class HealthSystem : MonoBehaviour
+{
     Slider HpSlider;
-	RectTransform sliderRect;
-	Vector3 targetPos;
+    RectTransform sliderRect;
+    Vector3 targetPos;
 
     bool isInitHPSlider = false;
 
-	// Use this for initialization
-	private void Start()
-	{
+    // Use this for initialization
+    private void Start()
+    {
         InitHPSlider();
-	}
-
+    }
     void InitHPSlider()
     {
         if (isInitHPSlider)
@@ -58,3 +59,4 @@ public class HealthSystem : MonoBehaviour {
         HpSlider.gameObject.SetActive(isActive);        
 	}
 }
+    
