@@ -40,18 +40,13 @@ public class JsonDataManager : MonoBehaviour {
         {
             SlotInfo newSlot = InitSlotInfo(slotData[i]);
             slotInfoList.Add(newSlot.id, newSlot);
+        }
 
-            Sprite newSprite;
-            try
-            {
-                newSprite = Resources.Load<GameObject>("Image/" + newSlot.imageName).GetComponent<SpriteRenderer>().sprite;
-            }
-            catch
-            {
-                newSprite = Resources.Load<GameObject>("Image/OldBuilding").GetComponent<SpriteRenderer>().sprite;
-            }
+        GameObject[] sprite = Resources.LoadAll<GameObject>("Image");
 
-            slotImage.Add(newSlot.imageName, newSprite);
+        for(int i = 0; i < sprite.Length; i++)
+        {
+            slotImage.Add(sprite[i].name, sprite[i].GetComponent<SpriteRenderer>().sprite);
         }
     }
     

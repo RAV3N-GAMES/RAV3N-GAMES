@@ -42,7 +42,7 @@ public class ObjectColor : MonoBehaviour
         }
         
         sprite[0].sortingOrder = idx + 1;
-        objectInfo.SetClickColliderPos(2f + (idx * 0.05f));
+        objectInfo.SetClickColliderPos(2f + (idx * 0.01f));
     }
 
     public void OnTransparency(bool isTransparency)
@@ -68,8 +68,14 @@ public class ObjectColor : MonoBehaviour
         float alpha = 1;
         SetSpriteColor(new Color(1, 1, 1, 0));
 
-        if (RoomManager.isTransparency && GetComponent<ObjectInfo>().type == 0)
-            alpha = 0.3f;
+        if (RoomManager.isTransparency)
+        {
+            if (GetComponent<ObjectInfo>().type == 0)
+            {
+                alpha = 0.3f;
+                GetComponent<ObjectInfo>().ClickCollider.SetActive(false);
+            }
+        }
 
         sprite[0].color = new Color(1, 1, 1, alpha);
     }

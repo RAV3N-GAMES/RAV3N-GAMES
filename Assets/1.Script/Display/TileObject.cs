@@ -22,7 +22,20 @@ public class TileObject {
     public void OnTransparency(bool isTransparency)
     {
         if (objectInfo.type == 0)
+        {
             mObject.GetComponent<ObjectColor>().OnTransparency(isTransparency);
+            SetClickColliderStatus(!isTransparency);
+        }
+    }
+
+    public void SetClickColliderStatus(bool isActive)
+    {
+        if (objectInfo.type == 0)
+        {
+            if (RoomManager.isTransparency && isActive)
+                return;
+        }
+        mObject.GetComponent<ObjectInfo>().ClickCollider.SetActive(isActive);
     }
 
     public void SetOrderInLayer(string layer, int idx, int layerDepth)

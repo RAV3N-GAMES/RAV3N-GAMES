@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectInfo : MonoBehaviour
 {
-    public Transform FlameThrowingTrap;
+    //public Transform FlameThrowingTrap;
 
     public GameObject ClickCollider;
     public GameObject TileCollider;
@@ -67,8 +67,6 @@ public class ObjectInfo : MonoBehaviour
     
     public void InitObject(SaveObject objInfo) //설치된거 껐다 켜고 설치할때
     {
-        id = objInfo.id; //아마 ㄴ필요 
-        type = objInfo.type; //아마 ㄴ필요 
         level = objInfo.level;
         presentHP = objInfo.presentHP;
         totalHP = objInfo.totalHP;
@@ -79,16 +77,15 @@ public class ObjectInfo : MonoBehaviour
 
         Rotate(InitDir());
 
-        StartCoroutine(temp());
+        StartCoroutine(Display());
     }
     
-    IEnumerator temp()
+    IEnumerator Display()
     {
         yield return null;
         OnDisplay();
         yield break;
     }
-
 
     int SetDir()
     {
@@ -109,24 +106,23 @@ public class ObjectInfo : MonoBehaviour
 
     void Rotate(int dir)
     {
-        if (id.Equals("FlameThrowingTrap"))
-        {
-            if (isRotation < 2)
-                FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.9f, 0);
-            else
-                FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.6f, 0);
-        }
+        //if (id.Equals("FlameThrowingTrap"))
+        //{
+        //    if (isRotation < 2)
+        //        FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.9f, 0);
+        //    else
+        //        FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.6f, 0);
+        //}
 
         transform.Rotate(new Vector3(dir * 180, 0, dir * 180));
     }
 
     public void rotationObject()
     {
-        if (id.Equals("FlameThrowingTrap"))
-            isRotation = (isRotation + 1) % 4;
-        else
-            isRotation = (isRotation + 1) % 2;
-
+        //if (id.Equals("FlameThrowingTrap"))
+        //    isRotation = (isRotation + 1) % 4;
+        //else    
+        isRotation = (isRotation + 1) % 2;
         Rotate(SetDir());
 
         for (int i = 0; i < coordinate.Length; i = i + 2)
@@ -137,12 +133,17 @@ public class ObjectInfo : MonoBehaviour
         }
     }
 
-    public void RepairObject()
+    public void RepairObject(int repairHP)
     {
-        print("repair");
-        
-        presentHP = totalHP;
-        //돈쓰기
+        if (repairHP == -1)
+            presentHP = totalHP;
+        else
+        {
+            presentHP += repairHP;
+
+            if (presentHP > totalHP)
+                presentHP = totalHP;
+        }
     }
 
     public void OnDisplay()

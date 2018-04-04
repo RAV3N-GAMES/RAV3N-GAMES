@@ -6,10 +6,15 @@ using UnityEngine.UI;
 public class DamageReportPopUp : MonoBehaviour {
     const int ObjLength = 4;
 
-    int[] Building = new int[ObjLength]; 
-    int[] OurForces = new int[ObjLength];
-    int[] Trap = new int[ObjLength];
-    int[] Secret = new int[ObjLength];
+    public static string[] BuildingIdx = { "OldBuilding", "NewBuilding", "FunctionalBuilding", "CoreBuilding" };
+    public static string[] OurForcesIdx = { "Guard", "QuickReactionForces", "BiochemistryUnit", "Researcher" };
+    public static string[] TrapIdx = { "HumanTrap", "Warp", "FlameThrowingTrap", "ObstructMovementCurrent" };
+    public static string[] SecretIdx = { "UFOCore", "AlienStorageCapsule", "AlienBooldStorage", "SpaceVoiceRecordingFile" };
+
+    public static int[] Building = new int[ObjLength];
+    public static int[] OurForces = new int[ObjLength];
+    public static int[] Trap = new int[ObjLength];
+    public static int[] Secret = new int[ObjLength];
 
     public Transform BuildingParent;
     public Transform OurForcesParent;
@@ -24,6 +29,36 @@ public class DamageReportPopUp : MonoBehaviour {
     List<Text> TextSecret = new List<Text>();
 
     int maxNum;
+
+    public static void PlusDamage(int type, string id)
+    {
+        string[] damageObj;
+
+        switch (type)
+        {
+            case 0: damageObj = BuildingIdx; break;
+            case 2: damageObj = OurForcesIdx; break;
+            case 3: damageObj = TrapIdx; break;
+            case 4: damageObj = SecretIdx; break;
+            default: return;
+        }
+
+        for(int i = 0; i < ObjLength; i++)
+        {
+            if(damageObj[i].Equals(id))
+            {
+                switch (type)
+                {
+                    case 0: Building[i]++; break;
+                    case 2: OurForces[i]++; break;
+                    case 3: Trap[i]++; break;
+                    case 4: Secret[i]++; break;
+                    default: return;
+                }
+                return;
+            }
+        }
+    }
 
     void InitTextList(Transform parent, List<Text> textList)
     {
@@ -41,13 +76,13 @@ public class DamageReportPopUp : MonoBehaviour {
         InitTextList(SecretParent, TextSecret);
 
         //임시
-        for (int i = 0; i < ObjLength; i++)
-        {
-            Building[i] = i;
-            OurForces[i] = i % 2;
-            Trap[i] = i + 1;
-            Secret[i] = 1;
-        }
+        //for (int i = 0; i < ObjLength; i++)
+        //{
+        //    Building[i] = i;
+        //    OurForces[i] = i % 2;
+        //    Trap[i] = i + 1;
+        //    Secret[i] = 1;
+        //}
     }
 
     void SetActive()
@@ -85,8 +120,20 @@ public class DamageReportPopUp : MonoBehaviour {
         StartCoroutine("PlayDamageReport");
     }
 
+    void InitDamageList()
+    {
+        for(int i = 0; i< ObjLength; i++)
+        {
+            Building[i] = 0;
+            OurForces[i] = 0;
+            Trap[i] = 0;
+            Secret[i] = 0;
+        }
+    }
+
     IEnumerator PlayDamageReport()
     {
+        //버튼 클릭 막을지...
         for(int loopCnt = 0; loopCnt < maxNum; loopCnt++)
         {
             for(int objCnt = 0; objCnt < ObjLength; objCnt++)
@@ -104,6 +151,7 @@ public class DamageReportPopUp : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
         }
 
+        InitDamageList();
         yield break;
     }
 }

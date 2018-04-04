@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour {
-
     Slider HpSlider;
 	RectTransform sliderRect;
 	Vector3 targetPos;
 
+    bool isInitHPSlider = false;
+
 	// Use this for initialization
-	private void Awake()
+	private void Start()
 	{
-		HpSlider = Instantiate(UIManager.current.UIBarPrefab).GetComponent<Slider>();
-		HpSlider.transform.SetParent(UIManager.current.UIBarParent);
-		sliderRect = HpSlider.GetComponent<RectTransform>();
-		HpSlider.gameObject.SetActive(false);
+        InitHPSlider();
 	}
+
+    void InitHPSlider()
+    {
+        if (isInitHPSlider)
+            return;
+
+        HpSlider = Instantiate(UIManager.current.UIBarPrefab).GetComponent<Slider>();
+        HpSlider.transform.SetParent(UIManager.current.UIBarParent);
+        sliderRect = HpSlider.GetComponent<RectTransform>();
+
+        HpSlider.gameObject.SetActive(false);
+
+        isInitHPSlider = true;
+    }
 
 	private void Update()
 	{
@@ -41,8 +53,8 @@ public class HealthSystem : MonoBehaviour {
 	}
 	public void HealthActvie(bool isActive)
 	{
-		HpSlider.gameObject.SetActive(isActive);
+        if(HpSlider == null)
+            InitHPSlider();
+        HpSlider.gameObject.SetActive(isActive);        
 	}
-
-
 }

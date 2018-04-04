@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveObject {
-    public int type;
+    public double type;
     public string id;
 
     public int DontDestroy;
@@ -27,7 +27,7 @@ public class SaveObject {
     public int parentRow;
     public int parentCol;
 
-    public SaveObject(Vector3 pos, int DontDestroy, int type, string id, int level, int presentHP, int totalHP, 
+    public SaveObject(Vector3 pos, int DontDestroy, float type, string id, int level, int presentHP, int totalHP, 
                        int row, int col, int[] coordinate, string pivotObject, int isRotation, int parentRow, int parentCol)
     {
         this.DontDestroy = DontDestroy;

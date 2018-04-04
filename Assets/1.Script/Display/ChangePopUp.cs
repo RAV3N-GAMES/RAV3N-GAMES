@@ -8,8 +8,7 @@ public class ChangePopUp : MonoBehaviour {
     public GameObject Obj;
 
     string id;
-
-    //public Text levelText;
+    
     int price;
     int repairPrice;
 
@@ -22,7 +21,7 @@ public class ChangePopUp : MonoBehaviour {
 
     public Text HPText;
 
-    public GameObject LackOfCoin;
+    public GameObject PartialRepair;
     public GameObject DontDestroy;
 
     public GameObject MovePopUp;
@@ -61,8 +60,10 @@ public class ChangePopUp : MonoBehaviour {
 
     void InitSecret(ObjectInfo objInfo)
     {
-        //Secret secret = JsonDataManager.GetSecretInfo(objInfo.id, Data_Player.Fame);
-        priceText.text = "0";
+        price = 0;
+        repairPrice = 0;
+
+        priceText.text = "삭제 불가";
         repairPriceText.text = "0";
     }
 
@@ -76,29 +77,19 @@ public class ChangePopUp : MonoBehaviour {
         else
             id = objInfo.id;
 
-        //levelText.text = objInfo.level.ToString();
         nameText.text = id + " " + objInfo.level.ToString() + "단계";
         HPText.text = "HP " + objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
         contentsText.text = objInfo.level.ToString() +"단계의 " + id + "이다.";
 
         switch (objInfo.type)
         {
-            case 0:
-                InitBuilding(objInfo);
-                break;
-            case 2:
-                InitOurForces(objInfo);
-                break;
-            case 3://Trap
-                InitTrap(objInfo);
-                break;
-            case 4://Secret
-                InitSecret(objInfo);
-                break;
+            case 0: InitBuilding(objInfo); break;
+            case 2: InitOurForces(objInfo); break;
+            case 3: InitTrap(objInfo);  break;
+            case 4: InitSecret(objInfo); break;
             default:
                 price = 0;
                 repairPrice = 0;
-
                 priceText.text = "0";
                 repairPriceText.text = "0";
                 break;
@@ -121,52 +112,65 @@ public class ChangePopUp : MonoBehaviour {
             DontDestroy.SetActive(true);
     }
 
+    public void PartialRepairPref()
+    {
+        ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
+        int repairHP = (int)((objInfo.totalHP - objInfo.presentHP) * ((float)Data_Player.Gold / repairPrice));
+
+        Obj.GetComponent<ObjectInfo>().RepairObject(repairHP);
+        Data_Player.subGold(Data_Player.Gold);
+
+        RoomManager.ChangeClickStatus(true);
+    }
+
     public void RepairPref()
     {
-        if (Data_Player.isEnough_G(price))
+        if (Data_Player.isEnough_G(repairPrice))
         {
             Data_Player.subGold(repairPrice);
-            Obj.GetComponent<ObjectInfo>().RepairObject();
+            Obj.GetComponent<ObjectInfo>().RepairObject(-1);
 
-            InitPopUp(); //필요없을수 있음
-            PossibleDrag();
+            RoomManager.ChangeClickStatus(true);
         }
         else
-            LackOfCoin.SetActive(true);
+            PartialRepair.SetActive(true);
+    }
+
+    void DestroyWarp()
+    {
+        if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))//Warp 자식일 경우 자기 부모 디스트로이
+        {
+            GameObject Warp = Obj.transform.parent.gameObject;
+            Warp.GetComponent<DisplayObject>().DestroyObj(false);
+
+            Destroy(Warp);
+        }
+        else if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
+        {
+            Obj.transform.Find("Warp_Exit").gameObject.GetComponent<DisplayObject>().DestroyObj(false);
+        }
+
     }
 
     public void DestroyPref()
     {
-        bool isDestroy = Obj.GetComponent<DisplayObject>().DestroyObj();
-
-        if (isDestroy)
-        {
-            if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))//Warp 자식일 경우 자기 부모 디스트로이
-            {
-                GameObject Warp = Obj.transform.parent.gameObject;
-                Warp.GetComponent<DisplayObject>().DestroyObj();
-
-                Destroy(Warp);
-            }
-            else if(Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
-            {
-                Obj.transform.Find("Warp_Exit").gameObject.GetComponent<DisplayObject>().DestroyObj();
-            }
-            Data_Player.addGold(price);
-
-            Destroy(Obj);
-            PossibleDrag();
-        }
+        if (Obj.GetComponent<ObjectInfo>().type == 4)
+            RoomManager.ChangeClickStatus(true);
         else
-            DontDestroy.SetActive(true);
+        {
+            bool isDestroy = Obj.GetComponent<DisplayObject>().DestroyObj(false);
 
-        PossibleDrag();
+            if (isDestroy)
+            {
+                DestroyWarp();
+
+                Data_Player.addGold(price);
+                RoomManager.ChangeClickStatus(true);
+                Destroy(Obj);
+            }
+            else
+                DontDestroy.SetActive(true);
+        }
         gameObject.SetActive(false);
-    }
-
-    public void PossibleDrag()
-    {
-        RoomManager.possibleDrag = true;
-        ClickObject.isPossibleClick = true;
     }
 }

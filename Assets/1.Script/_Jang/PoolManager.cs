@@ -153,7 +153,6 @@ public class PoolManager : MonoBehaviour {
 	}
 	public GameObject PopEnemy(ENEMY_TYPE type)    
 	{
-        Debug.Log("Enter PopEnemy");
 		if (EnemyPoolList[(int)type].Count > 0)
 		{
 			GameObject obj = EnemyPoolList[(int)type][0];

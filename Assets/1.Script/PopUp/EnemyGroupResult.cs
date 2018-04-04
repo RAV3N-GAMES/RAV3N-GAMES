@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyGroupResult : MonoBehaviour {
+    const int EnemyCnt = 4;
+
     public GameObject Success;
     public GameObject Fail;
 
@@ -27,7 +29,7 @@ public class EnemyGroupResult : MonoBehaviour {
 
     IEnumerator SetEnemyActive()
     {
-        for (int i = 0; i < active.Length; i++)
+        for (int i = 0; i < EnemyCnt; i++)
         {
             float alpha = 1f;
             if (!active[i])
@@ -50,18 +52,13 @@ public class EnemyGroupResult : MonoBehaviour {
 
         isSuccess = true;
 
-        for (int i = 0; i < active.Length; i++)
+        for (int i = 0; i < EnemyCnt; i++)
+        {
             isSuccess = isSuccess & !active[i];
 
-        for (int i = 0; i < enemyId.Length; i++)
-        {
-            Enemy[i].sprite = JsonDataManager.slotImage[enemyId[i]];
-            Enemy[i].color = new Color(1, 1, 1, 1);
-        }
+            print("enemyId : " + enemyId[i]);
 
-        for(int i = enemyId.Length; i < Enemy.Count; i++)
-        {
-            Enemy[i].sprite = null;
+            Enemy[i].sprite = JsonDataManager.slotImage[enemyId[i]];
             Enemy[i].color = new Color(1, 1, 1, 1);
         }
     }
