@@ -28,7 +28,8 @@ public class Friendly : MonoBehaviour
 	public float StopDistance;          //정지할 거리 설정값
 	public int DamageStack;
 	public int RoomIndex;
-	public int Hp;
+    public int Level;
+    public int Hp;
 	public int MaxHp;
 	public int AttackDamage;
 	public int AttackCount;
@@ -74,6 +75,7 @@ public class Friendly : MonoBehaviour
 		friendAi = GetComponentInParent<NavMeshAgent>();
 		scollider = GetComponent<SphereCollider>();
 		UiHealth = GetComponentInParent<HealthSystem>();
+        AttackCount = 0;
 		NavObj = friendAi.transform;		
 	}
 	private void OnEnable()
@@ -177,7 +179,7 @@ public class Friendly : MonoBehaviour
 	private IEnumerator DieEvent()              
 	{
 		yield return new WaitForSeconds(0.5f);
-		gameObject.SetActive(false);
+		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushFriend(NavObj.gameObject);
 	}
 	private IEnumerator ShootEvent()

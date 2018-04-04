@@ -6,15 +6,21 @@ using UnityEngine;
 //Data_SetupPlayer : 플레이어의 명성에 따른 레벨업 필요 경험치 및 집단 등장 수, 적 사살 시 보상, 적 집단 제압 시 보상을 저장.0
 public class Data_SetupPlayer
 {
-    public int fame, lvExperience, enemyClusterNumber, rewardA, rewardB;
+    public int Fame;
+    public int Reward_Min;//해당 Fame 최소 경험치
+    public int Reward_Max;//해당 Fame 최대 경험치
+    public int enemyClusterNumber;//출현하는 적 그룹 개수
+    public int Reward_Kill;//적 1킬 당 보상 골드
+    public int Reward_GroupOppression;//적 그룹 제압 보상 골드
 
     public Data_SetupPlayer()
     {
-        fame = -1;
-        lvExperience = -1;
+        Fame = -1;
+        Reward_Min = -1;
+        Reward_Max = -1;
         enemyClusterNumber = -1;
-        rewardA = -1;
-        rewardB = -1;
+        Reward_Kill = -1;
+        Reward_GroupOppression = -1;
     }
 }
 
@@ -42,8 +48,6 @@ public static class Data_Player
     const int OurForcesTypes = 4;
     const int TrapTypes = 4;
 
-    private static int lvExperience;//레벨업에 필요한 경험치
-    private static int experience;//플레이어가 현재 가지고 있는 경험치
     public static int[] BuildingLv = new int[BuildingTypes];
     public static int[] OurForcesLv = new int[OurForcesTypes];
     public static int[] TrapLv = new int[TrapTypes];
@@ -57,14 +61,14 @@ public static class Data_Player
     public static void addFame(int add_f) { Fame += add_f; }
     public static void subGold(int sub_g) { Gold -= sub_g; Debug.Log("gold : " + Gold); }
     public static void subFame(int sub_f) { Fame -= sub_f; }
-    public static void addLvExperience(int add_le) { lvExperience += add_le; }
+    public static void addLvExperience(int add_le) { LvExperience += add_le; }
     public static void addExperience(int add_e)
     {//player level이 최대치면 경험치 오르지 않음.
         if (Fame < 25)
-            experience += add_e;
+            Experience += add_e;
     }
-    public static void subLvExperience(int sub_le) { lvExperience -= sub_le; }
-    public static void subExperience(int sub_e) { experience -= sub_e; }
+    public static void subLvExperience(int sub_le) { LvExperience -= sub_le; }
+    public static void subExperience(int sub_e) { Experience -= sub_e; }
     public static bool isEnough_G(int price) { return (Gold >= price) ? true : false; }
 
     public static void initObjectLv()

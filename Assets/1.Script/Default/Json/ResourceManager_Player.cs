@@ -34,11 +34,12 @@ public class ResourceManager_Player : JsonReadWrite
         for (int i = 0; i < data.Count; i++)
         {
             Data_SetupPlayer tmp = new Data_SetupPlayer();
-            tmp.fame = int.Parse(data[i]["fame"].ToString());
-            tmp.lvExperience = int.Parse(data[i]["lvExperience"].ToString());
+            tmp.Fame = int.Parse(data[i]["Fame"].ToString());
+            tmp.Reward_Min= int.Parse(data[i]["Reward_Min"].ToString());
+            tmp.Reward_Max= int.Parse(data[i]["Reward_Max"].ToString());
             tmp.enemyClusterNumber = int.Parse(data[i]["enemyClusterNumber"].ToString());
-            tmp.rewardA = int.Parse(data[i]["rewardA"].ToString());
-            tmp.rewardB = int.Parse(data[i]["rewardB"].ToString());
+            tmp.Reward_Kill = int.Parse(data[i]["Reward_Kill"].ToString());
+            tmp.Reward_GroupOppression = int.Parse(data[i]["Reward_GroupOppression"].ToString());
             Tbl_Player.Add(tmp);
         }
     }

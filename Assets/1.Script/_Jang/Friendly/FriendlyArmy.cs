@@ -33,7 +33,6 @@ public class FriendlyArmy : Friendly {
 		int perDamage =  Mathf.RoundToInt(AttackDamage * 1.5f);
 		GameManager.ParticleGenerate(EFFECT_TYPE.Bang, targetEnemy.NavObj.position);
 		targetEnemy.GroupConductor.RangeInEnemy(targetEnemy.NavObj.position, perDamage,5.0f ,EFFECT_TYPE.Bang);
-		AttackCount = 0;
 		isSkill = false;
 	}
 

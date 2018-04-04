@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 	public Friendly targetFriend;			//타겟의 정보를 가져오기 위한
 	public Transform OriginalPoint;			//기본 타겟을 저장하기위한
 
+    public int Level;
 	public int Hp;							//체력
 	public int Attack;						//공격력
 	public int MaxHp;						//최대 체력
@@ -98,7 +99,7 @@ public class Enemy : MonoBehaviour {
 	private IEnumerator DieEvent()
 	{
 		yield return new WaitForSeconds(0.5f);
-		gameObject.SetActive(false);
+		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushEnemy(NavObj.gameObject);
 	}
 	private bool DirDistance()
