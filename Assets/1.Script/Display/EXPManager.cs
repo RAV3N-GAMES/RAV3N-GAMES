@@ -8,7 +8,7 @@ public class EXPManager : MonoBehaviour {
     public Image expBar;
     public Text fameText;
     public Text prizeText;
-    
+
     public void DisplayExInfo() {
         fameText.text = Data_Player.Fame.ToString();
         prizeText.text = Data_Player.Experience.ToString();
@@ -22,12 +22,26 @@ public class EXPManager : MonoBehaviour {
         prizeText.fontSize += 3;
     }
     void Start()
-    {
-
+    { 
     }
 
     void Update()
     {
         DisplayExInfo();
+    }
+
+    public static void addExp(int exp) {
+        Data_Player.addExperience(exp);
+        if (Data_Player.Experience >= Data_Player.LvExperience) {
+            LvUp();
+        }
+        
+    }
+
+    private static void LvUp() {
+        Data_Player.Fame++;
+        foreach (SecretActs s in SecretManager.SecretList) {
+            s.CheckChange();
+        }
     }
 }

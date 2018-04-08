@@ -22,7 +22,7 @@ public class SecretManager : JsonReadWrite
     const string Path3 = "./Assets/Resources/Data/Secret_AlienBloodStorage.json";
     const string Path4 = "./Assets/Resources/Data/Secret_SpaceVoiceRecordingFile.json";
     public static List<SecretObject> Tbl_SecretSetup = new List<SecretObject>();
-
+    public static List<SecretActs> SecretList;
     public static Dictionary<string, int> SecretFame = new Dictionary<string, int>(); //첫 등장 Fame
 
     //    public static List<SecretActs> CurrentSecrets = new List<SecretActs>();//기밀이 1개 생성될 때마다 리스트에 추가. 다룰 일이 생기면 그때 넣도록.
@@ -34,6 +34,8 @@ public class SecretManager : JsonReadWrite
         ReadMain(Path2);
         ReadMain(Path3);
         ReadMain(Path4);
+        SecretList = new List<SecretActs>();
+
         /*입력값 확인용 코드입니다. 지우지 마세요. 
                 for (int i = 0; i < 22 * 4; i++)
                 {

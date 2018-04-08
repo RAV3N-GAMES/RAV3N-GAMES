@@ -23,7 +23,7 @@ public class EnemyManager : JsonReadWrite
     const string Path5 = "./Assets/Resources/Data/Enemy_Meateater.json";
     const string Path6 = "./Assets/Resources/Data/Enemy_WanderingMinstrel.json";
     public static List<EnemyObject> Tbl_EnemySetup = new List<EnemyObject>();
-
+    public static int EnemyGroupMax;
     // Use this for initialization
     void Awake () {
         ReadMain(Path1);
@@ -32,6 +32,7 @@ public class EnemyManager : JsonReadWrite
         ReadMain(Path4);
         ReadMain(Path5);
         ReadMain(Path6);
+        EnemyGroupMax = 0;
         /*입력값 확인용 코드입니다. 지우지 마세요. 
         for (int i = 0; i < 22*6; i++)
         {

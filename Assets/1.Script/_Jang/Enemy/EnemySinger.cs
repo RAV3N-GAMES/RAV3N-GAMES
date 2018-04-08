@@ -60,31 +60,65 @@ public class EnemySinger : Enemy {
 
 		ChangeAnimation();
 	}
-	private void OriginalDest()
-	{
-		dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
-		start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
-		Distance = Vector3.Distance(start, dest);
 
-		if (Distance <= StopDistance)
-		{
-			if (enemyAI.enabled)
-			{
-				enemyAI.enabled = false;
-			}
-			currentState = EnemyState.Idle;
-		}
-		else if (Distance > StopDistance)
-		{
-			if (!enemyAI.enabled)
-			{
-				enemyAI.enabled = true;
-			}
-			currentState = EnemyState.Walk;
-			enemyAI.SetDestination(OriginalPoint.position);
-		}
+    private Transform FindClosestSecret(Vector3 start)
+    {
+        Transform Closest = null;
+        float closest = float.MaxValue;
+        float tmp = 0f;
+        foreach (SecretActs s in SecretManager.SecretList)
+        {
+            tmp = Vector3.Distance(start, s.transform.position);
+            if (tmp < closest)
+            {
+                Closest = s.transform;
+                closest = tmp;
+            }
+        }
+        return Closest;
+    }
+    private void OriginalDest()
+    {
+        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+        if (!isSeizure)
+            dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
+        else
+        {
+            if (SecretManager.SecretList.Count != 0)
+            {
+                dest = FindClosestSecret(start).position;
+            }
+            else
+                dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
+        }
+        Distance = Vector3.Distance(start, dest);
 
-	}
+        if (Distance <= StopDistance)
+        {
+            if (enemyAI.enabled)
+            {
+                enemyAI.enabled = false;
+            }
+            currentState = EnemyState.Idle;
+        }
+        else if (Distance > StopDistance)
+        {
+            if (!enemyAI.enabled)
+            {
+                enemyAI.enabled = true;
+            }
+            currentState = EnemyState.Walk;
+            if (!isSeizure)
+                enemyAI.SetDestination(OriginalPoint.position);
+            else
+            {
+                if (SecretManager.SecretList.Count != 0)
+                    enemyAI.SetDestination(FindClosestSecret(start).position);
+                else
+                    enemyAI.SetDestination(OriginalPoint.position);
+            }
+        }
+    }
 	private bool HealingDirDisatnce()
 	{
 		dest = new Vector3(healTarget.NavObj.position.x, 0, healTarget.NavObj.position.z);

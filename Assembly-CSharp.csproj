@@ -84,6 +84,7 @@
      <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />
      <Compile Include="Assets\1.Script\Room\MiniMapManager.cs" />
      <Compile Include="Assets\1.Script\Room\RoomManager.cs" />
+     <Compile Include="Assets\1.Script\Secrets\SecretActs.cs" />
      <Compile Include="Assets\1.Script\Select\BoxManager.cs" />
      <Compile Include="Assets\1.Script\Select\ObjInfoPopUp.cs" />
      <Compile Include="Assets\1.Script\Select\SlotArray.cs" />

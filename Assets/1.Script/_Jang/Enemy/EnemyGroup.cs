@@ -31,11 +31,14 @@ public class EnemyGroup : MonoBehaviour {
 	{
 		return this;
 	}
-	private IEnumerator MemberAppear(float probability)
+	private IEnumerator MemberAppear(float probability, int GroupId)
 	{
         int Group_Normal = 0;//비행청소년, 사채업자, 부패경찰
         int Group_Special = 0;//음유시인, 분노조절장애농부, 소매치기
-        float criteria = 0.5f;
+        float criteria = 0.5f;//랜덤값이 이보다 크면 명예집단 / 작으면 기밀탈취집단.
+        foreach (SecretActs s in SecretManager.SecretList) {
+            criteria += (float)s.Chance;
+        }
 		if (EnemyCount <= 0)
 			EnemyCount = 4;
 
@@ -70,6 +73,9 @@ public class EnemyGroup : MonoBehaviour {
                 Group_Special++;
             }
 
+            obj.GetComponentInChildren<Enemy>().isSeizure = (criteria < probability) ? false : true;
+            Debug.Log("ID: "+GroupId+"Criteria: " + criteria + " Prob: " + probability);
+            obj.GetComponentInChildren<Enemy>().Group = GroupId;
             obj.SetActive(false);
 			obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
 
@@ -87,9 +93,9 @@ public class EnemyGroup : MonoBehaviour {
         }
 	}
 
-	public void GroupMemberInit(float probability)
+	public void GroupMemberInit(float probability, int GroupId)
 	{
-		StartCoroutine(MemberAppear(probability));
+		StartCoroutine(MemberAppear(probability, GroupId));
 	}
 	
 
@@ -107,6 +113,7 @@ public class EnemyGroup : MonoBehaviour {
 		{
 			enemyList.Clear();
 			isGenerate = false;
+            Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame-4].Reward_GroupOppression);
 		}
 	}
 
