@@ -188,7 +188,15 @@ public class Enemy : MonoBehaviour {
 		{
 			OriginalDest();
 		}
-	}
+
+        if (transform.position == OriginalPoint.transform.position) {
+            enemyAI.enabled = false;
+            scollider.enabled = false;
+            UIEnemyHealth.HealthActvie(false);
+            GroupConductor.RemoveEnemy(this);
+            StartCoroutine(DieEvent());
+        }
+    }
 	protected void ChangeAnimation()
 	{
 		anime.SetInteger("Action", (int)currentState);

@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour {
 
 	public Transform GroupParent;
 	public Transform CommandPost;
-	public Transform[] GenPoint;
-
+	
 	public EnemyGroup[]	enemyGroups;
 	public FriendlyGroup[] friendGroups;
 
@@ -40,11 +39,6 @@ public class GameManager : MonoBehaviour {
 		else
 			Destroy(gameObject);
 
-        foreach (Transform i in GenPoint){
-            Vector3 pos = new Vector3(i.position.x, 0, i.position.z);
-            i.SetPositionAndRotation(pos, Quaternion.identity);
-        }
-
 		tileMask = LayerMask.GetMask("Tile");
 		GroupInit();
 	}
@@ -60,18 +54,32 @@ public class GameManager : MonoBehaviour {
 
 	public void EnemyGenerate()
 	{
-		if (EnemyGroupEvent().gameObject.activeSelf)
-		{
-			genGroup = EnemyGroupEvent();
-			if (!genGroup.isGenerate)
-			{
-				if (genGroup.EnemyCount != 0)
-					return;
-
-				genGroup.isGenerate = true;
-				genGroup.GroupMemberInit();     //적 그룹을 생성하지않은 곳을 찾아 생성호출
-			}
-		}
+        int i = 0;
+        int GenerateCount = 0;
+        List<EnemyGroup> activeGroup = new List<EnemyGroup>();
+        for (i = 0; i < enemyGroups.Length; i++) {
+            if (enemyGroups[i].gameObject.activeSelf) {
+                activeGroup.Add(enemyGroups[i]);
+            }
+        }
+        for(i=1;i<enemyGroups.Length;i++){//0번방에선 Enemy 생성 안함
+            int random = Random.Range(1, activeGroup.Count);
+            genGroup = activeGroup[random];
+            
+            if (!genGroup.isGenerate)
+            {
+                if (genGroup.EnemyCount != 0)
+                    return;
+                genGroup.isGenerate = true;
+                genGroup.GroupMemberInit();     //적 그룹을 생성하지않은 곳을 찾아 생성호출
+                GenerateCount++;
+            }
+            else
+                continue;
+            if (GenerateCount == ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber)
+                break;
+            
+        }
 	}
 	private void RayEvent()
 	{
