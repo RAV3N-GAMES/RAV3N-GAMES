@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour {
 	public float Distance;					//거리 체크 
 	public float StopDistance;				//거리 제한 값
 	public bool isDie;						//현재 죽은 상태 체크
-
+    public bool isSeizure;                  //탈취집단이면 true
 	protected NavMeshAgent enemyAI;			//NevMeshAgent 
 	protected Animator anime;				//애니메이션
 	protected SphereCollider scollider;		//2D캐릭터에 붙어있는 콜라이더
@@ -84,21 +84,25 @@ public class Enemy : MonoBehaviour {
 		GroupConductor.RemoveEnemy(this);
 		StartCoroutine("DieEvent");
 	}
-	public bool Health(int damage)
-	{
-		UIEnemyHealth.ValueDecrease(damage);
+    public bool Health(int damage)
+    {
+        UIEnemyHealth.ValueDecrease(damage);
 
-		if (Hp <= 10)
-			return true;
-		else
-			Hp -= damage;
+        if (Hp <= 10)
+            return true;
+        else
+            Hp -= damage;
 
-		return false;
-	}
-	
+        return false;
+    }
+    private void KillGold() {
+        Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].Reward_Kill);
+    }
+
 	private IEnumerator DieEvent()
 	{
-		yield return new WaitForSeconds(0.5f);
+        KillGold();
+        yield return new WaitForSeconds(0.5f);
 		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushEnemy(NavObj.gameObject);
 	}

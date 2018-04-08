@@ -31,11 +31,11 @@ public class EnemyGroup : MonoBehaviour {
 	{
 		return this;
 	}
-	private IEnumerator MemberAppear()
+	private IEnumerator MemberAppear(float probability)
 	{
         int Group_Normal = 0;//비행청소년, 사채업자, 부패경찰
         int Group_Special = 0;//음유시인, 분노조절장애농부, 소매치기
-        
+        float criteria = 0.5f;
 		if (EnemyCount <= 0)
 			EnemyCount = 4;
 
@@ -87,9 +87,9 @@ public class EnemyGroup : MonoBehaviour {
         }
 	}
 
-	public void GroupMemberInit()
+	public void GroupMemberInit(float probability)
 	{
-		StartCoroutine(MemberAppear());
+		StartCoroutine(MemberAppear(probability));
 	}
 	
 
