@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RoomManager : MonoBehaviour {
     public Transform RoomParent;
@@ -42,10 +43,31 @@ public class RoomManager : MonoBehaviour {
     {
         Camera.main.transform.position = new Vector3(Room[idx].transform.position.x, Camera.main.transform.position.y, Room[idx].transform.position.z);
     }
+    public bool InitialRooms(int idx) {
+        return (idx <= 1 || idx == 5 || idx == 6) ? true : false;//idx= 0 or 1 or 5 or 6 -> true
+    }
 
     public void OpenRoom(int idx)
     {
         Room[idx].SetActive(true);
+        if (idx >= 1) { 
+            if (Room[idx - 1].gameObject.activeSelf) {
+                NavMeshObstacle[] obs = Room[idx - 1].GetComponentsInChildren<NavMeshObstacle>();
+                Debug.Log("Name0: " + obs[0].name);
+                Debug.Log("Name1: " + obs[1].name);
+
+                obs[1].enabled = false;
+            }
+        }
+        if (idx >= 5) { 
+            if (Room[idx - 5].gameObject.activeSelf) {
+                NavMeshObstacle[] obs = Room[idx - 5].GetComponentsInChildren<NavMeshObstacle>();
+                Debug.Log("Name0: " + obs[0].name);
+                Debug.Log("Name1: " + obs[1].name);
+                Debug.Log("Name P: " + obs[0].transform.parent.transform.parent.name);
+                obs[0].enabled = false;
+            }
+        }
     }
 
     Vector3 GetRay()

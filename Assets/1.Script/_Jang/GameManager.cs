@@ -78,7 +78,6 @@ public class GameManager : MonoBehaviour {
                 continue;
             if (GenerateCount == ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber)
                 break;
-            
         }
 	}
 	private void RayEvent()
