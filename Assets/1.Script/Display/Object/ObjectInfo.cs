@@ -153,7 +153,7 @@ public class ObjectInfo : MonoBehaviour
         ClickCollider.SetActive(true);
         TileCollider.SetActive(false);
         ClickCollider.SetActive(!DayandNight.isDay);
-
+        
         GetComponent<ObjectColor>().OffColor();
     }
 

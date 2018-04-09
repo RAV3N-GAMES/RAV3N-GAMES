@@ -175,7 +175,7 @@ public class MiniMapManager : MonoBehaviour {
         return newRoom;
     }
 
-    void InitMap() //맵 창에 보이게 하기위함...실제 방은 미리 다 만들어놓고 활성화 여부를 변경해서 사용할 수 있도록 할것
+    void InitMap()
     {
         DestroyRoomPref();
         float size = 1f / (float)Step;
