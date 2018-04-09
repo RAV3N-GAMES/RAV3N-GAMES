@@ -56,8 +56,6 @@ public class EnemyGroupResult : MonoBehaviour {
         {
             isSuccess = isSuccess & !active[i];
 
-            print("enemyId : " + enemyId[i]);
-
             Enemy[i].sprite = JsonDataManager.slotImage[enemyId[i]];
             Enemy[i].color = new Color(1, 1, 1, 1);
         }

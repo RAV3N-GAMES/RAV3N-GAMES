@@ -21,7 +21,6 @@ public class RoomManager : MonoBehaviour {
     float touchDistance;
 
     public static bool isTransparency;
-
     public MiniMapManager miniMapManager;
 
     void Awake()

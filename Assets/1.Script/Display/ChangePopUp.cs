@@ -15,6 +15,7 @@ public class ChangePopUp : MonoBehaviour {
     public Text nameText;
     public Text priceText;
     public Text repairPriceText;
+    public Text partialRepairPriceText;
     public Text contentsText;
 
     public Image ObjImage;
@@ -25,6 +26,8 @@ public class ChangePopUp : MonoBehaviour {
     public GameObject DontDestroy;
 
     public GameObject MovePopUp;
+
+    bool isMove;
 
     void InitBuilding(ObjectInfo objInfo)
     {
@@ -80,6 +83,7 @@ public class ChangePopUp : MonoBehaviour {
         nameText.text = id + " " + objInfo.level.ToString() + "단계";
         HPText.text = "HP " + objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
         contentsText.text = objInfo.level.ToString() +"단계의 " + id + "이다.";
+        partialRepairPriceText.text = Data_Player.Gold + "/" + Data_Player.Gold + "골드";
 
         switch (objInfo.type)
         {
@@ -105,8 +109,12 @@ public class ChangePopUp : MonoBehaviour {
             Obj.GetComponent<ObjectMove>().enabled = true;
             Obj.GetComponent<ObjectMove>().changePos = true;
 
+            Obj.GetComponent<ObjectInfo>().TileCollider.SetActive(true);
             Obj.GetComponent<ObjectColor>().OnColor(true);
+
             Obj.GetComponent<DisplayObject>().CreateButton = MovePopUp;
+
+            isMove = true;
         }
         else
             DontDestroy.SetActive(true);
@@ -172,5 +180,16 @@ public class ChangePopUp : MonoBehaviour {
                 DontDestroy.SetActive(true);
         }
         gameObject.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        isMove = false;
+    }
+
+    void OnDisable()
+    {
+        if (!isMove)
+            Obj.GetComponent<ObjectColor>().OnRecognizeRage(false);
     }
 }

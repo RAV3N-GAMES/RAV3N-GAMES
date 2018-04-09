@@ -7,6 +7,7 @@ public class CheckTile : MonoBehaviour {
     public List<GameObject> lastCol;
 
     public SpriteRenderer Warp;
+    public SpriteRenderer WarpExit;
 
     ObjectInfo objectInfo;
     ObjectColor objectColor;
@@ -33,7 +34,6 @@ public class CheckTile : MonoBehaviour {
     public Transform findPivotCol()
     {
         int Cnt = lastCol.Count;
-
         GameObject tempPivot = lastCol[0];
 
         for (int i = 1; i < Cnt; i++)
@@ -145,10 +145,18 @@ public class CheckTile : MonoBehaviour {
                 return false;
         }
 
-        if(name.Equals("Warp_Exit"))
+        if (name.Equals("Warp_Exit"))
         {
             if (!roomName.Equals(Warp.sortingLayerName))
                 return false;
+        }
+        else if(name.Equals("Warp"))
+        {
+            if(!WarpExit.sortingLayerName.Equals("NewObject"))
+            {
+                if (!roomName.Equals(WarpExit.sortingLayerName))
+                    return false;
+            }
         }
 
         return true;
@@ -245,12 +253,11 @@ public class CheckTile : MonoBehaviour {
     bool isEnable()
     {
         if (lastCol.Count == 0 || !isSameRoom() || lastCol.Count < TileCnt)
-            return false;
+            return false;        
 
         tileManager = lastCol[0].transform.parent.parent.GetComponent<TileManager>();
 
         int[] idx = makeIdx();
-
         return tileManager.isEnableTile(idx);
     }
 
@@ -267,6 +274,7 @@ public class CheckTile : MonoBehaviour {
         }
 
         isPossible = isEnable() & isBuilding;
+        
         objectColor.OnColor(isPossible);
     }
 

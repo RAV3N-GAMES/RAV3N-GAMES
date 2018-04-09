@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectColor : MonoBehaviour
 {
     [Tooltip("0번에는 오브젝트 이미지를 넣으세요.")]
+    public SpriteRenderer RecognizeRange;
     public List<SpriteRenderer> sprite;
 
     public Color SuccessColor;
@@ -17,12 +18,29 @@ public class ObjectColor : MonoBehaviour
         objectInfo = GetComponent<ObjectInfo>();
     }
 
+    public void OnRecognizeRage(bool isPossible)
+    {
+        if (RecognizeRange != null)
+        {
+            float alpha = 0;
+            if (isPossible)
+                alpha = 0.3f;
+
+            RecognizeRange.color = new Color(0, 1, 1, alpha);
+        }
+    }
+
     void SetSpriteColor(Color _color)
     {
         for (int i = 0; i < sprite.Count; i++)
         {
             sprite[i].color = _color;
         }
+
+        if (_color.a == 0)
+            OnRecognizeRage(false);
+        else
+            OnRecognizeRage(true);
     }
 
     public void SetSortingLayer(string layer)

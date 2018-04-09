@@ -14,6 +14,8 @@ public class TileManager : MonoBehaviour {
     GameObject ChangePopUp;
     GameObject CreatePopUp;
 
+    MapManager mapManager;
+
     int warpCol;
     int warpRow;
 
@@ -44,8 +46,11 @@ public class TileManager : MonoBehaviour {
         objectList = new List<TileObject>();
         saveObj = new List<SaveObject>();
 
-        ChangePopUp = FindObjectOfType<CreateObject>().ChangePopUp;
-        CreatePopUp = FindObjectOfType<CreateObject>().CreatePopUp;
+        CreateObject createObject = FindObjectOfType<CreateObject>();
+        ChangePopUp = createObject.ChangePopUp;
+        CreatePopUp = createObject.CreatePopUp;
+
+        mapManager = FindObjectOfType<MapManager>();
 
         warpRow = -1;
         warpCol = -1;
@@ -208,6 +213,7 @@ public class TileManager : MonoBehaviour {
 
         if (isDestroyed)
             DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id);
+        mapManager.SetObjectCnt(objInfo.type, -1);
 
         return true;
     }
@@ -352,6 +358,8 @@ public class TileManager : MonoBehaviour {
         saveObj.Add(new SaveObject(Obj.transform.position, objInfo.DontDestroy, type, objInfo.id, objInfo.level,
                                    objInfo.presentHP, objInfo.totalHP, idx[0], idx[1],
                                    objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation, warpRow, warpCol));
+
+        mapManager.SetObjectCnt(objInfo.type, 1);
     }
     
 

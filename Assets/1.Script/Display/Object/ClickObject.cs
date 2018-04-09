@@ -31,6 +31,8 @@ public class ClickObject : MonoBehaviour
                 ChangePopUp.SetActive(true);
                 ChangePopUp.GetComponent<ChangePopUp>().Obj = gameObject;
                 ChangePopUp.GetComponent<ChangePopUp>().InitPopUp();
+
+                GetComponent<ObjectColor>().OnRecognizeRage(true);
             }
         }
     }

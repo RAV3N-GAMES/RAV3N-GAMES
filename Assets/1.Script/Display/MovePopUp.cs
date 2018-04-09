@@ -43,7 +43,7 @@ public class MovePopUp : MonoBehaviour {
         {
             objectInfo.rotationObject();
         }
-
+        
         movingObj.GetComponent<ObjectInfo>().OnDisplay();
         SetSortingLayer();  //이거 굳이 해야하나
         gameObject.SetActive(false);
@@ -67,19 +67,25 @@ public class MovePopUp : MonoBehaviour {
         tileManager.SetMatrix(preIdx, type);
 
         RoomManager.ChangeClickStatus(true);
+
         StartCoroutine("ReturnDisplay");
-        //CreatePopUp의 CreateObj 참고(돈사용 없애기)
     }
 
     public void MoveObj()
     {
-        //Warp에 대한 체크해줘야할듯 //안해줘도 될거 같기도 함 //디스트로이가 요주
-        movingObj.GetComponent<CheckTile>().DestroyObj(false, preIdx);
-        movingObj.GetComponent<DisplayObject>().UsingTile();
+        if (movingObj.GetComponent<DisplayObject>().UsingTile())
+        {
+            movingObj.GetComponent<CheckTile>().DestroyObj(false, preIdx);
 
-        movingObj.GetComponent<ObjectInfo>().OnDisplay();
-        RoomManager.ChangeClickStatus(true);
-        //CreatePopUp의 CreateObj 참고(돈사용 없애기) => ReturnObj 랑 겹침
+            movingObj.GetComponent<ObjectInfo>().OnDisplay();
+            RoomManager.ChangeClickStatus(true);
+
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            ReturnObj();
+        }
     }
     
     IEnumerator CheckTile()
