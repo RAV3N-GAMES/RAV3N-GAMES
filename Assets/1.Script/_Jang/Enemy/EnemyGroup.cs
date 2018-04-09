@@ -7,11 +7,17 @@ public class EnemyGroup : MonoBehaviour {
 	public int GroupIndex;
 	public int EnemyCount;
 	public bool isGenerate;
+    public Transform[] GenPoint;
 
-	private List<Enemy> enemyList = new List<Enemy>();
+    private List<Enemy> enemyList = new List<Enemy>();
 	private WaitForSeconds genDelay = new WaitForSeconds(0.7f);
 
     private void Awake() {
+        foreach (Transform i in GenPoint)
+        {
+            Vector3 pos = new Vector3(i.position.x, 0, i.position.z);
+            i.SetPositionAndRotation(pos, Quaternion.identity);
+        }
     }
 	private void OnEnable()
 	{
@@ -25,22 +31,52 @@ public class EnemyGroup : MonoBehaviour {
 	{
 		return this;
 	}
-	private IEnumerator MemberAppear()
+	private IEnumerator MemberAppear(float probability, int GroupId)
 	{
+        int Group_Normal = 0;//비행청소년, 사채업자, 부패경찰
+        int Group_Special = 0;//음유시인, 분노조절장애농부, 소매치기
+        float criteria = 0.5f;//랜덤값이 이보다 크면 명예집단 / 작으면 기밀탈취집단.
+        foreach (SecretActs s in SecretManager.SecretList) {
+            criteria += (float)s.Chance;
+        }
 		if (EnemyCount <= 0)
 			EnemyCount = 4;
 
 		Enemy info = null;
-		Transform pos = GameManager.current.GenPoint[Random.Range(0, 2)];
+        //Genopint =. GameManger에서 EnemyGroup으로 옮김
+		Transform pos = GenPoint[Random.Range(0, GenPoint.Length)];
 		for (int i = 0; i < EnemyCount; ++i)
 		{
 			int rand = Random.Range(0, PoolManager.current.GetEnemyCountMax);
 
 			if (rand == 1 && i == 0)
 				rand = rand - 1;
-			GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
-            
-			obj.SetActive(false);
+            /*
+             *  Group_Normal 및 Special을 2로 고정하는건 문제가 될 수 있음
+             *  따라서 EnemyCount의 절반을 기준으로 하겠음.
+             */
+            if (Group_Normal >= EnemyCount / 2)
+            {
+                rand = Random.Range((int)(ENEMY_TYPE.Singer), PoolManager.current.GetEnemyCountMax);
+            }
+            else if (Group_Special >= EnemyCount / 2)
+            {
+                rand = Random.Range((int)(ENEMY_TYPE.FlyTeen), (int)(ENEMY_TYPE.Sheriff));
+            }
+            GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
+            if (rand <= (int)(ENEMY_TYPE.Sheriff))
+            {
+                Group_Normal++;
+            }
+            else
+            {
+                Group_Special++;
+            }
+
+            obj.GetComponentInChildren<Enemy>().isSeizure = (criteria < probability) ? false : true;
+            Debug.Log("ID: "+GroupId+"Criteria: " + criteria + " Prob: " + probability);
+            obj.GetComponentInChildren<Enemy>().Group = GroupId;
+            obj.SetActive(false);
 			obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
 
 			yield return genDelay;
@@ -57,9 +93,9 @@ public class EnemyGroup : MonoBehaviour {
         }
 	}
 
-	public void GroupMemberInit()
+	public void GroupMemberInit(float probability, int GroupId)
 	{
-		StartCoroutine(MemberAppear());
+		StartCoroutine(MemberAppear(probability, GroupId));
 	}
 	
 
@@ -77,6 +113,7 @@ public class EnemyGroup : MonoBehaviour {
 		{
 			enemyList.Clear();
 			isGenerate = false;
+            Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame-4].Reward_GroupOppression);
 		}
 	}
 

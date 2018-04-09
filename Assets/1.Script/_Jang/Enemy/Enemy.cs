@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 	public Friendly targetFriend;			//타겟의 정보를 가져오기 위한
 	public Transform OriginalPoint;			//기본 타겟을 저장하기위한
 
+    public int Group;                       //4명으로 묶인 한 그룹
     public int Level;
 	public int Hp;							//체력
 	public int Attack;						//공격력
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour {
 	public float Distance;					//거리 체크 
 	public float StopDistance;				//거리 제한 값
 	public bool isDie;						//현재 죽은 상태 체크
-
+    public bool isSeizure;                  //탈취집단이면 true
 	protected NavMeshAgent enemyAI;			//NevMeshAgent 
 	protected Animator anime;				//애니메이션
 	protected SphereCollider scollider;		//2D캐릭터에 붙어있는 콜라이더
@@ -37,7 +38,7 @@ public class Enemy : MonoBehaviour {
 	protected EFFECT_TYPE effectType;		//캐릭터가 사용하는 이펙트 타입
 
 	private bool isShoot;					//딜레이와 공격을 맞추기위한 
-	//기능 초기화
+    //기능 초기화
 	public virtual void EnemyInit()
 	{
 		anime.Play("idle");
@@ -67,8 +68,6 @@ public class Enemy : MonoBehaviour {
                 targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
             }
             catch { }
-				
-
 		}
 	}
 	public void Die()
@@ -84,21 +83,25 @@ public class Enemy : MonoBehaviour {
 		GroupConductor.RemoveEnemy(this);
 		StartCoroutine("DieEvent");
 	}
-	public bool Health(int damage)
-	{
-		UIEnemyHealth.ValueDecrease(damage);
+    public bool Health(int damage)
+    {
+        UIEnemyHealth.ValueDecrease(damage);
 
-		if (Hp <= 10)
-			return true;
-		else
-			Hp -= damage;
+        if (Hp <= 10)
+            return true;
+        else
+            Hp -= damage;
 
-		return false;
-	}
-	
+        return false;
+    }
+    private void KillGold() {
+        Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].Reward_Kill);
+    }
+
 	private IEnumerator DieEvent()
 	{
-		yield return new WaitForSeconds(0.5f);
+        KillGold();
+        yield return new WaitForSeconds(0.5f);
 		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushEnemy(NavObj.gameObject);
 	}
@@ -124,13 +127,38 @@ public class Enemy : MonoBehaviour {
 			return false;
 		}
 	}
-	private void OriginalDest()
-	{
-		if (targetFriend != null)
-			return;
 
-		dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
-		start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+    private Transform FindClosestSecret(Vector3 start) {
+        Transform Closest=null;
+        float closest = float.MaxValue;
+        float tmp = 0f;
+        foreach (SecretActs s in SecretManager.SecretList) {
+            tmp = Vector3.Distance(start, s.transform.position);
+            if (tmp < closest) {
+                Closest = s.transform;
+                closest = tmp;
+            }
+        }
+        return Closest;
+    }
+    private void OriginalDest()
+    {
+        if (targetFriend != null)
+            return;
+        Transform d=null;
+        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+        if (!isSeizure) {
+            dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
+        }
+        else {
+            if (SecretManager.SecretList.Count != 0) {
+                d = FindClosestSecret(start);
+                dest = d.position;
+            }
+            else
+                dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
+        }
+        
 		Distance = Vector3.Distance(start, dest);
 
 		if (Distance < StopDistance)
@@ -151,7 +179,14 @@ public class Enemy : MonoBehaviour {
 				enemyAI.enabled = true;
 			}
 			currentState = EnemyState.Walk;
-			enemyAI.SetDestination(OriginalPoint.position);
+            if(!isSeizure)
+    			enemyAI.SetDestination(OriginalPoint.position);
+            else {
+                if (SecretManager.SecretList.Count != 0)
+                    enemyAI.SetDestination(d.position);
+                else
+                    enemyAI.SetDestination(OriginalPoint.position);
+            }
         }
 	}
 	private IEnumerator ShootEvent()
@@ -162,7 +197,9 @@ public class Enemy : MonoBehaviour {
 	}	
 	private void EnemyAction()
 	{
-		if (targetFriend != null)
+        
+
+        if (targetFriend != null)
 		{							
 			if (DirDistance() == true)
 			{
@@ -188,7 +225,15 @@ public class Enemy : MonoBehaviour {
 		{
 			OriginalDest();
 		}
-	}
+
+        if (transform.position == OriginalPoint.transform.position) {
+            enemyAI.enabled = false;
+            scollider.enabled = false;
+            UIEnemyHealth.HealthActvie(false);
+            GroupConductor.RemoveEnemy(this);
+            StartCoroutine(DieEvent());
+        }
+    }
 	protected void ChangeAnimation()
 	{
 		anime.SetInteger("Action", (int)currentState);

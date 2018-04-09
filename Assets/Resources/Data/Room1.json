@@ -1,1 +1,1 @@
-[{"type":0.0,"id":"OldBuilding","DontDestroy":0,"level":3,"presentHP":120,"totalHP":120,"mRow":12,"mCol":6,"coordinate":[0,0,0,1,1,0,1,1],"pivotObject":"0","pos":"19.43/-2.980232E-08/7.460001","isRotation":0,"parentRow":-1,"parentCol":-1}]
+[{"type":2.0,"id":"Guard","DontDestroy":0,"level":1,"presentHP":200,"totalHP":200,"mRow":7,"mCol":9,"coordinate":[0,0,0,1,1,0,1,1],"pivotObject":"0","pos":"13.2/-2.980232E-08/6.57","isRotation":0,"parentRow":-1,"parentCol":-1}]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyFlyTeen : Enemy
 {
-	private void Start()
+    private void Start()
 	{
 		StopDistance = 1;
 		effectType = EFFECT_TYPE.Approach;

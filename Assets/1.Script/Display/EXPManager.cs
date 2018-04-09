@@ -8,41 +8,40 @@ public class EXPManager : MonoBehaviour {
     public Image expBar;
     public Text fameText;
     public Text prizeText;
-    public int EXP = 60;
-    public int ExpRequirementofThisLevel = 70;
 
-    public void AddEXP(int num) // 경험치 추가 함수
-    {
-        EXP += num; // 경험치 더하기
-        if ( EXP >= ExpRequirementofThisLevel )
-        {
-            //Fame += 1;
-            EXP =- ExpRequirementofThisLevel;   
-        }
+    public void DisplayExInfo() {
+        fameText.text = Data_Player.Fame.ToString();
+        prizeText.text = Data_Player.Experience.ToString();
+        expBar.fillAmount = ((float)Data_Player.Experience / (float)Data_Player.LvExperience);
     }
 
-    public void DisplayFame()
-    {
-        //fameText.text = Fame;
+    void Awake() {
+        Data_Player.Fame = 4;
+        Data_Player.Experience = 100;
+        prizeText.color = Color.yellow;
+        prizeText.fontSize += 3;
     }
-
-    public void DisplayPrize(int prize)
-    {
-        prizeText.text = prize + "000";
-    }
-
-    public void DisplayEXP()
-    {
-        expBar.fillAmount = ((float)EXP / (float)ExpRequirementofThisLevel);
-    }
-
     void Start()
-    {
-
+    { 
     }
 
     void Update()
     {
-        DisplayEXP();
+        DisplayExInfo();
+    }
+
+    public static void addExp(int exp) {
+        Data_Player.addExperience(exp);
+        if (Data_Player.Experience >= Data_Player.LvExperience) {
+            LvUp();
+        }
+        
+    }
+
+    private static void LvUp() {
+        Data_Player.Fame++;
+        foreach (SecretActs s in SecretManager.SecretList) {
+            s.CheckChange();
+        }
     }
 }
