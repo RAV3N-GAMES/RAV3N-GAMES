@@ -7,7 +7,7 @@ public class EnemyGroup : MonoBehaviour {
 	public int GroupIndex;
 	public int EnemyCount;
 	public bool isGenerate;
-    public Transform[] GenPoint;
+    public List<Transform> GenPoint;
 
     private List<Enemy> enemyList = new List<Enemy>();
 	private WaitForSeconds genDelay = new WaitForSeconds(0.7f);
@@ -44,7 +44,7 @@ public class EnemyGroup : MonoBehaviour {
 
 		Enemy info = null;
         //Genopint =. GameManger에서 EnemyGroup으로 옮김
-		Transform pos = GenPoint[Random.Range(0, GenPoint.Length)];
+		Transform pos = GenPoint[Random.Range(0, GenPoint.Count)];
 		for (int i = 0; i < EnemyCount; ++i)
 		{
 			int rand = Random.Range(0, PoolManager.current.GetEnemyCountMax);
