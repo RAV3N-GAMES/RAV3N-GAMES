@@ -17,11 +17,13 @@ public class SecretActs : MonoBehaviour {
     void Start () {
         //현재 맵에 있는 Secret의 수를 1 늘린다. 최대치면 해당 gameObject를 삭제한다.
         secretSeizured = false;
-        checkCount();
-        if (Data_Player.Fame >= 4)
-            initChance();
-        SecretManager.SecretCount++;
-        SecretManager.SecretList.Add(this);
+        if (checkCount()) { 
+            if (Data_Player.Fame >= 4)
+                initChance();
+            SecretManager.SecretCount++;
+            SecretManager.SecretList.Add(this);
+            SecretManager.CalCriteria(this);
+        }
     }
 
     // Update is called once per frame
@@ -32,13 +34,15 @@ public class SecretActs : MonoBehaviour {
     public double getChance() { return Chance; }
     public void setChance(double chance) { Chance = chance; }
 
-    private void checkCount() {
+    private bool checkCount() {//True : 생성 성공 / False : 생성 실패(생성한계 초과)
         if (SecretManager.SecretCount >= SecretManager.GetSecretLimit())
         {
             Destroy(this.gameObject);
             SecretManager.SecretCount -= 1;
+            return false;
         }
         SecretManager.SecretCount += 1;
+        return true;
     }
     private void initChance() {
         switch (name)

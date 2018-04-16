@@ -6,7 +6,10 @@ public class CreatePopUp : MonoBehaviour {
     [HideInInspector]
     public GameObject Obj;
 
+    public GameObject RotationButton;
     public GameObject LackOfCoin;
+
+    public RoomManager roomManager;
 
     void UsingTile(string id, int price)
     {
@@ -39,6 +42,9 @@ public class CreatePopUp : MonoBehaviour {
                 UsingTile(id, price);
             else
                 CancelPref();
+
+            if(!Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
+                RoomManager.ChangeClickStatus(true);
         }
         else
         {
@@ -46,6 +52,7 @@ public class CreatePopUp : MonoBehaviour {
             LackOfCoin.SetActive(true);
         }
 
+        roomManager.SetClickColliderStatus(true);
         gameObject.SetActive(false);
     }
 
@@ -70,7 +77,7 @@ public class CreatePopUp : MonoBehaviour {
         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
         {
             GameObject Warp = Obj.transform.parent.gameObject;
-            Warp.GetComponent<DisplayObject>().DestroyObj();
+            Warp.GetComponent<DisplayObject>().DestroyObj(false);
 
             Destroy(Warp);
         }
@@ -78,13 +85,7 @@ public class CreatePopUp : MonoBehaviour {
             Destroy(Obj);
 
         gameObject.SetActive(false);
-
-        PossibleDrag();
-    }
-
-    public void PossibleDrag()
-    {
-        RoomManager.possibleDrag = true;
-        ClickObject.isPossibleClick = true;
+        roomManager.SetClickColliderStatus(true);
+        RoomManager.ChangeClickStatus(true);
     }
 }

@@ -165,7 +165,7 @@ public class PoolManager : MonoBehaviour {
 		else if (EnemyPoolList[(int)type].Count <= 0)
 		{
 			GameObject obj = Instantiate(EnemyPrefabs[(int)type]);
-			obj.name = EnemyPrefabs[(int)type].name;
+            obj.name = EnemyPrefabs[(int)type].name;
 			obj.transform.SetParent(null);
 			obj.SetActive(true);
             DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());

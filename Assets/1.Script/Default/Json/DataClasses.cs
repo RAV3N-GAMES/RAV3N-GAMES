@@ -57,9 +57,9 @@ public static class Data_Player
     public static int Fame;
     public static int LvExperience { get; set; }
     public static int Experience { get; set; }
-    public static void addGold(int add_g) { Gold += add_g; Debug.Log("gold : " + Gold); }
+    public static void addGold(int add_g) { Gold += add_g; }
     public static void addFame(int add_f) { Fame += add_f; }
-    public static void subGold(int sub_g) { Gold -= sub_g; Debug.Log("gold : " + Gold); }
+    public static void subGold(int sub_g) { Gold -= sub_g; }
     public static void subFame(int sub_f) { Fame -= sub_f; }
     public static void addLvExperience(int add_le) { LvExperience += add_le; }
     public static void addExperience(int add_e)

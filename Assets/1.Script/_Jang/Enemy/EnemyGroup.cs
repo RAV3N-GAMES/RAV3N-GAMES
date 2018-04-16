@@ -7,12 +7,14 @@ public class EnemyGroup : MonoBehaviour {
 	public int GroupIndex;
 	public int EnemyCount;
 	public bool isGenerate;
-    public Transform[] GenPoint;
+    public int isOpressed;//0: not opressed, 1: oppressed, 2: gold provided
+    public List<Transform> GenPoint;
 
     private List<Enemy> enemyList = new List<Enemy>();
 	private WaitForSeconds genDelay = new WaitForSeconds(0.7f);
 
     private void Awake() {
+        isOpressed = 0;
         foreach (Transform i in GenPoint)
         {
             Vector3 pos = new Vector3(i.position.x, 0, i.position.z);
@@ -35,16 +37,13 @@ public class EnemyGroup : MonoBehaviour {
 	{
         int Group_Normal = 0;//비행청소년, 사채업자, 부패경찰
         int Group_Special = 0;//음유시인, 분노조절장애농부, 소매치기
-        float criteria = 0.5f;//랜덤값이 이보다 크면 명예집단 / 작으면 기밀탈취집단.
-        foreach (SecretActs s in SecretManager.SecretList) {
-            criteria += (float)s.Chance;
-        }
+        
 		if (EnemyCount <= 0)
 			EnemyCount = 4;
 
 		Enemy info = null;
         //Genopint =. GameManger에서 EnemyGroup으로 옮김
-		Transform pos = GenPoint[Random.Range(0, GenPoint.Length)];
+		Transform pos = GenPoint[Random.Range(0, GenPoint.Count)];
 		for (int i = 0; i < EnemyCount; ++i)
 		{
 			int rand = Random.Range(0, PoolManager.current.GetEnemyCountMax);
@@ -73,8 +72,8 @@ public class EnemyGroup : MonoBehaviour {
                 Group_Special++;
             }
 
-            obj.GetComponentInChildren<Enemy>().isSeizure = (criteria < probability) ? false : true;
-            Debug.Log("ID: "+GroupId+"Criteria: " + criteria + " Prob: " + probability);
+            obj.GetComponentInChildren<Enemy>().isSeizure = (SecretManager.criteria < probability) ? false : true;
+            //Debug.Log("ID: "+GroupId+"Criteria: " + criteria + " Prob: " + probability);
             obj.GetComponentInChildren<Enemy>().Group = GroupId;
             obj.SetActive(false);
 			obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
@@ -98,8 +97,6 @@ public class EnemyGroup : MonoBehaviour {
 		StartCoroutine(MemberAppear(probability, GroupId));
 	}
 	
-
-	
 	//적군이 죽었을 때 List에서 삭제
 	public void RemoveEnemy(Enemy enemy)
 	{
@@ -107,25 +104,29 @@ public class EnemyGroup : MonoBehaviour {
 		enemyList.Remove(enemy);
         GameManager.current.friendGroups[GroupIndex]
             .GroupRouteCall(GroupFindEnemy());
-//			.FriendTargetChange(enemy);
+        /*GameManager.current.friendGroups[GroupIndex]
+          	.FriendTargetChange(enemy);*/
 
-		if (enemyList.Count <= 0)
+        if (enemyList.Count <= 0)
 		{
 			enemyList.Clear();
 			isGenerate = false;
-            Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame-4].Reward_GroupOppression);
 		}
+
+        
 	}
 
 	//그룹 안에서 살아있는 적을 받아오기 위한
 	public Enemy GroupFindEnemy()
 	{
+        Enemy nextTarget = null;
 		for(int i =0; i<enemyList.Count; ++i)
 		{
 			if (!enemyList[i].isDie)
-				return enemyList[i];
+				nextTarget=enemyList[i];
 		}
-		return null;
+
+        return nextTarget;
 	}
 
 	//같은 그룹의 적의 타겟을 바꾸기위해 

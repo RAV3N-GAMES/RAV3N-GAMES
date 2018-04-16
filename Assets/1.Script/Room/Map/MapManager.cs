@@ -4,21 +4,46 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour {
-    public Transform MapCamera;
+    public Transform MapCameraPos;
+    public Camera MapCamera;
 
     public GameObject RoomPref;
     public Transform RoomParent;
     public RectTransform ObjPos;
     public RoomManager roomManager;
-    //public GameObject ObjectPosPref;
 
     public MiniMapManager miniMapManager;
 
-    static int Step;           //이거 저장해놨다가 불러야함 //Step * Step 개의 방 사용
-    List<GameObject> RoomList; //접근하는 인덱스 바꿔야함
-    Type[][] isOpen;
+    //index : Step..? , value : 활성화되는 Fame
+    static int[] Fame = { 0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 8 };
 
-    //List<GameObject> ObjPosList;
+    public static int tempFame = 0;
+    public Text tempFameText;
+
+    static float Edge;
+    public static int Step;           //이거 저장해놨다가 불러야함 //Step * Step 개의 방 사용
+    List<GameObject> RoomList; //접근하는 인덱스 바꿔야함
+    public static Type[][] isOpen;
+
+    public Text BuildingText;
+    public Text OurForcesText;
+    public Text TrapText;
+    public Text SecretText;
+
+    public Text AllRepairCost;
+
+    public GameObject LackOfCoin;
+
+    public GameObject AllRepairButton;
+    public GameObject ActivedDamageButton;
+
+    int BuildingCnt;
+    int OurForcesCnt;
+    int TrapCnt;
+    int SecretCnt;
+
+    public static int DamageBuildingCnt = 0;
+    public static int DamageOurForcesCnt = 0;
 
     public enum Type
     {
@@ -34,13 +59,11 @@ public class MapManager : MonoBehaviour {
 	void Awake () {
         Step = 2; 
         conRoom = 0;
+        Edge = 0.5f;
 
         RoomList = new List<GameObject>();
-        //ObjPosList = new List<GameObject>();
 
         SetRoomParentRect();
-
-
 
         isOpen = new Type[STEP_MAX][];
         for(int i = 0; i < STEP_MAX; i++)
@@ -50,9 +73,76 @@ public class MapManager : MonoBehaviour {
 
         InitRoomStatus(Type.DISABLE, STEP_MAX);
         InitRoomStatus(Type.OPEN, Step);
-
-        InitMap();
 	}
+
+    void Start()
+    {
+        InitMap();
+        gameObject.SetActive(false);
+    }
+
+    public void SetObjectCnt(int type, int Cnt)
+    {
+        switch (type)
+        {
+            case 0: BuildingCnt += Cnt; BuildingText.text = BuildingCnt.ToString(); break;
+            case 2: OurForcesCnt += Cnt; OurForcesText.text = OurForcesCnt.ToString(); break;
+            case 3: TrapCnt += Cnt; TrapText.text = TrapCnt.ToString(); break;
+            case 4: SecretCnt += Cnt; SecretText.text = SecretCnt.ToString(); break;
+        }
+    }
+
+    public void ChangeToNonActiveDamage()
+    {
+        AllRepairButton.SetActive(true);
+        ChangeMapStatus();
+    }
+
+    public void ChangeMapStatus()
+    {
+        bool isActiveAllRepair = AllRepairButton.activeInHierarchy;
+
+        AllRepairButton.SetActive(!isActiveAllRepair);
+        ActivedDamageButton.SetActive(!isActiveAllRepair);
+
+        TrapText.transform.parent.gameObject.SetActive(isActiveAllRepair);
+        SecretText.transform.parent.gameObject.SetActive(isActiveAllRepair);
+
+        if (isActiveAllRepair)
+        {
+            MapCamera.cullingMask = LayerMask.GetMask("ObjPos");
+
+            BuildingText.text = BuildingCnt.ToString();
+            OurForcesText.text = OurForcesCnt.ToString();
+        }
+        else
+        {
+            MapCamera.cullingMask = LayerMask.GetMask("DamageObjPos");
+
+            MapManager.DamageBuildingCnt = 0;
+            MapManager.DamageOurForcesCnt = 0;
+
+            SetAllRepairCost();
+
+            BuildingText.text = MapManager.DamageBuildingCnt.ToString();
+            OurForcesText.text = MapManager.DamageOurForcesCnt.ToString();
+        }
+    }
+
+    void SetAllRepairCost()
+    {
+        AllRepairCost.text = roomManager.GetAllRepairCost().ToString() + "/" + Data_Player.Gold;
+    }
+
+    public void AllRepair()
+    {
+        if (!roomManager.AllRepair())
+        {
+            LackOfCoin.SetActive(true);
+        }
+        else
+            RoomManager.ChangeClickStatus(true);
+    }
 
     void SetRoomParentRect()
     {
@@ -87,7 +177,14 @@ public class MapManager : MonoBehaviour {
         return isOpen[i][j];
     }
 
-    bool isAllOpen()
+    bool isEdgeOpen()
+    {
+        if (isOpen[Step - 1][Step - 1] == Type.OPEN)
+            return true;
+        return false;
+    }
+
+    bool isAllSideOpen()
     {
         for (int i = 0; i < Step - 1 ; i++)
         {
@@ -108,15 +205,70 @@ public class MapManager : MonoBehaviour {
         return true;
     }
 
+    public void tempFameUp()
+    {
+        tempFame++;
+        tempFameText.text = tempFame.ToString();
+
+        ChangedFame();
+    }
+
+    public void ChangedFame()
+    {
+        StepUp();
+        InitMap();
+    }
+
+    public void tempFameDown()
+    {
+        tempFame--;
+        tempFameText.text = tempFame.ToString();
+
+        ChangedFame();
+    }
+
     public void StepUp()
     {
-        if (Step == STEP_MAX)
+        if (Edge == 0.5f)
+        {
+            if (Step * Step >= tempFame)
+                return;
+            if (Step == STEP_MAX)
+                return;
+        }
+        else if(Step * Step > tempFame)
+        {
             return;
-        if (!isAllOpen())
+        }
+        
+        if (Edge == 0.5f)
+        {
+            if (!isEdgeOpen())
+                return;
+        }
+        else if (!isAllSideOpen())
             return;
+    
+        Edge = (Edge + 0.5f) % 1f;
+        if (Edge == 0)
+            Step++;
+    
+        if (Edge == 0.5f)
+            EdgeOpen();
+        else
+            NextSideOpen();
+    }
 
-        Step++;
-        conRoom = (conRoom / (Step -1)) * Step + (conRoom % (Step-1));
+    public void EdgeOpen()
+    {
+        isOpen[Step - 1][Step - 1] = Type.CLOSE;
+        
+        InitMap();
+    }
+
+    public void NextSideOpen()
+    {
+        conRoom = (conRoom / (Step - 1)) * Step + (conRoom % (Step - 1));
 
         for (int i = 0; i < Step - 1; i++)
         {
@@ -130,12 +282,9 @@ public class MapManager : MonoBehaviour {
 
         float z = (roomManager.Room[((Step - 1) * STEP_MAX + (Step - 1))].transform.position.z - roomManager.Room[0].transform.position.z) / 2f;
 
-        MapCamera.transform.position = new Vector3(0, 10, z);
-
-        //print("z : " + 0 + "," + ((Step - 1) * STEP_MAX + (Step - 1)) + " pos : " + z);
-        MapCamera.gameObject.GetComponent<Camera>().orthographicSize = Step * 16;
-
-        miniMapManager.StepUp();
+        MapCameraPos.transform.position = new Vector3(0, 10, z);
+        MapCameraPos.gameObject.GetComponent<Camera>().orthographicSize = Step * 16;
+        
         InitMap();
     }
 
@@ -160,77 +309,41 @@ public class MapManager : MonoBehaviour {
         roomManager.MoveRoom(idx);
     }
 
+    int GetOpenRoomCnt()
+    {
+        int openRoomCnt = 0;
+        for (int room = 0; room < STEP_MAX * STEP_MAX; room++)
+        {
+            if (GetIsOpen(room) == Type.OPEN)
+                openRoomCnt++;
+        }
+
+        return openRoomCnt;
+    }
+
     public void OpenRoom(int idx)
     {
+        if (GetOpenRoomCnt() >= tempFame)
+            return;
+
         int i = idx / STEP_MAX;
         int j = idx % STEP_MAX;
 
         isOpen[i][j] = Type.OPEN;
         RoomList[(idx / STEP_MAX) * Step + (idx % STEP_MAX)].GetComponent<Image>().color = new Color(255, 255, 255, 255);
-        
-        if(isAllOpen())
+
+        if (Edge == 0.5f)
         {
-            isOpen[Step - 1][Step - 1] = Type.OPEN;
-            roomManager.OpenRoom((Step - 1) * (STEP_MAX + 1));
-            InitMap();
+            if (isEdgeOpen())
+                StepUp();
         }
+        else if (isAllSideOpen())
+            StepUp();
         
         roomManager.OpenRoom(idx);
-        miniMapManager.OpenRoom(idx);
+        InitMap();
     }
-
-    //void DestroyObjPosPref()
-    //{
-    //    for(int i = 0; i < ObjPosList.Count; i++)
-    //    {
-    //        Destroy(ObjPosList[i]);
-    //    }
-    //
-    //    ObjPosList.Clear();
-    //}
-
-    //public void InitObjectPos()
-    //{
-    //    if (ObjectPosPref == null) //수정해야함
-    //        return;
-    //
-    //    DestroyObjPosPref();
-    //
-    //    for (int i = 0; i < RoomList.Count; i++)
-    //    {
-    //        int idx = (i % Step) + (i / Step) * STEP_MAX;
-    //        TileManager tileManager = roomManager.Room[idx].GetComponent<TileManager>();
-    //        int ObjCnt = tileManager.GetObjectCount();
-    //
-    //        for (int j = 0; j < ObjCnt; j++)
-    //        {
-    //            GameObject ObjPos = Instantiate(ObjectPosPref, RoomList[i].transform);
-    //            RectTransform posRect = ObjPos.GetComponent<RectTransform>();
-    //
-    //            float[] objInfo = tileManager.GetObjectInfo(j);
-    //
-    //            posRect.anchorMin = new Vector2((float)objInfo[0] / 20f, (float)objInfo[1] / 20f);
-    //            posRect.anchorMax = new Vector2((float)objInfo[0] / 20f, (float)objInfo[1] / 20f);
-    //            
-    //            posRect.offsetMin = Vector2.zero;
-    //            posRect.offsetMax = Vector2.zero;
-    //
-    //            posRect.sizeDelta = new Vector2(50, 50);
-    //            
-    //            switch ((int)objInfo[2])
-    //            {
-    //                case 0: ObjPos.GetComponent<Image>().color = new Color(0.3f, 0, 0); break;
-    //                case 1: ObjPos.GetComponent<Image>().color = new Color(1, 1, 0); break;
-    //                case 2: ObjPos.GetComponent<Image>().color = new Color(0, 0, 1); break;
-    //                case 3: ObjPos.GetComponent<Image>().color = new Color(1, 0, 1); break;
-    //                case 4: ObjPos.GetComponent<Image>().color = new Color(0, 1, 1); break;
-    //                case 5: ObjPos.GetComponent<Image>().color = new Color(0, 1, 0); break;
-    //                default: break;
-    //            }
-    //            ObjPosList.Add(ObjPos);
-    //        }
-    //    }
-    //}
+    
 
     void DestroyRoomPref()
     {
@@ -278,13 +391,18 @@ public class MapManager : MonoBehaviour {
                 InitRoomRect(newRoom.GetComponent<RectTransform>(), size, i * Step + j);
 
                 if (isOpen[i][j] == Type.CLOSE)
-                    newRoom.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 1, 1);
+                {
+                    if (GetOpenRoomCnt() >= tempFame)
+                        newRoom.SetActive(false);
+                    else
+                        newRoom.GetComponent<Image>().color = new Color(0, 0, 1, 1);
+                }
             }
         }
 
-        RoomList[conRoom].GetComponent<UnityEngine.UI.Image>().color = new Color(0, 1, 0, 1);
-
-        //InitObjectPos();
+        RoomList[conRoom].GetComponent<Image>().color = new Color(0, 1, 0, 1);
+        miniMapManager.InitMap();
     }
 
+    
 }

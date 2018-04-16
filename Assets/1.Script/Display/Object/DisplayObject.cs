@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DisplayObject : MonoBehaviour
 {
+    public bool possibleRotation;
+
     CheckTile checkTile;
     public GameObject CreateButton;
 
@@ -25,7 +27,8 @@ public class DisplayObject : MonoBehaviour
     void Array()
     {
         lastCol = checkTile.findPivotCol();
-
+        if (lastCol == null)
+            return;
         Camera.main.transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z);
     }
 
@@ -50,9 +53,9 @@ public class DisplayObject : MonoBehaviour
     }
 
 
-    public bool DestroyObj()
+    public bool DestroyObj(bool isDestroyed)
     {
-        return checkTile.DestroyObj(makeIdx());
+        return checkTile.DestroyObj(isDestroyed, makeIdx());
     }
 
     public bool UsingTile()
@@ -66,7 +69,15 @@ public class DisplayObject : MonoBehaviour
 
         CreatePopUp createPopUp = CreateButton.GetComponent<CreatePopUp>();
         if (createPopUp != null)
+        {
             createPopUp.Obj = gameObject;
+            createPopUp.RotationButton.SetActive(possibleRotation);
+        }
+        else
+        {
+            MovePopUp movePopUp = CreateButton.GetComponent<MovePopUp>();
+            movePopUp.RotationButton.SetActive(possibleRotation);
+        }
     }
 
     void OffCheckButton()

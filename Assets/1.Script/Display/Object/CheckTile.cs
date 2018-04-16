@@ -6,6 +6,9 @@ public class CheckTile : MonoBehaviour {
     [HideInInspector]
     public List<GameObject> lastCol;
 
+    public SpriteRenderer Warp;
+    public SpriteRenderer WarpExit;
+
     ObjectInfo objectInfo;
     ObjectColor objectColor;
     DisplayObject displayObject;
@@ -31,7 +34,6 @@ public class CheckTile : MonoBehaviour {
     public Transform findPivotCol()
     {
         int Cnt = lastCol.Count;
-
         GameObject tempPivot = lastCol[0];
 
         for (int i = 1; i < Cnt; i++)
@@ -45,23 +47,78 @@ public class CheckTile : MonoBehaviour {
         return tempPivot.transform;
     }
 
+    int[] AroundBuildingIdx()
+    {
+        int[] buildingIdx = makeIdx();
+        int[] dir = { 0, 1, 1, 0, 0, -1, -1, 0 };
+
+        int[] aroundBuildingIdx;
+        if (buildingIdx.Length == 8)
+            aroundBuildingIdx = new int[16];
+        else //NewBuilding
+            aroundBuildingIdx = new int[20];
+
+        int Cnt = 0;
+        for (int i = 0; i < buildingIdx.Length; i = i + 2)
+        {
+            for(int j = 0; j < dir.Length; j = j + 2)
+            {
+                int row = buildingIdx[i] + dir[j];
+                int col = buildingIdx[i + 1] + dir[j + 1];
+
+                int k = 0;
+                for (; k < buildingIdx.Length; k = k + 2)
+                {
+                    if (buildingIdx[k] == row)
+                        if (buildingIdx[k + 1] == col)
+                            break;
+                }
+
+                if (k == buildingIdx.Length)
+                {
+                    aroundBuildingIdx[Cnt] = row;
+                    aroundBuildingIdx[Cnt + 1] = col;
+
+                    Cnt = Cnt + 2;
+                }
+            }
+        }
+
+        return aroundBuildingIdx;
+    }
+
+    int[] GetPivotCoordinate()
+    {
+        Transform pivot = findPivotCol();
+        int[] pivotCoordinate = { System.Int32.Parse(pivot.transform.parent.name), System.Int32.Parse(pivot.name) };
+
+        return pivotCoordinate;
+    }
+
     public bool UsingTile(int[] idx)
     {
         OnDisplayCheckTile();
 
         if (isPossible) {
-            if (name == "ObstructMovementCurrent")
+            if (objectInfo.type == 0)
             {
-                int[] omcIdx = DepencyTile_OMC();
+                objectInfo.DontDestroy += tileManager.isFlameThrowingTrap(AroundBuildingIdx());
+            }
+            else if (name.Equals("ObstructMovementCurrent"))
+            {
+                int[] omcIdx = DepencyTile_OMC(GetPivotCoordinate());
 
                 tileManager.OnDependency(omcIdx[0], omcIdx[1]);
                 tileManager.OnDependency(omcIdx[2], omcIdx[3]);
             }
-            else if (name == "FlameThrowingTrap")
+            else if (name.Equals("FlameThrowingTrap"))
             {
-                int[] fttIdx = DepencyTile_FTT();
+                int[] fttIdx = DepencyTile_FTT(GetPivotCoordinate());
 
-                tileManager.OnDependency(fttIdx[0], fttIdx[1]);
+                for(int i = 0; i < fttIdx.Length; i = i + 2)
+                {
+                    tileManager.OnDependency(fttIdx[i], fttIdx[i + 1]);
+                }
             }
 
             tileManager.UsingTile(gameObject, idx);
@@ -70,9 +127,9 @@ public class CheckTile : MonoBehaviour {
         return false;
     }
 
-    public bool DestroyObj(int[] idx)
+    public bool DestroyObj(bool isDestroyed , int[] idx)
     {
-        return tileManager.DestroyObj(gameObject, idx);
+        return tileManager.DestroyObj(isDestroyed, gameObject, idx);
     }
 
     bool isSameRoom()
@@ -86,6 +143,20 @@ public class CheckTile : MonoBehaviour {
         {
             if (roomName != lastCol[i].transform.parent.parent.name)
                 return false;
+        }
+
+        if (name.Equals("Warp_Exit"))
+        {
+            if (!roomName.Equals(Warp.sortingLayerName))
+                return false;
+        }
+        else if(name.Equals("Warp"))
+        {
+            if(!WarpExit.sortingLayerName.Equals("NewObject"))
+            {
+                if (!roomName.Equals(WarpExit.sortingLayerName))
+                    return false;
+            }
         }
 
         return true;
@@ -109,12 +180,10 @@ public class CheckTile : MonoBehaviour {
 
         return idx;
     }
-    public int[] DepencyTile_OMC()
+    public int[] DepencyTile_OMC(int[] pivotCoordinte)
     {
-        Transform pivot = findPivotCol();
-
-        int row = System.Int32.Parse(pivot.transform.parent.name);
-        int col = System.Int32.Parse(pivot.name);
+        int row = pivotCoordinte[0];
+        int col = pivotCoordinte[1];
 
         int[] displayTile = new int[4];
 
@@ -138,56 +207,57 @@ public class CheckTile : MonoBehaviour {
 
     bool isBuilding_OMC()
     {
-        return tileManager.isBuilding(DepencyTile_OMC());
+        return tileManager.isBuilding(DepencyTile_OMC(GetPivotCoordinate()));
     }
 
-    public int[] DepencyTile_FTT()
+    public int[] DepencyTile_FTT(int[] pivotCoordinate)
     {
-        Transform pivot = findPivotCol();
+        int row = pivotCoordinate[0];
+        int col = pivotCoordinate[1];
 
-        int row = System.Int32.Parse(pivot.transform.parent.name);
-        int col = System.Int32.Parse(pivot.name);
+        int[] displayTile = { row, col + 1, row + 1, col, row - 1, col, row, col - 1 };
+        List<int> tileIdx = new List<int>();
 
-        int[] displayTile = new int[2];
+        for(int i = 0; i < displayTile.Length; i = i + 2)
+        {
+            int[] tempTile = { displayTile[i], displayTile[i + 1] };
 
-        if (objectInfo.isRotation == 0)
-        {
-            displayTile[0] = row;
-            displayTile[1] = col + 1;
-        }
-        else if(objectInfo.isRotation == 1)
-        {
-            displayTile[0] = row + 1;
-            displayTile[1] = col;
-        }
-        else if(objectInfo.isRotation == 2)
-        {
-            displayTile[0] = row - 1;
-            displayTile[1] = col;
-        }
-        else if (objectInfo.isRotation == 3)
-        {
-            displayTile[0] = row;
-            displayTile[1] = col - 1;
+            if (tileManager.isBuilding(tempTile))
+            {
+                tileIdx.Add(i);
+                tileIdx.Add(i + 1);
+            }
         }
 
-        return displayTile;
+        if (tileIdx.Count == 0)
+            return null;
+
+        int[] dependencyTile = new int[tileIdx.Count];
+
+        for(int i = 0; i < dependencyTile.Length; i++)
+        {
+            dependencyTile[i] = displayTile[tileIdx[i]];
+        }
+
+        return dependencyTile;
     }
 
     bool isBuilding_FTT()
     {
-        return tileManager.isBuilding(DepencyTile_FTT());
+        if (DepencyTile_FTT(GetPivotCoordinate()) != null)
+            return true;
+        else
+            return false;
     }
 
     bool isEnable()
     {
         if (lastCol.Count == 0 || !isSameRoom() || lastCol.Count < TileCnt)
-            return false;
+            return false;        
 
         tileManager = lastCol[0].transform.parent.parent.GetComponent<TileManager>();
 
         int[] idx = makeIdx();
-
         return tileManager.isEnableTile(idx);
     }
 
@@ -204,6 +274,7 @@ public class CheckTile : MonoBehaviour {
         }
 
         isPossible = isEnable() & isBuilding;
+        
         objectColor.OnColor(isPossible);
     }
 

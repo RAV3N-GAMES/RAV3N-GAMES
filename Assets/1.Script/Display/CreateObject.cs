@@ -14,6 +14,8 @@ public class CreateObject : MonoBehaviour {
 
     bool isCreate;
 
+    public RoomManager roomManager;
+
     void Awake()
     {
         id = "";
@@ -37,31 +39,38 @@ public class CreateObject : MonoBehaviour {
         id = "";
         SetBoxRect(MaxY);
 
-        if (!isCreate)
-            RoomManager.possibleDrag = true;
+        if (isCreate)
+        {
+            //roomManager.SetClickColliderStatus(true);
+        }
         isCreate = false;
+    }
+
+    void InitObject()
+    {
+        GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
+        newObj.name = id;
+        newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
+        newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+        newObj.GetComponent<ObjectInfo>().InitObject();
+
+        if (id.Equals("Warp"))
+        {
+            GameObject warp_Exit = newObj.transform.Find("Warp_Exit").gameObject;
+            warp_Exit.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
+            warp_Exit.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+            warp_Exit.GetComponent<ObjectInfo>().InitObject();
+        }
     }
 
     public void MouseExit()
     {
-        if (id != "" && Input.GetMouseButton(0))
+        if (id != "" && Input.GetMouseButton(0) && RoomManager.possibleDrag)
         {
-            GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
-            newObj.name = id;
-            newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
-            newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
-            newObj.GetComponent<ObjectInfo>().InitObject();
+            InitObject();
+            RoomManager.ChangeClickStatus(false);
 
-            if(id.Equals("Warp"))
-            {
-                GameObject warp_Exit =  newObj.transform.Find("Warp_Exit").gameObject;
-                warp_Exit.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
-                warp_Exit.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
-                warp_Exit.GetComponent<ObjectInfo>().InitObject();
-            }
-
-            RoomManager.possibleDrag = false;
-            ClickObject.isPossibleClick = false;
+            roomManager.SetClickColliderStatus(false);
 
             SetBoxRect(BoxRect.anchorMin.y + 0.02f);
 

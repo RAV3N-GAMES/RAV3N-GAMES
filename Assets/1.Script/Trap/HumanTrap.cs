@@ -10,7 +10,6 @@ public class HumanTrap : Trap {
     // Use this for initialization
 	void Start () {
         //checkCount(0);
-        Data_Player.Fame = 4;
         TrapManager.TrapCount[0]++;
         TrapAni = GetComponent<Animator>();
         CoolTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame-4].CoolTime;

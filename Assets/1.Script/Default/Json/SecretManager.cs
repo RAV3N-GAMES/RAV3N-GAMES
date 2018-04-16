@@ -24,6 +24,7 @@ public class SecretManager : JsonReadWrite
     public static List<SecretObject> Tbl_SecretSetup = new List<SecretObject>();
     public static List<SecretActs> SecretList;
     public static Dictionary<string, int> SecretFame = new Dictionary<string, int>(); //첫 등장 Fame
+    public static float criteria = 0.5f;//랜덤값이 이보다 크면 명예집단 / 작으면 기밀탈취집단.
 
     //    public static List<SecretActs> CurrentSecrets = new List<SecretActs>();//기밀이 1개 생성될 때마다 리스트에 추가. 다룰 일이 생기면 그때 넣도록.
     // Use this for initialization
@@ -81,5 +82,9 @@ public class SecretManager : JsonReadWrite
     public static int GetSecretLimit()
     {
         return SecretLimit;
+    }
+
+    public static void CalCriteria(SecretActs sa){
+        criteria += (float)sa.Chance;
     }
 }

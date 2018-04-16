@@ -16,7 +16,7 @@ public class EXPManager : MonoBehaviour {
     }
 
     void Awake() {
-        Data_Player.Fame = 4;
+        Data_Player.Fame = 10;
         Data_Player.Experience = 100;
         prizeText.color = Color.yellow;
         prizeText.fontSize += 3;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectColor : MonoBehaviour
 {
     [Tooltip("0번에는 오브젝트 이미지를 넣으세요.")]
+    public SpriteRenderer RecognizeRange;
     public List<SpriteRenderer> sprite;
 
     public Color SuccessColor;
@@ -17,12 +18,29 @@ public class ObjectColor : MonoBehaviour
         objectInfo = GetComponent<ObjectInfo>();
     }
 
+    public void OnRecognizeRage(bool isPossible)
+    {
+        if (RecognizeRange != null)
+        {
+            float alpha = 0;
+            if (isPossible)
+                alpha = 0.3f;
+
+            RecognizeRange.color = new Color(0, 1, 1, alpha);
+        }
+    }
+
     void SetSpriteColor(Color _color)
     {
         for (int i = 0; i < sprite.Count; i++)
         {
             sprite[i].color = _color;
         }
+
+        if (_color.a == 0)
+            OnRecognizeRage(false);
+        else
+            OnRecognizeRage(true);
     }
 
     public void SetSortingLayer(string layer)
@@ -42,7 +60,7 @@ public class ObjectColor : MonoBehaviour
         }
         
         sprite[0].sortingOrder = idx + 1;
-        objectInfo.SetClickColliderPos(2f + (idx * 0.05f));
+        objectInfo.SetClickColliderPos(2f + (idx * 0.01f));
     }
 
     public void OnTransparency(bool isTransparency)
@@ -68,8 +86,14 @@ public class ObjectColor : MonoBehaviour
         float alpha = 1;
         SetSpriteColor(new Color(1, 1, 1, 0));
 
-        if (RoomManager.isTransparency && GetComponent<ObjectInfo>().type == 0)
-            alpha = 0.3f;
+        if (RoomManager.isTransparency)
+        {
+            if (GetComponent<ObjectInfo>().type == 0)
+            {
+                alpha = 0.3f;
+                GetComponent<ObjectInfo>().ClickCollider.SetActive(false);
+            }
+        }
 
         sprite[0].color = new Color(1, 1, 1, alpha);
     }

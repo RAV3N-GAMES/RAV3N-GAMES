@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class HealthSystem : MonoBehaviour
 {
     Slider HpSlider;
@@ -15,7 +16,6 @@ public class HealthSystem : MonoBehaviour
     {
         InitHPSlider();
     }
-
     void InitHPSlider()
     {
         if (isInitHPSlider)
@@ -24,38 +24,39 @@ public class HealthSystem : MonoBehaviour
         HpSlider = Instantiate(UIManager.current.UIBarPrefab).GetComponent<Slider>();
         HpSlider.transform.SetParent(UIManager.current.UIBarParent);
         sliderRect = HpSlider.GetComponent<RectTransform>();
-        sliderRect.localScale = new Vector3(3, 2, 1);
+
         HpSlider.gameObject.SetActive(false);
 
         isInitHPSlider = true;
     }
 
-    private void Update()
-    {
-        if (!gameObject.activeSelf)
-            return;
+	private void Update()
+	{
+		if (!gameObject.activeSelf)
+			return;
 
-        targetPos = Camera.main.WorldToScreenPoint(transform.position);
-        sliderRect.position = targetPos + Vector3.up * 150;
-    }
-    public void ValueInit(int value)
-    {
-        HpSlider.minValue = 0;
-        HpSlider.maxValue = value;
-        HpSlider.value = value;
-    }
-    public void ValueDecrease(int damage)
-    {
-        HpSlider.value -= damage;
-    }
-    public void ValueIncrease(int heal)
-    {
-        HpSlider.value += heal;
-    }
-    public void HealthActvie(bool isActive)
-    {
-        if (HpSlider == null)
+		targetPos = Camera.main.WorldToScreenPoint(transform.position);
+		sliderRect.position = targetPos + Vector3.up * 30;
+	}
+	public void ValueInit(int value)
+	{
+		HpSlider.minValue = 0;
+		HpSlider.maxValue = value;
+		HpSlider.value = value;
+	}
+	public void ValueDecrease(int damage)
+	{
+		HpSlider.value -= damage;
+	}
+	public void ValueIncrease(int heal)
+	{
+		HpSlider.value += heal;
+	}
+	public void HealthActvie(bool isActive)
+	{
+        if(HpSlider == null)
             InitHPSlider();
-        HpSlider.gameObject.SetActive(isActive);
-    }
+        HpSlider.gameObject.SetActive(isActive);        
+	}
 }
+    

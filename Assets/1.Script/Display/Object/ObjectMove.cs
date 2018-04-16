@@ -18,6 +18,9 @@ public class ObjectMove : MonoBehaviour
     
     public bool changePos;
 
+    public GameObject WarpExit;
+    public Vector3 warpPos;
+
     void Start()
     {
         lastCol = null;
@@ -29,7 +32,8 @@ public class ObjectMove : MonoBehaviour
         canvasWidth = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.x;
         canvasHeight = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.y;
 
-        StartCoroutine("OnMove");
+        if (!name.Equals("Warp_Exit"))
+            StartCoroutine("OnMove");
 
         objectInfo = GetComponent<ObjectInfo>();
     }
@@ -60,7 +64,6 @@ public class ObjectMove : MonoBehaviour
 
         if(changePos)
         {
-            changePos = false;
             GetComponent<ObjectInfo>().OffDisplay();
         }
 
@@ -77,6 +80,12 @@ public class ObjectMove : MonoBehaviour
                 Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
 
                 transform.position += movePos;
+
+                if (changePos)
+                {
+                    if (name.Equals("Warp"))
+                        WarpExit.transform.position = warpPos;
+                }
 
                 yield return null;
 
@@ -107,6 +116,15 @@ public class ObjectMove : MonoBehaviour
                 isMove = true;
                 GetComponent<DisplayObject>().CreateButton.GetComponent<MovePopUp>().InitObject(gameObject);
 
+                if (name.Equals("Warp"))
+                {
+                    warpPos = WarpExit.transform.position;
+                }
+
+                StartCoroutine("OnMove");
+            }
+            else if (name.Equals("Warp_Exit"))
+            {
                 StartCoroutine("OnMove");
             }
         }
@@ -115,6 +133,8 @@ public class ObjectMove : MonoBehaviour
             if (isMove)
             {
                 isMove = false;
+                changePos = false;
+
                 GetComponent<DisplayObject>().OnDisplay();
             }
         }

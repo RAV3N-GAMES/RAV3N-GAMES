@@ -62,11 +62,11 @@ public class GameManager : MonoBehaviour {
                 activeGroup.Add(enemyGroups[i]);
             }
         }
-        EnemyManager.EnemyGroupMax = enemyGroups.Length;
+
         for(i=1;i<enemyGroups.Length;i++){//0번방에선 Enemy 생성 안함
             int random = Random.Range(1, activeGroup.Count);
             float probability = Random.Range(0f, 1f);
-            Debug.Log("Random.Range(0, 1): " + probability);
+            //Debug.Log("Random.Range(0, 1): " + probability);
 
             genGroup = activeGroup[random];
             
@@ -83,7 +83,8 @@ public class GameManager : MonoBehaviour {
             if (GenerateCount == ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber)
                 break;
         }
-	}
+        EnemyManager.EnemyGroupMax = ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber;
+    }
 	private void RayEvent()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -168,7 +169,7 @@ public class GameManager : MonoBehaviour {
 	public static void ParticleGenerate(EFFECT_TYPE type, Vector3 point)
 	{		
 		GameObject obj = PoolManager.current.PopParticle(type);
-		obj.transform.position = new Vector3(point.x, 5f, point.z + 0.5f);
+		obj.transform.position = new Vector3(point.x, 0.5f, point.z + 0.5f);
 	}
 
 }

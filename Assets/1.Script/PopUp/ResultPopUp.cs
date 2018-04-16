@@ -10,6 +10,8 @@ public class ResultPopUp : MonoBehaviour {
     public GameObject Success;
     public GameObject Fail;
 
+    public UnityEngine.UI.Image prizePercent;  
+
     List<EnemyGroupResult> enemyGroupResult = new List<EnemyGroupResult>();
 
     int EnemyCnt;
@@ -21,6 +23,8 @@ public class ResultPopUp : MonoBehaviour {
         EnemyGroupList[0].SetActive(false);
         EnemyGroupList[1].SetActive(false);
         EnemyGroupList[2].SetActive(false);
+
+        print("enemyNum : " + enemyNum);
 
         EnemyGroupList[enemyNum - 1].SetActive(true);
     }
@@ -39,7 +43,8 @@ public class ResultPopUp : MonoBehaviour {
         //bool[]   enemyActive : 집단 별 적군 종류 별 제압 성공 여부 
 
         ///////임시
-        int tempEnemyNum = 3;
+        int tempEnemyNum = EnemyManager.EnemyGroupMax;
+        
         SetEnemyListActive(tempEnemyNum);
         ///////
 
@@ -49,24 +54,54 @@ public class ResultPopUp : MonoBehaviour {
         }
 
         //////임시
-        string[] tmpEnemyId0 = { "Guard", "Guard", "QuickReactionForces", "Researcher" };
-        bool[] tmpEnemyActive0 = { true, false, false, true };
-
-        string[] tmpEnemyId1 = { "QuickReactionForces", "BiochemistryUnit", "Researcher", "Guard" };
-        bool[] tmpEnemyActive1 = { false, false, false, false };
-
-        string[] tmpEnemyId2 = { "Researcher", "QuickReactionForces", "Guard", "Researcher" };
-        bool[] tmpEnemyActive2 = { true, true, false, true };
-
-        enemyGroupResult[0].InitResult(tmpEnemyId0, tmpEnemyActive0);
-        enemyGroupResult[1].InitResult(tmpEnemyId1, tmpEnemyActive1);
-        enemyGroupResult[2].InitResult(tmpEnemyId2, tmpEnemyActive2);
+        //string[] tmpEnemyId0 = { "Guard", "Guard", "QuickReactionForces", "Researcher" };
+        //bool[] tmpEnemyActive0 = { true, false, false, true };
+        //
+        //string[] tmpEnemyId1 = { "QuickReactionForces", "BiochemistryUnit", "Researcher", "Guard" };
+        //bool[] tmpEnemyActive1 = { false, false, false, false };
+        //
+        //string[] tmpEnemyId2 = { "Researcher", "QuickReactionForces", "Guard", "Researcher" };
+        //bool[] tmpEnemyActive2 = { true, true, false, true };
+        //
+        //enemyGroupResult[0].InitResult(tmpEnemyId0, tmpEnemyActive0);
+        //enemyGroupResult[1].InitResult(tmpEnemyId1, tmpEnemyActive1);
+        //enemyGroupResult[2].InitResult(tmpEnemyId2, tmpEnemyActive2);
         ///////
 
-        //for (int i = 0; i < EnemyCnt; i++)
-        //{
-        //    enemyGroupResult[i].InitResult(enemyId, enemyActive);
-        //}
+        if(DayandNight.CreatedEnemy.Count < 4)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        int createdEnemyCnt =  DayandNight.CreatedEnemy.Count;
+        for (int i = 0; i < EnemyCnt; i++)
+        {
+            string[] enemyId = new string[4];
+            bool[] enemyActive = new bool[4];
+
+            //이제 나중에 여기에서 소속집단 판별하면 될듯
+            int Cnt = 0;
+            for (int j = 0; j < createdEnemyCnt; j++)
+            {
+                print("Group : " + DayandNight.CreatedEnemy[j].Group);
+                if (DayandNight.CreatedEnemy[j].Group == (i + 1))
+                {
+                    enemyId[Cnt] = DayandNight.CreatedEnemy[j].name;
+                    enemyActive[Cnt] = !DayandNight.CreatedEnemy[j].isDie;
+
+                    if (Cnt == 3)
+                        break;
+                    else
+                        Cnt++;
+                }
+            }
+
+            if (Cnt != 3)
+                print("Cnt != 3");
+
+            enemyGroupResult[i].InitResult(enemyId, enemyActive);
+        }
 
         StartCoroutine("PlayResult");
     }
@@ -88,6 +123,9 @@ public class ResultPopUp : MonoBehaviour {
             yield return new WaitUntil(enemyGroupResult[i].GetIsDone);
         }
         //없앤 적군 종류 만큼 현상금 + 달러오르고
+
+        //print(Data_Player.Experience + "/" + Data_Player.LvExperience);
+        //prizePercent.fillAmount = Data_Player.Experience / Data_Player.LvExperience;
 
 
         //제압 성공한 적군 집단 표시

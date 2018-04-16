@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ObjectInfo : MonoBehaviour
 {
-    public Transform FlameThrowingTrap;
-
+    //public Transform FlameThrowingTrap;
     public GameObject ClickCollider;
     public GameObject TileCollider;
     public GameObject ObjectCollider;
+
+    public GameObject DamageObjPos;
 
     public string id;
     public int type;
@@ -28,7 +29,6 @@ public class ObjectInfo : MonoBehaviour
     public int layerDepth;
 
     public int DontDestroy;
-
 
     public void SetClickColliderPos(float z)
     {
@@ -67,8 +67,6 @@ public class ObjectInfo : MonoBehaviour
     
     public void InitObject(SaveObject objInfo) //설치된거 껐다 켜고 설치할때
     {
-        id = objInfo.id; //아마 ㄴ필요 
-        type = objInfo.type; //아마 ㄴ필요 
         level = objInfo.level;
         presentHP = objInfo.presentHP;
         totalHP = objInfo.totalHP;
@@ -79,16 +77,21 @@ public class ObjectInfo : MonoBehaviour
 
         Rotate(InitDir());
 
-        StartCoroutine(temp());
+        if (DamageObjPos != null)
+        {
+            if (presentHP < totalHP)
+                DamageObjPos.SetActive(true);
+        }
+
+        StartCoroutine(Display());
     }
     
-    IEnumerator temp()
+    IEnumerator Display()
     {
         yield return null;
         OnDisplay();
         yield break;
     }
-
 
     int SetDir()
     {
@@ -109,24 +112,23 @@ public class ObjectInfo : MonoBehaviour
 
     void Rotate(int dir)
     {
-        if (id.Equals("FlameThrowingTrap"))
-        {
-            if (isRotation < 2)
-                FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.9f, 0);
-            else
-                FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.6f, 0);
-        }
+        //if (id.Equals("FlameThrowingTrap"))
+        //{
+        //    if (isRotation < 2)
+        //        FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.9f, 0);
+        //    else
+        //        FlameThrowingTrap.localPosition = new Vector3(-0.2f, 0.6f, 0);
+        //}
 
         transform.Rotate(new Vector3(dir * 180, 0, dir * 180));
     }
 
     public void rotationObject()
     {
-        if (id.Equals("FlameThrowingTrap"))
-            isRotation = (isRotation + 1) % 4;
-        else
-            isRotation = (isRotation + 1) % 2;
-
+        //if (id.Equals("FlameThrowingTrap"))
+        //    isRotation = (isRotation + 1) % 4;
+        //else    
+        isRotation = (isRotation + 1) % 2;
         Rotate(SetDir());
 
         for (int i = 0; i < coordinate.Length; i = i + 2)
@@ -137,12 +139,41 @@ public class ObjectInfo : MonoBehaviour
         }
     }
 
-    public void RepairObject()
+    public void SetHP(int changeHP)
     {
-        print("repair");
-        
-        presentHP = totalHP;
-        //돈쓰기
+        if(changeHP < 0)
+        {
+            if (DamageObjPos != null)
+                DamageObjPos.SetActive(true);
+
+            if (changeHP + presentHP <= 0)
+            {
+                presentHP = 0;
+                GetComponent<DisplayObject>().DestroyObj(true); //게임 오브젝트를 Destory 해야함//나중에 문제 생길수도 있음
+
+                Destroy(gameObject);
+            }
+            else
+                presentHP += changeHP;
+        }
+    }
+
+    public void RepairObject(int repairHP)
+    {
+        if (repairHP == -1)
+        {
+            presentHP = totalHP;
+        }
+        else if (repairHP > 0)
+        {
+            presentHP += repairHP;
+
+            if (presentHP > totalHP)
+                presentHP = totalHP;
+        }
+
+        if (presentHP == totalHP && DamageObjPos != null)
+            DamageObjPos.SetActive(false);
     }
 
     public void OnDisplay()
@@ -152,7 +183,7 @@ public class ObjectInfo : MonoBehaviour
         ClickCollider.SetActive(true);
         TileCollider.SetActive(false);
         ClickCollider.SetActive(!DayandNight.isDay);
-
+        
         GetComponent<ObjectColor>().OffColor();
     }
 

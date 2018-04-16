@@ -4,25 +4,81 @@ using UnityEngine;
 
 public class TileObject {
     public GameObject mObject { get; } //이거 변경해줘야하나
-
     ObjectInfo objectInfo;
 
     public int mRow { get; } //바닥타일의 0을 기준으로
     public int mCol { get; } //나중에는 변경가능해야함
 
-    public TileObject(GameObject _Obj, int row, int col)
+    public int parentRow;
+    public int parentCol;
+
+    public TileObject(GameObject _Obj, int row, int col, int parentRow, int parentCol)
     {
         mObject = _Obj;
         mRow = row;
         mCol = col;
 
+        this.parentRow = parentRow;
+        this.parentCol = parentCol;
+
         objectInfo = mObject.GetComponent<ObjectInfo>();
+    }
+
+    public SaveObject GetSaveObj()
+    {
+        return new SaveObject(mObject.transform.position, objectInfo.DontDestroy, objectInfo.type, objectInfo.id, objectInfo.level,
+                             objectInfo.presentHP, objectInfo.totalHP, mRow, mCol, objectInfo.coordinate, objectInfo.pivotObject.gameObject.name,
+                          objectInfo.isRotation, parentRow, parentCol);
+    }
+
+    public void Repair()
+    {
+        objectInfo.RepairObject(-1);
+    }
+
+    public int GetRepairCost()
+    {
+        int damageHP = objectInfo.totalHP - objectInfo.presentHP;
+        int repairCost = 0;
+
+        switch (objectInfo.type)
+        {
+            case 0:
+                repairCost =  damageHP * JsonDataManager.GetBuildingInfo(objectInfo.id, objectInfo.level).RepairCost;
+                break;
+            case 2:
+                repairCost = (int)(damageHP * JsonDataManager.GetOurForcesInfo(objectInfo.id, objectInfo.level).HealCost);
+                break;
+        }
+
+        if(repairCost != 0)
+        {
+            if (objectInfo.type == 0)
+                MapManager.DamageBuildingCnt++;
+            else if (objectInfo.type == 2)
+                MapManager.DamageOurForcesCnt++;
+        }
+
+        return repairCost;
     }
 
     public void OnTransparency(bool isTransparency)
     {
         if (objectInfo.type == 0)
+        {
             mObject.GetComponent<ObjectColor>().OnTransparency(isTransparency);
+            SetClickColliderStatus(!isTransparency);
+        }
+    }
+
+    public void SetClickColliderStatus(bool isActive)
+    {
+        if (objectInfo.type == 0)
+        {
+            if (RoomManager.isTransparency && isActive)
+                return;
+        }
+        mObject.GetComponent<ObjectInfo>().ClickCollider.SetActive(isActive);
     }
 
     public void SetOrderInLayer(string layer, int idx, int layerDepth)

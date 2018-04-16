@@ -53,7 +53,7 @@ public class FriendlyChemistry : Friendly {
 		{
 			if (targetEnemy == null)
 			{	
-				targetEnemy = other.GetComponent<Enemy>();				
+				targetEnemy = other.GetComponent<Enemy>();
 				GroupConductor.GroupRouteCall(targetEnemy);
 				targetEnemy.GroupConductor.GroupRouteSet(GroupConductor.GetOrderFriendly());
 			}

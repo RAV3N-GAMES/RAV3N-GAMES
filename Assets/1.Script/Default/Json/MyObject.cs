@@ -62,9 +62,14 @@ public class OurForcesObject : MyObject
     public double AttackRange;
     public double AttackAngle;
     public int HitConstrain;
-    public double AttackCool;
     public double EnemyRecognizeRangeHalf;
     public double MoveSpeed;
+    public double AttackPeriod;
+    public double SkillDuration;
+    public double SkillCoefficient_Damage;
+    public double SkillCoefficient_Util;
+    public double SkillCoefficient_Defence;
+    public double SkillRange;
 
     public OurForcesObject() { }
     
@@ -125,8 +130,13 @@ public class EnemyObject : MyObject
     public double AttackRange;
     public double AttackAngle;
     public int HitConstrain;
-    public double AttackCool;
     public double MoveSpeed;
+    public double AttackPeriod;
+    public double SkillDuration;
+    public double SkillCoefficient_Damage;
+    public double SkillCoefficient_Util;
+    public double SkillCoefficient_Defence;
+    public double SkillRange;
 
     public EnemyObject() { }
 

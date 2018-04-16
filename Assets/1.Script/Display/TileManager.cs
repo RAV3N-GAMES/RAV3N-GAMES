@@ -6,7 +6,7 @@ using System.IO;
 
 public class TileManager : MonoBehaviour {
     const int TILE_MAX = 20;
-    int[][] tileMatrix;          //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
+    float[][] tileMatrix;          //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
 
     List<TileObject> objectList;
     List<SaveObject> saveObj;
@@ -14,38 +14,29 @@ public class TileManager : MonoBehaviour {
     GameObject ChangePopUp;
     GameObject CreatePopUp;
 
+    MapManager mapManager;
+
     int warpCol;
     int warpRow;
 
 
-    public List<SaveObject> GetOurForcesInfo()
-    {
-        List<SaveObject> ourForcesList = new List<SaveObject>();
-
-        for(int i = 0; i < saveObj.Count; i++)
-        {
-            if (saveObj[i].type == 2)
-                ourForcesList.Add(saveObj[i]); //깊은 복사를 해야하는가..
-        }
-        
-        return ourForcesList;
-    }
-
-
     void Awake()
     {
-        tileMatrix = new int[TILE_MAX][];
+        tileMatrix = new float[TILE_MAX][];
 
         for(int i = 0; i< tileMatrix.Length; i++)
         {
-            tileMatrix[i] = new int[TILE_MAX];
+            tileMatrix[i] = new float[TILE_MAX];
         }
 
         objectList = new List<TileObject>();
         saveObj = new List<SaveObject>();
 
-        ChangePopUp = FindObjectOfType<CreateObject>().ChangePopUp;
-        CreatePopUp = FindObjectOfType<CreateObject>().CreatePopUp;
+        CreateObject createObject = FindObjectOfType<CreateObject>();
+        ChangePopUp = createObject.ChangePopUp;
+        CreatePopUp = createObject.CreatePopUp;
+
+        mapManager = FindObjectOfType<MapManager>();
 
         warpRow = -1;
         warpCol = -1;
@@ -55,7 +46,30 @@ public class TileManager : MonoBehaviour {
         LoadTileObject();
     }
 
-    public void SetMatrix(int[] idx, int type)
+    public void AllRepair()
+    {
+        if (objectList == null)
+            return;
+
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            objectList[i].Repair();
+        }
+    }
+
+    public int GetRepairCost()
+    {
+        int repairCost = 0;
+
+        for(int i = 0; i < objectList.Count; i++)
+        {
+            repairCost += objectList[i].GetRepairCost();
+        }
+
+        return repairCost;
+    }
+
+    public void SetMatrix(int[] idx, float type)
     {
         for(int i = 0; i < idx.Length; i = i + 2)
         {
@@ -114,6 +128,24 @@ public class TileManager : MonoBehaviour {
         return true;
     }
 
+    public int isFlameThrowingTrap(int[] idx)
+    {
+        int Cnt = 0;
+        for (int i = 0; i < idx.Length; i = i + 2)
+        {
+            try
+            {
+                if (tileMatrix[idx[i]][idx[i + 1]] == 3.5f)
+                {
+                    Cnt += 1;
+                }
+            }
+            catch (System.IndexOutOfRangeException) {}
+        }
+
+        return Cnt;
+    }
+
     public bool isEnableTile(int[] idx)
     {
         for(int i = 0; i < idx.Length; i = i + 2)
@@ -132,26 +164,28 @@ public class TileManager : MonoBehaviour {
         return true;
     }
 
-    void OffDependency(GameObject Obj)
+    void OffDependency(GameObject Obj, int[] pivotCoordinate)
     {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
 
         if (objInfo.id == "ObstructMovementCurrent")
         {
-            int[] omcIdx = Obj.GetComponent<CheckTile>().DepencyTile_OMC();
+            int[] omcIdx = Obj.GetComponent<CheckTile>().DepencyTile_OMC(pivotCoordinate);
 
             OffDepency(omcIdx[0], omcIdx[1]);
             OffDepency(omcIdx[2], omcIdx[3]);
         }
         else if (objInfo.id == "FlameThrowingTrap")
         {
-            int[] fttIdx = Obj.GetComponent<CheckTile>().DepencyTile_FTT();
+            int[] fttIdx = Obj.GetComponent<CheckTile>().DepencyTile_FTT(pivotCoordinate);
 
-            OffDepency(fttIdx[0], fttIdx[1]);
+            for(int i = 0; i < fttIdx.Length; i = i + 2)
+            {
+                OffDepency(fttIdx[i], fttIdx[i + 1]);
+            }
         }
     }
-
-    public bool DestroyObj(GameObject Obj, int[] idx)
+    public bool DestroyObj(bool isDestroyed, GameObject Obj, int[] idx)
     {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
         int layerDepth = objInfo.layerDepth;
@@ -159,7 +193,8 @@ public class TileManager : MonoBehaviour {
         if (objInfo.DontDestroy != 0)
             return false;
 
-        OffDependency(Obj);
+        int[] pivotCoordinte = { idx[0], idx[1] };
+        OffDependency(Obj, pivotCoordinte);
 
         for (int i = 0; i < idx.Length; i = i + 2)
         {
@@ -172,18 +207,13 @@ public class TileManager : MonoBehaviour {
         {
             objectList[i].SetLayerDepth(i);
         }
-
-        for (int i = 0; i < saveObj.Count; i++)
+        
+        if (isDestroyed)
         {
-            if (saveObj[i].mRow == idx[0])
-            {
-                if (saveObj[i].mCol == idx[1])
-                {
-                    saveObj.RemoveAt(i);
-                    break;
-                }
-            }
+            DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id);
         }
+        mapManager.SetObjectCnt(objInfo.type, -1);
+
         return true;
     }
 
@@ -258,18 +288,7 @@ public class TileManager : MonoBehaviour {
                 break;
             }
         }
-
-        for (int j = 0; j < saveObj.Count; j++)
-        {
-            if (saveObj[j].mRow == objectList[i].mRow)
-            {
-                if (saveObj[j].mCol == objectList[i].mCol)
-                {
-                    saveObj[j].DontDestroy--;
-                    break;
-                }
-            }
-        }
+        
     }
 
     public void OnDependency(int row, int col)
@@ -284,46 +303,36 @@ public class TileManager : MonoBehaviour {
                 break;
             }
         }
-
-        for (int j = 0; j < saveObj.Count; j++)
-        {
-            if (saveObj[j].mRow == objectList[i].mRow)
-            {
-                if (saveObj[j].mCol == objectList[i].mCol)
-                {
-                    saveObj[j].DontDestroy++;
-                    break;
-                }
-            }
-        }
+        
     }
 
     public void UsingTile(GameObject Obj, int[] idx) //addSave안해도 될듯 0 Obj에 값 제대로 넣어서 만들어야함 애초에
     {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
 
+        float type = objInfo.type;
+        if (objInfo.id.Equals("FlameThrowingTrap"))
+            type += 0.5f;
         for (int i = 0; i < idx.Length; i = i + 2)
         {
-            tileMatrix[idx[i]][idx[i + 1]] = objInfo.type;
+            tileMatrix[idx[i]][idx[i + 1]] = type;
         }
 
-        //여기에서 정렬하면서 추가 -> Layer 변경
-        SetOrderInLayer(new TileObject(Obj, idx[0], idx[1]));
-        
-        if(objInfo.id.Equals("Warp"))
+        if (objInfo.id.Equals("Warp"))
         {
             warpRow = idx[0];
             warpCol = idx[1];
         }
-        else if(!objInfo.id.Equals("Warp_Exit"))
+        else if (!objInfo.id.Equals("Warp_Exit"))
         {
             warpRow = -1;
             warpCol = -1;
         }
 
-        saveObj.Add(new SaveObject(Obj.transform.position, objInfo.DontDestroy, objInfo.type, objInfo.id, objInfo.level,
-                                   objInfo.presentHP, objInfo.totalHP, idx[0], idx[1],
-                                   objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation, warpRow, warpCol));
+        //여기에서 정렬하면서 추가 -> Layer 변경
+        SetOrderInLayer(new TileObject(Obj, idx[0], idx[1], warpRow, warpCol));
+
+        mapManager.SetObjectCnt(objInfo.type, 1);
     }
     
 
@@ -333,7 +342,20 @@ public class TileManager : MonoBehaviour {
             return;
 
         for (int i = 0; i < objectList.Count; i++)
+        {
             objectList[i].OnTransparency(isTransparency);
+        }
+    }
+
+    public void SetClickColliderStatus(bool ClickStatus)
+    {
+        if (objectList == null)
+            return;
+
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            objectList[i].SetClickColliderStatus(ClickStatus);
+        }
     }
 
     GameObject GetParentWarp(int row, int col)
@@ -438,7 +460,7 @@ public class TileManager : MonoBehaviour {
 
     SaveObject GetSaveObject(JsonData data)
     {
-        int type = int.Parse(data["type"].ToString());
+        float type = float.Parse(data["type"].ToString());
 
         int DontDestroy = int.Parse(data["DontDestroy"].ToString());
 
@@ -500,6 +522,20 @@ public class TileManager : MonoBehaviour {
 
     void SaveTileObject()
     {
+        saveObj.Clear();
+
+        for(int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
+                saveObj.Add(objectList[i].GetSaveObj());
+        }
+
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
+                saveObj.Add(objectList[i].GetSaveObj());
+        }
+
         JsonData newObj = JsonMapper.ToJson(saveObj);
         File.WriteAllText(Application.dataPath + "/Resources/Data/Room" + gameObject.name + ".json", newObj.ToString());
     }

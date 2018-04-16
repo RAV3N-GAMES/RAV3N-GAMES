@@ -83,6 +83,7 @@
      <Compile Include="Assets\1.Script\Room\Map\MapManager.cs" />
      <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />
      <Compile Include="Assets\1.Script\Room\MiniMapManager.cs" />
+     <Compile Include="Assets\1.Script\Room\Room.cs" />
      <Compile Include="Assets\1.Script\Room\RoomManager.cs" />
      <Compile Include="Assets\1.Script\Secrets\SecretActs.cs" />
      <Compile Include="Assets\1.Script\Select\BoxManager.cs" />

@@ -11,6 +11,8 @@ public enum Traps_Script { HumanTrap , Warp_Enter , Warp_Exit};
 
 public class DayandNight : MonoBehaviour
 {
+    public ResultPopUp resultPopUp;
+
     public static bool isDay;
     public static bool DayTime;
     [HideInInspector]
@@ -24,13 +26,11 @@ public class DayandNight : MonoBehaviour
 
     // Use this for initialization
     void Awake() {
-        Data_Player.Fame = 10;
         CreatedEnemy = new List<Enemy>();
         DeadEnemy = new List<Enemy>();
         isDay = false;//밤부터 시작
     }
     void Start() {
-        Debug.Log("Fame: " + Data_Player.Fame);
     }
 
     // Update is called once per frame
@@ -39,7 +39,13 @@ public class DayandNight : MonoBehaviour
 
     public void changeState() {
         isDay = !isDay;
-        Debug.Log("Day: " + isDay);
+
+        if (!isDay)
+        {
+            resultPopUp.gameObject.SetActive(true);
+            resultPopUp.InitResultPopUp();
+        }
+
         if (isDay) {
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();

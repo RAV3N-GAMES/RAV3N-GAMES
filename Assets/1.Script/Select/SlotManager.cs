@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SlotManager : MonoBehaviour {
     public Text price;
-    public Button glassButton;
+    //public Button glassButton;
 
     GameObject PopUp;
 
@@ -14,10 +14,10 @@ public class SlotManager : MonoBehaviour {
     public string id;
     public int type;
 
+    public GameObject LackOfCoin;
+
     public void Start()
     {
-        glassButton.onClick.AddListener(OnExplain);
-        
         if(type == 4)
             InitSecretActBtn();
         
@@ -29,12 +29,10 @@ public class SlotManager : MonoBehaviour {
     public void OnExplain()
     {
         ObjInfoPopUp objInfoPopUp = PopUp.GetComponent<ObjInfoPopUp>();
-        objInfoPopUp.id = id;
-        objInfoPopUp.slotManager = this;
 
-        ClickObject.isPossibleClick = false;
-        RoomManager.possibleDrag = false;
+        objInfoPopUp.InitObjInfoPopUp(id, type, this);
 
+        RoomManager.ChangeClickStatus(false);
         PopUp.SetActive(true);
     }
 
@@ -43,14 +41,18 @@ public class SlotManager : MonoBehaviour {
         //Fame 올라갈때 호출해줘야 함
         SecretObject tmpSecret = JsonDataManager.GetSecretInfo(id, Data_Player.Fame);
         double SecretBanditsGenChance = 0;
-    
+
         if (tmpSecret != null)
             SecretBanditsGenChance = tmpSecret.SecretBanditsGenChance;
-    
+
         if (SecretBanditsGenChance == 0)
+        {
             BlockPanel.SetActive(true);
+        }
         else
+        {
             BlockPanel.SetActive(false);
+        }
     }
 
     public void OnActivationSlot()
@@ -71,9 +73,12 @@ public class SlotManager : MonoBehaviour {
 
         price.text = slotInfo.price.ToString();
 
-        if (slotInfo.level == 0)
-            BlockPanel.SetActive(true);
-        else
-            BlockPanel.SetActive(false);
+        if (type != 4)
+        {
+            if (slotInfo.level == 0)
+                BlockPanel.SetActive(true);
+            else
+                BlockPanel.SetActive(false);
+        }
     }
 }

@@ -13,7 +13,7 @@ public class SlotMove : MonoBehaviour {
         postX = preX = Input.mousePosition.x;
         isMove = true;
 
-        RoomManager.possibleDrag = false;
+        RoomManager.ChangeClickStatus(false);
     }
 
     public void OnMove()
