@@ -172,7 +172,7 @@ public class ChangePopUp : MonoBehaviour {
             {
                 DestroyWarp();
 
-                Data_Player.addGold(price);
+                //Data_Player.addGold(price);
                 RoomManager.ChangeClickStatus(true);
                 Destroy(Obj);
             }

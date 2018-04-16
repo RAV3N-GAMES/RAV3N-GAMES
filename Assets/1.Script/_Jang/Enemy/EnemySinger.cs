@@ -53,12 +53,23 @@ public class EnemySinger : Enemy {
 			}
 		}
 		else
-		{
-			
+		{	
 			OriginalDest();
 		}
 
-		ChangeAnimation();
+        if (Distance <= StopDistance)
+        {
+            if (isSeizure && dest != OriginalPoint.position)
+            {
+                StartCoroutine(StealEvent());
+            }
+            else
+            {
+                StartCoroutine(DieEvent());
+            }
+        }
+
+        ChangeAnimation();
 	}
 
     private Transform FindClosestSecret(Vector3 start)

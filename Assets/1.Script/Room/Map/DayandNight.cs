@@ -30,7 +30,6 @@ public class DayandNight : MonoBehaviour
         isDay = false;//밤부터 시작
     }
     void Start() {
-        Debug.Log("Fame: " + Data_Player.Fame);
     }
 
     // Update is called once per frame
@@ -39,7 +38,6 @@ public class DayandNight : MonoBehaviour
 
     public void changeState() {
         isDay = !isDay;
-        Debug.Log("Day: " + isDay);
         if (isDay) {
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();

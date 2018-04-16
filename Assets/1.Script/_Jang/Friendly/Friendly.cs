@@ -93,6 +93,12 @@ public class Friendly : MonoBehaviour
 		UiHealth.ValueInit(Hp);
 		UiHealth.HealthActvie(true);
 	}
+
+    private void Start()
+    {
+        targetEnemy = targetEnemy.GroupConductor.GroupFindEnemy();
+
+    }
 	private void Update()
 	{
 		if (isDie)
@@ -170,11 +176,14 @@ public class Friendly : MonoBehaviour
 		Hp -= damage;
 		UiHealth.ValueDecrease(damage);
 		DamageStack++;
+        GetComponent<ObjectInfo>().presentHP = Hp;
 
-		if (Hp <= 0)
-			return true;
-		
-		return false;
+		if (Hp <= 0) {
+            GetComponent<ObjectInfo>().presentHP = 0;
+            return true;
+        }
+
+        return false;
 	}
 	private IEnumerator DieEvent()              
 	{
@@ -188,9 +197,10 @@ public class Friendly : MonoBehaviour
 		yield return attackDelay;
 		isShoot = false;
 	}
+
 	private void FriendlyAction()
-	{
-		if (targetEnemy != null)
+	{  
+        if (targetEnemy != null)
 		{
 			if (DirDistance() == true)
 			{
