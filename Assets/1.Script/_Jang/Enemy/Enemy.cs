@@ -58,11 +58,11 @@ public class Enemy : MonoBehaviour {
 		if (targetFriend == null)
 			return;
 
-		GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
-
 		if (targetFriend.Health(Attack))
 		{
-			targetFriend.Die();
+            GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
+
+            targetFriend.Die();
             try
             {
                 targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
@@ -74,39 +74,58 @@ public class Enemy : MonoBehaviour {
 	{
 		if (isDie)
 			return;
-
-		isDie = true;
-		anime.SetTrigger("Die");
-		enemyAI.enabled = false;
-		scollider.enabled = false;
-		UIEnemyHealth.HealthActvie(false);
-		GroupConductor.RemoveEnemy(this);
-		StartCoroutine("DieEvent");
+        StartCoroutine("DieEvent");
 	}
     public bool Health(int damage)
     {
         UIEnemyHealth.ValueDecrease(damage);
-
-        if (Hp <= 10)
+        if (Hp <= 10) {
+            Hp = 0;
             return true;
+        }
         else
             Hp -= damage;
-
+        try
+        {
+            GetComponentInParent<ObjectInfo>().presentHP = Hp;
+        }
+        catch { }
+        
         return false;
     }
     private void KillGold() {
         Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].Reward_Kill);
     }
 
-	private IEnumerator DieEvent()
+	protected IEnumerator DieEvent()
 	{
-        KillGold();
+        Debug.Log(name + ": is in DieEvent");
+        isDie = true;
+        anime.SetTrigger("Die");
+        enemyAI.enabled = false;
+        scollider.enabled = false;
+        UIEnemyHealth.HealthActvie(false);
+        GroupConductor.RemoveEnemy(this);
         yield return new WaitForSeconds(0.5f);
+        KillGold();
 		transform.parent.gameObject.SetActive(false);
 		PoolManager.current.PushEnemy(NavObj.gameObject);
 	}
+
+    protected IEnumerator StealEvent() {
+        isDie = true;
+        anime.SetTrigger("Die");
+        enemyAI.enabled = false;
+        scollider.enabled = false;
+        UIEnemyHealth.HealthActvie(false);
+        GroupConductor.RemoveEnemy(this);
+        yield return new WaitForSeconds(0.5f);
+        transform.parent.gameObject.SetActive(false);
+        PoolManager.current.PushEnemy(NavObj.gameObject);
+    }
 	private bool DirDistance()
-	{
+	{//targetFriend한테 가는지 안가는지 결정.
+        //targetFriend까지의 거리 Distance도 계산
 		if (targetFriend == null)
 			return false;
 
@@ -126,6 +145,8 @@ public class Enemy : MonoBehaviour {
 		{
 			return false;
 		}
+        //true: 때릴 친구랑 붙어있음
+        //false: 때릴 친구가 없거나 붙어있지 않음.
 	}
 
     private Transform FindClosestSecret(Vector3 start) {
@@ -197,11 +218,9 @@ public class Enemy : MonoBehaviour {
 	}	
 	private void EnemyAction()
 	{
-        
-
         if (targetFriend != null)
 		{							
-			if (DirDistance() == true)
+			if (DirDistance())
 			{
 				enemyAI.enabled = false;
 
@@ -211,7 +230,7 @@ public class Enemy : MonoBehaviour {
 					currentState = EnemyState.Attack;
 				}
 			}
-			if (DirDistance() == false)
+			if (!DirDistance())
 			{
 				if (currentState == EnemyState.Attack)
 					return;
@@ -226,12 +245,15 @@ public class Enemy : MonoBehaviour {
 			OriginalDest();
 		}
 
-        if (transform.position == OriginalPoint.transform.position) {
-            enemyAI.enabled = false;
-            scollider.enabled = false;
-            UIEnemyHealth.HealthActvie(false);
-            GroupConductor.RemoveEnemy(this);
-            StartCoroutine(DieEvent());
+        if (Distance <= StopDistance) {//목적지에 도달할 경우(목적지: base / Secret 중 1)
+            if (isSeizure && dest != OriginalPoint.position) {//Secret 도착
+                StartCoroutine(StealEvent());
+            }
+            else { //base 도착
+                //DieEvent를 호출하여 죽이지만 DeadEnemy에는 안들어감.
+                StartCoroutine(DieEvent());
+            }
+            //targetFriend 도착은 이미 위에서 처리
         }
     }
 	protected void ChangeAnimation()
@@ -255,5 +277,4 @@ public class Enemy : MonoBehaviour {
 		EnemyAction();
 		ChangeAnimation();
 	}
-
 }

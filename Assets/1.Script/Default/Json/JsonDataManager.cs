@@ -14,9 +14,7 @@ public class JsonDataManager : MonoBehaviour {
     {
         slotInfoList = new Dictionary<string, SlotInfo>();
         slotImage = new Dictionary<string, Sprite>();
-
         Data_Player.addGold(10000);
-
         LoadData();
     }
 

@@ -32,7 +32,6 @@ public class DayandNight : MonoBehaviour
         isDay = false;//밤부터 시작
     }
     void Start() {
-        Debug.Log("Fame: " + Data_Player.Fame);
     }
 
     // Update is called once per frame

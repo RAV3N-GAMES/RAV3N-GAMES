@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public class RoomManager : MonoBehaviour {
     public Transform RoomParent;
     public List<GameObject> Room { get; private set; }
-
+    public List<bool> IsOutside { get; private set; }
+    private const int MaxSide = 5;//한 변 최대 방 개수
     [HideInInspector]
     public int CenterRoomIdx;
 
@@ -23,7 +24,41 @@ public class RoomManager : MonoBehaviour {
 
     public static bool isTransparency;
     public MiniMapManager miniMapManager;
+    /*private void checkOutside() {
+        IsOutside[0] = false;
+        int idx_i, idx_j;
+        int idxAdjLefttop, idxAdjRighttop;
+        for (int i = 1; i < Room.Count-MaxSide-1; i++) {
+            idx_i = i / MaxSide;
+            idx_j = i / MaxSide;
+            idxAdjLefttop = (idx_i + 1) * MaxSide + idx_j;
+            idxAdjRighttop = i * MaxSide + idx_j + 1;
+            if (!Room[idxAdjLefttop].activeSelf || !Room[idxAdjRighttop].activeSelf)
+            {
+                IsOutside[i] = true;
+            }
+            else
+                IsOutside[i] = false;
+        }
 
+        for (int i = 1; i < MaxSide; i++) {//4 9 14 19에 대해 outside 설정
+            if (Room[MaxSide * i - 1].activeSelf)
+                IsOutside[MaxSide * i - 1] = true;
+            else
+                IsOutside[MaxSide * i - 1] = false;
+        }
+
+        for (int i = 0; i < MaxSide; i++) {//20~24에 대해 outside 설정
+            if (Room[(MaxSide * (MaxSide - 1)) + i].activeSelf)
+                IsOutside[(MaxSide * (MaxSide - 1)) + i] = true;
+            else
+                IsOutside[(MaxSide * (MaxSide - 1)) + i] = false;
+        }
+    }
+    */
+    private void RemoveGenPoint() {
+
+    }
     void Awake()
     {
         possibleDrag = true;
@@ -32,11 +67,16 @@ public class RoomManager : MonoBehaviour {
         CenterRoomIdx = 0;
 
         Room = new List<GameObject>();
-
+        IsOutside = new List<bool>();
         for (int i = 0; i < RoomParent.childCount; i++)
         {
             Room.Add(RoomParent.GetChild(i).gameObject);
+            IsOutside.Add(new bool());
         }
+    }
+
+    void Start() {
+      //  checkOutside();
     }
 
     public void MoveRoom(int idx)
@@ -47,27 +87,88 @@ public class RoomManager : MonoBehaviour {
         return (idx <= 1 || idx == 5 || idx == 6) ? true : false;//idx= 0 or 1 or 5 or 6 -> true
     }
 
+    private void SetObstacles(int idx) {
+        int i = idx / MaxSide;
+        int j = idx % MaxSide;
+
+        int adjacentRoom = idx - 1;//열린 방과 인접한 방
+        int adj_i = adjacentRoom / MaxSide;//왼쪽 아래 방부터 시작
+        int adj_j = adjacentRoom % MaxSide;
+        NavMeshObstacle[] obs_open;
+        NavMeshObstacle[] obs_adj;
+        Transform deleteform;
+
+        if (idx > 1 && adj_i == i && adj_j == (j - 1) && Room[adjacentRoom].gameObject.activeSelf)
+        {//열린 방의 왼쪽 아래에 방이 있을 경우
+            obs_open = Room[idx].GetComponentsInChildren<NavMeshObstacle>();
+            obs_adj = Room[adjacentRoom].GetComponentsInChildren<NavMeshObstacle>();
+            obs_open[3].enabled = false;
+            obs_adj[2].enabled = false;
+            obs_open = null;
+            obs_adj = null;
+            deleteform = Room[adjacentRoom].transform.GetChild(19).GetChild(10);
+            Room[adjacentRoom].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+            deleteform = Room[idx].transform.GetChild(2).GetChild(10);
+            Room[idx].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+        }
+        adjacentRoom = idx + 1;//오른쪽 위 방
+        adj_i = adjacentRoom / MaxSide;
+        adj_j = adjacentRoom % MaxSide;
+        if (idx < Room.Count - 1 && adj_i == i && adj_j == j + 1 && Room[adjacentRoom].gameObject.activeSelf)
+        {//열린 방의 오른쪽 위에 방이 있을 경우
+            obs_open = Room[idx].GetComponentsInChildren<NavMeshObstacle>();
+            obs_adj = Room[adjacentRoom].GetComponentsInChildren<NavMeshObstacle>();
+            obs_open[2].enabled = false;
+            obs_adj[3].enabled = false;
+            obs_open = null;
+            obs_adj = null;
+
+            deleteform = Room[adjacentRoom].transform.GetChild(2).GetChild(10);
+            Room[adjacentRoom].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+            deleteform = Room[idx].transform.GetChild(19).GetChild(10);
+            Room[idx].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+        }
+        adjacentRoom = idx - 5;//오른쪽 아래 방
+        adj_i = adjacentRoom / MaxSide;
+        adj_j = adjacentRoom % MaxSide;
+        if (idx >= 5 && adj_i == (i - 1) && adj_j == j && Room[adjacentRoom].gameObject.activeSelf)
+        {
+            obs_open = Room[idx].GetComponentsInChildren<NavMeshObstacle>();
+            obs_adj = Room[adjacentRoom].GetComponentsInChildren<NavMeshObstacle>();
+            obs_open[1].enabled = false;
+            obs_adj[0].enabled = false;
+            obs_open = null;
+            obs_adj = null;
+
+            deleteform = Room[adjacentRoom].transform.GetChild(11).GetChild(18);
+            Room[adjacentRoom].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+            deleteform = Room[idx].transform.GetChild(11).GetChild(1);
+            Room[idx].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+        }
+        adjacentRoom = idx + 5;//왼쪽 위 방
+        adj_i = adjacentRoom / MaxSide;
+        adj_j = adjacentRoom % MaxSide;
+        if (idx < Room.Count - 5 && adj_i == (i + 1) && adj_j == j && Room[adjacentRoom].gameObject.activeSelf)
+        {
+            obs_open = Room[idx].GetComponentsInChildren<NavMeshObstacle>();
+            obs_adj = Room[adjacentRoom].GetComponentsInChildren<NavMeshObstacle>();
+            obs_open[0].enabled = false;
+            obs_adj[1].enabled = false;
+            obs_open = null;
+            obs_adj = null;
+            
+            deleteform = Room[adjacentRoom].transform.GetChild(11).GetChild(1);
+            Room[adjacentRoom].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+            deleteform = Room[idx].transform.GetChild(11).GetChild(18);
+            Room[idx].GetComponent<EnemyGroup>().GenPoint.Remove(deleteform);
+        }
+    }
+
     public void OpenRoom(int idx)
     {
         Room[idx].SetActive(true);
-        if (idx >= 1) { 
-            if (Room[idx - 1].gameObject.activeSelf) {
-                NavMeshObstacle[] obs = Room[idx - 1].GetComponentsInChildren<NavMeshObstacle>();
-                Debug.Log("Name0: " + obs[0].name);
-                Debug.Log("Name1: " + obs[1].name);
-
-                obs[1].enabled = false;
-            }
-        }
-        if (idx >= 5) { 
-            if (Room[idx - 5].gameObject.activeSelf) {
-                NavMeshObstacle[] obs = Room[idx - 5].GetComponentsInChildren<NavMeshObstacle>();
-                Debug.Log("Name0: " + obs[0].name);
-                Debug.Log("Name1: " + obs[1].name);
-                Debug.Log("Name P: " + obs[0].transform.parent.transform.parent.name);
-                obs[0].enabled = false;
-            }
-        }
+        //checkOutside();
+        SetObstacles(idx);
     }
 
     Vector3 GetRay()
