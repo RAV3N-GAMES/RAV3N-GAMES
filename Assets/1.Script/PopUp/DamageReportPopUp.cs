@@ -74,15 +74,6 @@ public class DamageReportPopUp : MonoBehaviour {
         InitTextList(OurForcesParent, TextOurForces);
         InitTextList(TrapParent, TextTrap);
         InitTextList(SecretParent, TextSecret);
-
-        //임시
-        //for (int i = 0; i < ObjLength; i++)
-        //{
-        //    Building[i] = i;
-        //    OurForces[i] = i % 2;
-        //    Trap[i] = i + 1;
-        //    Secret[i] = 1;
-        //}
     }
 
     void SetActive()
@@ -117,6 +108,8 @@ public class DamageReportPopUp : MonoBehaviour {
             TextSecret[i].text = "X0";
         }
 
+        print("maxNum : " + maxNum);
+
         StartCoroutine("PlayDamageReport");
     }
 
@@ -133,8 +126,8 @@ public class DamageReportPopUp : MonoBehaviour {
 
     IEnumerator PlayDamageReport()
     {
-        //버튼 클릭 막을지...
-        for(int loopCnt = 0; loopCnt < maxNum; loopCnt++)
+        //버튼 클릭 막고
+        for(int loopCnt = 0; loopCnt < (maxNum + 1); loopCnt++)
         {
             for(int objCnt = 0; objCnt < ObjLength; objCnt++)
             {
@@ -150,7 +143,7 @@ public class DamageReportPopUp : MonoBehaviour {
 
             yield return new WaitForSeconds(0.5f);
         }
-
+        //클릭 풀고
         InitDamageList();
         yield break;
     }

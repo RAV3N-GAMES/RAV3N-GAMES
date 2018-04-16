@@ -24,6 +24,8 @@ public class ResultPopUp : MonoBehaviour {
         EnemyGroupList[1].SetActive(false);
         EnemyGroupList[2].SetActive(false);
 
+        print("enemyNum : " + enemyNum);
+
         EnemyGroupList[enemyNum - 1].SetActive(true);
     }
 
@@ -41,7 +43,8 @@ public class ResultPopUp : MonoBehaviour {
         //bool[]   enemyActive : 집단 별 적군 종류 별 제압 성공 여부 
 
         ///////임시
-        int tempEnemyNum = 1;
+        int tempEnemyNum = EnemyManager.EnemyGroupMax;
+        
         SetEnemyListActive(tempEnemyNum);
         ///////
 
@@ -71,17 +74,31 @@ public class ResultPopUp : MonoBehaviour {
             return;
         }
 
-        for(int i = 0; i < EnemyCnt; i++)
+        int createdEnemyCnt =  DayandNight.CreatedEnemy.Count;
+        for (int i = 0; i < EnemyCnt; i++)
         {
             string[] enemyId = new string[4];
             bool[] enemyActive = new bool[4];
 
             //이제 나중에 여기에서 소속집단 판별하면 될듯
-            for (int j = 0; j < enemyId.Length; j++)
+            int Cnt = 0;
+            for (int j = 0; j < createdEnemyCnt; j++)
             {
-                enemyId[j] = DayandNight.CreatedEnemy[j].name;
-                enemyActive[j] = !DayandNight.CreatedEnemy[j].isDie;
+                print("Group : " + DayandNight.CreatedEnemy[j].Group);
+                if (DayandNight.CreatedEnemy[j].Group == (i + 1))
+                {
+                    enemyId[Cnt] = DayandNight.CreatedEnemy[j].name;
+                    enemyActive[Cnt] = !DayandNight.CreatedEnemy[j].isDie;
+
+                    if (Cnt == 3)
+                        break;
+                    else
+                        Cnt++;
+                }
             }
+
+            if (Cnt != 3)
+                print("Cnt != 3");
 
             enemyGroupResult[i].InitResult(enemyId, enemyActive);
         }

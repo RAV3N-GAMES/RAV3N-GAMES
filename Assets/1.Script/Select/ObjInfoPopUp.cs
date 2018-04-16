@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ObjInfoPopUp : MonoBehaviour {
     string id;
     int type;
+
     SlotManager slotManager;
 
     public Image ObjImage;
@@ -20,6 +21,21 @@ public class ObjInfoPopUp : MonoBehaviour {
     public Text UpgradePrice;
 
     public GameObject LackOfCoin;
+
+    public List<GameObject> UpgradeIcon;
+
+    void InitUpgradeIcon()
+    {
+        for (int i = 0; i < UpgradeIcon.Count; i++)
+            UpgradeIcon[i].SetActive(false);
+
+        switch (type)
+        {
+            case 0: UpgradeIcon[0].SetActive(true); break;
+            case 2: UpgradeIcon[1].SetActive(true); break;
+            case 3: UpgradeIcon[2].SetActive(true); break;
+        }
+    }
 
     void InitPriceInfo(int level)
     {
@@ -64,7 +80,14 @@ public class ObjInfoPopUp : MonoBehaviour {
         ObjTitle.text = id + " " + level + "단계";
         Contents.text = level + "단계의 " + id + "이다.";
 
-        HP.text = "HP " + 0;
+        switch(type)
+        {
+            case 0: HP.text = "HP " + JsonDataManager.GetBuildingInfo(id, level).HP.ToString(); break;
+            case 2: HP.text = "HP " + JsonDataManager.GetOurForcesInfo(id, level).HP.ToString(); break;
+            default: HP.text = "HP" + 0; break;
+        }
+
+        InitUpgradeIcon();
 
         int upgradeCost = GetUpgradeCost();
         if (upgradeCost != -1)

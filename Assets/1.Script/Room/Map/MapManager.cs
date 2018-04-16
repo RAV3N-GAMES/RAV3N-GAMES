@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour {
-    public Transform MapCamera;
+    public Transform MapCameraPos;
+    public Camera MapCamera;
 
     public GameObject RoomPref;
     public Transform RoomParent;
@@ -16,23 +17,33 @@ public class MapManager : MonoBehaviour {
     //index : Step..? , value : 활성화되는 Fame
     static int[] Fame = { 0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 8 };
 
-    static int tempFame = 0;
+    public static int tempFame = 0;
     public Text tempFameText;
 
     static float Edge;
-    static int Step;           //이거 저장해놨다가 불러야함 //Step * Step 개의 방 사용
+    public static int Step;           //이거 저장해놨다가 불러야함 //Step * Step 개의 방 사용
     List<GameObject> RoomList; //접근하는 인덱스 바꿔야함
-    Type[][] isOpen;
+    public static Type[][] isOpen;
 
     public Text BuildingText;
     public Text OurForcesText;
     public Text TrapText;
     public Text SecretText;
 
+    public Text AllRepairCost;
+
+    public GameObject LackOfCoin;
+
+    public GameObject AllRepairButton;
+    public GameObject ActivedDamageButton;
+
     int BuildingCnt;
     int OurForcesCnt;
     int TrapCnt;
     int SecretCnt;
+
+    public static int DamageBuildingCnt = 0;
+    public static int DamageOurForcesCnt = 0;
 
     public enum Type
     {
@@ -62,12 +73,11 @@ public class MapManager : MonoBehaviour {
 
         InitRoomStatus(Type.DISABLE, STEP_MAX);
         InitRoomStatus(Type.OPEN, Step);
-
-        InitMap();
 	}
 
     void Start()
     {
+        InitMap();
         gameObject.SetActive(false);
     }
 
@@ -80,6 +90,58 @@ public class MapManager : MonoBehaviour {
             case 3: TrapCnt += Cnt; TrapText.text = TrapCnt.ToString(); break;
             case 4: SecretCnt += Cnt; SecretText.text = SecretCnt.ToString(); break;
         }
+    }
+
+    public void ChangeToNonActiveDamage()
+    {
+        AllRepairButton.SetActive(true);
+        ChangeMapStatus();
+    }
+
+    public void ChangeMapStatus()
+    {
+        bool isActiveAllRepair = AllRepairButton.activeInHierarchy;
+
+        AllRepairButton.SetActive(!isActiveAllRepair);
+        ActivedDamageButton.SetActive(!isActiveAllRepair);
+
+        TrapText.transform.parent.gameObject.SetActive(isActiveAllRepair);
+        SecretText.transform.parent.gameObject.SetActive(isActiveAllRepair);
+
+        if (isActiveAllRepair)
+        {
+            MapCamera.cullingMask = LayerMask.GetMask("ObjPos");
+
+            BuildingText.text = BuildingCnt.ToString();
+            OurForcesText.text = OurForcesCnt.ToString();
+        }
+        else
+        {
+            MapCamera.cullingMask = LayerMask.GetMask("DamageObjPos");
+
+            MapManager.DamageBuildingCnt = 0;
+            MapManager.DamageOurForcesCnt = 0;
+
+            SetAllRepairCost();
+
+            BuildingText.text = MapManager.DamageBuildingCnt.ToString();
+            OurForcesText.text = MapManager.DamageOurForcesCnt.ToString();
+        }
+    }
+
+    void SetAllRepairCost()
+    {
+        AllRepairCost.text = roomManager.GetAllRepairCost().ToString() + "/" + Data_Player.Gold;
+    }
+
+    public void AllRepair()
+    {
+        if (!roomManager.AllRepair())
+        {
+            LackOfCoin.SetActive(true);
+        }
+        else
+            RoomManager.ChangeClickStatus(true);
     }
 
     void SetRoomParentRect()
@@ -148,15 +210,37 @@ public class MapManager : MonoBehaviour {
         tempFame++;
         tempFameText.text = tempFame.ToString();
 
+        ChangedFame();
+    }
+
+    public void ChangedFame()
+    {
         StepUp();
+        InitMap();
+    }
+
+    public void tempFameDown()
+    {
+        tempFame--;
+        tempFameText.text = tempFame.ToString();
+
+        ChangedFame();
     }
 
     public void StepUp()
     {
-        if (Fame[(int)((Step + Edge) * 2)] > tempFame)
+        if (Edge == 0.5f)
+        {
+            if (Step * Step >= tempFame)
+                return;
+            if (Step == STEP_MAX)
+                return;
+        }
+        else if(Step * Step > tempFame)
+        {
             return;
-        if (Step == STEP_MAX && Edge == 0.5f)
-            return;
+        }
+        
         if (Edge == 0.5f)
         {
             if (!isEdgeOpen())
@@ -178,8 +262,7 @@ public class MapManager : MonoBehaviour {
     public void EdgeOpen()
     {
         isOpen[Step - 1][Step - 1] = Type.CLOSE;
-
-        roomManager.OpenRoom((Step - 1) * (STEP_MAX + 1));
+        
         InitMap();
     }
 
@@ -199,10 +282,9 @@ public class MapManager : MonoBehaviour {
 
         float z = (roomManager.Room[((Step - 1) * STEP_MAX + (Step - 1))].transform.position.z - roomManager.Room[0].transform.position.z) / 2f;
 
-        MapCamera.transform.position = new Vector3(0, 10, z);
-        MapCamera.gameObject.GetComponent<Camera>().orthographicSize = Step * 16;
-
-        miniMapManager.StepUp();
+        MapCameraPos.transform.position = new Vector3(0, 10, z);
+        MapCameraPos.gameObject.GetComponent<Camera>().orthographicSize = Step * 16;
+        
         InitMap();
     }
 
@@ -227,8 +309,23 @@ public class MapManager : MonoBehaviour {
         roomManager.MoveRoom(idx);
     }
 
+    int GetOpenRoomCnt()
+    {
+        int openRoomCnt = 0;
+        for (int room = 0; room < STEP_MAX * STEP_MAX; room++)
+        {
+            if (GetIsOpen(room) == Type.OPEN)
+                openRoomCnt++;
+        }
+
+        return openRoomCnt;
+    }
+
     public void OpenRoom(int idx)
     {
+        if (GetOpenRoomCnt() >= tempFame)
+            return;
+
         int i = idx / STEP_MAX;
         int j = idx % STEP_MAX;
 
@@ -244,7 +341,7 @@ public class MapManager : MonoBehaviour {
             StepUp();
         
         roomManager.OpenRoom(idx);
-        miniMapManager.OpenRoom(idx);
+        InitMap();
     }
     
 
@@ -294,11 +391,18 @@ public class MapManager : MonoBehaviour {
                 InitRoomRect(newRoom.GetComponent<RectTransform>(), size, i * Step + j);
 
                 if (isOpen[i][j] == Type.CLOSE)
-                    newRoom.GetComponent<Image>().color = new Color(0, 0, 1, 1);
+                {
+                    if (GetOpenRoomCnt() >= tempFame)
+                        newRoom.SetActive(false);
+                    else
+                        newRoom.GetComponent<Image>().color = new Color(0, 0, 1, 1);
+                }
             }
         }
 
         RoomList[conRoom].GetComponent<Image>().color = new Color(0, 1, 0, 1);
+        miniMapManager.InitMap();
     }
 
+    
 }

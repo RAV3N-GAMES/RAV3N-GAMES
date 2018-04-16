@@ -105,14 +105,41 @@ public class RoomManager : MonoBehaviour {
         if (touch0.phase == TouchPhase.Moved || touch1.phase == TouchPhase.Moved)
         {
             float dis = Vector3.Distance(touch0.position, touch1.position);
-            Vector3 camPos = Camera.main.transform.position;
+            //Vector3 camPos = Camera.main.transform.position;
+            float camSize = Camera.main.orthographicSize;
 
-            if (dis < touchDistance && camPos.y < 15)
-                Camera.main.transform.position = new Vector3(camPos.x, camPos.y + 0.1f, camPos.z);
-            else if (dis > touchDistance && camPos.y > 3)
-                Camera.main.transform.position = new Vector3(camPos.x, camPos.y - 0.1f, camPos.z);
+            if (dis < touchDistance && camSize < 15)
+                Camera.main.orthographicSize = camSize + 0.1f;
+            //Camera.main.transform.position = new Vector3(camPos.x, camPos.y + 0.1f, camPos.z);
+            else if (dis > touchDistance && camSize > 3)
+                Camera.main.orthographicSize = camSize - 0.1f;
+            //Camera.main.transform.position = new Vector3(camPos.x, camPos.y - 0.1f, camPos.z);
         }
         touchDistance = Vector3.Distance(touch0.position, touch1.position);
+    }
+
+    public bool AllRepair()
+    {
+        int repairCost = GetAllRepairCost();
+        if (!Data_Player.isEnough_G(repairCost))
+            return false;
+
+        Data_Player.subGold(repairCost);
+        for (int i = 0; i < Room.Count; i++)
+            Room[i].GetComponent<TileManager>().AllRepair();
+        return true;
+    }
+
+    public int GetAllRepairCost()
+    {
+        int allRepairCost = 0;
+        for(int i = 0; i < Room.Count; i++)
+        {
+            if (Room[i].activeInHierarchy)
+                allRepairCost += Room[i].GetComponent<TileManager>().GetRepairCost();
+        }
+
+        return allRepairCost;
     }
 
     public void OnTransparency()

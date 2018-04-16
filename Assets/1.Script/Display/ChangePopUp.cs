@@ -26,14 +26,14 @@ public class ChangePopUp : MonoBehaviour {
     public GameObject DontDestroy;
 
     public GameObject MovePopUp;
-
     bool isMove;
+    
 
     void InitBuilding(ObjectInfo objInfo)
     {
         BuildingObject building = JsonDataManager.GetBuildingInfo(id, objInfo.level);
         price = (building.Price / 2) * objInfo.presentHP / objInfo.totalHP;
-        priceText.text = price.ToString() + "/"+ Data_Player.Gold + "골드회수";
+        priceText.text = price.ToString() + "/"+ Data_Player.Gold;
 
         repairPrice = (objInfo.totalHP - objInfo.presentHP) * building.RepairCost;
         repairPriceText.text = repairPrice.ToString() + "/" + Data_Player.Gold + "골드";
@@ -44,7 +44,7 @@ public class ChangePopUp : MonoBehaviour {
         OurForcesObject ourForces = JsonDataManager.GetOurForcesInfo(id, objInfo.level);
 
         price = (ourForces.Price / 2) * objInfo.presentHP / objInfo.totalHP;
-        priceText.text = price.ToString() + "/" + Data_Player.Gold + "골드회수";
+        priceText.text = price.ToString() + "/" + Data_Player.Gold;
 
         repairPrice = (int)((objInfo.totalHP - objInfo.presentHP) * ourForces.HealCost);
         repairPriceText.text = repairPrice.ToString() + "/" + Data_Player.Gold + "골드";
@@ -55,8 +55,8 @@ public class ChangePopUp : MonoBehaviour {
         TrapObject trap = JsonDataManager.GetTrapInfo(id, objInfo.level);
 
         price = trap.Price / 2;
-        priceText.text = price.ToString() + "/" + Data_Player.Gold + " 골드회수";
-
+        priceText.text = price.ToString() + "/" + Data_Player.Gold;
+        
         repairPrice = 0;
         repairPriceText.text = "0" + "/" + Data_Player.Gold + "골드";
     }
@@ -66,7 +66,7 @@ public class ChangePopUp : MonoBehaviour {
         price = 0;
         repairPrice = 0;
 
-        priceText.text = "삭제 불가";
+        priceText.text = "0/0";
         repairPriceText.text = "0";
     }
 
@@ -142,6 +142,16 @@ public class ChangePopUp : MonoBehaviour {
         }
         else
             PartialRepair.SetActive(true);
+    }
+
+    public void tempHitObjForTest()
+    {
+        ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
+        if (objInfo.type == 0 || objInfo.type == 2)
+        {
+            objInfo.SetHP(-20);
+            HPText.text = "HP " + objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
+        }
     }
 
     void DestroyWarp()

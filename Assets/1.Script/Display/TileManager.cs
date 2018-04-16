@@ -20,20 +20,6 @@ public class TileManager : MonoBehaviour {
     int warpRow;
 
 
-    public List<SaveObject> GetOurForcesInfo()
-    {
-        List<SaveObject> ourForcesList = new List<SaveObject>();
-
-        for(int i = 0; i < saveObj.Count; i++)
-        {
-            if (saveObj[i].type == 2)
-                ourForcesList.Add(saveObj[i]); //깊은 복사를 해야하는가..
-        }
-        
-        return ourForcesList;
-    }
-
-
     void Awake()
     {
         tileMatrix = new float[TILE_MAX][];
@@ -58,6 +44,29 @@ public class TileManager : MonoBehaviour {
         InitMatrix();
 
         LoadTileObject();
+    }
+
+    public void AllRepair()
+    {
+        if (objectList == null)
+            return;
+
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            objectList[i].Repair();
+        }
+    }
+
+    public int GetRepairCost()
+    {
+        int repairCost = 0;
+
+        for(int i = 0; i < objectList.Count; i++)
+        {
+            repairCost += objectList[i].GetRepairCost();
+        }
+
+        return repairCost;
     }
 
     public void SetMatrix(int[] idx, float type)
@@ -198,21 +207,11 @@ public class TileManager : MonoBehaviour {
         {
             objectList[i].SetLayerDepth(i);
         }
-
-        for (int i = 0; i < saveObj.Count; i++)
-        {
-            if (saveObj[i].mRow == idx[0])
-            {
-                if (saveObj[i].mCol == idx[1])
-                {
-                    saveObj.RemoveAt(i);
-                    break;
-                }
-            }
-        }
-
+        
         if (isDestroyed)
+        {
             DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id);
+        }
         mapManager.SetObjectCnt(objInfo.type, -1);
 
         return true;
@@ -289,18 +288,7 @@ public class TileManager : MonoBehaviour {
                 break;
             }
         }
-
-        for (int j = 0; j < saveObj.Count; j++)
-        {
-            if (saveObj[j].mRow == objectList[i].mRow)
-            {
-                if (saveObj[j].mCol == objectList[i].mCol)
-                {
-                    saveObj[j].DontDestroy--;
-                    break;
-                }
-            }
-        }
+        
     }
 
     public void OnDependency(int row, int col)
@@ -315,18 +303,7 @@ public class TileManager : MonoBehaviour {
                 break;
             }
         }
-
-        for (int j = 0; j < saveObj.Count; j++)
-        {
-            if (saveObj[j].mRow == objectList[i].mRow)
-            {
-                if (saveObj[j].mCol == objectList[i].mCol)
-                {
-                    saveObj[j].DontDestroy++;
-                    break;
-                }
-            }
-        }
+        
     }
 
     public void UsingTile(GameObject Obj, int[] idx) //addSave안해도 될듯 0 Obj에 값 제대로 넣어서 만들어야함 애초에
@@ -341,23 +318,19 @@ public class TileManager : MonoBehaviour {
             tileMatrix[idx[i]][idx[i + 1]] = type;
         }
 
-        //여기에서 정렬하면서 추가 -> Layer 변경
-        SetOrderInLayer(new TileObject(Obj, idx[0], idx[1]));
-        
-        if(objInfo.id.Equals("Warp"))
+        if (objInfo.id.Equals("Warp"))
         {
             warpRow = idx[0];
             warpCol = idx[1];
         }
-        else if(!objInfo.id.Equals("Warp_Exit"))
+        else if (!objInfo.id.Equals("Warp_Exit"))
         {
             warpRow = -1;
             warpCol = -1;
         }
 
-        saveObj.Add(new SaveObject(Obj.transform.position, objInfo.DontDestroy, type, objInfo.id, objInfo.level,
-                                   objInfo.presentHP, objInfo.totalHP, idx[0], idx[1],
-                                   objInfo.coordinate, objInfo.pivotObject.name, objInfo.isRotation, warpRow, warpCol));
+        //여기에서 정렬하면서 추가 -> Layer 변경
+        SetOrderInLayer(new TileObject(Obj, idx[0], idx[1], warpRow, warpCol));
 
         mapManager.SetObjectCnt(objInfo.type, 1);
     }
@@ -549,6 +522,20 @@ public class TileManager : MonoBehaviour {
 
     void SaveTileObject()
     {
+        saveObj.Clear();
+
+        for(int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
+                saveObj.Add(objectList[i].GetSaveObj());
+        }
+
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
+                saveObj.Add(objectList[i].GetSaveObj());
+        }
+
         JsonData newObj = JsonMapper.ToJson(saveObj);
         File.WriteAllText(Application.dataPath + "/Resources/Data/Room" + gameObject.name + ".json", newObj.ToString());
     }

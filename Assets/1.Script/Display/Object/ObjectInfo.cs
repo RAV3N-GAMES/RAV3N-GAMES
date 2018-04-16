@@ -5,10 +5,11 @@ using UnityEngine;
 public class ObjectInfo : MonoBehaviour
 {
     //public Transform FlameThrowingTrap;
-
     public GameObject ClickCollider;
     public GameObject TileCollider;
     public GameObject ObjectCollider;
+
+    public GameObject DamageObjPos;
 
     public string id;
     public int type;
@@ -28,7 +29,6 @@ public class ObjectInfo : MonoBehaviour
     public int layerDepth;
 
     public int DontDestroy;
-
 
     public void SetClickColliderPos(float z)
     {
@@ -76,6 +76,12 @@ public class ObjectInfo : MonoBehaviour
         isRotation = objInfo.isRotation;
 
         Rotate(InitDir());
+
+        if (DamageObjPos != null)
+        {
+            if (presentHP < totalHP)
+                DamageObjPos.SetActive(true);
+        }
 
         StartCoroutine(Display());
     }
@@ -133,17 +139,41 @@ public class ObjectInfo : MonoBehaviour
         }
     }
 
+    public void SetHP(int changeHP)
+    {
+        if(changeHP < 0)
+        {
+            if (DamageObjPos != null)
+                DamageObjPos.SetActive(true);
+
+            if (changeHP + presentHP <= 0)
+            {
+                presentHP = 0;
+                GetComponent<DisplayObject>().DestroyObj(true); //게임 오브젝트를 Destory 해야함//나중에 문제 생길수도 있음
+
+                Destroy(gameObject);
+            }
+            else
+                presentHP += changeHP;
+        }
+    }
+
     public void RepairObject(int repairHP)
     {
         if (repairHP == -1)
+        {
             presentHP = totalHP;
-        else
+        }
+        else if (repairHP > 0)
         {
             presentHP += repairHP;
 
             if (presentHP > totalHP)
                 presentHP = totalHP;
         }
+
+        if (presentHP == totalHP && DamageObjPos != null)
+            DamageObjPos.SetActive(false);
     }
 
     public void OnDisplay()
