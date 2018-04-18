@@ -76,14 +76,13 @@ public class EnemyGroup : MonoBehaviour {
             //Debug.Log("ID: "+GroupId+"Criteria: " + criteria + " Prob: " + probability);
             obj.GetComponentInChildren<Enemy>().Group = GroupId;
             obj.SetActive(false);
-			obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
-
-			yield return genDelay;
+            obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
+            yield return genDelay;
 
 			obj.transform.SetParent(null);
 			obj.SetActive(true);
 
-			info = obj.GetComponentInChildren<Enemy>();
+            info = obj.GetComponentInChildren<Enemy>();
 			info.OriginalPoint = GameManager.current.CommandPost;
 			info.GroupConductor = this;
 			info.UIEnemyHealth.HealthActvie(true);

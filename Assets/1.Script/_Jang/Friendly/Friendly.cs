@@ -180,14 +180,14 @@ public class Friendly : MonoBehaviour
         Hp -= damage;
         UiHealth.ValueDecrease(damage);
         DamageStack++;
-        GetComponent<ObjectInfo>().presentHP = Hp;
+        GetComponentInParent<ObjectInfo>().presentHP = Hp;
 
-        if (Hp <= 0) {
-            GetComponent<ObjectInfo>().presentHP = 0;
+        if (Hp <= 0) {//죽으면 true
+            GetComponentInParent<ObjectInfo>().presentHP = 0;
             return true;
         }
 
-        return false;
+        return false;//살면 false
     }
     private IEnumerator DieEvent()
     {

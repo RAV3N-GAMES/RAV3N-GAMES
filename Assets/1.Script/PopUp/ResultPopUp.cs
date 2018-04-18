@@ -84,7 +84,6 @@ public class ResultPopUp : MonoBehaviour {
             int Cnt = 0;
             for (int j = 0; j < createdEnemyCnt; j++)
             {
-                print("Group : " + DayandNight.CreatedEnemy[j].Group);
                 if (DayandNight.CreatedEnemy[j].Group == (i + 1))
                 {
                     enemyId[Cnt] = DayandNight.CreatedEnemy[j].name;

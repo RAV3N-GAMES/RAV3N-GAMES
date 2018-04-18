@@ -11,15 +11,16 @@ public class EnemySinger : Enemy {
 	private void Start()
 	{
 		effectType = EFFECT_TYPE.Heal;
-		StopDistance = 2;
 		isDie = false;
 	}
 	public override void EnemyInit()
 	{
-		Hp = 100;
-		Attack = 30;
-		MaxHp = 100;
-		base.EnemyInit();
+        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].AttackRange * 2;
+        StopDistance = scollider.radius;
+        Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].HP;
+        Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].Attack;
+        MaxHp = Hp;
+        base.EnemyInit();
 	}
 
 	private void Update()

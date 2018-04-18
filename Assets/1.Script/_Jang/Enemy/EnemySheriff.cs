@@ -7,14 +7,16 @@ public class EnemySheriff : Enemy {
 	private void Start()
 	{
 		effectType = EFFECT_TYPE.Hit;
-		StopDistance = 2;
 		attackDelay = new WaitForSeconds(2f);
 	}
 	public override void EnemyInit()
 	{
-		Hp = 100;
-		Attack = 40;
-		base.EnemyInit();
+        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].AttackRange * 2;
+        StopDistance = scollider.radius;
+        Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].HP;
+        Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].Attack;
+        MaxHp = Hp;
+        base.EnemyInit();
 
 	}
 }

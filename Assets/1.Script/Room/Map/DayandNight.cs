@@ -52,15 +52,6 @@ public class DayandNight : MonoBehaviour
         }
         else {
             curtain.transform.Rotate(0, -90, 0);
-            try
-            {
-                foreach (Enemy i in CreatedEnemy) {
-                    Debug.Log("Enemy data: " + i.name + " isdead: " + i.isDie);
-                }
-            }
-            catch {
-                Debug.Log("First Night");
-            }
         }
 
         TrapEnable(isDay);

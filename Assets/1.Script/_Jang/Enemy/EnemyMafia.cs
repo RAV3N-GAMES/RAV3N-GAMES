@@ -9,14 +9,15 @@ public class EnemyMafia : Enemy {
 	private void Start()
 	{
 		effectType = EFFECT_TYPE.Hit;
-		StopDistance = 2;
 		attackDelay = new WaitForSeconds(1.2f);
 	}
 	public override void EnemyInit()
 	{
-		Hp = 100;
+        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].AttackRange * 2;
+        StopDistance = scollider.radius;
+        Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].HP;
+        Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].Attack;
 		MaxHp = Hp;
-		Attack = 15;
 		base.EnemyInit();
 	}
 }

@@ -71,7 +71,6 @@ public class PoolManager : MonoBehaviour {
 		characterParent = parent.transform;
 		characterParent.SetParent(transform);
 
-
 		int count = EnemyPrefabs.Length;
 		EnemyPoolList = new List<GameObject>[count];
 
@@ -157,6 +156,7 @@ public class PoolManager : MonoBehaviour {
 		{
 			GameObject obj = EnemyPoolList[(int)type][0];
 			obj.SetActive(true);
+
 			obj.transform.SetParent(null);
 			EnemyPoolList[(int)type].RemoveAt(0);
             DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());

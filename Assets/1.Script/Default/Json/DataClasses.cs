@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ObjectType
+{
+    Building,
+    Enemy,
+    Friendly,
+    Trap,
+    Secret
+}
 
 //Data_SetupPlayer : 플레이어의 명성에 따른 레벨업 필요 경험치 및 집단 등장 수, 적 사살 시 보상, 적 집단 제압 시 보상을 저장.0
 public class Data_SetupPlayer
