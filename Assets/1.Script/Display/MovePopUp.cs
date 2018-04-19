@@ -75,7 +75,12 @@ public class MovePopUp : MonoBehaviour {
     {
         if (movingObj.GetComponent<DisplayObject>().UsingTile())
         {
+            TileManager newTileManger = movingObj.GetComponent<CheckTile>().tileManager;
+
+            movingObj.GetComponent<CheckTile>().tileManager = tileManager;
             movingObj.GetComponent<CheckTile>().DestroyObj(false, preIdx);
+
+            movingObj.GetComponent<CheckTile>().tileManager = newTileManger;
 
             movingObj.GetComponent<ObjectInfo>().OnDisplay();
             RoomManager.ChangeClickStatus(true);

@@ -15,7 +15,7 @@ public class ObjectMove : MonoBehaviour
     public Collider lastCol;
 
     ObjectInfo objectInfo;
-    
+
     public bool changePos;
 
     public GameObject WarpExit;
@@ -62,7 +62,7 @@ public class ObjectMove : MonoBehaviour
     {
         yield return null;
 
-        if(changePos)
+        if (changePos)
         {
             GetComponent<ObjectInfo>().OffDisplay();
         }
@@ -77,6 +77,7 @@ public class ObjectMove : MonoBehaviour
         {
             if (isPossibleMove())
             {
+                yield return null;
                 Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
 
                 transform.position += movePos;

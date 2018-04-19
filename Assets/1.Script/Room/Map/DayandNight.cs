@@ -26,7 +26,6 @@ public class DayandNight : MonoBehaviour
 
     // Use this for initialization
     void Awake() {
-        Data_Player.Fame = 10;
         CreatedEnemy = new List<Enemy>();
         DeadEnemy = new List<Enemy>();
         isDay = false;//밤부터 시작

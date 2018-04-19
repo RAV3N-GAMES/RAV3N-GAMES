@@ -200,18 +200,37 @@ public class TileManager : MonoBehaviour {
         {
             tileMatrix[idx[i]][idx[i + 1]] = -1;
         }
-        
-        objectList.RemoveAt(layerDepth);
+        int removeIdx = 0;
+        for (; removeIdx < objectList.Count; removeIdx++)
+        {
+            if (objectList[removeIdx].mRow == idx[0])
+            {
+                if (objectList[removeIdx].mCol == idx[1])
+                {
+                    objectList.RemoveAt(removeIdx);
+                    print("Remove");
+                    break;
+                }
+            }
+        }
 
-        for(int i = layerDepth; i < objectList.Count; i++)
+        for (int i = removeIdx; i < objectList.Count; i++)
         {
             objectList[i].SetLayerDepth(i);
         }
+
+        //objectList.RemoveAt(layerDepth);
+        //
+        //for(int i = layerDepth; i < objectList.Count; i++)
+        //{
+        //    objectList[i].SetLayerDepth(i);
+        //}
         
         if (isDestroyed)
         {
             DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id);
         }
+
         mapManager.SetObjectCnt(objInfo.type, -1);
 
         return true;
@@ -516,8 +535,11 @@ public class TileManager : MonoBehaviour {
                 //saveObj 리스트에 순서가 문제가 될수도 있음
                 UsingTile(InitObj(obj, GetVector(obj.pos)), makeIdx(obj.mRow, obj.mCol, obj.coordinate));
             }
+
         }
-        catch { }
+        catch (System.Exception e){
+            print(e.Message);
+        }
     }
 
     void SaveTileObject()

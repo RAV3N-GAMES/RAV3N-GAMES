@@ -35,7 +35,7 @@ public class SecretActs : MonoBehaviour {
     private void checkCount() {
         if (SecretManager.SecretCount >= SecretManager.GetSecretLimit())
         {
-            Destroy(this.gameObject);
+            Destroy(transform.parent.gameObject);
             SecretManager.SecretCount -= 1;
         }
         SecretManager.SecretCount += 1;

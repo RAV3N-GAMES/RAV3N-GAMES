@@ -108,6 +108,7 @@ public class ChangePopUp : MonoBehaviour {
         {
             Obj.GetComponent<ObjectMove>().enabled = true;
             Obj.GetComponent<ObjectMove>().changePos = true;
+            Obj.GetComponent<ObjectInfo>().isDisplay = false;
 
             Obj.GetComponent<ObjectInfo>().TileCollider.SetActive(true);
             Obj.GetComponent<ObjectColor>().OnColor(true);

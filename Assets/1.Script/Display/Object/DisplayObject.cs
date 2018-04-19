@@ -68,9 +68,9 @@ public class DisplayObject : MonoBehaviour
         CreateButton.SetActive(true);
 
         CreatePopUp createPopUp = CreateButton.GetComponent<CreatePopUp>();
+
         if (createPopUp != null)
         {
-            createPopUp.Obj = gameObject;
             createPopUp.RotationButton.SetActive(possibleRotation);
         }
         else

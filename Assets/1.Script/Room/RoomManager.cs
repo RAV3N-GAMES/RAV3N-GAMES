@@ -76,7 +76,8 @@ public class RoomManager : MonoBehaviour {
     }
 
     void Start() {
-      //  checkOutside();
+        //  checkOutside();
+        ChangeClickStatus(true);
     }
 
     public void MoveRoom(int idx)

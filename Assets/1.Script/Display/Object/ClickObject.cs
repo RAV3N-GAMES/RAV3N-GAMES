@@ -16,7 +16,7 @@ public class ClickObject : MonoBehaviour
     void Awake()
     {
         clickTime = 1f;
-        isPossibleClick = true;
+        isPossibleClick = false;
 
         objectInfo = GetComponent<ObjectInfo>();
     }
