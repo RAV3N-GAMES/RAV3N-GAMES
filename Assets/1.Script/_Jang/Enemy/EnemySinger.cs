@@ -20,6 +20,7 @@ public class EnemySinger : Enemy {
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].Attack;
         MaxHp = Hp;
+        isHealer = true;
         base.EnemyInit();
 	}
 

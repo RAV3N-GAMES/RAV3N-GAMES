@@ -15,6 +15,7 @@ public class Wall : MonoBehaviour {
     public ObjectInfo info;
     public DisplayObject displayObject;
     protected virtual void WallInit() {
+        Debug.Log("Virtual WallIniit");
         info = GetComponentInParent<ObjectInfo>();
         displayObject = GetComponentInParent<DisplayObject>();
         Type = info.type;
@@ -49,16 +50,13 @@ public class Wall : MonoBehaviour {
         Destroy(transform.parent.gameObject);
         displayObject.DestroyObj(true);
     }
-    void Awake() {
+    void Start() {
         WallInit();
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }

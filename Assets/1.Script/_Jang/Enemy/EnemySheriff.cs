@@ -16,6 +16,7 @@ public class EnemySheriff : Enemy {
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].Attack;
         MaxHp = Hp;
+        isHealer = false;
         base.EnemyInit();
 
 	}

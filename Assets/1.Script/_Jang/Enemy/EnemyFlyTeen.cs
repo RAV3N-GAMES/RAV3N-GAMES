@@ -16,6 +16,7 @@ public class EnemyFlyTeen : Enemy
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame-4].HP;
 		Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame-4].Attack;
         MaxHp = Hp;
+        isHealer = false;
 		base.EnemyInit();
 	}
 }
