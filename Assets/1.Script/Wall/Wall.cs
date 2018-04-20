@@ -24,6 +24,10 @@ public class Wall : MonoBehaviour {
         HP = info.presentHP;
         //그 외 정보는 각각 Builidng 스크립트에서 override 해서 사용
     }
+
+    public virtual void WallSync() {
+        WallInit();
+    }
     private void WallSyncInfo() {//변동사항 있을 경우 object info에 이를 동기화
         info.presentHP = HP;
         info.level = Level;

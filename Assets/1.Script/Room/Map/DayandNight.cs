@@ -23,7 +23,6 @@ public class DayandNight : MonoBehaviour
     public const int EnumMax_OurForces = (int)OurForces_Sprite.Researcher;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
     public const int EnumMax_Traps = (int)Traps_body.Trap_W;//얘도 함정 추가되면 바꿔줘야됨
     //DayTime은 추후에 json 파일에서 읽어올 수 있음.
-
     // Use this for initialization
     void Awake() {
         CreatedEnemy = new List<Enemy>();
@@ -33,6 +32,19 @@ public class DayandNight : MonoBehaviour
     void Start() {
     }
 
+    void ObjectInfoSyncToObject(GameObject g, int Type) {//ObjectInfo 정보 변경 시 아래 Object에 정보 전달
+        //수리, 회복 등에서 사용
+        ObjectInfo info;
+        switch (Type) {
+            case (int)ObjectType.Friendly:
+                info = GetComponent<ObjectInfo>();
+                Friendly f = GetComponentInChildren<Friendly>(true);
+                f.Level = info.level;
+                f.Hp = info.presentHP;
+                f.MaxHp = info.totalHP;
+                break;
+        }
+    }
     // Update is called once per frame
     void Update() {
     }
@@ -49,14 +61,22 @@ public class DayandNight : MonoBehaviour
         if (isDay) {
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();
+            //WallSyncFromObjectInfo();
         }
         else {
             curtain.transform.Rotate(0, -90, 0);
         }
-
+        
         TrapEnable(isDay);
         EnemyEnable();
         CharacterEnable(isDay);
+    }
+
+    private void WallSyncFromObjectInfo() {
+        GameObject[] Walls = GameObject.FindGameObjectsWithTag("Wall");
+        for (int i = 0; i < Walls.Length; i++) {
+            Walls[i].GetComponent<Wall>().WallSync();
+        }
     }
 
     IEnumerator DayCount(float a) {
@@ -85,6 +105,7 @@ public class DayandNight : MonoBehaviour
                         setOriginalPoint(ref animationObject, ref spriteObject);
                         spriteObject.SetActive(false);
                         animationObject.SetActive(true);
+                        //ObjectInfoSyncToObject(OurForces[i], (int)ObjectType.Friendly);
                         CharacterEnabled = true;
                     }
                 }
@@ -94,6 +115,7 @@ public class DayandNight : MonoBehaviour
                     {
                         spriteObject.SetActive(true);
                         animationObject.SetActive(false);
+                        //ObjectInfoSyncToObject(OurForces[i], (int)ObjectType.Friendly);
                         CharacterEnabled = false;
                     }
                 }

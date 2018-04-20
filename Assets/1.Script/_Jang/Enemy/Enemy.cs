@@ -68,27 +68,26 @@ public class Enemy : MonoBehaviour {
 
     public void Hit()
     {
-        if (targetWall) {
+        if (targetFriend) { 
+            if (targetFriend.Health(Attack))
+            {
+                GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
+
+                targetFriend.Die();
+                /*try
+                {
+                    targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
+                }
+                catch { }*/
+            }
+        }
+        else if (targetWall) {
             targetWall.GetDamaged(Attack);
+            GameManager.ParticleGenerate(effectType, targetWall.transform.position);
             if (targetWall.IsDestroyed()) {
                 NearWall.Remove(targetWall);
                 targetWall.DestoryWall();
             }
-        }
-        
-        if (targetFriend == null)
-            return;
-
-        if (targetFriend.Health(Attack))
-        {
-            GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
-                
-            targetFriend.Die();
-            /*try
-            {
-                targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
-            }
-            catch { }*/
         }
     }
     public void Die()
@@ -320,6 +319,7 @@ public class Enemy : MonoBehaviour {
          * 공격수)
          *  1. 주변 용병 (Priority : 2)
          *      용병 내 우선순위는 소팅으로 정렬
+         *  1.1 경로 없는 경우 벽(Priority : 1)
          *  2.1 탈취단 && 기밀 존재 => 기밀(Priority: 3)
          *  2.2 그 외 => 베이스(Priority: 4)
          *  
@@ -338,14 +338,21 @@ public class Enemy : MonoBehaviour {
         }
 
         if (!isHealer) {
-            if (isSurrounded && targetWall && IsNear(NavObj.transform, targetWall.transform)) {
-                dest = SetYZero(targetWall.transform);
-                priority = 1;
-            }
-            else if (targetFriend && IsNear(NavObj.transform, targetFriend.transform))
+
+            if (targetFriend && IsNear(NavObj.transform, targetFriend.transform))
             {//아군 용병이 공격범위 안에 있을 경우 dest는 용병
                 dest = SetYZero(targetFriend.transform);
                 priority = 2;
+            }
+            else if (isSurrounded) {
+                if (targetWall && IsNear(NavObj.transform, targetWall.transform))
+                {
+                    dest = SetYZero(targetWall.transform);
+                    priority = 1;
+                }
+                else {
+                    priority = 5;//경로는 없는데 주변에 벽이 없는 경우
+                }
             }
             else {
                 if (isSeizure && targetSecret)
@@ -367,12 +374,12 @@ public class Enemy : MonoBehaviour {
                 enemyAI.SetDestination(SetYZero(targetTrap.transform));
                 break;
             case 1:
-                enemyAI.SetDestination(SetYZero(OriginalPoint.transform));
+                //enemyAI.SetDestination(SetYZero(OriginalPoint.transform));
                 break;
             case 2:
                 if (!isHealer)
                 {
-                    enemyAI.SetDestination(SetYZero(targetFriend.transform));
+                    //enemyAI.SetDestination(SetYZero(targetFriend.transform));
                 }
                 else {//다친 Enemy 한테로 destination 설정
 
@@ -416,17 +423,19 @@ public class Enemy : MonoBehaviour {
                 {
                     if (!isShoot)
                     {
+                        enemyAI.enabled = false;
                         isShoot = true;
                         currentState = EnemyState.Attack;
                     }
                 }
                 else {//힐러인 경우 => 공격안함. 그냥 TargetWall로 붙기.
-                    transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, targetWall.transform.position, 0.01f);
+                    //transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, targetWall.transform.position, 0.01f);
                 }
                 break;
             case 2://주변에 용병 있는 경우
                 if (!isHealer)
                 {
+                    enemyAI.enabled = false;
                     if (!isShoot)
                     {
                         isShoot = true;
@@ -445,7 +454,6 @@ public class Enemy : MonoBehaviour {
                 enemyAI.enabled = true;
                 currentState = EnemyState.Walk;
                 enemyAI.SetDestination(dest);
-                transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, targetSecret.transform.position, 0.01f);
                 break;
             case 4:
                 if (currentState == EnemyState.Attack)
@@ -454,6 +462,11 @@ public class Enemy : MonoBehaviour {
                 enemyAI.enabled = true;
                 currentState = EnemyState.Walk;
                 enemyAI.SetDestination(dest);
+                break;
+            case 5:
+                enemyAI.enabled = true;
+                currentState = EnemyState.Walk;
+                enemyAI.SetDestination(SetYZero(OriginalPoint));
                 transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, OriginalPoint.transform.position, 0.01f);
                 break;
         }

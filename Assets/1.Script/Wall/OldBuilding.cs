@@ -13,7 +13,11 @@ public class OldBuilding : Wall {
         RepairCost= BuildingManager.Tbl_BuildingSetup[Level - 1].RepairCost;
         ActiveCost= BuildingManager.Tbl_BuildingSetup[Level - 1].ActiveCost;
     }
-    
+
+    public override void WallSync()
+    {
+        WallInit();
+    }
     // Use this for initialization
     void Start () {
         WallInit();
