@@ -5,7 +5,6 @@ using UnityEngine;
 public class OldBuilding : Wall {
     protected override void WallInit()
     {
-        Debug.Log("Override WallInit ");
         base.WallInit();
         MaxHP=BuildingManager.Tbl_BuildingSetup[Level-1].HP;
         Price = BuildingManager.Tbl_BuildingSetup[Level - 1].Price;

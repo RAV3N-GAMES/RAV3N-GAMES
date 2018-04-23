@@ -68,7 +68,7 @@ public class DayandNight : MonoBehaviour
         }
         
         TrapEnable(isDay);
-        EnemyEnable();
+        EnemyEnable(isDay);
         CharacterEnable(isDay);
     }
 
@@ -89,8 +89,7 @@ public class DayandNight : MonoBehaviour
         DeadEnemy.Clear();
     }
 
-    public bool CharacterEnable(bool Day) {
-        bool CharacterEnabled = false;
+    public void CharacterEnable(bool Day) {
         GameObject[] OurForces = GameObject.FindGameObjectsWithTag("Friendly");
         GameObject spriteObject=null;
         GameObject animationObject = null;
@@ -106,7 +105,6 @@ public class DayandNight : MonoBehaviour
                         spriteObject.SetActive(false);
                         animationObject.SetActive(true);
                         //ObjectInfoSyncToObject(OurForces[i], (int)ObjectType.Friendly);
-                        CharacterEnabled = true;
                     }
                 }
                 else
@@ -116,24 +114,22 @@ public class DayandNight : MonoBehaviour
                         spriteObject.SetActive(true);
                         animationObject.SetActive(false);
                         //ObjectInfoSyncToObject(OurForces[i], (int)ObjectType.Friendly);
-                        CharacterEnabled = false;
                     }
                 }
             }
             catch { }
         }
-        return CharacterEnabled;
     }
 
-    public bool EnemyEnable() {
-        bool EnemyEnabled = false;
-        GameManager.current.EnemyGenerate();
-        return EnemyEnabled;
+    public void EnemyEnable(bool Day) {
+        if (Day) {
+            Debug.Log("EnemyEnabled in DayNNight");
+            GameManager.current.EnemyGenerate();
+        }
     }
 
-    public bool TrapEnable(bool Day)
+    public void TrapEnable(bool Day)
     {
-        bool TrapEnabled = false;
         GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
         GameObject trapObject = null;
         for (int i = 0; i < Traps.Length; i++)
@@ -146,7 +142,6 @@ public class DayandNight : MonoBehaviour
                     if (trapObject!= null)
                     {
                         trapObject.GetComponent<SphereCollider>().enabled = true;
-                        TrapEnabled = true;
                     }
                 }
                 else
@@ -154,13 +149,11 @@ public class DayandNight : MonoBehaviour
                     if (trapObject != null)
                     {
                         trapObject.GetComponent<SphereCollider>().enabled = false;
-                        TrapEnabled = false;
                     }
                 }
             }
             catch { }
         }
-        return TrapEnabled;
     }
 
     public void getOurForces(GameObject OurForces, ref GameObject spriteObject, ref GameObject animationObject) {

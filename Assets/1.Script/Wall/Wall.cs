@@ -15,7 +15,6 @@ public class Wall : MonoBehaviour {
     public ObjectInfo info;
     public DisplayObject displayObject;
     protected virtual void WallInit() {
-        Debug.Log("Virtual WallIniit");
         info = GetComponentInParent<ObjectInfo>();
         displayObject = GetComponentInParent<DisplayObject>();
         Type = info.type;

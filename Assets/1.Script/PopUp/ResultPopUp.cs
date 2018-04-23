@@ -24,8 +24,6 @@ public class ResultPopUp : MonoBehaviour {
         EnemyGroupList[1].SetActive(false);
         EnemyGroupList[2].SetActive(false);
 
-        print("enemyNum : " + enemyNum);
-
         EnemyGroupList[enemyNum - 1].SetActive(true);
     }
 
