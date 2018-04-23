@@ -33,7 +33,6 @@ using UnityEngine;
    public double SkillRange : 스킬 범위. ******** 방 전체인 경우 -1 로 표기 ***********
  */
 
-
 public class OurForcesManager : JsonReadWrite
 {
     const string Path1 = "./Assets/Resources/Data/OurForces_Guard.json";

@@ -1,0 +1,1341 @@
+Mono path[0] = 'C:/Users/Public/Documents/Unity Projects/Sector/test_Data/Managed'
+Mono path[1] = 'C:/Users/Public/Documents/Unity Projects/Sector/test_Data/Mono'
+Mono config path = 'C:/Users/Public/Documents/Unity Projects/Sector/test_Data/Mono/etc'
+PlayerConnection initialized from C:/Users/Public/Documents/Unity Projects/Sector/test_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55449
+Multi-casting "[IP] 172.16.52.1 [Port] 55449 [Flags] 3 [Guid] 1191943355 [EditorId] 648399570 [Version] 1048832 [Id] WindowsPlayer(DESKTOP-3LQMLPV) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [0.0.0.0:55449]...
+Timed out. Continuing without host connection.
+Started listening to [0.0.0.0:55449]
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56355
+PlayerConnection already initialized - listening to [0.0.0.0:55449]
+Player data archive not found at `C:/Users/Public/Documents/Unity Projects/Sector/test_Data/data.unity3d`, using local filesystemInitialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1050 Ti (ID=0x1c8c)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+    Driver:   22.21.13.8205
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.114 seconds
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 3.184682 ms
+PlayerConnection accepted from [192.168.0.12] handle:0xaa4
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.179665 ms
+Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room1.json".
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+TileManager:LoadTileObject() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:544)
+TileManager:Awake() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:47)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/Display/TileManager.cs Line: 544)
+
+Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room6.json".
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+TileManager:LoadTileObject() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:544)
+TileManager:Awake() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:47)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/Display/TileManager.cs Line: 544)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\SlotInfo.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001f9] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs:290 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.File.OpenRead (System.String path) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:363 
+  at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize) [0x00077] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/StreamReader.cs:167 
+  at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.ReadAllText (System.String path, System.Text.Encoding encoding) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:587 
+  at System.IO.File.ReadAllText (System.String path) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:582 
+  at JsonDataManager.LoadSlotData () [0x00010] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Default\Json\JsonDataManager.cs:35 
+  at JsonDataManager.LoadData () [0x00002] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Default\Json\JsonDataManager.cs:55 
+  at JsonDataManager.Awake () [0x00027] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Default\Json\JsonDataManager.cs:19 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs Line: 290)
+
+Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room5.json".
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+TileManager:LoadTileObject() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:544)
+TileManager:Awake() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:47)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/Display/TileManager.cs Line: 544)
+
+Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room0.json".
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+TileManager:LoadTileObject() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:544)
+TileManager:Awake() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:47)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/Display/TileManager.cs Line: 544)
+
+System memory in use before: 63.4 MB.
+System memory in use after: 66.1 MB.
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 111759.
+Total: 37.943409 ms (FindLiveObjects: 8.398398 ms CreateObjectMapping: 5.018253 ms MarkObjects: 24.326550 ms  DeleteObjects: 0.199111 ms)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at SlotManager.RefreshInfo () [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:72 
+  at SlotManager.Start () [0x00047] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:26 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ClickSlot.OnPointerDown (UnityEngine.EventSystems.PointerEventData data) [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\ClickSlot.cs:12 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerDownHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:36 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerDownHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.ExecuteEvents:ExecuteHierarchy(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:286)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:482)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ClickSlot.OnPointerDown (UnityEngine.EventSystems.PointerEventData data) [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\ClickSlot.cs:12 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerDownHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:36 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerDownHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.ExecuteEvents:ExecuteHierarchy(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:286)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:482)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,UnityEngine.Sprite].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ObjInfoPopUp.InitObjInfoPopUp (System.String id, Int32 type, .SlotManager slotManager) [0x00022] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\ObjInfoPopUp.cs:79 
+  at SlotManager.OnExplain () [0x0001b] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:33 
+  at UnityEngine.Events.InvokableCall.Invoke (System.Object[] args) [0x00017] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154 
+  at UnityEngine.Events.InvokableCallList.Invoke (System.Object[] parameters) [0x00056] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637 
+  at UnityEngine.Events.UnityEventBase.Invoke (System.Object[] parameters) [0x0000e] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773 
+  at UnityEngine.Events.UnityEvent.Invoke () [0x00008] in C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52 
+  at UnityEngine.UI.Button.Press () [0x00022] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35 
+  at UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) [0x00012] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerClickHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ClickSlot.OnPointerDown (UnityEngine.EventSystems.PointerEventData data) [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\ClickSlot.cs:12 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerDownHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:36 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerDownHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.ExecuteEvents:ExecuteHierarchy(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:286)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:482)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ClickSlot.OnPointerDown (UnityEngine.EventSystems.PointerEventData data) [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\ClickSlot.cs:12 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerDownHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:36 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerDownHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.ExecuteEvents:ExecuteHierarchy(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:286)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:482)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,UnityEngine.Sprite].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ObjInfoPopUp.InitObjInfoPopUp (System.String id, Int32 type, .SlotManager slotManager) [0x00022] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\ObjInfoPopUp.cs:79 
+  at SlotManager.OnExplain () [0x0001b] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:33 
+  at UnityEngine.Events.InvokableCall.Invoke (System.Object[] args) [0x00017] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154 
+  at UnityEngine.Events.InvokableCallList.Invoke (System.Object[] parameters) [0x00056] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637 
+  at UnityEngine.Events.UnityEventBase.Invoke (System.Object[] parameters) [0x0000e] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773 
+  at UnityEngine.Events.UnityEvent.Invoke () [0x00008] in C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52 
+  at UnityEngine.UI.Button.Press () [0x00022] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35 
+  at UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) [0x00012] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerClickHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,SlotInfo].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ClickSlot.OnPointerDown (UnityEngine.EventSystems.PointerEventData data) [0x0000c] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\ClickSlot.cs:12 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerDownHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:36 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerDownHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.ExecuteEvents:ExecuteHierarchy(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:286)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:482)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+KeyNotFoundException: The given key was not present in the dictionary.
+  at System.Collections.Generic.Dictionary`2[System.String,UnityEngine.Sprite].get_Item (System.String key) [0x000a2] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs:150 
+  at ObjInfoPopUp.InitObjInfoPopUp (System.String id, Int32 type, .SlotManager slotManager) [0x00022] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\ObjInfoPopUp.cs:79 
+  at SlotManager.OnExplain () [0x0001b] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Select\SlotManager.cs:33 
+  at UnityEngine.Events.InvokableCall.Invoke (System.Object[] args) [0x00017] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154 
+  at UnityEngine.Events.InvokableCallList.Invoke (System.Object[] parameters) [0x00056] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637 
+  at UnityEngine.Events.UnityEventBase.Invoke (System.Object[] parameters) [0x0000e] in C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773 
+  at UnityEngine.Events.UnityEvent.Invoke () [0x00008] in C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52 
+  at UnityEngine.UI.Button.Press () [0x00022] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35 
+  at UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) [0x00012] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00008] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50 
+  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerClickHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00073] in C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:265)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/Dictionary.cs Line: 150)
+
+EnemyEnabled in DayNNight
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:126)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/Room/Map/DayandNight.cs Line: 126)
+
+enemyGroups.Length: 25
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:65)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 65)
+
+GenGroup[1].IsGenerate: False
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:72)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 72)
+
+Call GroupMemeberInit in GameManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:78)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 78)
+
+MemberAppear Start in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:38)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 38)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+GenGroup[1].IsGenerate: True
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:72)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 72)
+
+GenGroup[3].IsGenerate: False
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:72)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 72)
+
+Call GroupMemeberInit in GameManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:78)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 78)
+
+MemberAppear Start in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:38)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 38)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+GenGroup[2].IsGenerate: False
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:72)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 72)
+
+Call GroupMemeberInit in GameManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:78)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/GameManager.cs Line: 78)
+
+MemberAppear Start in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:38)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 38)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemyGroup:GroupMemberInit(Single, Int32) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:98)
+GameManager:EnemyGenerate() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\GameManager.cs:79)
+DayandNight:EnemyEnable(Boolean) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:127)
+DayandNight:changeState() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Room\Map\DayandNight.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:154)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:637)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:773)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:52)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:50)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:261)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:533)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:432)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:412)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:186)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:283)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count over 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:157)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 157)
+
+Call PopEnemy in EnemyGroup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/EnemyGroup.cs Line: 66)
+
+Pop Enemy when Count under 0 in PoolManager
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+PoolManager:PopEnemy(ENEMY_TYPE) (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:168)
+<MemberAppear>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemyGroup.cs:67)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/PoolManager.cs Line: 168)
+
+Die Event: MonsterSinger2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<DieEvent>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:122)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemySinger:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemySinger.cs:70)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 122)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<DieEvent>c__Iterator0.MoveNext () [0x00105] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:133 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Die Event: MonsterSinger2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<DieEvent>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:122)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemySinger:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemySinger.cs:70)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 122)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<DieEvent>c__Iterator0.MoveNext () [0x00105] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:133 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Escape Event: MonsterSheriffPolice2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<EscapeEvent>c__Iterator1:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:138)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+Enemy:IsArrived() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:403)
+Enemy:EnemyAction() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:476)
+Enemy:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:608)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 138)
+
+Escape Event: MonsterFlyTeen2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<EscapeEvent>c__Iterator1:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:138)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+Enemy:IsArrived() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:403)
+Enemy:EnemyAction() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:476)
+Enemy:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:608)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 138)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<EscapeEvent>c__Iterator1.MoveNext () [0x000fa] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:148 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<EscapeEvent>c__Iterator1.MoveNext () [0x000fa] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:148 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Escape Event: MonsterFlyTeen2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<EscapeEvent>c__Iterator1:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:138)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+Enemy:IsArrived() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:403)
+Enemy:EnemyAction() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:476)
+Enemy:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:608)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 138)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<EscapeEvent>c__Iterator1.MoveNext () [0x000fa] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:148 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Die Event: MonsterSinger2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<DieEvent>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:122)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemySinger:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemySinger.cs:70)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 122)
+
+Die Event: MonsterSinger2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<DieEvent>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:122)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemySinger:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemySinger.cs:70)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 122)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<DieEvent>c__Iterator0.MoveNext () [0x00105] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:133 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<DieEvent>c__Iterator0.MoveNext () [0x00105] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:133 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Die Event: MonsterSinger2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<DieEvent>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:122)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemySinger:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemySinger.cs:70)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 122)
+
+Die Event: MonsterSinger2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<DieEvent>c__Iterator0:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:122)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+EnemySinger:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\EnemySinger.cs:70)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 122)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<DieEvent>c__Iterator0.MoveNext () [0x00105] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:133 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<DieEvent>c__Iterator0.MoveNext () [0x00105] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:133 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Escape Event: MonsterFlyTeen2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<EscapeEvent>c__Iterator1:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:138)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+Enemy:IsArrived() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:403)
+Enemy:EnemyAction() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:476)
+Enemy:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:608)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 138)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<EscapeEvent>c__Iterator1.MoveNext () [0x000fa] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:148 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+Escape Event: MonsterFlyTeen2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<EscapeEvent>c__Iterator1:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:138)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+Enemy:IsArrived() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:403)
+Enemy:EnemyAction() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:476)
+Enemy:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:608)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 138)
+
+Escape Event: MonsterFlyTeen2D
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+<EscapeEvent>c__Iterator1:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:138)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+Enemy:IsArrived() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:403)
+Enemy:EnemyAction() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:476)
+Enemy:Update() (at C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:608)
+ 
+(Filename: C:/Users/Public/Documents/Unity Projects/Sector/Assets/1.Script/_Jang/Enemy/Enemy.cs Line: 138)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<EscapeEvent>c__Iterator1.MoveNext () [0x000fa] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:148 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.GameObject].get_Item (Int32 index) [0x0000c] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs:633 
+  at PoolManager.PushEnemy (UnityEngine.GameObject obj) [0x00012] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\PoolManager.cs:230 
+  at Enemy+<EscapeEvent>c__Iterator1.MoveNext () [0x000fa] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\_Jang\Enemy\Enemy.cs:148 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00028] in C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.Collections.Generic/List.cs Line: 633)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room6.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001f9] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs:290 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding, Int32 bufferSize) [0x00039] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/StreamWriter.cs:124 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:626 
+  at System.IO.File.WriteAllText (System.String path, System.String contents) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:621 
+  at TileManager.SaveTileObject () [0x0010a] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:565 
+  at TileManager.OnApplicationQuit () [0x00002] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:570 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs Line: 290)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room5.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001f9] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs:290 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding, Int32 bufferSize) [0x00039] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/StreamWriter.cs:124 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:626 
+  at System.IO.File.WriteAllText (System.String path, System.String contents) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:621 
+  at TileManager.SaveTileObject () [0x0010a] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:565 
+  at TileManager.OnApplicationQuit () [0x00002] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:570 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs Line: 290)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\SlotInfo.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001f9] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs:290 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding, Int32 bufferSize) [0x00039] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/StreamWriter.cs:124 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:626 
+  at System.IO.File.WriteAllText (System.String path, System.String contents) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:621 
+  at JsonDataManager.SaveData () [0x0006f] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Default\Json\JsonDataManager.cs:68 
+  at JsonDataManager.OnApplicationQuit () [0x00001] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Default\Json\JsonDataManager.cs:181 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs Line: 290)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room1.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001f9] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs:290 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding, Int32 bufferSize) [0x00039] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/StreamWriter.cs:124 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:626 
+  at System.IO.File.WriteAllText (System.String path, System.String contents) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:621 
+  at TileManager.SaveTileObject () [0x0010a] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:565 
+  at TileManager.OnApplicationQuit () [0x00002] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:570 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs Line: 290)
+
+IsolatedStorageException: Could not find a part of the path "C:\Users\Public\Documents\Unity Projects\Sector\test_Data\Resources\Data\Room0.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001f9] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs:290 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding, Int32 bufferSize) [0x00039] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/StreamWriter.cs:124 
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:626 
+  at System.IO.File.WriteAllText (System.String path, System.String contents) [0x00000] in /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/File.cs:621 
+  at TileManager.SaveTileObject () [0x0010a] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:565 
+  at TileManager.OnApplicationQuit () [0x00002] in C:\Users\Public\Documents\Unity Projects\Sector\Assets\1.Script\Display\TileManager.cs:570 
+ 
+(Filename: /Users/builduser/buildslave/mono/build/mcs/class/corlib/System.IO/FileStream.cs Line: 290)
+
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 33a8 -> priority: 1 
+  Thread -> id: 10a0 -> priority: 1 
+  Thread -> id: 2d08 -> priority: 1 
+  Thread -> id: 347c -> priority: 1 
+Waiting for finish
