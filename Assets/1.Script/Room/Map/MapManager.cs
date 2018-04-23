@@ -149,10 +149,9 @@ public class MapManager : MonoBehaviour {
         RectTransform rect = GetComponent<RectTransform>();
         float anchorY = rect.anchorMax.y - rect.anchorMin.y;
 
-        float rectY = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.y * anchorY * 0.9f;
+        float rectY = 1440 * anchorY * 0.9f;
 
         ObjPos.sizeDelta = new Vector2(rectY, rectY * 2);
-
         float rectSize = Mathf.Sqrt(1/2f) * rectY;
 
         RoomParent.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rectSize, rectSize);

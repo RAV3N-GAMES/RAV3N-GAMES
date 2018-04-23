@@ -49,6 +49,9 @@ public class CreateObject : MonoBehaviour {
     void InitObject()
     {
         GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
+
+        print("CreateObj id : " + id);
+
         newObj.name = id;
         newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
         newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
@@ -61,6 +64,8 @@ public class CreateObject : MonoBehaviour {
             warp_Exit.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
             warp_Exit.GetComponent<ObjectInfo>().InitObject();
         }
+
+        CreatePopUp.GetComponent<CreatePopUp>().Obj = newObj;
     }
 
     public void MouseExit()

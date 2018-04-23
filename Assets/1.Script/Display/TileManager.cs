@@ -4,7 +4,8 @@ using UnityEngine;
 using LitJson;
 using System.IO;
 
-public class TileManager : MonoBehaviour {
+public class TileManager : MonoBehaviour
+{
     const int TILE_MAX = 20;
     float[][] tileMatrix;          //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
 
@@ -24,7 +25,7 @@ public class TileManager : MonoBehaviour {
     {
         tileMatrix = new float[TILE_MAX][];
 
-        for(int i = 0; i< tileMatrix.Length; i++)
+        for (int i = 0; i < tileMatrix.Length; i++)
         {
             tileMatrix[i] = new float[TILE_MAX];
         }
@@ -61,7 +62,7 @@ public class TileManager : MonoBehaviour {
     {
         int repairCost = 0;
 
-        for(int i = 0; i < objectList.Count; i++)
+        for (int i = 0; i < objectList.Count; i++)
         {
             repairCost += objectList[i].GetRepairCost();
         }
@@ -71,7 +72,7 @@ public class TileManager : MonoBehaviour {
 
     public void SetMatrix(int[] idx, float type)
     {
-        for(int i = 0; i < idx.Length; i = i + 2)
+        for (int i = 0; i < idx.Length; i = i + 2)
         {
             tileMatrix[idx[i]][idx[i + 1]] = type;
         }
@@ -104,9 +105,9 @@ public class TileManager : MonoBehaviour {
         if (name.Equals("0"))
             initNum = 5;
 
-        for(int i = 0; i < TILE_MAX; i++)
+        for (int i = 0; i < TILE_MAX; i++)
         {
-            for(int j = 0; j <TILE_MAX; j++)
+            for (int j = 0; j < TILE_MAX; j++)
             {
                 tileMatrix[i][j] = initNum;
             }
@@ -140,7 +141,7 @@ public class TileManager : MonoBehaviour {
                     Cnt += 1;
                 }
             }
-            catch (System.IndexOutOfRangeException) {}
+            catch (System.IndexOutOfRangeException) { }
         }
 
         return Cnt;
@@ -148,7 +149,7 @@ public class TileManager : MonoBehaviour {
 
     public bool isEnableTile(int[] idx)
     {
-        for(int i = 0; i < idx.Length; i = i + 2)
+        for (int i = 0; i < idx.Length; i = i + 2)
         {
             try
             {
@@ -179,7 +180,7 @@ public class TileManager : MonoBehaviour {
         {
             int[] fttIdx = Obj.GetComponent<CheckTile>().DepencyTile_FTT(pivotCoordinate);
 
-            for(int i = 0; i < fttIdx.Length; i = i + 2)
+            for (int i = 0; i < fttIdx.Length; i = i + 2)
             {
                 OffDepency(fttIdx[i], fttIdx[i + 1]);
             }
@@ -200,18 +201,37 @@ public class TileManager : MonoBehaviour {
         {
             tileMatrix[idx[i]][idx[i + 1]] = -1;
         }
-        
-        objectList.RemoveAt(layerDepth);
+        int removeIdx = 0;
+        for (; removeIdx < objectList.Count; removeIdx++)
+        {
+            if (objectList[removeIdx].mRow == idx[0])
+            {
+                if (objectList[removeIdx].mCol == idx[1])
+                {
+                    objectList.RemoveAt(removeIdx);
+                    print("Remove");
+                    break;
+                }
+            }
+        }
 
-        for(int i = layerDepth; i < objectList.Count; i++)
+        for (int i = removeIdx; i < objectList.Count; i++)
         {
             objectList[i].SetLayerDepth(i);
         }
-        
+
+        //objectList.RemoveAt(layerDepth);
+        //
+        //for(int i = layerDepth; i < objectList.Count; i++)
+        //{
+        //    objectList[i].SetLayerDepth(i);
+        //}
+
         if (isDestroyed)
         {
             DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id);
         }
+
         mapManager.SetObjectCnt(objInfo.type, -1);
 
         return true;
@@ -219,7 +239,7 @@ public class TileManager : MonoBehaviour {
 
     bool ComparePosition(int[] tempIdx, int[] newIdx)
     {
-        for(int i = 0; i < tempIdx.Length; i = i + 2)
+        for (int i = 0; i < tempIdx.Length; i = i + 2)
         {
             for (int j = 0; j < newIdx.Length; j = j + 2)
             {
@@ -227,12 +247,12 @@ public class TileManager : MonoBehaviour {
                 {
                     return true;
                 }
-                else if(tempIdx[i + 1] < newIdx[j + 1])
+                else if (tempIdx[i + 1] < newIdx[j + 1])
                 {
                     if (tempIdx[i] == newIdx[j])
                         return true;
                 }
-                else if (tempIdx[i ] < newIdx[j])
+                else if (tempIdx[i] < newIdx[j])
                 {
                     if (tempIdx[i + 1] == newIdx[j + 1])
                         return true;
@@ -271,7 +291,7 @@ public class TileManager : MonoBehaviour {
 
     void SetOrderInLayer()
     {
-        for(int i = 0; i < objectList.Count; i++)
+        for (int i = 0; i < objectList.Count; i++)
         {
             objectList[i].SetOrderInLayer(name, (objectList.Count - i) * 2, i);
         }
@@ -288,7 +308,7 @@ public class TileManager : MonoBehaviour {
                 break;
             }
         }
-        
+
     }
 
     public void OnDependency(int row, int col)
@@ -297,13 +317,13 @@ public class TileManager : MonoBehaviour {
 
         for (; i < objectList.Count; i++)
         {
-            if(objectList[i].isTileBuilding(row, col))
+            if (objectList[i].isTileBuilding(row, col))
             {
                 objectList[i].OnDependency();
                 break;
             }
         }
-        
+
     }
 
     public void UsingTile(GameObject Obj, int[] idx) //addSave안해도 될듯 0 Obj에 값 제대로 넣어서 만들어야함 애초에
@@ -334,7 +354,7 @@ public class TileManager : MonoBehaviour {
 
         mapManager.SetObjectCnt(objInfo.type, 1);
     }
-    
+
 
     public void OnTransparency(bool isTransparency)
     {
@@ -360,9 +380,9 @@ public class TileManager : MonoBehaviour {
 
     GameObject GetParentWarp(int row, int col)
     {
-        for(int i = 0; i < objectList.Count; i++)
+        for (int i = 0; i < objectList.Count; i++)
         {
-            if(objectList[i].mRow == row)
+            if (objectList[i].mRow == row)
             {
                 if (objectList[i].mCol == col)
                     return objectList[i].mObject;
@@ -399,16 +419,17 @@ public class TileManager : MonoBehaviour {
 
         try
         {
-            
-            switch (objInfo.id) {
+
+            switch (objInfo.id)
+            {
                 case "Guard":
                     obj = newObj.transform.Find("Friendly_Guard/Human").gameObject;
                     fInfo = obj.GetComponentInChildren<Friendly>(true);
                     fInfo.Hp = objInfo.presentHP;
                     fInfo.Level = objInfo.level;
-                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level-1].Attack;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].Attack;
                     fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].HP;
-                    fInfo.AttackEventMax= OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].SkillCool;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].SkillCool;
                     fInfo.RoomIndex = int.Parse(newObj.GetComponentInChildren<SpriteRenderer>().sortingLayerName);
                     break;
                 case "QuickReactionForces":
@@ -416,9 +437,9 @@ public class TileManager : MonoBehaviour {
                     fInfo = obj.GetComponentInChildren<Friendly>(true);
                     fInfo.Hp = objInfo.presentHP;
                     fInfo.Level = objInfo.level;
-                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+99].Attack;
-                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+99].HP;
-                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+99].SkillCool;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].SkillCool;
                     fInfo.RoomIndex = int.Parse(newObj.GetComponentInChildren<SpriteRenderer>().sortingLayerName);
                     break;
                 case "BiochemistryUnit":
@@ -426,7 +447,7 @@ public class TileManager : MonoBehaviour {
                     fInfo = obj.GetComponentInChildren<Friendly>(true);
                     fInfo.Hp = objInfo.presentHP;
                     fInfo.Level = objInfo.level;
-                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+199].Attack;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].Attack;
                     fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].HP;
                     fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].SkillCool;
                     fInfo.RoomIndex = int.Parse(newObj.GetComponentInChildren<SpriteRenderer>().sortingLayerName);
@@ -436,7 +457,7 @@ public class TileManager : MonoBehaviour {
                     fInfo = obj.GetComponentInChildren<Friendly>(true);
                     fInfo.Hp = objInfo.presentHP;
                     fInfo.Level = objInfo.level;
-                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level+299].Attack;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].Attack;
                     fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].HP;
                     fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].SkillCool;
                     break;
@@ -508,7 +529,7 @@ public class TileManager : MonoBehaviour {
         {
             string jsonObj = File.ReadAllText(Application.dataPath + "/Resources/Data/Room" + gameObject.name + ".json");
             JsonData displayObj = JsonMapper.ToObject(jsonObj);
-            
+
             for (int i = 0; i < displayObj.Count; i++)
             {
                 SaveObject obj = GetSaveObject(displayObj[i]);
@@ -516,15 +537,19 @@ public class TileManager : MonoBehaviour {
                 //saveObj 리스트에 순서가 문제가 될수도 있음
                 UsingTile(InitObj(obj, GetVector(obj.pos)), makeIdx(obj.mRow, obj.mCol, obj.coordinate));
             }
+
         }
-        catch { }
+        catch (System.Exception e)
+        {
+            print(e.Message);
+        }
     }
 
     void SaveTileObject()
     {
         saveObj.Clear();
 
-        for(int i = 0; i < objectList.Count; i++)
+        for (int i = 0; i < objectList.Count; i++)
         {
             if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
                 saveObj.Add(objectList[i].GetSaveObj());

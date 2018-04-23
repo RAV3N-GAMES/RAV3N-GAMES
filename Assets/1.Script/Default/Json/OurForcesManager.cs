@@ -34,7 +34,8 @@ using UnityEngine;
  */
 
 
-public class OurForcesManager : JsonReadWrite {
+public class OurForcesManager : JsonReadWrite
+{
     const string Path1 = "./Assets/Resources/Data/OurForces_Guard.json";
     const string Path2 = "./Assets/Resources/Data/OurForces_QuickReactionForces.json";
     const string Path3 = "./Assets/Resources/Data/OurForces_BiochemistryUnit.json";
@@ -42,7 +43,8 @@ public class OurForcesManager : JsonReadWrite {
     public static List<OurForcesObject> Tbl_OurForceSetup = new List<OurForcesObject>();
 
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
         ReadMain(Path1);
         ReadMain(Path2);
         ReadMain(Path3);
@@ -56,34 +58,36 @@ public class OurForcesManager : JsonReadWrite {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
     public override void ParsingJson(JsonData data)
     {
-        for (int i = 0; i < data.Count; i++) {
+        for (int i = 0; i < data.Count; i++)
+        {
             OurForcesObject tmp = new OurForcesObject();
             tmp.Level = int.Parse(data[i]["Level"].ToString());
             tmp.HP = int.Parse(data[i]["HP"].ToString());
-            tmp.Attack= int.Parse(data[i]["Attack"].ToString());
-            tmp.SkillCool= int.Parse(data[i]["SkillCool"].ToString());
+            tmp.Attack = int.Parse(data[i]["Attack"].ToString());
+            tmp.SkillCool = int.Parse(data[i]["SkillCool"].ToString());
             tmp.Price = int.Parse(data[i]["Price"].ToString());
             tmp.UpgradeCost = int.Parse(data[i]["UpgradeCost"].ToString());
-            tmp.HealCost= double.Parse(data[i]["HealCost"].ToString());
+            tmp.HealCost = double.Parse(data[i]["HealCost"].ToString());
             tmp.id = data[i]["id"].ToString();
             tmp.Type = int.Parse(data[i]["Type"].ToString());
-            tmp.ActiveCost= int.Parse(data[i]["ActiveCost"].ToString());
-            tmp.AttackRange= double.Parse(data[i]["AttackRange"].ToString());
+            tmp.ActiveCost = int.Parse(data[i]["ActiveCost"].ToString());
+            tmp.AttackRange = double.Parse(data[i]["AttackRange"].ToString());
             tmp.AttackAngle = double.Parse(data[i]["AttackAngle"].ToString());
             tmp.HitConstrain = int.Parse(data[i]["HitConstrain"].ToString());
             tmp.EnemyRecognizeRangeHalf = double.Parse(data[i]["EnemyRecognizeRangeHalf"].ToString());
-            tmp.MoveSpeed= double.Parse(data[i]["MoveSpeed"].ToString());
-            tmp.AttackPeriod= double.Parse(data[i]["AttackPeriod"].ToString());
-            tmp.SkillDuration= double.Parse(data[i]["SkillDuration"].ToString());
-            tmp.SkillCoefficient_Damage= double.Parse(data[i]["SkillCoefficient_Damage"].ToString());
-            tmp.SkillCoefficient_Util= double.Parse(data[i]["SkillCoefficient_Util"].ToString());
-            tmp.SkillCoefficient_Defence= double.Parse(data[i]["SkillCoefficient_Defence"].ToString());
-            tmp.SkillRange= double.Parse(data[i]["SkillRange"].ToString());
+            tmp.MoveSpeed = double.Parse(data[i]["MoveSpeed"].ToString());
+            tmp.AttackPeriod = double.Parse(data[i]["AttackPeriod"].ToString());
+            tmp.SkillDuration = double.Parse(data[i]["SkillDuration"].ToString());
+            tmp.SkillCoefficient_Damage = double.Parse(data[i]["SkillCoefficient_Damage"].ToString());
+            tmp.SkillCoefficient_Util = double.Parse(data[i]["SkillCoefficient_Util"].ToString());
+            tmp.SkillCoefficient_Defence = double.Parse(data[i]["SkillCoefficient_Defence"].ToString());
+            tmp.SkillRange = double.Parse(data[i]["SkillRange"].ToString());
             Tbl_OurForceSetup.Add(tmp);
         }
     }

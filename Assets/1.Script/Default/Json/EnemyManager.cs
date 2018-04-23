@@ -44,7 +44,8 @@ public class EnemyManager : JsonReadWrite
     public static List<EnemyObject> Tbl_EnemySetup = new List<EnemyObject>();
     public static int EnemyGroupMax;
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
         ReadMain(Path1);
         ReadMain(Path2);
         ReadMain(Path3);
@@ -61,9 +62,10 @@ public class EnemyManager : JsonReadWrite
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
     public override void ParsingJson(JsonData data)
     {
         for (int i = 0; i < data.Count; i++)
@@ -71,9 +73,9 @@ public class EnemyManager : JsonReadWrite
             EnemyObject tmp = new EnemyObject();
             tmp.Fame = int.Parse(data[i]["Fame"].ToString());
             tmp.Level = 1;
-            tmp.HP= int.Parse(data[i]["HP"].ToString());
+            tmp.HP = int.Parse(data[i]["HP"].ToString());
             tmp.Attack = int.Parse(data[i]["Attack"].ToString());
-            tmp.BuildingAttack= int.Parse(data[i]["BuildingAttack"].ToString());
+            tmp.BuildingAttack = int.Parse(data[i]["BuildingAttack"].ToString());
             tmp.id = data[i]["id"].ToString();
             tmp.Type = int.Parse(data[i]["Type"].ToString());
             tmp.AttackRange= double.Parse(data[i]["AttackRange"].ToString());

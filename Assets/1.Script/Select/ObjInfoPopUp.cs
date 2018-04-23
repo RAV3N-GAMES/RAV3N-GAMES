@@ -9,6 +9,7 @@ public class ObjInfoPopUp : MonoBehaviour {
 
     SlotManager slotManager;
 
+
     public Image ObjImage;
     public Text ObjTitle;
     public Text HP;
@@ -80,12 +81,17 @@ public class ObjInfoPopUp : MonoBehaviour {
         ObjTitle.text = id + " " + level + "단계";
         Contents.text = level + "단계의 " + id + "이다.";
 
-        switch(type)
+        if (level != 0)
         {
-            case 0: HP.text = "HP " + JsonDataManager.GetBuildingInfo(id, level).HP.ToString(); break;
-            case 2: HP.text = "HP " + JsonDataManager.GetOurForcesInfo(id, level).HP.ToString(); break;
-            default: HP.text = "HP" + 0; break;
+            switch (type)
+            {
+                case 0: HP.text = JsonDataManager.GetBuildingInfo(id, level).HP.ToString(); break;
+                case 2: HP.text = JsonDataManager.GetOurForcesInfo(id, level).HP.ToString(); break;
+                default: HP.text = "0"; break;
+            }
         }
+        else
+            HP.text = "0";
 
         InitUpgradeIcon();
 

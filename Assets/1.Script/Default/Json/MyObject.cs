@@ -72,7 +72,7 @@ public class OurForcesObject : MyObject
     public double SkillRange;
 
     public OurForcesObject() { }
-    
+
     public OurForcesObject(int Type, string id, int Level, int HP, int Attack, int SkillCool, int Price, int UpgradeCost, double HealCost) : base(Type, id, Level)
     {
         this.HP = HP;
@@ -111,7 +111,7 @@ public class TrapObject : MyObject
     public int ActiveCost;
     public double EffectContinuousTime;
 
-    public TrapObject() {}
+    public TrapObject() { }
 
     public TrapObject(int Type, string id, int Level, int Price, int UpgradeCost, double CoolTime) : base(Type, id, Level)
     {
@@ -146,4 +146,4 @@ public class EnemyObject : MyObject
         this.Fame = Fame;
         this.Attack = Attack;
     }
-}   
+}

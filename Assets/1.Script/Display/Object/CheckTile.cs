@@ -304,7 +304,6 @@ public class CheckTile : MonoBehaviour {
             {
                 lastCol.Remove(col.transform.parent.gameObject);
             }
-
         }
     }
 }

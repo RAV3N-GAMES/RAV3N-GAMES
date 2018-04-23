@@ -77,6 +77,8 @@
      <Compile Include="Assets\1.Script\Display\TileObject.cs" />
      <Compile Include="Assets\1.Script\PopUp\DamageReportPopUp.cs" />
      <Compile Include="Assets\1.Script\PopUp\EnemyGroupResult.cs" />
+     <Compile Include="Assets\1.Script\PopUp\EnemyInfoPopUp.cs" />
+     <Compile Include="Assets\1.Script\PopUp\EnemyInfoText.cs" />
      <Compile Include="Assets\1.Script\PopUp\ResultPopUp.cs" />
      <Compile Include="Assets\1.Script\Room\Map\CheckRoomIndex.cs" />
      <Compile Include="Assets\1.Script\Room\Map\DayandNight.cs" />

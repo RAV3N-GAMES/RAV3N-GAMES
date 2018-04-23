@@ -37,7 +37,7 @@ public class SecretActs : MonoBehaviour {
     private bool checkCount() {//True : 생성 성공 / False : 생성 실패(생성한계 초과)
         if (SecretManager.SecretCount >= SecretManager.GetSecretLimit())
         {
-            Destroy(this.gameObject);
+            Destroy(transform.parent.gameObject);
             SecretManager.SecretCount -= 1;
             return false;
         }
