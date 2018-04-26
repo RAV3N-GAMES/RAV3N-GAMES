@@ -1,22 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class OldBuilding : Wall {
+﻿public class OldBuilding : Wall {
     protected override void WallInit()
     {
         base.WallInit();
-        MaxHP=BuildingManager.Tbl_BuildingSetup[Level-1].HP;
-        Price = BuildingManager.Tbl_BuildingSetup[Level - 1].Price;
-        UpgraeCost= BuildingManager.Tbl_BuildingSetup[Level - 1].UpgradeCost;
-        RepairCost= BuildingManager.Tbl_BuildingSetup[Level - 1].RepairCost;
-        ActiveCost= BuildingManager.Tbl_BuildingSetup[Level - 1].ActiveCost;
+        compensation = -1;
+        MaxHP=BuildingManager.Tbl_BuildingSetup[Level + compensation].HP;
+        Price = BuildingManager.Tbl_BuildingSetup[Level + compensation].Price;
+        UpgraeCost= BuildingManager.Tbl_BuildingSetup[Level + compensation].UpgradeCost;
+        RepairCost= BuildingManager.Tbl_BuildingSetup[Level + compensation].RepairCost;
+        ActiveCost= BuildingManager.Tbl_BuildingSetup[Level + compensation].ActiveCost;
     }
 
-    public override void WallSync()
-    {
-        WallInit();
-    }
     // Use this for initialization
     void Start () {
         WallInit();

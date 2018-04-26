@@ -36,6 +36,7 @@ public class Friendly : MonoBehaviour
     public int AttackCount;
     public int AttackEventMax;
     public int roomidx;//현재 위치한 room의 idx
+    public int TargetIdx;//Lv4 벽(Core Building) 등반 시 타겟으로 삼게 되는 Room idx
 
     protected EFFECT_TYPE effectType;
     protected Animator anime;
@@ -180,12 +181,12 @@ public class Friendly : MonoBehaviour
         Hp -= damage;
         UiHealth.ValueDecrease(damage);
         DamageStack++;
-        GetComponentInParent<ObjectInfo>().presentHP = Hp;
 
         if (Hp <= 0) {//죽으면 true
             GetComponentInParent<ObjectInfo>().presentHP = 0;
             return true;
         }
+        GetComponentInParent<ObjectInfo>().presentHP = Hp;
 
         return false;//살면 false
     }

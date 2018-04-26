@@ -74,8 +74,8 @@ public class PoolManager : MonoBehaviour {
 		int count = EnemyPrefabs.Length;
 		EnemyPoolList = new List<GameObject>[count];
 
-		if (SetCount <= 0)
-			SetCount = 5;
+		
+		SetCount = 7;
 
 		for (int i = 0; i < count; ++i)
 		{
@@ -154,7 +154,7 @@ public class PoolManager : MonoBehaviour {
 	{
 		if (EnemyPoolList[(int)type].Count > 0)
 		{
-            Debug.Log("Pop Enemy when Count over 0 in PoolManager");
+
 			GameObject obj = EnemyPoolList[(int)type][0];
 			obj.SetActive(true);
 

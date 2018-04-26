@@ -62,20 +62,19 @@ public class GameManager : MonoBehaviour {
                 activeGroup.Add(enemyGroups[i]);
             }
         }
-        Debug.Log("enemyGroups.Length: " + enemyGroups.Length);
         for(i=1;i<enemyGroups.Length;i++){//0번방에선 Enemy 생성 안함
             int random = Random.Range(1, activeGroup.Count);
             float probability = Random.Range(0f, 1f);
             //Debug.Log("Random.Range(0, 1): " + probability);
 
             genGroup = activeGroup[random];
-            Debug.Log("GenGroup["+random+"].IsGenerate: " + genGroup.isGenerate);
+
             if (!genGroup.isGenerate)
             {
                 //if (genGroup.EnemyCount != 0)
                 //    return;
                 genGroup.isGenerate = true;
-                Debug.Log("Call GroupMemeberInit in GameManager");
+
                 genGroup.GroupMemberInit(probability, i);     //적 그룹을 생성하지않은 곳을 찾아 생성호출
                 GenerateCount++;
             }

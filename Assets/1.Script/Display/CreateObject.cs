@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateObject : MonoBehaviour {
+public class CreateObject : MonoBehaviour
+{
     [HideInInspector]
     public string id;
 
@@ -32,7 +33,7 @@ public class CreateObject : MonoBehaviour {
         BoxRect.offsetMin = Vector2.zero;
         BoxRect.offsetMax = Vector2.zero;
     }
-    
+
 
     public void MouseUp()
     {
@@ -50,8 +51,6 @@ public class CreateObject : MonoBehaviour {
     {
         GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
 
-        print("CreateObj id : " + id);
-
         newObj.name = id;
         newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
         newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
@@ -66,6 +65,8 @@ public class CreateObject : MonoBehaviour {
         }
 
         CreatePopUp.GetComponent<CreatePopUp>().Obj = newObj;
+        newObj.GetComponent<ObjectMove>().isNewObj = true;
+        newObj.GetComponent<ObjectMove>().StartCoroutine("ArrayObject");
     }
 
     public void MouseExit()

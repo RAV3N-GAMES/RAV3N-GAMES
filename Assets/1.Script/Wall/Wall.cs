@@ -12,6 +12,7 @@ public class Wall : MonoBehaviour {
     public int UpgraeCost;
     public int RepairCost;
     public int ActiveCost;
+    public int compensation;
     public ObjectInfo info;
     public DisplayObject displayObject;
     protected virtual void WallInit() {
@@ -24,10 +25,15 @@ public class Wall : MonoBehaviour {
         //그 외 정보는 각각 Builidng 스크립트에서 override 해서 사용
     }
 
-    public virtual void WallSync() {
-        WallInit();
+    protected virtual void LevelSync() {
+        MaxHP = BuildingManager.Tbl_BuildingSetup[Level + compensation].HP;
+        Price = BuildingManager.Tbl_BuildingSetup[Level + compensation].Price;
+        UpgraeCost = BuildingManager.Tbl_BuildingSetup[Level + compensation].UpgradeCost;
+        RepairCost = BuildingManager.Tbl_BuildingSetup[Level + compensation].RepairCost;
+        ActiveCost = BuildingManager.Tbl_BuildingSetup[Level + compensation].ActiveCost;
     }
-    private void WallSyncInfo() {//변동사항 있을 경우 object info에 이를 동기화
+
+    public void WallSyncInfo() {//변동사항 있을 경우 object info에 이를 동기화
         info.presentHP = HP;
         info.level = Level;
         info.id = id;
@@ -49,17 +55,18 @@ public class Wall : MonoBehaviour {
         return false;
     }
 
-    public void DestoryWall() {
-        Destroy(transform.parent.gameObject);
+    public virtual void DestoryWall() {
         displayObject.DestroyObj(true);
+        Destroy(transform.parent.gameObject);
     }
+
     void Start() {
         WallInit();
     }
-
 
     // Update is called once per frame
     void Update () {
 		
 	}
+    
 }

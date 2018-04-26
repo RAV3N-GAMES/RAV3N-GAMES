@@ -99,6 +99,9 @@
      <Compile Include="Assets\1.Script\Trap\Trap.cs" />
      <Compile Include="Assets\1.Script\Trap\Warp_Enter.cs" />
      <Compile Include="Assets\1.Script\Trap\Warp_Exit.cs" />
+     <Compile Include="Assets\1.Script\Wall\CoreBuilding.cs" />
+     <Compile Include="Assets\1.Script\Wall\FunctionalBuilding.cs" />
+     <Compile Include="Assets\1.Script\Wall\NewBuilding.cs" />
      <Compile Include="Assets\1.Script\Wall\OldBuilding.cs" />
      <Compile Include="Assets\1.Script\Wall\Wall.cs" />
      <Compile Include="Assets\1.Script\_Jang\CameraMove.cs" />
