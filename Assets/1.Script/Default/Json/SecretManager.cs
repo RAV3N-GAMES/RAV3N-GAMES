@@ -17,10 +17,10 @@ public class SecretManager : JsonReadWrite
     public enum Group_Secret { UFOCore, AlienStorageCapsule, AlienBooldStorage, SpaceVoiceRecordingFile };
     private const int SecretLimit = 5;//Maximum is 5
     public static int SecretCount;//The number of existing secrets
-    const string Path1 = "./Assets/Resources/Data/Secret_UFOCore.json";
-    const string Path2 = "./Assets/Resources/Data/Secret_AlienStorageCapsule.json";
-    const string Path3 = "./Assets/Resources/Data/Secret_AlienBloodStorage.json";
-    const string Path4 = "./Assets/Resources/Data/Secret_SpaceVoiceRecordingFile.json";
+    const string Path1 = "Data/Secret_UFOCore";
+    const string Path2 = "Data/Secret_AlienStorageCapsule";
+    const string Path3 = "Data/Secret_AlienBloodStorage";
+    const string Path4 = "Data/Secret_SpaceVoiceRecordingFile";
     public static List<SecretObject> Tbl_SecretSetup = new List<SecretObject>();
     public static List<SecretActs> SecretList;
     public static Dictionary<string, int> SecretFame = new Dictionary<string, int>(); //첫 등장 Fame

@@ -149,7 +149,8 @@ public class GameManager : MonoBehaviour {
 	{
         float prob = 0f;//기밀탈취단 등장확률
         int GroupId = 0;
-		while (gameObject.activeSelf)
+
+        while (gameObject.activeSelf)
 		{
 			yield return new WaitForSeconds(2f);
 			if (EnemyGroupEvent().gameObject.activeSelf)
@@ -164,9 +165,10 @@ public class GameManager : MonoBehaviour {
 					yield return new WaitForEndOfFrame();
 			}
 		}
-	}
 
-	public static void ParticleGenerate(EFFECT_TYPE type, Vector3 point)
+    }
+
+    public static void ParticleGenerate(EFFECT_TYPE type, Vector3 point)
 	{		
 		GameObject obj = PoolManager.current.PopParticle(type);
 		obj.transform.position = new Vector3(point.x, 0.5f, point.z + 0.5f);

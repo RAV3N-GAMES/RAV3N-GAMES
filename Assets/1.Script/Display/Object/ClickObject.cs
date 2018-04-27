@@ -11,7 +11,7 @@ public class ClickObject : MonoBehaviour
     public ObjectInfo objectInfo;
 
     [HideInInspector]
-    public GameObject ChangePopUp;
+    public GameObject ChangePopUpManager;
 
     void Awake()
     {
@@ -28,9 +28,8 @@ public class ClickObject : MonoBehaviour
             if (!DayandNight.isDay) {
                 RoomManager.ChangeClickStatus(false);
 
-                ChangePopUp.SetActive(true);
-                ChangePopUp.GetComponent<ChangePopUp>().Obj = gameObject;
-                ChangePopUp.GetComponent<ChangePopUp>().InitPopUp();
+                ChangePopUpManager.SetActive(true);
+                ChangePopUpManager.GetComponent<ChangePopUpManager>().InitChangePopUp(gameObject, GetComponent<ObjectInfo>().type);
 
                 GetComponent<ObjectColor>().OnRecognizeRage(true);
             }

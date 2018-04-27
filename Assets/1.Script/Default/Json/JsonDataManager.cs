@@ -9,11 +9,20 @@ public class JsonDataManager : MonoBehaviour {
     public static Dictionary<string, SlotInfo> slotInfoList { get; private set; }   //현재까지 오브젝트 업데이트 정보및 슬롯관련 정보
                                                                                     //<id, SlotInfo>의 데이터 쌍
     public static Dictionary<string, Sprite> slotImage { get; private set; }
+    public static Dictionary<string, Sprite> upgradeImage { get; private set; }
+    public static Dictionary<string, Sprite> activationImage { get; private set; }
+
+    public RoomManager roomManager;
+    public List<SlotManager> slotManager;
+    public MapManager mapManager;
 
     void Awake()
     {
         slotInfoList = new Dictionary<string, SlotInfo>();
         slotImage = new Dictionary<string, Sprite>();
+        upgradeImage = new Dictionary<string, Sprite>();
+        activationImage = new Dictionary<string, Sprite>();
+
         Data_Player.addGold(100000);
         Data_Player.Fame = 20;
         LoadData();
@@ -32,7 +41,18 @@ public class JsonDataManager : MonoBehaviour {
 
     void LoadSlotData()
     {
-        string slotObj = File.ReadAllText(Application.dataPath + "/Resources/Data/SlotInfo.json");
+        string slotObj;
+        try
+        {
+            slotObj = File.ReadAllText(Application.persistentDataPath + "/SlotInfo.json");
+            
+        }
+        catch
+        {
+            TextAsset textAsset = Resources.Load("Data/SlotInfo") as TextAsset;
+            slotObj = textAsset.ToString();
+        }
+
         JsonData slotData = JsonMapper.ToObject(slotObj);
 
         for (int i = 0; i < slotData.Count; i++)
@@ -41,11 +61,25 @@ public class JsonDataManager : MonoBehaviour {
             slotInfoList.Add(newSlot.id, newSlot);
         }
 
-        GameObject[] sprite = Resources.LoadAll<GameObject>("Image");
+        GameObject[] sprite = Resources.LoadAll<GameObject>("ChangePopUp");
 
         for(int i = 0; i < sprite.Length; i++)
         {
             slotImage.Add(sprite[i].name, sprite[i].GetComponent<SpriteRenderer>().sprite);
+        }
+
+        sprite = Resources.LoadAll<GameObject>("UpgradePopUp");
+
+        for (int i = 0; i < sprite.Length; i++)
+        {
+            upgradeImage.Add(sprite[i].name, sprite[i].GetComponent<SpriteRenderer>().sprite);
+        }
+
+        sprite = Resources.LoadAll<GameObject>("ActivationPopUp");
+
+        for (int i = 0; i < sprite.Length; i++)
+        {
+            activationImage.Add(sprite[i].name, sprite[i].GetComponent<SpriteRenderer>().sprite);
         }
     }
     
@@ -65,7 +99,8 @@ public class JsonDataManager : MonoBehaviour {
         }
 
         JsonData newObj = JsonMapper.ToJson(tmp);
-        File.WriteAllText(Application.dataPath + "/Resources/Data/SlotInfo.json", newObj.ToString());
+        
+        File.WriteAllText(Application.persistentDataPath + "/SlotInfo.json", newObj.ToString());
     }
     
     public static BuildingObject GetBuildingInfo(string id, int level)
@@ -142,11 +177,7 @@ public class JsonDataManager : MonoBehaviour {
     {
         slotInfoList[id].level = level;
 
-        //0 : 건물
-        //1 : 적군
-        //2 : 아군
-        //3 : 함정
-        //4 : 기밀
+        //0 : 건물, 1 : 적군, 2 : 아군, 3 : 함정, 4 : 기밀
         try
         {
             switch (Type)
@@ -154,18 +185,11 @@ public class JsonDataManager : MonoBehaviour {
                 case 0:
                     slotInfoList[id].price = GetBuildingInfo(id, level).Price;
                     break;
-                case 1://적군 경우에는 슬롯이 없으니까 인포를 고칠게 없을듯
-                    break;
                 case 2:
                     slotInfoList[id].price = GetOurForcesInfo(id, level).Price;
                     break;
                 case 3:
                     slotInfoList[id].price = GetTrapInfo(id, level).Price;
-                    break;
-                case 4://기밀은 업그레이드 없음
-                    //활성화 만 있음ㄴ
-                    //slotInfoList[id].price = GetSecretInfo(id, level).Price;
-                    //이건 플레이어 정보 수정에서 같이 동기화되야할꺼임
                     break;
                 default:
                     break;
@@ -174,6 +198,63 @@ public class JsonDataManager : MonoBehaviour {
         catch (System.NullReferenceException) { Debug.Log("does not exist"); }
 
         SaveData();
+    }
+
+    void ResetMapInfo()
+    {
+        TextAsset textAsset = Resources.Load("Data/MapInfo") as TextAsset;
+        string mapData = textAsset.ToString();
+
+        File.WriteAllText(Application.persistentDataPath + "/MapInfo.json", mapData);
+    }
+
+    void ResetSlotInfo()
+    {
+        TextAsset textAsset = Resources.Load("Data/SlotInfo") as TextAsset;
+        string slotObj = textAsset.ToString();
+
+        JsonData slotData = JsonMapper.ToObject(slotObj);
+
+        slotInfoList.Clear();
+        List<SlotInfo> slot = new List<SlotInfo>();
+
+        for (int i = 0; i < slotData.Count; i++)
+        {
+            SlotInfo newSlot = InitSlotInfo(slotData[i]);
+
+            slotInfoList.Add(newSlot.id, newSlot);
+            slot.Add(newSlot);
+        }
+
+        JsonData newObj = JsonMapper.ToJson(slot);
+        File.WriteAllText(Application.persistentDataPath + "/SlotInfo.json", newObj.ToString());
+    }
+
+    void ResetSaveObject()
+    {
+        TextAsset textAsset = Resources.Load("Data/Room" + 0) as TextAsset;
+        string displayData = textAsset.ToString();
+
+        File.WriteAllText(Application.persistentDataPath + "/Room0.json", displayData);
+
+        for (int i = 1; i < 25; i++)
+        {
+            File.WriteAllText(Application.persistentDataPath + "/Room" + i + ".json", null);
+        }
+    }
+
+    public void Reset()
+    {
+        //맵 정보 및 플레이어 정보도 초기화
+        ResetSlotInfo();
+        for (int i = 0; i < slotManager.Count; i++)
+            slotManager[i].RefreshInfo();
+
+        ResetSaveObject();
+        roomManager.ResetRoom();
+
+        ResetMapInfo();
+        mapManager.InitMapManager();
     }
 
     void OnApplicationQuit()

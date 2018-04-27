@@ -12,7 +12,7 @@ public class TileManager : MonoBehaviour
     List<TileObject> objectList;
     List<SaveObject> saveObj;
 
-    GameObject ChangePopUp;
+    GameObject ChangePopUpManager;
     GameObject CreatePopUp;
 
     MapManager mapManager;
@@ -34,16 +34,20 @@ public class TileManager : MonoBehaviour
         saveObj = new List<SaveObject>();
 
         CreateObject createObject = FindObjectOfType<CreateObject>();
-        ChangePopUp = createObject.ChangePopUp;
+        ChangePopUpManager = createObject.ChangePopUpManager;
         CreatePopUp = createObject.CreatePopUp;
 
         mapManager = FindObjectOfType<MapManager>();
 
-        warpRow = -1;
-        warpCol = -1;
-
         InitMatrix();
 
+        InitTileManager();
+    }
+
+    public void InitTileManager()
+    {
+        warpRow = -1;
+        warpCol = -1;
         LoadTileObject();
     }
 
@@ -234,6 +238,7 @@ public class TileManager : MonoBehaviour
 
         mapManager.SetObjectCnt(objInfo.type, -1);
 
+        SaveTileObject();
         return true;
     }
 
@@ -353,6 +358,7 @@ public class TileManager : MonoBehaviour
         SetOrderInLayer(new TileObject(Obj, idx[0], idx[1], warpRow, warpCol));
 
         mapManager.SetObjectCnt(objInfo.type, 1);
+        SaveTileObject();
     }
 
 
@@ -376,6 +382,26 @@ public class TileManager : MonoBehaviour
         {
             objectList[i].SetClickColliderStatus(ClickStatus);
         }
+    }
+
+    public void AllDestroy()
+    {
+        if (objectList == null)
+            return;
+        int ObjCnt = objectList.Count;
+
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            Destroy(objectList[ObjCnt - 1 - i].mObject);
+        }
+
+        objectList.Clear();
+        saveObj.Clear();
+
+        InitMatrix();
+
+        mapManager.InitObjectCnt();
+        DamageReportPopUp.InitDamageIdx();
     }
 
     GameObject GetParentWarp(int row, int col)
@@ -407,7 +433,7 @@ public class TileManager : MonoBehaviour
         newObj.name = objInfo.id;
         newObj.transform.position = pos;
 
-        newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+        newObj.GetComponent<ClickObject>().ChangePopUpManager = ChangePopUpManager;
         newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
         newObj.GetComponent<CheckTile>().tileManager = this;
 
@@ -527,8 +553,20 @@ public class TileManager : MonoBehaviour
     {
         try
         {
-            string jsonObj = File.ReadAllText(Application.dataPath + "/Resources/Data/Room" + gameObject.name + ".json");
-            JsonData displayObj = JsonMapper.ToObject(jsonObj);
+            string displayData;
+
+            try
+            {
+                displayData = File.ReadAllText(Application.persistentDataPath + "/Room"+gameObject.name+".json");
+
+            }
+            catch
+            {
+                TextAsset textAsset = Resources.Load("Data/Room" + gameObject.name) as TextAsset;
+                displayData = textAsset.ToString();
+            }
+
+            JsonData displayObj = JsonMapper.ToObject(displayData);
 
             for (int i = 0; i < displayObj.Count; i++)
             {
@@ -547,22 +585,25 @@ public class TileManager : MonoBehaviour
 
     void SaveTileObject()
     {
-        saveObj.Clear();
-
-        for (int i = 0; i < objectList.Count; i++)
+        if (saveObj != null)
         {
-            if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
-                saveObj.Add(objectList[i].GetSaveObj());
-        }
+            saveObj.Clear();
 
-        for (int i = 0; i < objectList.Count; i++)
-        {
-            if (objectList[i].mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
-                saveObj.Add(objectList[i].GetSaveObj());
-        }
+            for (int i = 0; i < objectList.Count; i++)
+            {
+                if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
+                    saveObj.Add(objectList[i].GetSaveObj());
+            }
 
-        JsonData newObj = JsonMapper.ToJson(saveObj);
-        File.WriteAllText(Application.dataPath + "/Resources/Data/Room" + gameObject.name + ".json", newObj.ToString());
+            for (int i = 0; i < objectList.Count; i++)
+            {
+                if (objectList[i].mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
+                    saveObj.Add(objectList[i].GetSaveObj());
+            }
+
+            JsonData newObj = JsonMapper.ToJson(saveObj);
+            File.WriteAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json", newObj.ToString());
+        }
     }
 
     void OnApplicationQuit()

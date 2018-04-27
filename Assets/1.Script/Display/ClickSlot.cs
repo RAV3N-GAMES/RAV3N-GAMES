@@ -7,6 +7,13 @@ public class ClickSlot : MonoBehaviour, IPointerDownHandler {
     public string id;
     public CreateObject createObject;
 
+    SlotManager slotManager;
+
+    void Awake()
+    {
+        slotManager = GetComponent<SlotManager>();
+    }
+
     public void OnPointerDown(PointerEventData data)
     {
         SlotInfo slotInfo = JsonDataManager.slotInfoList[id];

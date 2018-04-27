@@ -21,6 +21,8 @@ public class ObjectMove : MonoBehaviour
     public GameObject WarpExit;
     public Vector3 warpPos;
 
+    public bool isNewObj = false;
+
     void Start()
     {
         lastCol = null;
@@ -29,11 +31,13 @@ public class ObjectMove : MonoBehaviour
 
         checkTile = GetComponent<CheckTile>();
 
-        canvasWidth = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.x;
-        canvasHeight = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.y;
+        canvasWidth = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.x * GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.x;
+        canvasHeight = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.y * GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
-        if (!name.Equals("Warp_Exit"))
+        if (!name.Equals("Warp_Exit") && !isNewObj)
+        {
             StartCoroutine("OnMove");
+        }
 
         objectInfo = GetComponent<ObjectInfo>();
     }
@@ -47,14 +51,45 @@ public class ObjectMove : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.tag == "Tile" && hit.collider != lastCol)
+            if (hit.collider.tag == "Tile" || hit.collider.tag == "Door")
             {
-                lastCol = hit.collider;
-                isMouseMove = true;
+                if (hit.collider != lastCol)
+                {
+                    lastCol = hit.collider;
+                    isMouseMove = true;
+                }
             }
         }
 
         return isMove & isMouseMove;
+    }
+
+    bool isPossibleStart()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.tag == "Tile" || hit.collider.tag == "Door")
+            {
+                transform.position = hit.collider.transform.position;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public IEnumerator ArrayObject()
+    {
+        yield return new WaitUntil(isPossibleStart);
+        yield return null;
+
+        Camera.main.transform.position = new Vector3( transform.position.x, Camera.main.transform.position.y, transform.position.z);
+
+        if (!name.Equals("Warp_Exit"))
+            StartCoroutine("OnMove");
     }
 
 
@@ -75,33 +110,32 @@ public class ObjectMove : MonoBehaviour
 
         while (true)
         {
-            if (isPossibleMove())
+            yield return new WaitUntil(isPossibleMove);
+
+            Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
+            transform.position += movePos;
+
+            if (CameraMove())
             {
-                yield return null;
-                Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
-
-                transform.position += movePos;
-
-                if (changePos)
-                {
-                    if (name.Equals("Warp"))
-                        WarpExit.transform.position = warpPos;
-                }
-
-                yield return null;
-
-                if (CameraMove())
-                    Camera.main.transform.position += movePos;
+                Camera.main.transform.position += movePos;
             }
-            else
-                yield return null;
+            yield return null;
+
+            if (changePos)
+            {
+                if (name.Equals("Warp"))
+                    WarpExit.transform.position = warpPos;
+            }
+
+            yield return null;
+
         }
     }
 
     bool CameraMove()
     {
-        if (Input.mousePosition.x < canvasWidth * 0.1f || Input.mousePosition.x > canvasWidth * 0.9f
-            || Input.mousePosition.y < canvasHeight * 0.1f || Input.mousePosition.y > canvasHeight * 0.9f)
+        if (Input.mousePosition.x < canvasWidth * 0.15f || Input.mousePosition.x > canvasWidth * 0.85f
+            || Input.mousePosition.y < canvasHeight * 0.15f || Input.mousePosition.y > canvasHeight * 0.85f)
         {
             return true;
         }

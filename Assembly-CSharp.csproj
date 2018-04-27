@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\1.Script\0.Loading\LoadingScene.cs" />
+     <Compile Include="Assets\1.Script\Default\ApplicationManager.cs" />
      <Compile Include="Assets\1.Script\Default\Json\BuildingManager.cs" />
      <Compile Include="Assets\1.Script\Default\Json\DataClasses.cs" />
      <Compile Include="Assets\1.Script\Default\Json\EnemyManager.cs" />
@@ -75,10 +76,20 @@
      <Compile Include="Assets\1.Script\Display\SaveObject.cs" />
      <Compile Include="Assets\1.Script\Display\TileManager.cs" />
      <Compile Include="Assets\1.Script\Display\TileObject.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ChangePopUpManager.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_Building.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_OurForces.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_Secret.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_Trap.cs" />
      <Compile Include="Assets\1.Script\PopUp\DamageReportPopUp.cs" />
      <Compile Include="Assets\1.Script\PopUp\EnemyGroupResult.cs" />
      <Compile Include="Assets\1.Script\PopUp\EnemyInfoPopUp.cs" />
      <Compile Include="Assets\1.Script\PopUp\EnemyInfoText.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ObjInfoPopUpManager.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ObjInfo_Building.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ObjInfo_OurForces.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ObjInfo_Secret.cs" />
+     <Compile Include="Assets\1.Script\PopUp\ObjInfo_Trap.cs" />
      <Compile Include="Assets\1.Script\PopUp\ResultPopUp.cs" />
      <Compile Include="Assets\1.Script\Room\Map\CheckRoomIndex.cs" />
      <Compile Include="Assets\1.Script\Room\Map\DayandNight.cs" />

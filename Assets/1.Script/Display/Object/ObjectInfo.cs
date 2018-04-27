@@ -191,7 +191,7 @@ public class ObjectInfo : MonoBehaviour
     {
         isDisplay = false;
 
-        GetComponent<CheckTile>().lastCol.Clear();
+        GetComponent<CheckTile>().lastColList.Clear();
 
         ClickCollider.SetActive(false);
         TileCollider.SetActive(true);

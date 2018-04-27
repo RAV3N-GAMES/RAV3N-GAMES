@@ -35,12 +35,12 @@ public class EnemyManager : JsonReadWrite
    public double SkillCoefficient_Defence : 스킬 방어 계수. 아직 관련 스킬은 없음.
    public double SkillRange : 스킬 범위. ******** 방 전체인 경우 -1 로 표기 ***********
    */
-    const string Path1 = "./Assets/Resources/Data/Enemy_JuvenileDelinquents.json";
-    const string Path2 = "./Assets/Resources/Data/Enemy_MoneyLender.json";
-    const string Path3 = "./Assets/Resources/Data/Enemy_Pickpocket.json";
-    const string Path4 = "./Assets/Resources/Data/Enemy_IEDFarmer.json";
-    const string Path5 = "./Assets/Resources/Data/Enemy_Meateater.json";
-    const string Path6 = "./Assets/Resources/Data/Enemy_WanderingMinstrel.json";
+    const string Path1 = "Data/Enemy_JuvenileDelinquents";
+    const string Path2 = "Data/Enemy_MoneyLender";
+    const string Path3 = "Data/Enemy_Pickpocket";
+    const string Path4 = "Data/Enemy_IEDFarmer";
+    const string Path5 = "Data/Enemy_Meateater";
+    const string Path6 = "Data/Enemy_WanderingMinstrel";
     public static List<EnemyObject> Tbl_EnemySetup = new List<EnemyObject>();
     public static int EnemyGroupMax;
     // Use this for initialization

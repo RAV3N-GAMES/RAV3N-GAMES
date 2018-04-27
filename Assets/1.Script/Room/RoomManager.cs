@@ -220,6 +220,15 @@ public class RoomManager : MonoBehaviour {
         touchDistance = Vector3.Distance(touch0.position, touch1.position);
     }
 
+    public void ResetRoom()
+    {
+        for (int i = 0; i < Room.Count; i++)
+        {
+            Room[i].GetComponent<TileManager>().AllDestroy();
+            Room[i].GetComponent<TileManager>().InitTileManager();
+        }
+    }
+
     public bool AllRepair()
     {
         int repairCost = GetAllRepairCost();

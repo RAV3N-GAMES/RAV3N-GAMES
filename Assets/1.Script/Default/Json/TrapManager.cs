@@ -12,10 +12,10 @@ using UnityEngine;
      */
 public class TrapManager : JsonReadWrite
 {
-    const string Path1 = "./Assets/Resources/Data/Trap_HumanTrap.json";
-    const string Path2 = "./Assets/Resources/Data/Trap_Warp.json";
-    const string Path3 = "./Assets/Resources/Data/Trap_FlameThrowingTrap.json";
-    const string Path4 = "./Assets/Resources/Data/Trap_ObstructMovementCurrent.json";
+    const string Path1 = "Data/Trap_HumanTrap";
+    const string Path2 = "Data/Trap_Warp";
+    const string Path3 = "Data/Trap_FlameThrowingTrap";
+    const string Path4 = "Data/Trap_ObstructMovementCurrent";
     public static List<TrapObject> Tbl_TrapSetup = new List<TrapObject>();
     public static int[] TrapCount;
     public static int TrapMax;

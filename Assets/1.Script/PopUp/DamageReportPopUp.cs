@@ -82,6 +82,17 @@ public class DamageReportPopUp : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    public static void InitDamageIdx()
+    {
+        for (int i = 0; i < ObjLength; i++)
+        {
+            Building[i] = 0;
+            OurForces[i] = 0;
+            Trap[i] = 0;
+            Secret[i] = 0;
+        }
+    }
+
     public void ClickOk()
     {
         Invoke("SetActive", 2f);

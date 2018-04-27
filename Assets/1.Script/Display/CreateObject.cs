@@ -6,7 +6,7 @@ public class CreateObject : MonoBehaviour {
     [HideInInspector]
     public string id;
 
-    public GameObject ChangePopUp;
+    public GameObject ChangePopUpManager;
     public GameObject CreatePopUp;
 
     public RectTransform BoxRect;
@@ -50,35 +50,43 @@ public class CreateObject : MonoBehaviour {
     {
         GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
 
-        print("CreateObj id : " + id);
-
         newObj.name = id;
         newObj.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
-        newObj.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+        newObj.GetComponent<ClickObject>().ChangePopUpManager = ChangePopUpManager;
         newObj.GetComponent<ObjectInfo>().InitObject();
 
         if (id.Equals("Warp"))
         {
             GameObject warp_Exit = newObj.transform.Find("Warp_Exit").gameObject;
             warp_Exit.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
-            warp_Exit.GetComponent<ClickObject>().ChangePopUp = ChangePopUp;
+            warp_Exit.GetComponent<ClickObject>().ChangePopUpManager = ChangePopUpManager;
             warp_Exit.GetComponent<ObjectInfo>().InitObject();
         }
 
-        CreatePopUp.GetComponent<CreatePopUp>().Obj = newObj;
+        //CreatePopUp.GetComponent<CreatePopUp>().Obj = newObj;
+        newObj.GetComponent<ObjectMove>().isNewObj = true;
+
+        newObj.GetComponent<ObjectMove>().StartCoroutine("ArrayObject");
     }
 
     public void MouseExit()
     {
         if (id != "" && Input.GetMouseButton(0) && RoomManager.possibleDrag)
         {
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit hit;
+            //
+            //if (Physics.Raycast(ray, out hit))
+            //{
+            //    
+            //}
+
             InitObject();
             RoomManager.ChangeClickStatus(false);
 
             roomManager.SetClickColliderStatus(false);
 
             SetBoxRect(BoxRect.anchorMin.y + 0.02f);
-
             isCreate = true;
             id = "";
         }

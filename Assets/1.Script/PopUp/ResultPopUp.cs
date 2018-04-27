@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResultPopUp : MonoBehaviour {
-    public UnityEngine.UI.Button NextButton;
+    public Button NextButton;
     public GameObject DamageReport;
     public List<GameObject> EnemyGroupList;
 
     public GameObject Success;
     public GameObject Fail;
 
-    public UnityEngine.UI.Image prizePercent;  
+    public Image prizePercent;
+    public Text Fame;
+    public Text Coin;
+    public Text Exp;
 
     List<EnemyGroupResult> enemyGroupResult = new List<EnemyGroupResult>();
 
@@ -35,36 +39,22 @@ public class ResultPopUp : MonoBehaviour {
         Fail.SetActive(false);
 
         NextButton.enabled = false;
+
+        Exp.text = Data_Player.Experience.ToString();
+        Coin.text = Data_Player.Gold.ToString();
+
         //필요한 데이터
         //int      EnemyCnt    : 적군 집단 수
         //string[] enemyId     : 집단 별 적군 종류 id
         //bool[]   enemyActive : 집단 별 적군 종류 별 제압 성공 여부 
-
-        ///////임시
-        int tempEnemyNum = EnemyManager.EnemyGroupMax;
         
+        int tempEnemyNum = EnemyManager.EnemyGroupMax;
         SetEnemyListActive(tempEnemyNum);
-        ///////
 
         for (int i = 0; i < EnemyCnt; i++)
         {
             enemyGroupResult.Add(EnemyGroupList[EnemyCnt - 1].transform.GetChild(i).GetComponent<EnemyGroupResult>());
         }
-
-        //////임시
-        //string[] tmpEnemyId0 = { "Guard", "Guard", "QuickReactionForces", "Researcher" };
-        //bool[] tmpEnemyActive0 = { true, false, false, true };
-        //
-        //string[] tmpEnemyId1 = { "QuickReactionForces", "BiochemistryUnit", "Researcher", "Guard" };
-        //bool[] tmpEnemyActive1 = { false, false, false, false };
-        //
-        //string[] tmpEnemyId2 = { "Researcher", "QuickReactionForces", "Guard", "Researcher" };
-        //bool[] tmpEnemyActive2 = { true, true, false, true };
-        //
-        //enemyGroupResult[0].InitResult(tmpEnemyId0, tmpEnemyActive0);
-        //enemyGroupResult[1].InitResult(tmpEnemyId1, tmpEnemyActive1);
-        //enemyGroupResult[2].InitResult(tmpEnemyId2, tmpEnemyActive2);
-        ///////
 
         if(DayandNight.CreatedEnemy.Count < 4)
         {
@@ -73,16 +63,35 @@ public class ResultPopUp : MonoBehaviour {
         }
 
         int createdEnemyCnt =  DayandNight.CreatedEnemy.Count;
+        int[] GroupId = new int[EnemyCnt];
+        int GroupCnt = 0;
+
+        for(int i = 0; i < DayandNight.CreatedEnemy.Count; i++)
+        {
+            for (int j = 0; j < GroupCnt + 1; j++)
+            {
+                if (GroupId[j] != DayandNight.CreatedEnemy[i].Group)
+                {
+                    print("GroupID : " + DayandNight.CreatedEnemy[i].Group);
+                    GroupId[GroupCnt++] = DayandNight.CreatedEnemy[i].Group;
+                    break;
+                }
+            }
+
+            if (GroupCnt == EnemyCnt)
+                break;
+        }
+
+
         for (int i = 0; i < EnemyCnt; i++)
         {
             string[] enemyId = new string[4];
             bool[] enemyActive = new bool[4];
-
-            //이제 나중에 여기에서 소속집단 판별하면 될듯
+            
             int Cnt = 0;
             for (int j = 0; j < createdEnemyCnt; j++)
             {
-                if (DayandNight.CreatedEnemy[j].Group == (i + 1))
+                if (DayandNight.CreatedEnemy[j].Group == GroupId[i])
                 {
                     enemyId[Cnt] = DayandNight.CreatedEnemy[j].name;
                     enemyActive[Cnt] = !DayandNight.CreatedEnemy[j].isDie;
@@ -119,22 +128,94 @@ public class ResultPopUp : MonoBehaviour {
 
             yield return new WaitUntil(enemyGroupResult[i].GetIsDone);
         }
+
+        yield return new WaitForSeconds(0.3f);
+
         //없앤 적군 종류 만큼 현상금 + 달러오르고
+        int firstExp = 100; 
+        int secondExp = 0;
 
-        //print(Data_Player.Experience + "/" + Data_Player.LvExperience);
-        //prizePercent.fillAmount = Data_Player.Experience / Data_Player.LvExperience;
+        int coin = 1000;
+        
+        if (firstExp + Data_Player.Experience >= Data_Player.LvExperience)
+            secondExp = firstExp - (Data_Player.LvExperience - Data_Player.Experience);
 
+        for (int i = 0; i < 100; i++)
+        {
+            Data_Player.addExperience(firstExp / 100);
+            prizePercent.fillAmount = (float)Data_Player.Experience / (float)Data_Player.LvExperience;
+
+            Data_Player.addGold(coin / 100);
+            Coin.text = Data_Player.Gold.ToString();
+            Exp.text = Data_Player.Experience.ToString();
+
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        if(secondExp != 0)
+        {
+            yield return new WaitForSeconds(0.3f);
+            /////////////////////////만약에 레벨 더 올라가는 경우를 위해 예외처리 필요////////////////////////
+            //여기에서 레벨 텍스트 올리고 올리고
+            for (int i = 0; i < 100; i++)
+            {
+                Data_Player.addExperience(secondExp / 100);
+                prizePercent.fillAmount = (float)Data_Player.Experience / (float)Data_Player.LvExperience;
+
+                Exp.text = Data_Player.Experience.ToString();
+
+                yield return new WaitForSeconds(0.02f);
+            }
+        }
+        yield return new WaitForSeconds(0.3f);
 
         //제압 성공한 적군 집단 표시
         for (int i = 0; i < enemyGroupResult.Count; i++)
         {
             if (enemyGroupResult[i].isSuccess)
+            {
                 enemyGroupResult[i].SetSuccess();
-
-            yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(0.4f);
+            }
         }
-        //제압 성공한 적군 만큼 현상금 + 달러
+        yield return new WaitForSeconds(0.3f);
 
+        //제압 성공한 적군 만큼 현상금 + 달러
+        firstExp = 100;
+        secondExp = 0;
+
+        coin = 1000;
+        
+        if (firstExp + Data_Player.Experience >= Data_Player.LvExperience)
+            secondExp = firstExp - (Data_Player.LvExperience - Data_Player.Experience);
+
+        for (int i = 0; i < 100; i++)
+        {
+            Data_Player.addExperience(firstExp / 100);
+            prizePercent.fillAmount = (float)Data_Player.Experience / (float)Data_Player.LvExperience;
+
+            Data_Player.addGold(coin / 100);
+
+            Coin.text = Data_Player.Gold.ToString();
+            Exp.text = Data_Player.Experience.ToString();
+
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        if (secondExp != 0)
+        {
+            yield return new WaitForSeconds(0.3f);
+            //여기에서 레벨 텍스트 올리고 올리고
+            for (int i = 0; i < 100; i++)
+            {
+                Data_Player.addExperience(secondExp / 100);
+                prizePercent.fillAmount = (float)Data_Player.Experience / (float)Data_Player.LvExperience;
+                
+                Exp.text = Data_Player.Experience.ToString();
+
+                yield return new WaitForSeconds(0.02f);
+            }
+        }
 
         yield return new WaitForSeconds(0.3f);
 
@@ -142,19 +223,47 @@ public class ResultPopUp : MonoBehaviour {
         for (int i = 0; i < enemyGroupResult.Count; i++)
         {
             if (!enemyGroupResult[i].isSuccess)
+            {
                 enemyGroupResult[i].SetSuccess();
-
-            yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(0.4f);
+            }
         }
+        yield return new WaitForSeconds(0.3f);
         //제압 실패한 만큼 현상금 떨어짐
+        firstExp = 100; 
+        secondExp = 0;
+        
+        if (Data_Player.Experience < firstExp)
+            secondExp = firstExp - Data_Player.Experience;
+
+        for (int i = 0; i < 100; i++)
+        {
+            Data_Player.subExperience(firstExp / 100);
+            prizePercent.fillAmount = (float)Data_Player.Experience / (float)Data_Player.LvExperience;
+
+            Exp.text = Data_Player.Experience.ToString();
+
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        if (secondExp != 0)
+        {
+            yield return new WaitForSeconds(0.3f);
+            //여기에서 레벨 텍스트 올리고 올리고
+            for (int i = 0; i < 100; i++)
+            {
+                Data_Player.subExperience(secondExp / 100);
+                prizePercent.fillAmount = (float)Data_Player.Experience / (float)Data_Player.LvExperience;
+
+                yield return new WaitForSeconds(0.02f);
+            }
+        }
 
         yield return new WaitForSeconds(0.3f);
         //거점 성공 여부 띄움 
-        SetSuccess(true); //true 아닌거 알지..?
+        SetSuccess(true); //true 아닌거 아님
         NextButton.enabled = true;
-
-        //결과화면 없애고
-        //일일피해 보고서 띄운다.  //이거는 클릭으로 이루어짐
+        
         yield break;
     }
 }
