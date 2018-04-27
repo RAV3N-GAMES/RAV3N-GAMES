@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class SlotManager : MonoBehaviour {
     public Text price;
-    //public Button glassButton;
-
-    GameObject PopUp;
+    public GameObject ObjInfoPopUp;
 
     public GameObject BlockPanel;
     
@@ -21,19 +19,17 @@ public class SlotManager : MonoBehaviour {
         if(type == 4)
             InitSecretActBtn();
         
-        PopUp = GameObject.Find("Canvas").transform.Find("PopUp").transform.Find("ObjInfo").gameObject;
-        
         RefreshInfo();
     }
 
     public void OnExplain()
     {
-        ObjInfoPopUp objInfoPopUp = PopUp.GetComponent<ObjInfoPopUp>();
+        ObjInfoPopUpManager objInfoPopUp = ObjInfoPopUp.GetComponent<ObjInfoPopUpManager>();
 
         objInfoPopUp.InitObjInfoPopUp(id, type, this);
 
         RoomManager.ChangeClickStatus(false);
-        PopUp.SetActive(true);
+        ObjInfoPopUp.SetActive(true);
     }
 
     public void InitSecretActBtn()

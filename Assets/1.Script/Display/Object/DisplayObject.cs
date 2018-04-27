@@ -71,6 +71,7 @@ public class DisplayObject : MonoBehaviour
 
         if (createPopUp != null)
         {
+            createPopUp.Obj = gameObject;
             createPopUp.RotationButton.SetActive(possibleRotation);
         }
         else

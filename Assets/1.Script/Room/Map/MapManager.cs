@@ -2,6 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using LitJson;
+
+public class Map
+{
+    public int tempFame;
+    public int Step;
+    public double Edge;
+
+    public int[] isOpen;
+
+    public Map(int _tempFame,int _Step, double _Edge, int[] _isOpen)
+    {
+        tempFame = _tempFame;
+        Step = _Step;
+        Edge = _Edge;
+
+        isOpen = _isOpen;
+    }
+}
+
 
 public class MapManager : MonoBehaviour {
     public Transform MapCameraPos;
@@ -55,31 +76,102 @@ public class MapManager : MonoBehaviour {
     int conRoom;
 
     const int STEP_MAX = 5;
-    
-	void Awake () {
-        Step = 2; 
+
+    void Awake()
+    {
+        Map map = ReadMapInfo();
+
+        Step = map.Step;
+        Edge = (float)map.Edge;
+        tempFame = map.tempFame;
+
+        tempFameText.text = tempFame.ToString();
+
+
         conRoom = 0;
-        Edge = 0.5f;
 
         RoomList = new List<GameObject>();
 
         SetRoomParentRect();
 
         isOpen = new Type[STEP_MAX][];
-        for(int i = 0; i < STEP_MAX; i++)
+        for (int i = 0; i < STEP_MAX; i++)
         {
             isOpen[i] = new Type[STEP_MAX];
         }
 
-        InitRoomStatus(Type.DISABLE, STEP_MAX);
-        InitRoomStatus(Type.OPEN, Step);
-	}
+        for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
+        {
+            isOpen[i / STEP_MAX][i % STEP_MAX] = (Type)map.isOpen[i];
+        }
+    }
+
+    public void InitMapManager()
+    {
+        Map map = ReadMapInfo();
+
+        Step = map.Step;
+        Edge = (float)map.Edge;
+        tempFame = map.tempFame;
+        tempFameText.text = tempFame.ToString();
+
+        for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
+        {
+            isOpen[i / STEP_MAX][i % STEP_MAX] = (Type)map.isOpen[i];
+        }
+
+        InitMap();
+    }
 
     void Start()
     {
         InitMap();
         gameObject.SetActive(false);
     }
+
+    Map InitMapInfo(JsonData data)
+    {
+        int tempFame = int.Parse(data["tempFame"].ToString());
+        int Step = int.Parse(data["Step"].ToString());
+        double Edge = double.Parse(data["Edge"].ToString());
+
+        int[] isOpen = new int[data["isOpen"].Count];
+        for (int i = 0; i < isOpen.Length; i++)
+            isOpen[i] = int.Parse(data["isOpen"][i].ToString());
+
+        return new Map(tempFame,Step, Edge, isOpen);
+    }
+
+    Map ReadMapInfo()
+    {
+        string strMap;
+        try
+        {
+            strMap = File.ReadAllText(Application.persistentDataPath + "/MapInfo.json");
+        }
+        catch
+        {
+            TextAsset textAsset = Resources.Load("Data/MapInfo") as TextAsset;
+            strMap = textAsset.ToString();
+        }
+
+        JsonData mapData = JsonMapper.ToObject(strMap);
+        return InitMapInfo(mapData);
+    }
+
+
+    void WriteMapInfo()
+    {
+        int[] mapOpen = new int[STEP_MAX * STEP_MAX];
+        for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
+            mapOpen[i] = (int)GetIsOpen(i);
+
+        Map map = new Map(tempFame, Step, Edge, mapOpen);
+        JsonData newObj = JsonMapper.ToJson(map);
+
+        File.WriteAllText(Application.persistentDataPath + "/MapInfo.json", newObj.ToString());
+    }
+
 
     public void SetObjectCnt(int type, int Cnt)
     {
@@ -90,6 +182,19 @@ public class MapManager : MonoBehaviour {
             case 3: TrapCnt += Cnt; TrapText.text = TrapCnt.ToString(); break;
             case 4: SecretCnt += Cnt; SecretText.text = SecretCnt.ToString(); break;
         }
+    }
+
+    public void InitObjectCnt()
+    {
+        BuildingCnt = 0;
+        OurForcesCnt = 0;
+        TrapCnt = 0;
+        SecretCnt = 0;
+
+        BuildingText.text = BuildingCnt.ToString();
+        OurForcesText.text = OurForcesCnt.ToString();
+        TrapText.text = TrapCnt.ToString();
+        SecretText.text = SecretCnt.ToString();
     }
 
     public void ChangeToNonActiveDamage()
@@ -131,7 +236,7 @@ public class MapManager : MonoBehaviour {
 
     void SetAllRepairCost()
     {
-        AllRepairCost.text = roomManager.GetAllRepairCost().ToString() + "/" + Data_Player.Gold;
+        AllRepairCost.text = roomManager.GetAllRepairCost().ToString();
     }
 
     public void AllRepair()
@@ -215,6 +320,7 @@ public class MapManager : MonoBehaviour {
     public void ChangedFame()
     {
         StepUp();
+
         InitMap();
     }
 
@@ -401,6 +507,8 @@ public class MapManager : MonoBehaviour {
 
         RoomList[conRoom].GetComponent<Image>().color = new Color(0, 1, 0, 1);
         miniMapManager.InitMap();
+
+        WriteMapInfo();
     }
 
     

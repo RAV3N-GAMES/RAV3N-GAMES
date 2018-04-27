@@ -37,10 +37,12 @@ public class EnemyGroupResult : MonoBehaviour {
 
             Enemy[i].color = new Color(1, 1, 1, alpha);
 
-            yield return new WaitForSeconds(0.3f);
+            if (!active[i])
+                yield return new WaitForSeconds(0.3f);
         }
 
         isDone = true;
+        yield break;
     }
 
     public void InitResult(string[] enemyId, bool[] active)

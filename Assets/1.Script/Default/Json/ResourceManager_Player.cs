@@ -8,7 +8,7 @@ using LitJson;
 public class ResourceManager_Player : JsonReadWrite
 {
 
-    private const string Path = "./Assets/Resources/Data/PlayerDetail.json";
+    private const string Path = "Data/PlayerDetail";
     public static List<Data_SetupPlayer> Tbl_Player = new List<Data_SetupPlayer>();
     //    public enum Group_Palyer { fame, lvExperience, enemyClusterNumber, rewardA, rewardB};
 

@@ -51,6 +51,7 @@ public class CreatePopUp : MonoBehaviour {
             Destroy(Obj);
             LackOfCoin.SetActive(true);
         }
+        
 
         roomManager.SetClickColliderStatus(true);
         gameObject.SetActive(false);
@@ -77,15 +78,18 @@ public class CreatePopUp : MonoBehaviour {
         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
         {
             GameObject Warp = Obj.transform.parent.gameObject;
-            Warp.GetComponent<DisplayObject>().DestroyObj(false);
+            bool temp = Warp.GetComponent<DisplayObject>().DestroyObj(false);
+
+            print(temp);
 
             Destroy(Warp);
         }
         else
             Destroy(Obj);
 
-        gameObject.SetActive(false);
         roomManager.SetClickColliderStatus(true);
         RoomManager.ChangeClickStatus(true);
+
+        gameObject.SetActive(false);
     }
 }

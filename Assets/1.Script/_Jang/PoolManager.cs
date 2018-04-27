@@ -30,8 +30,8 @@ public enum EFFECT_TYPE
 
 
 public class PoolManager : MonoBehaviour {
-
-	public static PoolManager current;
+    public GameObject ReadyButton;
+    public static PoolManager current;
 	public GameObject[] EnemyPrefabs;
 	public GameObject[] FriendPrefabs;
 	public GameObject[] ParticlePrefabs;
@@ -171,6 +171,8 @@ public class PoolManager : MonoBehaviour {
 			obj.transform.SetParent(null);
 			obj.SetActive(true);
             DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());
+            ReadyButton.SetActive(true);
+
             return obj;
 		}
 		return null;

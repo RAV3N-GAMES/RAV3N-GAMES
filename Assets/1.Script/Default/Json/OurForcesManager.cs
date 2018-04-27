@@ -36,10 +36,10 @@ using UnityEngine;
 
 public class OurForcesManager : JsonReadWrite
 {
-    const string Path1 = "./Assets/Resources/Data/OurForces_Guard.json";
-    const string Path2 = "./Assets/Resources/Data/OurForces_QuickReactionForces.json";
-    const string Path3 = "./Assets/Resources/Data/OurForces_BiochemistryUnit.json";
-    const string Path4 = "./Assets/Resources/Data/OurForces_Researcher.json";
+    const string Path1 = "Data/OurForces_Guard";
+    const string Path2 = "Data/OurForces_QuickReactionForces";
+    const string Path3 = "Data/OurForces_BiochemistryUnit";
+    const string Path4 = "Data/OurForces_Researcher";
     public static List<OurForcesObject> Tbl_OurForceSetup = new List<OurForcesObject>();
 
     // Use this for initialization

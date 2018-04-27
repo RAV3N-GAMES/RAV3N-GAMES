@@ -30,7 +30,8 @@ public class JsonReadWrite : MonoBehaviour
      */
     public string ReadFile(string Path)
     {
-        return File.ReadAllText(Path);
+        TextAsset textAsset = Resources.Load(Path) as TextAsset;
+        return textAsset.ToString();
     }
     public void JsonParse(string File)
     {

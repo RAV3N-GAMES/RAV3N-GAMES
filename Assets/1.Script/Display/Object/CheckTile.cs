@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CheckTile : MonoBehaviour {
     [HideInInspector]
-    public List<GameObject> lastCol;
+    public List<GameObject> lastColList;
+
+    GameObject lastCol;
 
     public SpriteRenderer Warp;
     public SpriteRenderer WarpExit;
@@ -22,7 +24,7 @@ public class CheckTile : MonoBehaviour {
 
     void Start()
     {
-        lastCol = new List<GameObject>();
+        lastColList = new List<GameObject>();
 
         objectInfo = GetComponent<ObjectInfo>();
         objectColor = GetComponent<ObjectColor>();
@@ -33,14 +35,17 @@ public class CheckTile : MonoBehaviour {
 
     public Transform findPivotCol()
     {
-        int Cnt = lastCol.Count;
-        GameObject tempPivot = lastCol[0];
+        int Cnt = lastColList.Count;
+        if (Cnt == 0)
+            return lastCol.transform;
+
+        GameObject tempPivot = lastColList[0];
 
         for (int i = 1; i < Cnt; i++)
         {
-            if (lastCol[i].transform.position.z < tempPivot.transform.position.z)
+            if (lastColList[i].transform.position.z < tempPivot.transform.position.z)
             {
-                tempPivot = lastCol[i];
+                tempPivot = lastColList[i];
             }
         }
 
@@ -134,14 +139,14 @@ public class CheckTile : MonoBehaviour {
 
     bool isSameRoom()
     {
-        if (lastCol.Count == 1)
+        if (lastColList.Count == 1)
             return true;
 
-        string roomName = lastCol[0].transform.parent.parent.name;
+        string roomName = lastColList[0].transform.parent.parent.name;
 
-        for (int i = 1; i < lastCol.Count; i++)
+        for (int i = 1; i < lastColList.Count; i++)
         {
-            if (roomName != lastCol[i].transform.parent.parent.name)
+            if (roomName != lastColList[i].transform.parent.parent.name)
                 return false;
         }
 
@@ -252,10 +257,10 @@ public class CheckTile : MonoBehaviour {
 
     bool isEnable()
     {
-        if (lastCol.Count == 0 || !isSameRoom() || lastCol.Count < TileCnt)
+        if (lastColList.Count == 0 || !isSameRoom() || lastColList.Count < TileCnt)
             return false;        
 
-        tileManager = lastCol[0].transform.parent.parent.GetComponent<TileManager>();
+        tileManager = lastColList[0].transform.parent.parent.GetComponent<TileManager>();
 
         int[] idx = makeIdx();
         return tileManager.isEnableTile(idx);
@@ -290,7 +295,7 @@ public class CheckTile : MonoBehaviour {
         {
             if (!objectInfo.isDisplay)
             {
-                lastCol.Add(col.transform.parent.gameObject);
+                lastColList.Add(col.transform.parent.gameObject);
                 OnCheckTile();
             }
         }
@@ -302,7 +307,9 @@ public class CheckTile : MonoBehaviour {
         {
             if (!objectInfo.isDisplay)
             {
-                lastCol.Remove(col.transform.parent.gameObject);
+                if (lastColList.Count == 1)
+                    lastCol = lastColList[0];
+                lastColList.Remove(col.transform.parent.gameObject);
             }
         }
     }

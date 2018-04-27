@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyInfoText : MonoBehaviour
 {
-    string id;
+   string id;
 
     int idxBase;
 
@@ -16,7 +16,6 @@ public class EnemyInfoText : MonoBehaviour
     void Awake()
     {
         id = gameObject.name;
-
         switch(id)
         {
             case "JuvenileDelinquents":
@@ -43,7 +42,7 @@ public class EnemyInfoText : MonoBehaviour
     public void SetEnemyInfo(bool isSS)
     {
         EnemyObject enemyObject = EnemyManager.Tbl_EnemySetup[idxBase + Data_Player.Fame];
-
+        
         if (enemyObject.id.Equals(id))
         {
             if (isSS)

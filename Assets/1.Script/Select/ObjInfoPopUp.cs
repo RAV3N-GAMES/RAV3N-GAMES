@@ -4,39 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ObjInfoPopUp : MonoBehaviour {
-    string id;
-    int type;
+    protected string id;
+    protected int type;
+    protected int level;
 
     SlotManager slotManager;
 
-
     public Image ObjImage;
-    public Text ObjTitle;
-    public Text HP;
-    public Text Contents;
 
     public GameObject LockImage;
     public Button PriceButton;
 
     public Text Price;
-    public Text UpgradePrice;
 
-    public GameObject LackOfCoin;
-
-    public List<GameObject> UpgradeIcon;
-
-    void InitUpgradeIcon()
-    {
-        for (int i = 0; i < UpgradeIcon.Count; i++)
-            UpgradeIcon[i].SetActive(false);
-
-        switch (type)
-        {
-            case 0: UpgradeIcon[0].SetActive(true); break;
-            case 2: UpgradeIcon[1].SetActive(true); break;
-            case 3: UpgradeIcon[2].SetActive(true); break;
-        }
-    }
+    public GameObject LackOfCoin_Activation;
+    public GameObject LackOfCoin_Upgrade;
+    
 
     void InitPriceInfo(int level)
     {
@@ -70,39 +53,14 @@ public class ObjInfoPopUp : MonoBehaviour {
             Price.gameObject.SetActive(false);
     }
 
-    public void InitObjInfoPopUp(string id, int type, SlotManager slotManager)
+    public virtual void InitObjInfoPopUp(string id, int type, SlotManager slotManager)
     {
         this.id = id;
         this.type = type;
         this.slotManager = slotManager;
 
         ObjImage.sprite = JsonDataManager.slotImage[id];
-        int level = JsonDataManager.slotInfoList[id].level;
-        ObjTitle.text = id + " " + level + "단계";
-        Contents.text = level + "단계의 " + id + "이다.";
-
-        if (level != 0)
-        {
-            switch (type)
-            {
-                case 0: HP.text = JsonDataManager.GetBuildingInfo(id, level).HP.ToString(); break;
-                case 2: HP.text = JsonDataManager.GetOurForcesInfo(id, level).HP.ToString(); break;
-                default: HP.text = "0"; break;
-            }
-        }
-        else
-            HP.text = "0";
-
-        InitUpgradeIcon();
-
-        int upgradeCost = GetUpgradeCost();
-        if (upgradeCost != -1)
-        {
-            UpgradePrice.gameObject.SetActive(true);
-            UpgradePrice.text = upgradeCost.ToString();
-        }
-        else
-            UpgradePrice.gameObject.SetActive(false);
+        level = JsonDataManager.slotInfoList[id].level;
 
         if (level != 0)
         {
@@ -142,7 +100,7 @@ public class ObjInfoPopUp : MonoBehaviour {
         }
     }
 
-    int GetUpgradeCost()
+    protected int GetUpgradeCost()
     {
         SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
         int type = slotInfo.type;
@@ -174,7 +132,7 @@ public class ObjInfoPopUp : MonoBehaviour {
             InitObjInfoPopUp(id, type, slotManager);
         }
         else
-            LackOfCoin.SetActive(true);
+            LackOfCoin_Upgrade.SetActive(true);
     }
 
     public void OnActivation()
@@ -190,7 +148,7 @@ public class ObjInfoPopUp : MonoBehaviour {
         }
         else
         {
-            LackOfCoin.SetActive(true);
+            LackOfCoin_Activation.SetActive(true);
         }
     }
 }

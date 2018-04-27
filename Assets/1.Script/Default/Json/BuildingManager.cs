@@ -12,10 +12,10 @@ using UnityEngine;
  */
 public class BuildingManager : JsonReadWrite
 {
-    const string Path1 = "./Assets/Resources/Data/Building_Old.json";
-    const string Path2 = "./Assets/Resources/Data/Building_New.json";
-    const string Path3 = "./Assets/Resources/Data/Building_Functional.json";
-    const string Path4 = "./Assets/Resources/Data/Building_Core.json";
+    const string Path1 = "Data/Building_Old";
+    const string Path2 = "Data/Building_New";
+    const string Path3 = "Data/Building_Functional";
+    const string Path4 = "Data/Building_Core";
     public static List<BuildingObject> Tbl_BuildingSetup = new List<BuildingObject>();
 
     // Use this for initialization

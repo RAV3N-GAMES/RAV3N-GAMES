@@ -11,6 +11,8 @@ public enum Traps_Script { HumanTrap , Warp_Enter , Warp_Exit};
 
 public class DayandNight : MonoBehaviour
 {
+    public GameObject ReadyButton;
+
     public ResultPopUp resultPopUp;
 
     public static bool isDay;
@@ -59,6 +61,7 @@ public class DayandNight : MonoBehaviour
         }
 
         if (isDay) {
+            ReadyButton.SetActive(false);
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();
             //WallSyncFromObjectInfo();

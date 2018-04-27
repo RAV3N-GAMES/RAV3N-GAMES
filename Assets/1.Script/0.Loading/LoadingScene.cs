@@ -5,11 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class LoadingScene : MonoBehaviour {
     public UnityEngine.UI.Text loadingPercentage;
+    public GameObject ApplicationManager;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject[] LoadingImage;
+
+	public void StartLoading()
+    {
+        int random = Random.Range(0, 100);
+        random = random % 2;
+
+        LoadingImage[random].SetActive(true);
+
         StartCoroutine("LoadScene");
-	}
+    }
 	
     IEnumerator LoadScene()
     {
@@ -18,7 +26,7 @@ public class LoadingScene : MonoBehaviour {
 
         while (!async.isDone)
         {
-            float progress = async.progress * 100.0f;
+            float progress = (async.progress / 0.9f) * 100.0f;
             int pRounded = Mathf.RoundToInt(progress);
             loadingPercentage.text = pRounded.ToString();
 

@@ -7,20 +7,16 @@ public class ChangePopUp : MonoBehaviour {
     [HideInInspector]
     public GameObject Obj;
 
-    string id;
+    protected string id;
     
-    int price;
-    int repairPrice;
+    protected int price;
+    protected int repairPrice;
 
-    public Text nameText;
     public Text priceText;
     public Text repairPriceText;
     public Text partialRepairPriceText;
-    public Text contentsText;
 
     public Image ObjImage;
-
-    public Text HPText;
 
     public GameObject PartialRepair;
     public GameObject DontDestroy;
@@ -28,77 +24,19 @@ public class ChangePopUp : MonoBehaviour {
     public GameObject MovePopUp;
     bool isMove;
     
+    protected ObjectInfo objInfo;
 
-    void InitBuilding(ObjectInfo objInfo)
+
+    public virtual void InitPopUp()
     {
-        BuildingObject building = JsonDataManager.GetBuildingInfo(id, objInfo.level);
-        price = (building.Price / 2) * objInfo.presentHP / objInfo.totalHP;
-        priceText.text = price.ToString() + "/"+ Data_Player.Gold;
-
-        repairPrice = (objInfo.totalHP - objInfo.presentHP) * building.RepairCost;
-        repairPriceText.text = repairPrice.ToString() + "/" + Data_Player.Gold + "골드";
-    }
-
-    void InitOurForces(ObjectInfo objInfo)
-    {
-        OurForcesObject ourForces = JsonDataManager.GetOurForcesInfo(id, objInfo.level);
-
-        price = (ourForces.Price / 2) * objInfo.presentHP / objInfo.totalHP;
-        priceText.text = price.ToString() + "/" + Data_Player.Gold;
-
-        repairPrice = (int)((objInfo.totalHP - objInfo.presentHP) * ourForces.HealCost);
-        repairPriceText.text = repairPrice.ToString() + "/" + Data_Player.Gold + "골드";
-    }
-
-    void InitTrap(ObjectInfo objInfo)
-    {        
-        TrapObject trap = JsonDataManager.GetTrapInfo(id, objInfo.level);
-
-        price = trap.Price / 2;
-        priceText.text = price.ToString() + "/" + Data_Player.Gold;
-        
-        repairPrice = 0;
-        repairPriceText.text = "0" + "/" + Data_Player.Gold + "골드";
-    }
-
-    void InitSecret(ObjectInfo objInfo)
-    {
-        price = 0;
-        repairPrice = 0;
-
-        priceText.text = "0/0";
-        repairPriceText.text = "0";
-    }
-
-
-    public void InitPopUp()
-    {
-        ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
+        objInfo = Obj.GetComponent<ObjectInfo>();
 
         if (objInfo.id.Equals("Warp_Exit"))
             id = "Warp";
         else
             id = objInfo.id;
-
-        nameText.text = id + " " + objInfo.level.ToString() + "단계";
-        HPText.text = "HP " + objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
-        contentsText.text = objInfo.level.ToString() +"단계의 " + id + "이다.";
-        partialRepairPriceText.text = Data_Player.Gold + "/" + Data_Player.Gold + "골드";
-
-        switch (objInfo.type)
-        {
-            case 0: InitBuilding(objInfo); break;
-            case 2: InitOurForces(objInfo); break;
-            case 3: InitTrap(objInfo);  break;
-            case 4: InitSecret(objInfo); break;
-            default:
-                price = 0;
-                repairPrice = 0;
-                priceText.text = "0";
-                repairPriceText.text = "0";
-                break;
-        }
-
+        
+        partialRepairPriceText.text = Data_Player.Gold.ToString();
         ObjImage.sprite = JsonDataManager.slotImage[id];
     }
     
@@ -145,14 +83,9 @@ public class ChangePopUp : MonoBehaviour {
             PartialRepair.SetActive(true);
     }
 
-    public void tempHitObjForTest()
+    public virtual void tempHitObjForTest()
     {
-        ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
-        if (objInfo.type == 0 || objInfo.type == 2)
-        {
-            objInfo.SetHP(-20);
-            HPText.text = "HP " + objInfo.presentHP.ToString() + "/" + objInfo.totalHP.ToString();
-        }
+        ;
     }
 
     void DestroyWarp()
@@ -173,23 +106,19 @@ public class ChangePopUp : MonoBehaviour {
 
     public void DestroyPref()
     {
-        if (Obj.GetComponent<ObjectInfo>().type == 4)
-            RoomManager.ChangeClickStatus(true);
-        else
+        bool isDestroy = Obj.GetComponent<DisplayObject>().DestroyObj(false);
+
+        if (isDestroy)
         {
-            bool isDestroy = Obj.GetComponent<DisplayObject>().DestroyObj(false);
+            DestroyWarp();
 
-            if (isDestroy)
-            {
-                DestroyWarp();
-
-                //Data_Player.addGold(price);
-                RoomManager.ChangeClickStatus(true);
-                Destroy(Obj);
-            }
-            else
-                DontDestroy.SetActive(true);
+            Data_Player.addGold(price);
+            RoomManager.ChangeClickStatus(true);
+            Destroy(Obj);
         }
+        else
+            DontDestroy.SetActive(true);
+
         gameObject.SetActive(false);
     }
 
