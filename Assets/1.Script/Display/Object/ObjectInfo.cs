@@ -207,4 +207,12 @@ public class ObjectInfo : MonoBehaviour
     {
         DontDestroy--;
     }
+
+    public void SynctoWall() {
+        Wall w = GetComponentInChildren<Wall>();
+        w.Level = level;
+        w.HP = presentHP;
+        w.MaxHP = totalHP;
+        w.WallSyncInfo();
+    }
 }

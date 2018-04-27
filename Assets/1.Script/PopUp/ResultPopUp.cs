@@ -105,7 +105,6 @@ public class ResultPopUp : MonoBehaviour {
 
             if (Cnt != 3)
                 print("Cnt != 3");
-
             enemyGroupResult[i].InitResult(enemyId, enemyActive);
         }
 

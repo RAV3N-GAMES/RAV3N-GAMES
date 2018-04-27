@@ -75,13 +75,6 @@ public class DayandNight : MonoBehaviour
         CharacterEnable(isDay);
     }
 
-    private void WallSyncFromObjectInfo() {
-        GameObject[] Walls = GameObject.FindGameObjectsWithTag("Wall");
-        for (int i = 0; i < Walls.Length; i++) {
-            Walls[i].GetComponent<Wall>().WallSync();
-        }
-    }
-
     IEnumerator DayCount(float a) {
         yield return new WaitForSeconds(a);
         changeState();
@@ -126,7 +119,6 @@ public class DayandNight : MonoBehaviour
 
     public void EnemyEnable(bool Day) {
         if (Day) {
-            Debug.Log("EnemyEnabled in DayNNight");
             GameManager.current.EnemyGenerate();
         }
     }

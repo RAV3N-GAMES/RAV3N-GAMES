@@ -30,7 +30,6 @@ public enum EFFECT_TYPE
 
 
 public class PoolManager : MonoBehaviour {
-    public GameObject ReadyButton;
     public static PoolManager current;
 	public GameObject[] EnemyPrefabs;
 	public GameObject[] FriendPrefabs;
@@ -74,8 +73,8 @@ public class PoolManager : MonoBehaviour {
 		int count = EnemyPrefabs.Length;
 		EnemyPoolList = new List<GameObject>[count];
 
-		if (SetCount <= 0)
-			SetCount = 5;
+		
+		SetCount = 7;
 
 		for (int i = 0; i < count; ++i)
 		{
@@ -154,7 +153,6 @@ public class PoolManager : MonoBehaviour {
 	{
 		if (EnemyPoolList[(int)type].Count > 0)
 		{
-            Debug.Log("Pop Enemy when Count over 0 in PoolManager");
 			GameObject obj = EnemyPoolList[(int)type][0];
 			obj.SetActive(true);
 
@@ -171,8 +169,7 @@ public class PoolManager : MonoBehaviour {
 			obj.transform.SetParent(null);
 			obj.SetActive(true);
             DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());
-            ReadyButton.SetActive(true);
-
+            
             return obj;
 		}
 		return null;

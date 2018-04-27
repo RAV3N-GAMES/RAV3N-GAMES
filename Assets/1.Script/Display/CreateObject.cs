@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateObject : MonoBehaviour {
+public class CreateObject : MonoBehaviour
+{
     [HideInInspector]
     public string id;
 
@@ -32,7 +33,7 @@ public class CreateObject : MonoBehaviour {
         BoxRect.offsetMin = Vector2.zero;
         BoxRect.offsetMax = Vector2.zero;
     }
-    
+
 
     public void MouseUp()
     {
@@ -62,7 +63,6 @@ public class CreateObject : MonoBehaviour {
             warp_Exit.GetComponent<ClickObject>().ChangePopUpManager = ChangePopUpManager;
             warp_Exit.GetComponent<ObjectInfo>().InitObject();
         }
-
         //CreatePopUp.GetComponent<CreatePopUp>().Obj = newObj;
         newObj.GetComponent<ObjectMove>().isNewObj = true;
 

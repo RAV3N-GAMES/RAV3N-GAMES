@@ -35,7 +35,7 @@ public class EnemyGroup : MonoBehaviour {
 	}
 	private IEnumerator MemberAppear(float probability, int GroupId)
 	{
-        Debug.Log("MemberAppear Start in EnemyGroup");
+
         int Group_Normal = 0;//비행청소년, 사채업자, 부패경찰
         int Group_Special = 0;//음유시인, 분노조절장애농부, 소매치기
         
@@ -63,7 +63,7 @@ public class EnemyGroup : MonoBehaviour {
             {
                 rand = Random.Range((int)(ENEMY_TYPE.FlyTeen), (int)(ENEMY_TYPE.Sheriff));
             }
-            Debug.Log("Call PopEnemy in EnemyGroup");
+
             GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
             if (rand <= (int)(ENEMY_TYPE.Sheriff))
             {

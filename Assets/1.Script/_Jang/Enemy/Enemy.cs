@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour {
     protected WaitForSeconds attackDelay;   //코루틴에서
     protected EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입
-
+    protected int PresentRoomidx;
     private bool isShoot;                   //딜레이와 공격을 맞추기위한 
                                             //기능 초기화
     public virtual void EnemyInit()
@@ -630,6 +630,11 @@ public class Enemy : MonoBehaviour {
             Wall w = col.GetComponentInParent<Wall>();
             if(!NearWall.Contains(w))
                 NearWall.Add(w);
+        }
+
+        if (col.CompareTag("Tile")) {
+            PresentRoomidx= col.GetComponentInParent<EnemyGroup>().GroupIndex;
+
         }
     }
     private void SetOrder() {
