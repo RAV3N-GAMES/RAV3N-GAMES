@@ -16,6 +16,11 @@ public class DamageReportPopUp : MonoBehaviour {
     public static int[] Trap = new int[ObjLength];
     public static int[] Secret = new int[ObjLength];
 
+    public static List<int>[] BuildingLevel = { new List<int>(), new List<int>(), new List<int>(), new List<int>() };
+    public static List<int>[] OurForcesLevel = { new List<int>(), new List<int>(), new List<int>(), new List<int>() };
+    public static List<int>[] TrapLevel = { new List<int>(), new List<int>(), new List<int>(), new List<int>() };
+    public static List<int>[] SecretLevel = { new List<int>(), new List<int>(), new List<int>(), new List<int>() };
+
     public Transform BuildingParent;
     public Transform OurForcesParent;
     public Transform TrapParent;
@@ -30,7 +35,7 @@ public class DamageReportPopUp : MonoBehaviour {
 
     int maxNum;
 
-    public static void PlusDamage(int type, string id)
+    public static void PlusDamage(int type, string id, int level)
     {
         string[] damageObj;
 
@@ -49,10 +54,10 @@ public class DamageReportPopUp : MonoBehaviour {
             {
                 switch (type)
                 {
-                    case 0: Building[i]++; break;
-                    case 2: OurForces[i]++; break;
-                    case 3: Trap[i]++; break;
-                    case 4: Secret[i]++; break;
+                    case 0: Building[i]++; BuildingLevel[i].Add(level); break;
+                    case 2: OurForces[i]++; OurForcesLevel[i].Add(level); break;
+                    case 3: Trap[i]++; TrapLevel[i].Add(level); break;
+                    case 4: Secret[i]++; SecretLevel[i].Add(level); break;
                     default: return;
                 }
                 return;
@@ -90,6 +95,11 @@ public class DamageReportPopUp : MonoBehaviour {
             OurForces[i] = 0;
             Trap[i] = 0;
             Secret[i] = 0;
+
+            BuildingLevel[i].Clear();
+            OurForcesLevel[i].Clear();
+            TrapLevel[i].Clear();
+            SecretLevel[i].Clear();
         }
     }
 
@@ -124,17 +134,6 @@ public class DamageReportPopUp : MonoBehaviour {
         StartCoroutine("PlayDamageReport");
     }
 
-    void InitDamageList()
-    {
-        for(int i = 0; i< ObjLength; i++)
-        {
-            Building[i] = 0;
-            OurForces[i] = 0;
-            Trap[i] = 0;
-            Secret[i] = 0;
-        }
-    }
-
     IEnumerator PlayDamageReport()
     {
         //버튼 클릭 막고
@@ -155,7 +154,7 @@ public class DamageReportPopUp : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
         }
         //클릭 풀고
-        InitDamageList();
+        InitDamageIdx();
         yield break;
     }
 }

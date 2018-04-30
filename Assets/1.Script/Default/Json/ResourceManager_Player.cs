@@ -7,7 +7,6 @@ using LitJson;
 
 public class ResourceManager_Player : JsonReadWrite
 {
-
     private const string Path = "Data/PlayerDetail";
     public static List<Data_SetupPlayer> Tbl_Player = new List<Data_SetupPlayer>();
     //    public enum Group_Palyer { fame, lvExperience, enemyClusterNumber, rewardA, rewardB};
@@ -42,5 +41,21 @@ public class ResourceManager_Player : JsonReadWrite
             tmp.Reward_GroupOppression = int.Parse(data[i]["Reward_GroupOppression"].ToString());
             Tbl_Player.Add(tmp);
         }
+    }
+
+    public static int GetPlayerFame(int Exp)
+    {
+        if (Exp < 0)
+            return 0;
+
+        for(int i = 0; i < Tbl_Player.Count; i++)
+        {
+            if(Tbl_Player[i].Reward_Min > Exp)
+            {
+                return i + 3;
+            }
+        }
+
+        return 25;
     }
 }

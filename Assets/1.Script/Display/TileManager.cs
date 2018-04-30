@@ -233,7 +233,7 @@ public class TileManager : MonoBehaviour
 
         if (isDestroyed)
         {
-            DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id);
+            DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id, objInfo.level);
         }
 
         mapManager.SetObjectCnt(objInfo.type, -1);

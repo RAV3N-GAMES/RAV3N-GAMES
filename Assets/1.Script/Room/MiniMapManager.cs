@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MiniMapManager : MonoBehaviour {
+public class MiniMapManager : MonoBehaviour
+{
     public GameObject RoomPref;
     public Transform RoomParent;
-          
+
     List<GameObject> RoomList;
 
     int conRoom;
 
     const int STEP_MAX = 5;
 
-    void Awake()
+    public void InitMiniMap()
     {
         conRoom = 0;
         RoomList = new List<GameObject>();
@@ -33,7 +34,7 @@ public class MiniMapManager : MonoBehaviour {
 
         RoomParent.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rectSize, rectSize);
     }
-    
+
 
     public void MoveMapRoom(int idx)
     {
@@ -106,7 +107,8 @@ public class MiniMapManager : MonoBehaviour {
                 GameObject newRoom = CreateRoomPref((i * STEP_MAX + j).ToString());
                 InitRoomRect(newRoom.GetComponent<RectTransform>(), size, i * Step + j);
 
-                if (MapManager.isOpen[i][j] == MapManager.Type.CLOSE){
+                if (MapManager.isOpen[i][j] == MapManager.Type.CLOSE)
+                {
                     if (GetOpenRoomCnt() >= MapManager.tempFame)
                         newRoom.SetActive(false);
                     else

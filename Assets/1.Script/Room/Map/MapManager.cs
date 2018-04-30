@@ -13,7 +13,7 @@ public class Map
 
     public int[] isOpen;
 
-    public Map(int _tempFame,int _Step, double _Edge, int[] _isOpen)
+    public Map(int _tempFame, int _Step, double _Edge, int[] _isOpen)
     {
         tempFame = _tempFame;
         Step = _Step;
@@ -24,7 +24,8 @@ public class Map
 }
 
 
-public class MapManager : MonoBehaviour {
+public class MapManager : MonoBehaviour
+{
     public Transform MapCameraPos;
     public Camera MapCamera;
 
@@ -104,6 +105,8 @@ public class MapManager : MonoBehaviour {
         {
             isOpen[i / STEP_MAX][i % STEP_MAX] = (Type)map.isOpen[i];
         }
+
+        miniMapManager.InitMiniMap();
     }
 
     public void InitMapManager()
@@ -139,7 +142,7 @@ public class MapManager : MonoBehaviour {
         for (int i = 0; i < isOpen.Length; i++)
             isOpen[i] = int.Parse(data["isOpen"][i].ToString());
 
-        return new Map(tempFame,Step, Edge, isOpen);
+        return new Map(tempFame, Step, Edge, isOpen);
     }
 
     Map ReadMapInfo()
@@ -224,13 +227,13 @@ public class MapManager : MonoBehaviour {
         {
             MapCamera.cullingMask = LayerMask.GetMask("DamageObjPos");
 
-            MapManager.DamageBuildingCnt = 0;
-            MapManager.DamageOurForcesCnt = 0;
+            DamageBuildingCnt = 0;
+            DamageOurForcesCnt = 0;
 
             SetAllRepairCost();
 
-            BuildingText.text = MapManager.DamageBuildingCnt.ToString();
-            OurForcesText.text = MapManager.DamageOurForcesCnt.ToString();
+            BuildingText.text = DamageBuildingCnt.ToString();
+            OurForcesText.text = DamageOurForcesCnt.ToString();
         }
     }
 
@@ -257,7 +260,7 @@ public class MapManager : MonoBehaviour {
         float rectY = 1440 * anchorY * 0.9f;
 
         ObjPos.sizeDelta = new Vector2(rectY, rectY * 2);
-        float rectSize = Mathf.Sqrt(1/2f) * rectY;
+        float rectSize = Mathf.Sqrt(1 / 2f) * rectY;
 
         RoomParent.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(rectSize, rectSize);
     }
@@ -290,7 +293,7 @@ public class MapManager : MonoBehaviour {
 
     bool isAllSideOpen()
     {
-        for (int i = 0; i < Step - 1 ; i++)
+        for (int i = 0; i < Step - 1; i++)
         {
             if (isOpen[i][Step - 1] != Type.OPEN)
             {
@@ -341,11 +344,11 @@ public class MapManager : MonoBehaviour {
             if (Step == STEP_MAX)
                 return;
         }
-        else if(Step * Step > tempFame)
+        else if (Step * Step > tempFame)
         {
             return;
         }
-        
+
         if (Edge == 0.5f)
         {
             if (!isEdgeOpen())
@@ -353,11 +356,11 @@ public class MapManager : MonoBehaviour {
         }
         else if (!isAllSideOpen())
             return;
-    
+
         Edge = (Edge + 0.5f) % 1f;
         if (Edge == 0)
             Step++;
-    
+
         if (Edge == 0.5f)
             EdgeOpen();
         else
@@ -367,7 +370,7 @@ public class MapManager : MonoBehaviour {
     public void EdgeOpen()
     {
         isOpen[Step - 1][Step - 1] = Type.CLOSE;
-        
+
         InitMap();
     }
 
@@ -389,7 +392,7 @@ public class MapManager : MonoBehaviour {
 
         MapCameraPos.transform.position = new Vector3(0, 10, z);
         MapCameraPos.gameObject.GetComponent<Camera>().orthographicSize = Step * 16;
-        
+
         InitMap();
     }
 
@@ -406,11 +409,11 @@ public class MapManager : MonoBehaviour {
 
         conRoom = roomIdx;
     }
-    
+
 
     public void MoveRoom(int idx)
     {
-        MoveMapRoom(idx);   
+        MoveMapRoom(idx);
         roomManager.MoveRoom(idx);
     }
 
@@ -444,11 +447,11 @@ public class MapManager : MonoBehaviour {
         }
         else if (isAllSideOpen())
             StepUp();
-        
+
         roomManager.OpenRoom(idx);
         InitMap();
     }
-    
+
 
     void DestroyRoomPref()
     {
@@ -511,5 +514,5 @@ public class MapManager : MonoBehaviour {
         WriteMapInfo();
     }
 
-    
+
 }

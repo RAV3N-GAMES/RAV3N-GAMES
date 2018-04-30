@@ -15,6 +15,7 @@ public class JsonDataManager : MonoBehaviour {
     public RoomManager roomManager;
     public List<SlotManager> slotManager;
     public MapManager mapManager;
+    public MailBox mailBox;
 
     void Awake()
     {
@@ -24,7 +25,7 @@ public class JsonDataManager : MonoBehaviour {
         activationImage = new Dictionary<string, Sprite>();
 
         Data_Player.addGold(100000);
-        Data_Player.Fame = 20;
+        Data_Player.Fame = 4;
         LoadData();
     }
 
@@ -243,9 +244,17 @@ public class JsonDataManager : MonoBehaviour {
         }
     }
 
+    void ResetMailList()
+    {
+        List<int> tmp = new List<int>();
+        JsonData newObj = JsonMapper.ToJson(tmp);
+
+        File.WriteAllText(Application.persistentDataPath + "/MailList.json", newObj.ToString());
+    }
+
     public void Reset()
     {
-        //맵 정보 및 플레이어 정보도 초기화
+        //플레이어 정보 초기화
         ResetSlotInfo();
         for (int i = 0; i < slotManager.Count; i++)
             slotManager[i].RefreshInfo();
@@ -255,6 +264,9 @@ public class JsonDataManager : MonoBehaviour {
 
         ResetMapInfo();
         mapManager.InitMapManager();
+
+        ResetMailList();
+        mailBox.RewardCoinList.Clear();
     }
 
     void OnApplicationQuit()

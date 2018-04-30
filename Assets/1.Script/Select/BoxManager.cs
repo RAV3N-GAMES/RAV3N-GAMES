@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BoxManager : MonoBehaviour {
     public List<GameObject> SlotList;
+    public List<GameObject> ActiveButton;
+
     int type;
 
     void Start()
@@ -18,6 +20,7 @@ public class BoxManager : MonoBehaviour {
         for (int i = 0; i < SlotList.Count; i++)
         {
             SlotList[i].SetActive(false);
+            ActiveButton[i].SetActive(false);
         }
     }
 
@@ -25,6 +28,7 @@ public class BoxManager : MonoBehaviour {
     {
         AllOffSlotList();
         SlotList[idx].SetActive(true);
+        ActiveButton[idx].SetActive(true);
     }
 
     public void LoadSlot(int boxType)

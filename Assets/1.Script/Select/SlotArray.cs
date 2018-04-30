@@ -11,9 +11,7 @@ public class SlotArray : MonoBehaviour {
         if (lastCol != null)
         {
             Vector3 pos = transform.position - lastCol.transform.position;
-            Box.transform.position += new Vector3(pos.x, 0, 0);
-
-            //RoomManager.possibleDrag = true;
+            Box.transform.position += new Vector3(0, pos.y, 0);
         }
     }
 
