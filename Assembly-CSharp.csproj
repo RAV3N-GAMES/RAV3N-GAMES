@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{89DE1756-DD99-95AE-9D84-0E61C8FE1A6E}</ProjectGuid>
+    <ProjectGuid>{6B2C2EB8-02AE-E15E-2921-484BED874EE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -39,105 +39,104 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\1.Script\0.Loading\LoadingScene.cs" />
-     <Compile Include="Assets\1.Script\Default\ApplicationManager.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\BuildingManager.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\DataClasses.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\EnemyManager.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\JsonDataManager.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\MyObject.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\OurForcesManager.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\ResourceManager_Player.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\SecretManager.cs" />
-     <Compile Include="Assets\1.Script\Default\Json\TrapManager.cs" />
-     <Compile Include="Assets\1.Script\Default\JsonReadWrite.cs" />
-     <Compile Include="Assets\1.Script\Default\ResourceManager.cs" />
-     <Compile Include="Assets\1.Script\Display\ChangePopUp.cs" />
-     <Compile Include="Assets\1.Script\Display\ClickController.cs" />
-     <Compile Include="Assets\1.Script\Display\ClickSlot.cs" />
-     <Compile Include="Assets\1.Script\Display\CreateObject.cs" />
-     <Compile Include="Assets\1.Script\Display\CreatePopUp.cs" />
-     <Compile Include="Assets\1.Script\Display\EXPManager.cs" />
-     <Compile Include="Assets\1.Script\Display\GoldManager.cs" />
-     <Compile Include="Assets\1.Script\Display\MovePopUp.cs" />
-     <Compile Include="Assets\1.Script\Display\Object\CheckTile.cs" />
-     <Compile Include="Assets\1.Script\Display\Object\ClickObject.cs" />
-     <Compile Include="Assets\1.Script\Display\Object\DisplayObject.cs" />
-     <Compile Include="Assets\1.Script\Display\Object\ObjectColor.cs" />
-     <Compile Include="Assets\1.Script\Display\Object\ObjectInfo.cs" />
-     <Compile Include="Assets\1.Script\Display\Object\ObjectMove.cs" />
-     <Compile Include="Assets\1.Script\Display\SaveObject.cs" />
-     <Compile Include="Assets\1.Script\Display\TileManager.cs" />
-     <Compile Include="Assets\1.Script\Display\TileObject.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ChangePopUpManager.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_Building.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_OurForces.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_Secret.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ChangePopUp_Trap.cs" />
-     <Compile Include="Assets\1.Script\PopUp\DamageReportPopUp.cs" />
-     <Compile Include="Assets\1.Script\PopUp\EnemyGroupResult.cs" />
-     <Compile Include="Assets\1.Script\PopUp\EnemyInfoPopUp.cs" />
-     <Compile Include="Assets\1.Script\PopUp\EnemyInfoText.cs" />
-     <Compile Include="Assets\1.Script\PopUp\MailBox.cs" />
-     <Compile Include="Assets\1.Script\PopUp\MailObject.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ObjInfoPopUpManager.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ObjInfo_Building.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ObjInfo_OurForces.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ObjInfo_Secret.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ObjInfo_Trap.cs" />
-     <Compile Include="Assets\1.Script\PopUp\ResultPopUp.cs" />
-     <Compile Include="Assets\1.Script\Room\Map\CheckRoomIndex.cs" />
-     <Compile Include="Assets\1.Script\Room\Map\DayandNight.cs" />
-     <Compile Include="Assets\1.Script\Room\Map\MapManager.cs" />
-     <Compile Include="Assets\1.Script\Room\Map\MapRoom.cs" />
-     <Compile Include="Assets\1.Script\Room\MiniMapManager.cs" />
-     <Compile Include="Assets\1.Script\Room\Room.cs" />
-     <Compile Include="Assets\1.Script\Room\RoomManager.cs" />
-     <Compile Include="Assets\1.Script\Secrets\SecretActs.cs" />
-     <Compile Include="Assets\1.Script\Select\BoxManager.cs" />
-     <Compile Include="Assets\1.Script\Select\ObjInfoPopUp.cs" />
-     <Compile Include="Assets\1.Script\Select\SlotArray.cs" />
-     <Compile Include="Assets\1.Script\Select\SlotInfo.cs" />
-     <Compile Include="Assets\1.Script\Select\SlotManager.cs" />
-     <Compile Include="Assets\1.Script\Select\SlotMove.cs" />
-     <Compile Include="Assets\1.Script\Trap\FlameThrowingTrap.cs" />
-     <Compile Include="Assets\1.Script\Trap\HumanTrap.cs" />
-     <Compile Include="Assets\1.Script\Trap\Trap.cs" />
-     <Compile Include="Assets\1.Script\Trap\Warp_Enter.cs" />
-     <Compile Include="Assets\1.Script\Trap\Warp_Exit.cs" />
-     <Compile Include="Assets\1.Script\Wall\CoreBuilding.cs" />
-     <Compile Include="Assets\1.Script\Wall\FunctionalBuilding.cs" />
-     <Compile Include="Assets\1.Script\Wall\NewBuilding.cs" />
-     <Compile Include="Assets\1.Script\Wall\OldBuilding.cs" />
-     <Compile Include="Assets\1.Script\Wall\Wall.cs" />
-     <Compile Include="Assets\1.Script\_Jang\CameraMove.cs" />
-     <Compile Include="Assets\1.Script\_Jang\CubeObject.cs" />
-     <Compile Include="Assets\1.Script\_Jang\DoorObject.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\ActiveEnemyManager.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\Enemy.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\EnemyFlyTeen.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\EnemyGroup.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\EnemyMafia.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\EnemySheriff.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Enemy\EnemySinger.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Friendly\Friendly.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Friendly\FriendlyArmy.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Friendly\FriendlyChemistry.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Friendly\FriendlyGroup.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Friendly\FriendlyGuard.cs" />
-     <Compile Include="Assets\1.Script\_Jang\Friendly\FriendlyResearcher.cs" />
-     <Compile Include="Assets\1.Script\_Jang\GameManager.cs" />
-     <Compile Include="Assets\1.Script\_Jang\HealthSystem.cs" />
-     <Compile Include="Assets\1.Script\_Jang\ParticleObject.cs" />
-     <Compile Include="Assets\1.Script\_Jang\PoolManager.cs" />
-     <Compile Include="Assets\1.Script\_Jang\UIManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\ApplicationManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\ClickController.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\EnemyInfo\EnemyInfoPopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\EnemyInfo\EnemyInfoText.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Mail\MailBox.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Mail\MailObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ChangePopUp\ChangePopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ChangePopUp\ChangePopUpManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ChangePopUp\ChangePopUp_Building.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ChangePopUp\ChangePopUp_OurForces.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ChangePopUp\ChangePopUp_Secret.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ChangePopUp\ChangePopUp_Trap.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\Create &amp; Move\ClickSlot.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\Create &amp; Move\CreateObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\Create &amp; Move\CreatePopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\Create &amp; Move\MovePopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ObjInfo\ObjInfoPopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ObjInfo\ObjInfoPopUpManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ObjInfo\ObjInfo_Building.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ObjInfo\ObjInfo_OurForces.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ObjInfo\ObjInfo_Secret.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Object\ObjInfo\ObjInfo_Trap.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Result &amp; Damage\DamageReportPopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Result &amp; Damage\EnemyGroupResult.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Result &amp; Damage\ResultPopUp.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Top\EXPManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\PopUp\Top\GoldManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\CheckRoomIndex.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\DayandNight.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\MapManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\MapRoom.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\MiniMapManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\RoomManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\TileManager\SaveObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\TileManager\TileManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\TileManager\TileObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Slot\BoxManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Slot\SlotArray.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Slot\SlotInfo.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Slot\SlotManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Slot\SlotMove.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\BuildingManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\DataClasses.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\EnemyManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\JsonDataManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\MyObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\OurForcesManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\ResourceManager_Player.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\SecretManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\Json\TrapManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\JsonReadWrite.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Data\ResourceManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Object\CheckTile.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Object\ClickObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Object\DisplayObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Object\ObjectColor.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Object\ObjectInfo.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Object\ObjectMove.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Secret\SecretActs.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Trap\FlameThrowingTrap.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Trap\HumanTrap.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Trap\Trap.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Trap\Warp_Enter.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Trap\Warp_Exit.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Wall\CoreBuilding.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Wall\FunctionalBuilding.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Wall\NewBuilding.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Wall\OldBuilding.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Wall\Wall.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\CameraMove.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\CubeObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\DoorObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\ActiveEnemyManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\Enemy.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyFlyTeen.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyGroup.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyMafia.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySheriff.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySinger.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\Friendly.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\FriendlyArmy.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\FriendlyChemistry.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\FriendlyGroup.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\FriendlyGuard.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\FriendlyResearcher.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\GameManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\HealthSystem.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\ParticleObject.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\PoolManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\UIManager.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Atlas Assets\ShFX_Atlas.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_CameraOrbit.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_Demo.cs" />
@@ -166,31 +165,25 @@
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle Multiply.shader" />
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle AlphaBlend.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Common">
- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
