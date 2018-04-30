@@ -72,7 +72,6 @@ public class ResultPopUp : MonoBehaviour {
             {
                 if (GroupId[j] != DayandNight.CreatedEnemy[i].Group)
                 {
-                    print("GroupID : " + DayandNight.CreatedEnemy[i].Group);
                     GroupId[GroupCnt++] = DayandNight.CreatedEnemy[i].Group;
                     break;
                 }
@@ -259,7 +258,7 @@ public class ResultPopUp : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(0.3f);
-        //거점 성공 여부 띄움 
+        //거점 성공 여부 띄움
         SetSuccess(true); //true 아닌거 아님
         NextButton.enabled = true;
         

@@ -118,6 +118,7 @@
      <Compile Include="Assets\1.Script\_Jang\CameraMove.cs" />
      <Compile Include="Assets\1.Script\_Jang\CubeObject.cs" />
      <Compile Include="Assets\1.Script\_Jang\DoorObject.cs" />
+     <Compile Include="Assets\1.Script\_Jang\Enemy\ActiveEnemyManager.cs" />
      <Compile Include="Assets\1.Script\_Jang\Enemy\Enemy.cs" />
      <Compile Include="Assets\1.Script\_Jang\Enemy\EnemyFlyTeen.cs" />
      <Compile Include="Assets\1.Script\_Jang\Enemy\EnemyGroup.cs" />

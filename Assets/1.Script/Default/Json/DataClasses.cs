@@ -63,8 +63,9 @@ public static class Data_Player
     public static int Gold;
     [Range(1, 25)]
     public static int Fame;
-    public static int LvExperience { get; set; }
-    public static int Experience { get; set; }
+    public static int LvExperience { get; set; }//이 값 보다 Experience가 크면 레벨 업
+    public static int LvExperienceDown { get; set; }//이 값 보다 Experience가 작으면 레벨 다운
+    public static int Experience { get; set; }//현재 경험치(현상금)
     public static void addGold(int add_g) { Gold += add_g; }
     public static void addFame(int add_f) { Fame += add_f; }
     public static void subGold(int sub_g) { Gold -= sub_g; }
@@ -88,6 +89,28 @@ public static class Data_Player
             OurForcesLv[i] = 1;
         for (i = 0; i < TrapTypes; i++)
             TrapLv[i] = 1;
+    }
+
+    public static void SetLvExperiences() {
+        if (Fame >= 4) {
+            LvExperienceDown = ResourceManager_Player.Tbl_Player[Fame - 4].Reward_Min;
+            LvExperience = ResourceManager_Player.Tbl_Player[Fame - 4].Reward_Max;
+        }
+    }
+    
+    public static void LvUP() {
+        Fame++;
+        SetLvExperiences();
+    }
+
+    public static void LvDown() {
+        Fame--;
+        SetLvExperiences();
+    }
+
+    public static void SetLv(int wantedLv) {
+        Fame = wantedLv;
+        SetLvExperiences();
     }
     /*
      * 차후 구현

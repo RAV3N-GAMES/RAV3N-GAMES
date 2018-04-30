@@ -38,6 +38,8 @@ public class Friendly : MonoBehaviour
     public int roomidx;//현재 위치한 room의 idx
     public int TargetIdx;//Lv4 벽(Core Building) 등반 시 타겟으로 삼게 되는 Room idx
 
+    public bool isLeft;
+    public bool faceLeft;
     protected EFFECT_TYPE effectType;
     protected Animator anime;
     protected NavMeshAgent friendAi;
@@ -50,6 +52,7 @@ public class Friendly : MonoBehaviour
     protected float setDelayTime;
     protected bool isShoot = false;
     protected bool isSkill = false;
+    protected Vector3 PrevPos;
 
     public float AISpeed
     {
@@ -74,6 +77,9 @@ public class Friendly : MonoBehaviour
 
     private void Awake()
     {
+        isLeft = true;
+        faceLeft = true;
+        PrevPos = Vector3.zero;
         anime = GetComponent<Animator>();
         friendAi = GetComponentInParent<NavMeshAgent>();
         scollider = GetComponent<SphereCollider>();
@@ -193,8 +199,17 @@ public class Friendly : MonoBehaviour
     private IEnumerator DieEvent()
     {
         yield return new WaitForSeconds(0.5f);
-        transform.parent.gameObject.SetActive(false);
-        PoolManager.current.PushFriend(NavObj.gameObject);
+        DisplayObject tmp= GetComponentInParent<DisplayObject>();
+        GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < Enemies.Length; i++) {
+            if (Enemies[i].GetComponentInChildren<Enemy>().
+                NearFriendly.Contains(this)) {
+                Enemies[i].GetComponentInChildren<Enemy>().NearFriendly.Remove(this);
+            }
+        }
+        tmp.DestroyObj(true);
+        Destroy(transform.parent.transform.parent.gameObject);
+        //PoolManager.current.PushFriend(NavObj.gameObject);
     }
     private IEnumerator ShootEvent()
     {
@@ -229,8 +244,34 @@ public class Friendly : MonoBehaviour
         {
             OriginalDest();
         }
+
+        //진행 경로에 따라 좌우 변경
+        if (PrevPos == Vector3.zero)
+        {
+            PrevPos = transform.position;
+        }
+        else
+        {
+            if (transform.position.x - PrevPos.x > 0)
+            {
+                isLeft = false;
+            }
+            else
+                isLeft = true;
+            if (isLeft != faceLeft)
+                Flip();
+
+            PrevPos = transform.position;
+        }
     }
 
+    private void Flip()
+    {
+        faceLeft = !faceLeft;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
 
     protected void OriginalDest()
     {

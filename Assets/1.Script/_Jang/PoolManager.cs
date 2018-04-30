@@ -85,6 +85,7 @@ public class PoolManager : MonoBehaviour {
 				obj.SetActive(false);
 				obj.name = EnemyPrefabs[i].name;
 				obj.transform.SetParent(characterParent);
+                obj.GetComponentInChildren<Enemy>().DnN = GameObject.Find("Curtain").GetComponent<DayandNight>();
 				EnemyPoolList[i].Add(obj);
 			}
 		}
@@ -168,6 +169,7 @@ public class PoolManager : MonoBehaviour {
             obj.name = EnemyPrefabs[(int)type].name;
 			obj.transform.SetParent(null);
 			obj.SetActive(true);
+            obj.GetComponentInChildren<Enemy>().DnN = GameObject.Find("Curtain").GetComponent<DayandNight>();
             DayandNight.CreatedEnemy.Add(obj.GetComponentInChildren<Enemy>());
             
             return obj;
