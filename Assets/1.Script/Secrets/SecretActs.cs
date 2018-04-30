@@ -88,13 +88,4 @@ public class SecretActs : MonoBehaviour {
         Chance /= 100;
     }
 
-    void onCollisionEnter(Collision col) {//tag가 Secret_Enemy인 적이 닿을 시 감점
-        if (col.gameObject.tag == "Secret_Enemy") {
-            secretSeizured = true;
-            SecretManager.SecretList.Remove(this);
-            SecretManager.SecretCount--;
-            Destroy(gameObject);
-        }
-     }
-
 }

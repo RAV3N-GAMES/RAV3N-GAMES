@@ -61,7 +61,6 @@ public class EnemyGroupResult : MonoBehaviour {
         for (int i = 0; i < EnemyCnt; i++)
         {
             isSuccess = isSuccess & !active[i];
-            Debug.Log(i + " th id : " + enemyId[i]);
             Enemy[i].sprite = JsonDataManager.slotImage[enemyId[i]];
             Enemy[i].color = new Color(1, 1, 1, 1);
         }

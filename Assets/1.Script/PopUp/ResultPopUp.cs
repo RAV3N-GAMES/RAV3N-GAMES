@@ -368,7 +368,6 @@ public class ResultPopUp : MonoBehaviour {
 
             yield return new WaitForSeconds(0.3f);
         }
-
         //거점 성공 여부 띄움
         bool isSuccess = false;
 

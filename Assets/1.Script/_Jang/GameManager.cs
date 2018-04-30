@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
 	public CubeObject getRayTrans;
 	private LayerMask tileMask;
 	private bool isFloorClick;
-
+    public static int OppressedEnemy;
 	
 	public int GetRoomIndex
 	{
@@ -42,7 +42,8 @@ public class GameManager : MonoBehaviour {
 
 		tileMask = LayerMask.GetMask("Tile");
 		GroupInit();
-	}
+        OppressedEnemy = 0;
+    }
 	private void Update()
 	{
 		if(Input.GetKeyDown(KeyCode.UpArrow))
@@ -80,8 +81,10 @@ public class GameManager : MonoBehaviour {
                 GenerateCount++;
             }
 
-            if (GenerateCount == ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber)
+            if (GenerateCount == ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber) {
+                ActiveEnemyManager.IsCreated = true;
                 break;
+            }
         }
         ReadyButton.SetActive(true);
 
