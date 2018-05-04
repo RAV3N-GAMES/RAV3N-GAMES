@@ -174,6 +174,15 @@ public class ObjectInfo : MonoBehaviour
 
         if (presentHP == totalHP && DamageObjPos != null)
             DamageObjPos.SetActive(false);
+
+        Friendly f=GetComponentInChildren<Friendly>();
+        Wall w=GetComponentInChildren<Wall>();
+        if (f) {
+            f.Hp = presentHP;
+        }
+        if (w) {
+            w.HP = presentHP;
+        }
     }
 
     public void OnDisplay()

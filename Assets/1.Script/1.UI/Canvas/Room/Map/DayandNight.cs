@@ -56,6 +56,7 @@ public class DayandNight : MonoBehaviour
 
         if (!isDay)
         {
+            Debug.Log("ResultPopup Active");
             resultPopUp.gameObject.SetActive(true);
             resultPopUp.InitResultPopUp();
         }

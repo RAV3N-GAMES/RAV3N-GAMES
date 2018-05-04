@@ -89,7 +89,6 @@ public class SoundManager : MonoBehaviour {
         {
             if (bgm.Key == bgmName)
             {
-                print(bgmName);
                 BGMAudio.clip = bgm.Value;
                 BGMAudio.Play();
                 break;

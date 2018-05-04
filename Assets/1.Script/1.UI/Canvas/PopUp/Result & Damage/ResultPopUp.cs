@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultPopUp : MonoBehaviour {
+public class ResultPopUp : MonoBehaviour
+{
     const int EnemyKill_ExpReward = 5;
     const int EnemyGroupKill_ExpReward = 10;
     const int Fail_Exp = -30;
@@ -109,7 +110,7 @@ public class ResultPopUp : MonoBehaviour {
         }
     }
 
-    
+
 
     public void InitResultPopUp()
     {
@@ -128,7 +129,7 @@ public class ResultPopUp : MonoBehaviour {
         //int      EnemyCnt    : 적군 집단 수
         //string[] enemyId     : 집단 별 적군 종류 id
         //bool[]   enemyActive : 집단 별 적군 종류 별 제압 성공 여부 
-        
+
         int tempEnemyNum = EnemyManager.EnemyGroupMax;
         SetEnemyListActive(tempEnemyNum);
 
@@ -137,7 +138,7 @@ public class ResultPopUp : MonoBehaviour {
             enemyGroupResult.Add(EnemyGroupList[EnemyCnt - 1].transform.GetChild(i).GetComponent<EnemyGroupResult>());
         }
 
-        if(DayandNight.CreatedEnemy.Count < 4)
+        if (DayandNight.CreatedEnemy.Count < 4)
         {
             gameObject.SetActive(false);
             return;
@@ -156,7 +157,7 @@ public class ResultPopUp : MonoBehaviour {
         StartCoroutine("PlayResult");
     }
 
-    
+
 
     void SetPlayerInfo()
     {
@@ -169,7 +170,7 @@ public class ResultPopUp : MonoBehaviour {
 
         //제압 성공 집단에 대한 보상
         int SuccessCnt = 0;
-        for(int i = 0; i < enemyGroupResult.Count; i++)
+        for (int i = 0; i < enemyGroupResult.Count; i++)
         {
             if (enemyGroupResult[i].isSuccess)
                 SuccessCnt++;
@@ -185,7 +186,7 @@ public class ResultPopUp : MonoBehaviour {
         RewardFail_Exp = Fail_Exp;
         if (Data_Player.Experience < -RewardFail_Exp)
             RewardFail_Exp = -Data_Player.Experience;
-        
+
         Data_Player.subExperience(-RewardFail_Exp);
 
         SoundManager.EffectAudio.clip = null;
@@ -204,7 +205,8 @@ public class ResultPopUp : MonoBehaviour {
         int rewardCoin = 0;
 
         //파괴에 대한 보상
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             for (int j = 0; j < DamageReportPopUp.Building[i]; j++)
                 rewardCoin += DamageReportPopUp.BuildingLevel[i][j];
         }
@@ -220,7 +222,7 @@ public class ResultPopUp : MonoBehaviour {
             for (int j = 0; j < DamageReportPopUp.Trap[i]; j++)
                 rewardCoin += DamageReportPopUp.TrapLevel[i][j];
         }
-        
+
         //수리에 대한 보상
         rewardCoin += roomManager.GetAllRepairCost();
         if (DiedEnemeyCnt < EnemyCnt * 4)
@@ -373,7 +375,7 @@ public class ResultPopUp : MonoBehaviour {
             yield return new WaitForSeconds(0.3f);
 
             SoundManager.soundManager.OnEffectSound("42_RESULT DOWN");
-            
+
             float PlusExp = 0;
 
             SetPlayerReward(PlayerExp);
@@ -397,7 +399,7 @@ public class ResultPopUp : MonoBehaviour {
 
         SetSuccess(isSuccess); //true 아닌거 아님
         NextButton.enabled = true;
-        
+
         yield break;
     }
 

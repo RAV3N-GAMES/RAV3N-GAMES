@@ -18,7 +18,7 @@ public class Trap : MonoBehaviour{
 	}   
 
     void OnTriggerEnter(Collider col) {
-        if (col.CompareTag("Enemy"))
+        if (col.CompareTag("EnemyBody"))
         {
             Acts(col);
         }

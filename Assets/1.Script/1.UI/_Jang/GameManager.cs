@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
                 //    return;
                 genGroup.isGenerate = true;
 
-                genGroup.GroupMemberInit(probability, i);     //적 그룹을 생성하지않은 곳을 찾아 생성호출
+                genGroup.GroupMemberInit(probability, i, genGroup.GroupIndex);     //적 그룹을 생성하지않은 곳을 찾아 생성호출
                 GenerateCount++;
             }
 
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour {
 	}
 	
 
-	IEnumerator EnemyGroupGenEvent()
+	/*IEnumerator EnemyGroupGenEvent()
 	{
         float prob = 0f;//기밀탈취단 등장확률
         int GroupId = 0;
@@ -164,14 +164,14 @@ public class GameManager : MonoBehaviour {
 				if (!genGroup.isGenerate)
 				{
 					genGroup.isGenerate = true;
-					genGroup.GroupMemberInit(prob, GroupId);		//적 그룹을 생성하지않은 곳을 찾아 생성호출
+					genGroup.GroupMemberInit(prob, GroupId, 0);		//적 그룹을 생성하지않은 곳을 찾아 생성호출
 				}
 				else
 					yield return new WaitForEndOfFrame();
 			}
 		}
 
-    }
+    }*/
 
     public static void ParticleGenerate(EFFECT_TYPE type, Vector3 point)
 	{		
