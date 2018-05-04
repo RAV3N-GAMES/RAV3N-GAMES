@@ -60,6 +60,8 @@ public class TileManager : MonoBehaviour
         {
             objectList[i].Repair();
         }
+
+        SoundManager.soundManager.OnEffectSound("47_REPAIR");
     }
 
     public int GetRepairCost()

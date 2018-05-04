@@ -137,6 +137,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\ParticleObject.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\PoolManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\UIManager.cs" />
+     <Compile Include="Assets\1.Script\SoundManager.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Atlas Assets\ShFX_Atlas.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_CameraOrbit.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_Demo.cs" />

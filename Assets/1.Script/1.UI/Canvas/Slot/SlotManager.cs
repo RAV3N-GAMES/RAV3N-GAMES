@@ -24,7 +24,7 @@ public class SlotManager : MonoBehaviour {
 
     public void OnExplain()
     {
-        ObjInfoPopUpManager objInfoPopUp = ObjInfoPopUp.GetComponent<ObjInfoPopUpManager>();
+        ObjInfoPopUpManager objInfoPopUp = ObjInfoPopUp.transform.GetChild(0).GetComponent<ObjInfoPopUpManager>();
 
         objInfoPopUp.InitObjInfoPopUp(id, type, this);
 

@@ -46,6 +46,11 @@ public class ResultPopUp : MonoBehaviour {
                                     new float[] {1f, 0.869f, 0.738f, 0.607f, 0.476f, 0.345f, 0.214f, 0.08f},
                                     new float[] {1f, 0.914f, 0.828f, 0.742f, 0.656f, 0.57f, 0.484f, 0.398f, 0.312f, 0.226f, 0.14f, 0.05f}};
 
+    void OnEnable()
+    {
+        SoundManager.soundManager.ChangeBGM("39_RESULT");
+    }
+
     void SetEnemyListActive(int enemyNum) //적군 집단 수
     {
         EnemyCnt = enemyNum;
@@ -182,10 +187,14 @@ public class ResultPopUp : MonoBehaviour {
             RewardFail_Exp = -Data_Player.Experience;
         
         Data_Player.subExperience(-RewardFail_Exp);
+
+        SoundManager.EffectAudio.clip = null;
     }
 
     void SetSuccess(bool isSuccess)
     {
+        SoundManager.soundManager.OnEffectSound("44_RESULT STAMP");
+
         Success.SetActive(isSuccess);
         Fail.SetActive(!isSuccess);
     }
@@ -254,6 +263,8 @@ public class ResultPopUp : MonoBehaviour {
         int newFame = ResourceManager_Player.GetPlayerFame((int)PlusExp + PlayerExp);
         if (newFame.ToString() != Fame.text)
         {
+            if (int.Parse(Fame.text) < newFame)
+                SoundManager.soundManager.ChangeBGM("46_SECURITY LEVEL");
             Fame.text = newFame.ToString();
             SetPlayerReward((int)PlusExp + PlayerExp);
         }
@@ -288,6 +299,9 @@ public class ResultPopUp : MonoBehaviour {
         if (DiedEnemeyCnt != 0)
         {
             yield return new WaitForSeconds(0.3f);
+
+            SoundManager.soundManager.OnEffectSound("41_RESULT UP");
+
             float PlusExp = 0;
             float PlusCoin = 0;
 
@@ -309,6 +323,7 @@ public class ResultPopUp : MonoBehaviour {
         }
 
         //제압 성공한 적군 집단 표시
+        SoundManager.soundManager.OnEffectSound("40_RESULT SIGN");
         for (int i = 0; i < enemyGroupResult.Count; i++)
         {
             if (enemyGroupResult[i].isSuccess)
@@ -321,6 +336,9 @@ public class ResultPopUp : MonoBehaviour {
         if (RewardGroup_Exp != 0)
         {
             yield return new WaitForSeconds(0.3f);
+
+            SoundManager.soundManager.OnEffectSound("41_RESULT UP");
+
             float PlusExp = 0;
             float PlusCoin = 0;
 
@@ -353,6 +371,9 @@ public class ResultPopUp : MonoBehaviour {
         if (RewardFail_Exp != 0)
         {
             yield return new WaitForSeconds(0.3f);
+
+            SoundManager.soundManager.OnEffectSound("42_RESULT DOWN");
+            
             float PlusExp = 0;
 
             SetPlayerReward(PlayerExp);
@@ -378,5 +399,10 @@ public class ResultPopUp : MonoBehaviour {
         NextButton.enabled = true;
         
         yield break;
+    }
+
+    void OnDisable()
+    {
+        SoundManager.soundManager.OnEffectSound("43_RESULT CHANGE");
     }
 }

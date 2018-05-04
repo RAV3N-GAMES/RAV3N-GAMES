@@ -129,6 +129,7 @@ public class ObjectMove : MonoBehaviour
 
             yield return null;
 
+            checkTile.OnCheckTile();
         }
     }
 

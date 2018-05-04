@@ -61,6 +61,7 @@ public class DayandNight : MonoBehaviour
         }
 
         if (isDay) {
+            SoundManager.soundManager.ChangeBGM("4_DAY START");
             ReadyButton.SetActive(false);
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();
