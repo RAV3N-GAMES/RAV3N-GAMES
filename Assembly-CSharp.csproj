@@ -79,6 +79,7 @@
      <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\MapManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\MapRoom.cs" />
      <Compile Include="Assets\1.Script\1.UI\Canvas\Room\Map\MiniMapManager.cs" />
+     <Compile Include="Assets\1.Script\1.UI\Canvas\Room\RoomBoundary.cs" />
      <Compile Include="Assets\1.Script\1.UI\Canvas\Room\RoomManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\Canvas\Room\TileManager\SaveObject.cs" />
      <Compile Include="Assets\1.Script\1.UI\Canvas\Room\TileManager\TileManager.cs" />
@@ -121,6 +122,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\DoorObject.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\ActiveEnemyManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\Enemy.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyBody.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyFlyTeen.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyGroup.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyMafia.cs" />
@@ -137,6 +139,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\ParticleObject.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\PoolManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\UIManager.cs" />
+     <Compile Include="Assets\1.Script\TestScript.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Atlas Assets\ShFX_Atlas.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_CameraOrbit.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_Demo.cs" />

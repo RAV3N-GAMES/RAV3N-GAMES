@@ -23,7 +23,7 @@ public class HumanTrap : Trap {
 	}
     
     public override void Acts(Collider col) {
-        //Trap 클래스의 on collision 함수에서 Enemy 태그를 가진 오브젝트가 콜라이더에 닿으면 실행. 
+        //Trap 클래스의 on collision 함수에서 EnemyBody 태그를 가진 오브젝트가 콜라이더에 닿으면 실행. 
         //쿨타임 적용
         if(!isCool)
             StartCoroutine(CatchStatus(EffectContinuousTime, col));
@@ -46,13 +46,17 @@ public class HumanTrap : Trap {
     }
 
     void CatchEnemy(Collider col) {//포획 대상 정지
-        Rigidbody rigid = col.gameObject.GetComponent<Rigidbody>();
-        rigid.constraints = RigidbodyConstraints.FreezeAll;
+                                   //        Rigidbody rigid = col.gameObject.GetComponent<Rigidbody>();
+                                   //        rigid.constraints = RigidbodyConstraints.FreezeAll;
+        Enemy e = col.GetComponentInParent<Enemy>();
+        e.enemyAI.isStopped=true;
     }
     void FreeEnemy(Collider col) {//포획 대상 풀어줌
-        Rigidbody rigid = col.gameObject.GetComponent<Rigidbody>();
+        /*Rigidbody rigid = col.gameObject.GetComponent<Rigidbody>();
         rigid.constraints = RigidbodyConstraints.None;
-        rigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        rigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;*/
+        Enemy e = col.GetComponentInParent<Enemy>();
+        e.enemyAI.isStopped = false;
     }
 
 }

@@ -12,12 +12,11 @@ public class EnemySheriff : Enemy {
 	public override void EnemyInit()
 	{
         scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].AttackRange * 2;
-        StopDistance = scollider.radius;
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].Attack;
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-
-	}
+        enemyAI.stoppingDistance = scollider.radius;
+    }
 }

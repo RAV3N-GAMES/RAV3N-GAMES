@@ -11,12 +11,13 @@ public class EnemyFlyTeen : Enemy
 	}
 	public override void EnemyInit()
 	{
-        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame-4].AttackRange*2;
-        StopDistance = scollider.radius;
+        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame-4].AttackRange*6;
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame-4].HP;
 		Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame-4].Attack;
         MaxHp = Hp;
         isHealer = false;
 		base.EnemyInit();
-	}
+        enemyAI.stoppingDistance = 0.5f;
+
+    }
 }

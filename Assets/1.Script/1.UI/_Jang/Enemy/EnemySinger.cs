@@ -16,13 +16,13 @@ public class EnemySinger : Enemy {
 	public override void EnemyInit()
 	{
         scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].AttackRange * 2;
-        StopDistance = scollider.radius;
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].Attack;
         MaxHp = Hp;
         isHealer = true;
         base.EnemyInit();
-	}
+        enemyAI.stoppingDistance = scollider.radius;
+    }
 
 	private void Update()
 	{
@@ -59,7 +59,7 @@ public class EnemySinger : Enemy {
 			OriginalDest();
 		}
 
-        if (Distance <= StopDistance)
+        if (Distance <= enemyAI.stoppingDistance)
         {
             if (isSeizure && dest != OriginalPoint.position)
             {
@@ -83,14 +83,16 @@ public class EnemySinger : Enemy {
         {
             if (SecretManager.SecretList.Count != 0)
             {
-                dest = FindClosestSecret(start).transform.position;
+                SecretActs s = FindClosestSecret(start);
+                if(s)
+                    dest = FindClosestSecret(start).transform.position;
             }
             else
                 dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
         }
         Distance = Vector3.Distance(start, dest);
 
-        if (Distance <= StopDistance)
+        if (Distance <= enemyAI.stoppingDistance)
         {
             if (enemyAI.enabled)
             {
@@ -98,7 +100,7 @@ public class EnemySinger : Enemy {
             }
             currentState = EnemyState.Idle;
         }
-        else if (Distance > StopDistance)
+        else if (Distance > enemyAI.stoppingDistance)
         {
             if (!enemyAI.enabled)
             {
@@ -130,7 +132,7 @@ public class EnemySinger : Enemy {
 			transform.localScale = new Vector3(1, 1, 1);
 
 
-		if (Distance <= StopDistance)
+		if (Distance <= enemyAI.stoppingDistance)
 			return true;
 		else
 			return false;

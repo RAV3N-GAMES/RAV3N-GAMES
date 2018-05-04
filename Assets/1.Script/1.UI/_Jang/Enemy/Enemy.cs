@@ -25,21 +25,24 @@ public class Enemy : MonoBehaviour {
     public DayandNight DnN;
 
     public bool isHealer;
+    public bool isEntered;
     public bool isLeft;
     public bool faceLeft;
     public bool isSurrounded;// 목적지(Secret / Base)까지의 경로가 막혔을 때 true
+    public bool InnerSurrounded;//방 내부에서 Exitpoint까지의 경로가 막혔을 때 true
     public int priority;
-    public int Group;                       //4명으로 묶인 한 그룹
+    public int Group;                       //4명으로 묶인 한 그룹. 그룹의 개수에 따라 1~3의 값을 가짐.
     public int Level;
     public int Hp;                          //체력
     public int Attack;                      //공격력
     public int MaxHp;                       //최대 체력
     public float Speed;                     //이동 속도
     public float Distance;                  //거리 체크 
-    public float StopDistance;              //거리 제한 값
     public bool isDie;						//현재 죽은 상태 체크
     public bool isSeizure;                  //탈취집단이면 true
-    protected NavMeshAgent enemyAI;         //NevMeshAgent 
+    public int nextIdx;
+    public int Exitdirection;
+    public NavMeshAgent enemyAI;         //NevMeshAgent 
     protected Animator anime;               //애니메이션
     protected SphereCollider scollider;     //2D캐릭터에 붙어있는 콜라이더
     public Vector3 dest;                 //목적지 좌표
@@ -48,7 +51,7 @@ public class Enemy : MonoBehaviour {
     protected WaitForSeconds attackDelay;   //코루틴에서
     protected EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입
-    protected int PresentRoomidx;
+    public int PresentRoomidx;
     private bool isShoot;                   //딜레이와 공격을 맞추기위한 
     protected Vector3 PrevPos;
     //기능 초기화
@@ -134,6 +137,8 @@ public class Enemy : MonoBehaviour {
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
+        DayandNight.CreatedEnemy.Remove(this);
+        DayandNight.DeadEnemy.Add(this);
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
@@ -148,6 +153,7 @@ public class Enemy : MonoBehaviour {
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
+        DayandNight.CreatedEnemy.Remove(this);
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
@@ -178,6 +184,7 @@ public class Enemy : MonoBehaviour {
             List[i].scollider.enabled = false;
             List[i].UIEnemyHealth.HealthActvie(false);
             List[i].GroupConductor.RemoveEnemy(this);
+            DayandNight.CreatedEnemy.Remove(List[i]);
             yield return new WaitForSeconds(0.5f);
             List[i].transform.parent.gameObject.SetActive(false);
             PoolManager.current.PushEnemy(List[i].NavObj.gameObject);
@@ -188,6 +195,7 @@ public class Enemy : MonoBehaviour {
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
+        DayandNight.CreatedEnemy.Remove(this);
         yield return new WaitForSeconds(0.5f);
         SecretManager.SecretList.Remove(targetSecret);
         SecretManager.SecretCount--;
@@ -227,7 +235,7 @@ public class Enemy : MonoBehaviour {
 
         if (Type == (int)ObjectType.Building)
         {
-            if (Distance < StopDistance * 3)
+            if (Distance < enemyAI.stoppingDistance * 3)
             {
                 return true;
             }
@@ -237,7 +245,7 @@ public class Enemy : MonoBehaviour {
             }
         }
         else {
-            if (Distance < StopDistance * 3)
+            if (Distance < enemyAI.stoppingDistance * 3)
             {
                 return true;
             }
@@ -250,106 +258,117 @@ public class Enemy : MonoBehaviour {
         //false: 때릴 오브젝트가 없거나 붙어있지 않음.
     }
 
-    protected SecretActs FindClosestSecret(Vector3 start) {
+    public SecretActs FindClosestSecret(Vector3 start) {
         SecretActs Closest = null;
         float closest = float.MaxValue;
         float tmp = 0f;
 
         foreach (SecretActs s in SecretManager.SecretList) {
-            tmp = Vector3.Distance(start, s.transform.position);
-            if (tmp < closest) {
-                Closest = s;
-                closest = tmp;
+            if (s) { 
+                tmp = Vector3.Distance(start, s.transform.position);
+                if(s.GetComponent<SpriteRenderer>().sortingLayerName == PresentRoomidx.ToString()) { 
+                    if (tmp < closest) {
+                        Closest = s;
+                        closest = tmp;
+                    }
+                }
             }
         }
         return Closest;
     }
-    private void OriginalDest()//targetFriend, targetSecret, targetWall, targetTrap에 따라 dest를 설정
-    {
-        //targetTrap -> PickPocket 한정
-        //그 외 => Surrounded -> target wall 1순위
-        //else { targetFriend => 2 순위
-        //targetSecret / OriginalDestination
-        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
-
-        if (name == "PickPocket")
-        {
-            if(!targetTrap)
-                dest = new Vector3(targetTrap.transform.position.x, 0, targetTrap.transform.position.z);
-            else
-                dest= new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
-        }
-        else {
-            if (isSurrounded)
-            {//Destination==targetWall
-                if (!targetWall)
-                    dest = new Vector3(targetWall.transform.position.x, 0, targetWall.transform.position.z);
-                else
-                    dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
-            }
-            else {
-                if (targetFriend != null)
-                    return;
-                if (!isSeizure)
-                {
-                    dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
-                }
-                else
-                {
-                    if (SecretManager.SecretList.Count != 0)
-                    {
-                        targetSecret = FindClosestSecret(start);
-                        dest = targetSecret.transform.position;
-                    }
-                    else
-                        dest = new Vector3(OriginalPoint.position.x, 0, OriginalPoint.position.z);
-                }
-            }
-        }
-        
-        Distance = Vector3.Distance(start, dest);
-
-        if (Distance < StopDistance)
-        {
-            if (enemyAI.enabled)
-            {
-                enemyAI.enabled = false;
-            }
-            currentState = EnemyState.Idle;
-        }
-        else if (Distance > StopDistance)
-        {
-            if (currentState == EnemyState.Attack)
-                return;
-
-            if (!enemyAI.enabled)
-            {
-
-                enemyAI.enabled = true;
-            }
-            currentState = EnemyState.Walk;
-            if(!isSurrounded)
-                enemyAI.SetDestination(dest);
-        }
-    }
-    
     private IEnumerator ShootEvent()
     {
         currentState = EnemyState.Idle;
         yield return attackDelay;
         isShoot = false;
     }
-    private void SetStart() {
-        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
-    }
-
+    
     private bool IsNear(Transform NavObjPos, Transform targetPos) {
-        return (Vector3.Distance(NavObjPos.position, targetPos.position) <= StopDistance) ? true : false;
+        return (Vector3.Distance(NavObjPos.position, targetPos.position) <= enemyAI.stoppingDistance) ? true : false;
     }
 
     private Vector3 SetYZero(Transform t) {
         return new Vector3(t.position.x, 0, t.position.z);
     }
+
+    public int CheckAdjacentCount() {
+        List<int> AdjacentList=new List<int>();
+        int row = PresentRoomidx / 5;
+        int col = PresentRoomidx % 5;
+        int nrow, ncol;
+        int Min = int.MaxValue;
+        int[] dx = { 0, 0, 1, -1 };
+        int[] dy = { 1, -1, 0, 0 };
+
+        for (int i = 0; i < 4; i++) {
+            nrow = row + dx[i];
+            ncol = col + dy[i];
+
+            if (nrow < 0 || nrow > 4 || ncol < 0 || ncol > 4) 
+                continue;
+           
+            EnemyGroup eg = GameManager.current.enemyGroups[nrow * 5 + ncol];
+            if (eg.gameObject.activeSelf) {
+                if (Min > eg.Count) {
+                    Min = eg.Count;
+                }
+            }
+        }
+
+        if (Min == int.MaxValue)//아무것도 활성화되지 않은 경우(없는 경우인거같음)
+            return -1;
+
+        for (int i = 0; i < 4; i++) {
+            nrow = row + dx[i];
+            ncol = col + dy[i];
+            if (nrow < 0 || nrow > 4 || ncol < 0 || ncol > 4)
+                continue;
+            EnemyGroup eg = GameManager.current.enemyGroups[nrow * 5 + ncol];
+            if (eg.gameObject.activeSelf)
+            {
+                if (Min == eg.Count)
+                {
+                    AdjacentList.Add(nrow*5+ncol);
+                }
+            }
+        }
+        int random = Random.Range(0, AdjacentList.Count - 1);
+        int result = AdjacentList[random];
+        return result;
+    }
+
+    public int FindExit() {
+        int result = -1;
+        int row = PresentRoomidx / 5;
+        int col = PresentRoomidx % 5;
+        int nRow = nextIdx / 5;
+        int nCol = nextIdx % 5;
+
+        if (col - 1 == nCol)
+        {
+            result = 0;
+        }
+        else if (row + 1 == nRow)
+        {
+            result = 1;
+        }
+        else if (col + 1 == nCol)
+        {
+            result = 2;
+        }
+        else if (row - 1 == nRow) {
+            result = 3;
+        }
+
+
+        return result;
+    }
+    
+    private void SetStart()
+    {
+        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+    }
+
     protected void SetDest(Enemy e)
     {
         /*
@@ -359,7 +378,8 @@ public class Enemy : MonoBehaviour {
          * 공격수)
          *  1. 주변 용병 (Priority : 2)
          *      용병 내 우선순위는 소팅으로 정렬
-         *  1.1 경로 없는 경우 벽(Priority : 1)
+         *  1.1 경로 없는 경우 다음 방 입구(Priority : 1)
+         *  1.2 다음 방 입구까지 경로 없는 경우 (Priority: 6)
          *  2.1 탈취단 && 기밀 존재 => 기밀(Priority: 3)
          *  2.2 그 외 => 베이스(Priority: 4)
          *  
@@ -371,112 +391,104 @@ public class Enemy : MonoBehaviour {
         if (e == null)
             return;
 
-        if (e.name == "PickPocket" && targetTrap) {
+        if (e.name == "PickPocket" && targetTrap)
+        {
             dest = SetYZero(targetTrap.transform);
             priority = 0;
             return;
         }
 
-        if (!isHealer) {
+        if (!isHealer)
+        {
+            if (isSurrounded) {
+                
+            }
 
-            if (targetFriend && IsNear(NavObj.transform, targetFriend.transform))
-            {//아군 용병이 공격범위 안에 있을 경우 dest는 용병
-                dest = SetYZero(targetFriend.transform);
-                priority = 2;
-            }
-            else if (isSurrounded) {
-                if (targetWall && IsNear(NavObj.transform, targetWall.transform))
-                {
-                    dest = SetYZero(targetWall.transform);
-                    priority = 1;
-                }
-                else {
-                    priority = 5;//경로는 없는데 주변에 벽이 없는 경우
-                }
-            }
-            else {
-                if (isSeizure && (targetSecret=FindClosestSecret(start)))
+            else
+            {
+                if (isSeizure && (targetSecret = FindClosestSecret(start)))
                 {
                     dest = SetYZero(targetSecret.transform);
                     priority = 3;
                 }
-                else {
+                else
+                {
                     dest = SetYZero(OriginalPoint.transform);
                     priority = 4;
                 }
             }
-        }
-    }
 
-    private void SetAIDestination() {
-        switch (priority) {
-            case 0:
-                enemyAI.SetDestination(SetYZero(targetTrap.transform));
-                break;
-            case 1:
-                //enemyAI.SetDestination(SetYZero(OriginalPoint.transform));
-                break;
-            case 2:
-                if (!isHealer)
+            /*if (targetFriend && IsNear(NavObj.transform, targetFriend.transform))
+            {//아군 용병이 공격범위 안에 있을 경우 dest는 용병
+                dest = SetYZero(targetFriend.transform);
+                priority = 2;
+            }
+            else if (isSurrounded)
+            {
+                nextIdx = CheckAdjacentCount();
+                Exitdirection = FindExit();
+                dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+
+                if (targetWall && IsNear(NavObj.transform, targetWall.transform))
                 {
-                    //enemyAI.SetDestination(SetYZero(targetFriend.transform));
+                    
+                    // * Count 고려해서 dest 선정
+                    // *  1. 상하좌우 Count 최소값 확인
+                    // *  2. 최소값인 enemyGroup 특정
+                    // *  3. 섞어줌(필요없을수 있음)
+                    // *  4. 0번째 인덱스로 전진 
+                    // *      4.1 dest 는 0번째 인덱스로 가는 방문(해당 enemyGroup에 포인트를 정함)
+                    // *       4.1.1 dest까지 가는 경로가 다시 막혀있으면(PathInnerRoomDisabled가 true이면) => 
+                    // *             dest=targetWall
+                    // *      4.2 살아있는 모든 팀원이 모인 후에 다음 방으로 건너감
+                    // *       4.2.1 door를 포인트로 지정할 것이므로 거긴 막혀있지 않음.
+                     
+                    priority = 1;
+                    //dest = SetYZero(targetWall.transform);
                 }
-                else {//다친 Enemy 한테로 destination 설정
-
-                }
-                break;
-            case 3:
-                enemyAI.SetDestination(SetYZero(targetSecret.transform));
-                break;
-            case 4:
-                enemyAI.SetDestination(SetYZero(OriginalPoint.transform));
-                break;
+                else
+                {
+                    priority = 5;//경로는 없는데 주변에 벽이 없는 경우
+                    // => Count에 따라 옆 방으로 보냄
+                }*/
         }
     }
 
-    private void ArrivedAction() {//도착 시 취하는 액션
-        switch (priority) {
-            case 3:
-                StartCoroutine(StealEvent());
-                break;
-            case 4:
-                ClearEnemies();//Find all Enemies and Escape them.
-                DnN.changeState();
-                break;
-        }
-    }
-
-    private void EnemyAction()
+    protected void SetAction()
     {
-        //시작지 설정
-        //목적지 설정(우선순위별)
-        //행동 설정
-
-        SetStart();
-        SetDest(this);
-
-        switch (priority) {
+        if (priority == 1)
+        {
+            if (Vector3.Distance(start, dest) < enemyAI.stoppingDistance)
+            {
+                dest = SetYZero(GameManager.current.enemyGroups[nextIdx].ExitPoint[0]);
+            }
+        }
+        switch (priority)
+        {
             case 0:
                 //소매치기가 함정 타게팅 했을 때
                 break;
-            case 1://벽에 갇힌 경우
+            case 1://Base / Secret까지의 경로가 없는 경우
                 if (!isHealer)
                 {
                     if (!isShoot)
                     {
-                        enemyAI.enabled = false;
+                        //enemyAI.enabled = false;
+                        enemyAI.isStopped = true;
                         isShoot = true;
                         currentState = EnemyState.Attack;
                     }
                 }
-                else {//힐러인 경우 => 공격안함. 그냥 TargetWall로 붙기.
+                else
+                {//힐러인 경우 => 공격안함. 그냥 TargetWall로 붙기.
                     //transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, targetWall.transform.position, 0.01f);
                 }
                 break;
             case 2://주변에 용병 있는 경우
                 if (!isHealer)
                 {
-                    enemyAI.enabled = false;
+                    //enemyAI.enabled = false;
+                    enemyAI.isStopped = true;
                     if (!isShoot)
                     {
                         isShoot = true;
@@ -492,29 +504,106 @@ public class Enemy : MonoBehaviour {
                 if (currentState == EnemyState.Attack)
                     return;
 
-                enemyAI.enabled = true;
+                enemyAI.isStopped = false;
                 currentState = EnemyState.Walk;
 
-                enemyAI.SetDestination(dest);
+                //enemyAI.SetDestination(dest);
                 break;
             case 4:
                 if (currentState == EnemyState.Attack)
                     return;
 
-                enemyAI.enabled = true;
+                enemyAI.isStopped = false;
                 currentState = EnemyState.Walk;
-                enemyAI.SetDestination(dest);
+                //enemyAI.SetDestination(dest);
                 break;
             case 5:
-                enemyAI.enabled = true;
+                enemyAI.isStopped = false;
                 currentState = EnemyState.Walk;
                 enemyAI.SetDestination(SetYZero(OriginalPoint));
                 transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, OriginalPoint.transform.position, 0.01f);
                 break;
+            case 6://Inner Surrounded 상태
+                enemyAI.isStopped = false;
+                currentState = EnemyState.Walk;
+                Vector3 p = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+                enemyAI.SetDestination(p);
+                transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, p, 0.01f);
+                break;
         }
+    }
+
+    private void SetAIDestination()
+    {
+        switch (priority)
+        {
+            case 0:
+                enemyAI.SetDestination(SetYZero(targetTrap.transform));
+                break;
+            case 1:
+                if(enemyAI.enabled)
+                    enemyAI.SetDestination(dest);
+                break;
+            case 2:
+                if (!isHealer)
+                {
+                    //enemyAI.SetDestination(SetYZero(targetFriend.transform));
+                }
+                else
+                {//다친 Enemy 한테로 destination 설정
+
+
+                }
+                break;
+            case 3:
+                enemyAI.SetDestination(SetYZero(targetSecret.transform));
+                break;
+            case 4:
+                enemyAI.SetDestination(SetYZero(OriginalPoint.transform));
+                break;
+        }
+    }
+
+    protected void ArrivedAction()
+    {//도착 시 취하는 액션
+        Debug.Log(name + " Arriveaction Called. Dest: "+dest);
+        if (Vector3.Distance(SetYZero(NavObj), SetYZero(OriginalPoint.transform)) <= enemyAI.stoppingDistance)
+        {
+            ClearEnemies();//Find all Enemies and Escape them.
+            DnN.changeState();
+        }
+        else if (isSeizure && targetSecret && Vector3.Distance(SetYZero(NavObj), SetYZero(targetSecret.transform)) <= enemyAI.stoppingDistance)
+        {
+            StartCoroutine(StealEvent());
+        }
+        else {
+            Debug.Log(name + "Nextidx: " + nextIdx);
+            if (nextIdx == -1)
+                return;
+            Transform nextRoom = GameManager.current.enemyGroups[nextIdx].ExitPoint[Exitdirection];
+            enemyAI.SetDestination(nextRoom.position);
+        }
+    }
+
+    protected void Flip()
+    {
+        faceLeft = !faceLeft;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
+    private void EnemyAction()
+    {
+        //시작지 설정
+        //목적지 설정(우선순위별)
+        //행동 설정
+        SetStart();
+        SetDest(this);
+        SetAction();
         SetAIDestination();
         Distance = Vector3.Distance(start, dest);
-        if (Distance <= StopDistance) {
+        if (Distance <= enemyAI.stoppingDistance) {
             ArrivedAction();
         }
 
@@ -524,7 +613,7 @@ public class Enemy : MonoBehaviour {
             PrevPos = transform.position;
         }
         else {
-            if (transform.position.x - PrevPos.x > 0)
+            if (transform.position.x - PrevPos.x > 0.05)
             {
                 isLeft = false;
             }
@@ -536,14 +625,7 @@ public class Enemy : MonoBehaviour {
             PrevPos = transform.position;
         }
     }
-    private void Flip()
-    {
-        faceLeft = !faceLeft;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
-
+    
     protected void ChangeAnimation()
     {
         anime.SetInteger("Action", (int)currentState);
@@ -551,10 +633,14 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
+        PresentRoomidx = -1;
+        isEntered = false;
+        nextIdx = -1;
         PrevPos = Vector3.zero;
         isLeft = true;
         faceLeft = true;
         isSurrounded = false;
+        InnerSurrounded = false;
         targetWall = null;
         targetTrap = null;
         NearFriendly = new List<Friendly>();
@@ -572,8 +658,10 @@ public class Enemy : MonoBehaviour {
         if (isDie)
             return;
         SetOrder();
-        IsDeadEnd();
-        EnemyAction();
+        //        IsDeadEnd();
+        //        EnemyAction();
+        //        ActionMain();
+        GroupActionMain();
         ChangeAnimation();
     }
 
@@ -599,17 +687,34 @@ public class Enemy : MonoBehaviour {
             if(!NearWall.Contains(w))
                 NearWall.Add(w);
         }
-
-        if (col.CompareTag("Tile")) {
-            if(col.GetComponentInParent<EnemyGroup>())
-                PresentRoomidx= col.GetComponentInParent<EnemyGroup>().GroupIndex;
-
-        }
     }
     private void SetOrder() {
         SetOrder_Wall();
         SetOrder_Trap();
         SetOrder_Friendly();
+    }
+
+    protected void GetTrap() {
+        GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
+        Trap t;
+        for (int i = 0; i < Traps.Length; i++) {
+            SpriteRenderer s = Traps[i].GetComponent<SpriteRenderer>();
+            if (!s)
+                continue;
+            if (s.sortingLayerName == PresentRoomidx.ToString())
+            {
+                t = s.GetComponent<Trap>();
+                if (!NearTrap.Contains(t))
+                    NearTrap.Add(t);
+            }
+            else {
+                t = s.GetComponent<Trap>();
+                if (NearTrap.Contains(t))
+                {
+                    NearTrap.Remove(t);
+                }
+            }
+        }
     }
 
     private void SetOrder_Trap() {
@@ -724,10 +829,238 @@ public class Enemy : MonoBehaviour {
     protected void IsDeadEnd() {
         if (enemyAI.pathStatus == NavMeshPathStatus.PathPartial || enemyAI.pathStatus == NavMeshPathStatus.PathInvalid)
         {
-            isSurrounded = true;
+            if (dest == SetYZero(OriginalPoint) ||( targetSecret && dest == SetYZero(targetSecret.transform) ))
+                isSurrounded = true;
+            else
+                InnerSurrounded = true;
+        }
+        else
+        {
+            if (dest == SetYZero(OriginalPoint) || (targetSecret && dest == SetYZero(targetSecret.transform)))
+                isSurrounded = false;
+            else
+                InnerSurrounded = false;
+        }
+    }
+
+    
+    protected void ActionMain() {
+        SetStart();
+        SetDestination();
+        Debug.Log(name + " NavMeshstatus: " + enemyAI.pathStatus);
+        if (targetFriend)
+        {
+            Debug.Log(name + "targetFriend Case start");
+            enemyAI.SetDestination(SetYZero(targetFriend.transform));
+            if (IsNear(NavObj, targetFriend.transform))
+            {
+                if (!isShoot)
+                {
+                    enemyAI.isStopped = true;
+                    isShoot = true;
+                    currentState = EnemyState.Attack;
+                }
+            }
+            else
+            {
+                enemyAI.isStopped = false;
+                currentState = EnemyState.Walk;
+            }
+        }
+        else if (enemyAI.pathStatus == NavMeshPathStatus.PathPartial || enemyAI.pathStatus == NavMeshPathStatus.PathInvalid)
+        {//주 목적지까지의 경로가 없는 경우
+            Debug.Log(name + "No path case start");
+            nextIdx = CheckAdjacentCount();
+            Exitdirection = FindExit();
+            dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+            enemyAI.SetDestination(dest);
+            Debug.Log(name + "Directoin: " + Exitdirection);
+            if (enemyAI.pathStatus == NavMeshPathStatus.PathPartial || enemyAI.pathStatus == NavMeshPathStatus.PathInvalid)
+            {//다음 방으로의 길이 막힌 경우
+                Debug.Log("Locked the door case");
+                if (targetWall && IsNear(NavObj, targetWall.transform))//가까운 벽이 있으면 때려부순 다음 길 재측정
+                {
+                    Debug.Log("Smash the door case");
+                    if (!isShoot)
+                    {
+                        enemyAI.isStopped = true;
+                        isShoot = true;
+                        currentState = EnemyState.Attack;
+                    }
+                }
+                else
+                {//가까운 벽이 없으면 최대한 목적지(출구)쪽으로 비빔
+                    Debug.Log("Go to the door case");
+                    currentState = EnemyState.Walk;
+                    enemyAI.isStopped = true;
+                    transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                }
+            }
+            else
+            {//다음 방 까지는 갈 수 있는 경우 => 그냥 직진함.
+                Debug.Log(name + "To next exit case start");
+                currentState = EnemyState.Walk;
+                enemyAI.isStopped = false;
+            }
         }
         else {
-            isSurrounded = false;
+            enemyAI.isStopped = false;
+            currentState = EnemyState.Walk;
+        }
+
+        Distance = Vector3.Distance(start, dest);
+        if (Distance <= enemyAI.stoppingDistance)
+        {
+            ArrivedAction();
+        }
+
+        //진행 경로에 따라 좌우 변경
+        if (PrevPos == Vector3.zero)
+        {
+            PrevPos = transform.position;
+        }
+        else
+        {
+            if (transform.position.x - PrevPos.x > 0.01)
+            {
+                isLeft = false;
+            }
+            else
+                isLeft = true;
+            if (isLeft != faceLeft)
+                Flip();
+
+            PrevPos = transform.position;
+        }
+    }
+
+    protected void SetDestination() {
+        targetSecret = FindClosestSecret(NavObj.position);
+        if (isSeizure && targetSecret)
+        {
+            dest = SetYZero(targetSecret.transform);
+        }
+        else {
+            dest = SetYZero(OriginalPoint.transform);
+        }
+        enemyAI.SetDestination(dest);
+    }
+
+    protected void GroupActionMain()
+    {
+        SetStart();
+        SetDestination();
+        if (isEntered)
+        {
+            //해당 방의 Trap / Secret 받아오기
+            Debug.Log(name + " PresentIdx: " + PresentRoomidx);
+            NearTrap.Clear();
+            GetTrap();
+            targetSecret = FindClosestSecret(NavObj.transform.position);
+            isEntered = false;
+        }
+
+        if (nextIdx != -1) {
+            if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+            { 
+                if (targetFriend && IsNear(NavObj, targetFriend.transform)) {
+                    dest = SetYZero(targetFriend.transform);
+                }
+                else if (isSeizure && targetSecret)
+                {
+                    dest = SetYZero(targetSecret.transform);
+                }
+                else
+                {
+                    if (PresentRoomidx == 0)
+                    {
+                        dest = SetYZero(OriginalPoint.transform);
+                    }
+                    else
+                    {
+                        Exitdirection = FindExit();
+                        dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+                    }
+                }
+                enemyAI.SetDestination(dest);
+
+                if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    if (targetWall && IsNear(NavObj, targetWall.transform))
+                    {
+                        if (!isShoot)
+                        {
+                            enemyAI.isStopped = true;
+                            isShoot = true;
+                            currentState = EnemyState.Attack;
+                        }
+                    }
+                    else
+                    {
+                        currentState = EnemyState.Walk;
+                        enemyAI.isStopped = true;
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                    }
+                }
+                else
+                {
+                    if (targetFriend && IsNear(NavObj, targetFriend.transform))
+                    {
+                        if (!isShoot)
+                        {
+                            enemyAI.isStopped = true;
+                            isShoot = true;
+                            currentState = EnemyState.Attack;
+                        }
+                    }
+                    else
+                    {
+                        enemyAI.isStopped = false;
+                        currentState = EnemyState.Walk;
+                    }
+                }
+            }
+            else
+            {
+                if (targetFriend && IsNear(NavObj, targetFriend.transform))
+                {
+                    if (!isShoot)
+                    {
+                        enemyAI.isStopped = true;
+                        isShoot = true;
+                        currentState = EnemyState.Attack;
+                    }
+                }
+                else
+                {
+                    enemyAI.isStopped = false;
+                    currentState = EnemyState.Walk;
+                }
+            }
+        }
+        Distance = Vector3.Distance(start, dest);
+        if (Distance <= enemyAI.stoppingDistance)
+        {
+            ArrivedAction();
+        }
+
+        //진행 경로에 따라 좌우 변경
+        if (PrevPos == Vector3.zero)
+        {
+            PrevPos = transform.position;
+        }
+        else
+        {
+            if (transform.position.x - PrevPos.x > 0.01)
+            {
+                isLeft = false;
+            }
+            else
+                isLeft = true;
+            if (isLeft != faceLeft)
+                Flip();
+
+            PrevPos = transform.position;
         }
     }
 }

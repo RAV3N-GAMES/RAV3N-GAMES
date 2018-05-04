@@ -14,11 +14,11 @@ public class EnemyMafia : Enemy {
 	public override void EnemyInit()
 	{
         scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].AttackRange * 2;
-        StopDistance = scollider.radius;
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].Attack;
 		MaxHp = Hp;
         isHealer = false;
 		base.EnemyInit();
+        enemyAI.stoppingDistance = scollider.radius;
 	}
 }

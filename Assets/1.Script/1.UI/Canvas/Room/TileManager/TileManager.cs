@@ -213,7 +213,6 @@ public class TileManager : MonoBehaviour
                 if (objectList[removeIdx].mCol == idx[1])
                 {
                     objectList.RemoveAt(removeIdx);
-                    print("Remove");
                     break;
                 }
             }
