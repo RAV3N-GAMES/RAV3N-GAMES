@@ -65,7 +65,7 @@ public class ObjInfo_OurForces : ObjInfoPopUp {
 
     public void InitActivationPopUp()
     {
-        ActivationImage.gameObject.SetActive(true);
+        ActivationImage.transform.parent.gameObject.SetActive(true);
         ActivationImage.sprite = JsonDataManager.activationImage[id];
 
         ActivationPrice.text = JsonDataManager.GetOurForcesInfo(id, 1).ActiveCost.ToString();

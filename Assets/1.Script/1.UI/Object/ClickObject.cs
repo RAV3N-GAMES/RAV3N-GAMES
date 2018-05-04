@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClickObject : MonoBehaviour
 {
-    public static bool isPossibleClick;
+    public static bool isPossibleClick = false;
 
     float clickTime;
     [HideInInspector]
@@ -16,7 +16,6 @@ public class ClickObject : MonoBehaviour
     void Awake()
     {
         clickTime = 1f;
-        isPossibleClick = false;
 
         objectInfo = GetComponent<ObjectInfo>();
     }
@@ -28,7 +27,7 @@ public class ClickObject : MonoBehaviour
             if (!DayandNight.isDay) {
                 RoomManager.ChangeClickStatus(false);
 
-                ChangePopUpManager.SetActive(true);
+                ChangePopUpManager.transform.parent.gameObject.SetActive(true);
                 ChangePopUpManager.GetComponent<ChangePopUpManager>().InitChangePopUp(gameObject, GetComponent<ObjectInfo>().type);
 
                 GetComponent<ObjectColor>().OnRecognizeRage(true);

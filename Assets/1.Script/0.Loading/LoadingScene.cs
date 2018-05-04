@@ -13,9 +13,8 @@ public class LoadingScene : MonoBehaviour {
     {
         int random = Random.Range(0, 100);
         random = random % 2;
-
+        
         LoadingImage[random].SetActive(true);
-
         StartCoroutine("LoadScene");
     }
 	

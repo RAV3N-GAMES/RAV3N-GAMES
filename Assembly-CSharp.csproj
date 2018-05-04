@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{6B2C2EB8-02AE-E15E-2921-484BED874EE0}</ProjectGuid>
+    <ProjectGuid>{1023694C-648C-6A24-7C2A-443E31F5F625}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -137,6 +137,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\ParticleObject.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\PoolManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\UIManager.cs" />
+     <Compile Include="Assets\1.Script\SoundManager.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Atlas Assets\ShFX_Atlas.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_CameraOrbit.cs" />
      <Compile Include="Assets\JMO Assets\Shape FX\Demo\Demo Assets\ShFX_Demo.cs" />

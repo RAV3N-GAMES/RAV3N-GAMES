@@ -67,6 +67,8 @@ public class ChangePopUp : MonoBehaviour {
         Obj.GetComponent<ObjectInfo>().RepairObject(repairHP);
         Data_Player.subGold(Data_Player.Gold);
 
+        SoundManager.soundManager.OnEffectSound("47_REPAIR");
+
         RoomManager.ChangeClickStatus(true);
     }
 
@@ -76,6 +78,8 @@ public class ChangePopUp : MonoBehaviour {
         {
             Data_Player.subGold(repairPrice);
             Obj.GetComponent<ObjectInfo>().RepairObject(-1);
+
+            SoundManager.soundManager.OnEffectSound("47_REPAIR");
 
             RoomManager.ChangeClickStatus(true);
         }
@@ -130,6 +134,12 @@ public class ChangePopUp : MonoBehaviour {
     void OnDisable()
     {
         if (!isMove)
-            Obj.GetComponent<ObjectColor>().OnRecognizeRage(false);
+        {
+            try
+            {
+                Obj.GetComponent<ObjectColor>().OnRecognizeRage(false);
+            }
+            catch (System.Exception e) { print(e.Message); }
+        }
     }
 }

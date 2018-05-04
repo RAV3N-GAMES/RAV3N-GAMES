@@ -78,6 +78,8 @@ public class RoomManager : MonoBehaviour {
     void Start() {
         //  checkOutside();
         ChangeClickStatus(true);
+
+        SoundManager.soundManager.ChangeBGM("7_NIGHT");
     }
 
     public void MoveRoom(int idx)
@@ -273,6 +275,7 @@ public class RoomManager : MonoBehaviour {
 
     public static void ChangeClickStatus(bool isPossible)
     {
+        print("ClickStatus : " + isPossible);
         possibleDrag = isPossible;
         ClickObject.isPossibleClick = isPossible;
     }

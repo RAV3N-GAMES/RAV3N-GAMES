@@ -28,6 +28,27 @@ public class CreatePopUp : MonoBehaviour {
         Obj.GetComponent<ObjectInfo>().OnDisplay();
     }
 
+    void OnEffectSound_Create(int type)
+    {
+        switch(type)
+        {
+            case 0:
+                SoundManager.soundManager.OnEffectSound("10_BUILDING SET");
+                break;
+            case 2:
+                SoundManager.soundManager.OnEffectSound("48_SOLDIER SET");
+                break;
+            case 3:
+                SoundManager.soundManager.OnEffectSound("50_TRAP SET");
+                break;
+            case 4:
+                SoundManager.soundManager.OnEffectSound("52_SECRET SET");
+                break;
+            default:
+                break;
+        }
+    }
+
     public void CreatePref()
     {
         string id = Obj.GetComponent<ObjectInfo>().id;
@@ -39,7 +60,11 @@ public class CreatePopUp : MonoBehaviour {
         if (Data_Player.isEnough_G(price))
         {
             if (Obj.GetComponent<DisplayObject>().UsingTile())
+            {
                 UsingTile(id, price);
+
+                OnEffectSound_Create(Obj.GetComponent<ObjectInfo>().type);
+            }
             else
                 CancelPref();
 

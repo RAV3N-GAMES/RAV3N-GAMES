@@ -41,10 +41,10 @@ public class DamageReportPopUp : MonoBehaviour {
 
         switch (type)
         {
-            case 0: damageObj = BuildingIdx; break;
-            case 2: damageObj = OurForcesIdx; break;
-            case 3: damageObj = TrapIdx; break;
-            case 4: damageObj = SecretIdx; break;
+            case 0: damageObj = BuildingIdx; SoundManager.soundManager.OnEffectSound("11_BUILDING DES"); break;
+            case 2: damageObj = OurForcesIdx; SoundManager.soundManager.OnEffectSound("49_SOLDIER DES"); break;
+            case 3: damageObj = TrapIdx; SoundManager.soundManager.OnEffectSound("51_TRAP DES"); break;
+            case 4: damageObj = SecretIdx; SoundManager.soundManager.OnEffectSound("53_SECRET DES"); break;
             default: return;
         }
 
@@ -103,9 +103,21 @@ public class DamageReportPopUp : MonoBehaviour {
         }
     }
 
+    void OnEffect_ResultOver()
+    {
+        SoundManager.soundManager.OnEffectSound("45_RESULT OVER");
+    }
+
+    void ChangeSound_StartNight()
+    {
+        SoundManager.soundManager.ChangeBGM("6_NIGHT START");
+    }
+
     public void ClickOk()
     {
+        Invoke("OnEffect_ResultOver", 1.8f);
         Invoke("SetActive", 2f);
+        Invoke("ChangeSound_StartNight", 2.3f);
     }
 
     public void InitDamageReport()
@@ -129,8 +141,6 @@ public class DamageReportPopUp : MonoBehaviour {
             TextSecret[i].text = "X0";
         }
 
-        print("maxNum : " + maxNum);
-
         StartCoroutine("PlayDamageReport");
     }
 
@@ -152,6 +162,12 @@ public class DamageReportPopUp : MonoBehaviour {
             }
 
             yield return new WaitForSeconds(0.5f);
+
+            if (loopCnt == 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+                SoundManager.soundManager.OnEffectSound("40_RESULT SIGN");
+            }
         }
         //클릭 풀고
         InitDamageIdx();
