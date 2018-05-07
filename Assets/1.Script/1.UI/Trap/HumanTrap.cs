@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HumanTrap : Trap {
-    double EffectContinuousTime;
-    public double CoolTime;
-    public bool isCool;
-
+    
     // Use this for initialization
 	void Start () {
         //checkCount(0);

@@ -12,19 +12,10 @@ public class FriendlyArmy : Friendly {
 	{
 		FriendType = FRIEND_TYPE.Army;
 		effectType = EFFECT_TYPE.Hit;
-		StopDistance = 2;
-		setDelayTime = 1.2f;
-		defaultTime = setDelayTime;
-		attackDelay = new WaitForSeconds(setDelayTime);		
-		AttackEventMax = 8;
-		AttackCount = AttackEventMax;
 	}
 	public override void FriendlyInit()
 	{
-		AttackEventMax = 8;
 		AttackCount = AttackEventMax;
-		Hp = 120;
-		AttackDamage = 22;
 		base.FriendlyInit();
 	}
 	protected override void SkillEvent()

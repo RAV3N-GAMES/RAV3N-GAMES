@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FlameThrowingTrap : Trap {
-    double EffectContinuousTime;
-    public double CoolTime;
-    public bool isCool;
-    public int AttackDamage;
-
     // Use this for initialization
     void Start () {
         CoolTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame + 40].CoolTime;

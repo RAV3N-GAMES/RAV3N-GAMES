@@ -37,6 +37,7 @@ public class TrapManager : JsonReadWrite
                Debug.Log(i + "th index: " + Tbl_TrapSetup[i].Level + " " + Tbl_TrapSetup[i].Price + " " + Tbl_TrapSetup[i].UpgradeCost+ " " + Tbl_TrapSetup[i].CoolTime+ " " + Tbl_TrapSetup[i].Attack+ " " + Tbl_TrapSetup[i].DisassemblyTime+ " " + Tbl_TrapSetup[i].Type+ " " + Tbl_TrapSetup[i].id + " " + Tbl_TrapSetup[i].SellPrice+ " " + Tbl_TrapSetup[i].ActiveCost + " " + Tbl_TrapSetup[i].EffectContinuousTime);
            }
            */
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame

@@ -12,18 +12,11 @@ public class FriendlyResearcher : Friendly {
 	{
 		FriendType = FRIEND_TYPE.Resercher;
 		effectType = EFFECT_TYPE.Approach;
-		StopDistance = 1;
-		setDelayTime = 2f;
-		defaultTime = setDelayTime;
-		attackDelay = new WaitForSeconds(setDelayTime);
 	}
 	public override void FriendlyInit()
 	{
 		FriendType = FRIEND_TYPE.Resercher;
 		effectType = EFFECT_TYPE.Approach;
-		AttackDamage = 15;
-		Hp = 100;
-		AttackCount = 10;
 		UiHealth.ValueInit(Hp);
 		UiHealth.HealthActvie(true);
 	}

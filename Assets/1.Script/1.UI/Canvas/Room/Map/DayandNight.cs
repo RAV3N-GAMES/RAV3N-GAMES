@@ -22,8 +22,8 @@ public class DayandNight : MonoBehaviour
     [HideInInspector]
     public static List<Enemy> DeadEnemy;
     public CanvasRenderer curtain;
-    public const int EnumMax_OurForces = (int)OurForces_Sprite.Researcher;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
-    public const int EnumMax_Traps = (int)Traps_body.Trap_W;//얘도 함정 추가되면 바꿔줘야됨
+    public const int EnumMax_OurForces = (int)OurForces_Sprite.Researcher+1;//얘는 나중에 아군캐릭터 추가되면 바꿔줘야됨
+    public const int EnumMax_Traps = (int)Traps_body.Trap_W+1;//얘도 함정 추가되면 바꿔줘야됨
     //DayTime은 추후에 json 파일에서 읽어올 수 있음.
     // Use this for initialization
     void Awake() {

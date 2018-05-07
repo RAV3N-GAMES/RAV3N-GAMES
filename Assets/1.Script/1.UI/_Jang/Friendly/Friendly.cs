@@ -28,7 +28,6 @@ public class Friendly : MonoBehaviour
     public float Distance;
     public float StopDistance;          //정지할 거리 설정값
     public int DamageStack;
-    public int RoomIndex;
     public int Level;
     public int Hp;
     public int MaxHp;
@@ -43,13 +42,13 @@ public class Friendly : MonoBehaviour
     protected EFFECT_TYPE effectType;
     protected Animator anime;
     protected NavMeshAgent friendAi;
-    protected SphereCollider scollider;
+    public SphereCollider scollider;
     protected Vector3 dest;
     protected Vector3 start;
     protected FriendlyState currentState;
-    protected WaitForSeconds attackDelay;
-    protected float defaultTime;
-    protected float setDelayTime;
+    public WaitForSeconds attackDelay;
+    public float defaultTime;
+    public float setDelayTime;
     protected bool isShoot = false;
     protected bool isSkill = false;
     protected Vector3 PrevPos;
@@ -122,7 +121,8 @@ public class Friendly : MonoBehaviour
 
         if (targetEnemy.Health(AttackDamage))
         {
-            targetEnemy.Die();
+            if(targetEnemy)
+                targetEnemy.Die();
             if (NearEnemy.Count > 0)
                 targetEnemy = NearEnemy[1];
             else

@@ -9,11 +9,13 @@ public class ResourceManager_Player : JsonReadWrite
 {
     private const string Path = "Data/PlayerDetail";
     public static List<Data_SetupPlayer> Tbl_Player = new List<Data_SetupPlayer>();
+    public static int ClusterMax;
     //    public enum Group_Palyer { fame, lvExperience, enemyClusterNumber, rewardA, rewardB};
 
     void Awake()
     {
         ReadMain(Path);
+        DontDestroyOnLoad(this);
     }
 
     // Use this for initialization
@@ -41,6 +43,8 @@ public class ResourceManager_Player : JsonReadWrite
             tmp.Reward_GroupOppression = int.Parse(data[i]["Reward_GroupOppression"].ToString());
             Tbl_Player.Add(tmp);
         }
+
+        ClusterMax = int.Parse(data[data.Count-1]["enemyClusterNumber"].ToString());
     }
 
     public static int GetPlayerFame(int Exp)

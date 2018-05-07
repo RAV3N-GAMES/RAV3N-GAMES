@@ -36,9 +36,9 @@ public class CheckTile : MonoBehaviour {
     public Transform findPivotCol()
     {
         int Cnt = lastColList.Count;
-        if (Cnt == 0)
-            return lastCol.transform;
-
+        if (Cnt == 0) 
+                return lastCol.transform;
+        
         GameObject tempPivot = lastColList[0];
 
         for (int i = 1; i < Cnt; i++)

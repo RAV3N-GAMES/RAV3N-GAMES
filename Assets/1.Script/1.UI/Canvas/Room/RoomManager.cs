@@ -275,7 +275,6 @@ public class RoomManager : MonoBehaviour {
 
     public static void ChangeClickStatus(bool isPossible)
     {
-        print("ClickStatus : " + isPossible);
         possibleDrag = isPossible;
         ClickObject.isPossibleClick = isPossible;
     }

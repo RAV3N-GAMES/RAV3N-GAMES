@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Warp_Enter : Trap {
     GameObject newObj;
-    double EffectContinuousTime;
-    public double CoolTime;
-    public bool isCool;
 
     // Use this for initialization
     void Start () {

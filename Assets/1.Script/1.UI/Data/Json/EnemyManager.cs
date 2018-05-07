@@ -53,6 +53,7 @@ public class EnemyManager : JsonReadWrite
         ReadMain(Path5);
         ReadMain(Path6);
         EnemyGroupMax = 0;
+        DontDestroyOnLoad(this);
         /*입력값 확인용 코드입니다. 지우지 마세요. 
         for (int i = 0; i < 22*6; i++)
         {
