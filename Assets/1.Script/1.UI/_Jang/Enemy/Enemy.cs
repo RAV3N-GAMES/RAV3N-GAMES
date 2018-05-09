@@ -12,6 +12,11 @@ public enum EnemyState
     Heal,
 }
 public class Enemy : MonoBehaviour {
+    protected const string path = "Audio/Character/";
+    public AudioSource Audio;
+    public AudioClip[] Clips;
+    public AudioClip[] DieClip;
+    public AudioClip AppearClip;
     public EnemyClusterManager ECM;
     public EnemyCluster myCluster;
     public EnemyGroup GroupConductor;       //캐릭터의 그룹을 정하고 정보를 받고 쓰기 위한 
@@ -83,17 +88,14 @@ public class Enemy : MonoBehaviour {
 
     public void Hit()
     {
+        Audio.clip = Clips[0];
+        Audio.Play();
         if (targetFriend) { 
             if (targetFriend.Health(Attack))
             {
                 GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
 
                 targetFriend.Die();
-                /*try
-                {
-                    targetFriend = targetFriend.GroupConductor.GetOrderFriendly();
-                }
-                catch { }*/
             }
         }
         else if (targetWall) {
@@ -109,6 +111,8 @@ public class Enemy : MonoBehaviour {
     {
         if (isDie)
             return;
+        Audio.clip = DieClip[Random.Range(0, DieClip.Length)];
+        Audio.Play();
         StartCoroutine("DieEvent");
     }
     public bool Health(int damage)
@@ -345,7 +349,7 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
-        int random = Random.Range(0, AdjacentList.Count - 1);
+        int random = Random.Range(0, AdjacentList.Count);
         int result = AdjacentList[random];
         return result;
     }
@@ -592,7 +596,8 @@ public class Enemy : MonoBehaviour {
             if (nextIdx == -1)
                 return;
             Transform nextRoom = GameManager.current.enemyGroups[nextIdx].ExitPoint[Exitdirection];
-            enemyAI.SetDestination(nextRoom.position);
+            if(!(isHealer && healTarget))
+                enemyAI.SetDestination(nextRoom.position);
         }
     }
 
@@ -644,8 +649,10 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
-        ECM = GameObject.Find("Managers").GetComponent<EnemyClusterManager>();
+        Audio = GetComponent<AudioSource>();
+        AppearClip= Resources.Load<AudioClip>("Audio/Character/Enemy/All") as AudioClip;
 
+        ECM = GameObject.Find("Managers").GetComponent<EnemyClusterManager>();
         isDie = false;
         isStolen = false;
         isDefeated = false;

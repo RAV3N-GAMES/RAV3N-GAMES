@@ -6,7 +6,8 @@ public class FriendlyChemistry : Friendly {
 
 	private void Start()
 	{
-		FriendType = FRIEND_TYPE.Chemistry;
+        Clips = Resources.LoadAll<AudioClip>("Audio/Character/Friendly/BiochemistryUnit") as AudioClip[];
+        FriendType = FRIEND_TYPE.Chemistry;
 		effectType = EFFECT_TYPE.Hit;
 	}
 	public override void FriendlyInit()

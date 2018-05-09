@@ -6,7 +6,9 @@ public class EnemyFlyTeen : Enemy
 {
     private void Start()
 	{
-		effectType = EFFECT_TYPE.Approach;
+        Clips = Resources.LoadAll<AudioClip>(path+"Enemy/FlyTeen") as AudioClip[];
+        DieClip= Resources.LoadAll<AudioClip>(path + "Man") as AudioClip[];
+        effectType = EFFECT_TYPE.Approach;
 		attackDelay = new WaitForSeconds(1f);
 	}
 	public override void EnemyInit()

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySheriff : Enemy {
-
-	private void Start()
+    private void Start()
 	{
-		effectType = EFFECT_TYPE.Hit;
+        Clips = Resources.LoadAll<AudioClip>(path + "Enemy/Sheriff") as AudioClip[];
+        DieClip = Resources.LoadAll<AudioClip>(path + "Man") as AudioClip[];
+        effectType = EFFECT_TYPE.Hit;
 		attackDelay = new WaitForSeconds(2f);
 	}
 	public override void EnemyInit()

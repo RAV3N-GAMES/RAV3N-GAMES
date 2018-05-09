@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FriendlyGuard : Friendly {
 	private void Start()
-	{		
-		FriendType = FRIEND_TYPE.Guard;
+	{
+        Clips = Resources.LoadAll<AudioClip>("Audio/Character/Friendly/Guard") as AudioClip[];
+        FriendType = FRIEND_TYPE.Guard;
 		effectType = EFFECT_TYPE.Approach;	
 	}
 	public override void FriendlyInit()

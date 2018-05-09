@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemySinger : Enemy {
-
-	WaitForSeconds healDelay = new WaitForSeconds(2f);
+    WaitForSeconds healDelay = new WaitForSeconds(2f);
 
 	private void Start()
 	{
-		effectType = EFFECT_TYPE.Heal;
+        Clips = Resources.LoadAll<AudioClip>(path + "Enemy/Singer") as AudioClip[];
+        DieClip = Resources.LoadAll<AudioClip>(path + "Woman") as AudioClip[];
+        effectType = EFFECT_TYPE.Heal;
 		isDie = false;
 	}
 	public override void EnemyInit()
