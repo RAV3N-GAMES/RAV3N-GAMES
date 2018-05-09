@@ -10,20 +10,14 @@ public class FriendlyResearcher : Friendly {
 
 	private void Start()
 	{
-		FriendType = FRIEND_TYPE.Resercher;
+        Clips = Resources.LoadAll<AudioClip>("Audio/Character/Friendly/Researcher") as AudioClip[];
+        FriendType = FRIEND_TYPE.Resercher;
 		effectType = EFFECT_TYPE.Approach;
-		StopDistance = 1;
-		setDelayTime = 2f;
-		defaultTime = setDelayTime;
-		attackDelay = new WaitForSeconds(setDelayTime);
 	}
 	public override void FriendlyInit()
 	{
 		FriendType = FRIEND_TYPE.Resercher;
 		effectType = EFFECT_TYPE.Approach;
-		AttackDamage = 15;
-		Hp = 100;
-		AttackCount = 10;
 		UiHealth.ValueInit(Hp);
 		UiHealth.HealthActvie(true);
 	}
@@ -33,10 +27,8 @@ public class FriendlyResearcher : Friendly {
 		if (healTarget == null)
 			return;
 
-		healTarget.Hp += AttackDamage;
-		healTarget.UiHealth.ValueIncrease(AttackDamage);
+        healTarget.Health(-AttackDamage);
 		GameManager.ParticleGenerate(EFFECT_TYPE.Heal,healTarget.NavObj.position);
-		
 	}
 	protected override void SkillEvent()
 	{

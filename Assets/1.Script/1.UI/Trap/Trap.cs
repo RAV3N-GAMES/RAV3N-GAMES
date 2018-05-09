@@ -6,9 +6,13 @@ using UnityEngine;
 public class Trap : MonoBehaviour{
     public static int RoomMax=25;
     public Animator TrapAni;
+    public double EffectContinuousTime;
+    public double CoolTime;
+    public bool isCool;
+    public int AttackDamage;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         
 	}
 	

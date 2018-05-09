@@ -35,9 +35,8 @@ public class EnemyGroup : MonoBehaviour {
     {
         return this;
     }
-    private IEnumerator MemberAppear(float probability, int GroupId, int EnemyGroupIdx)
+    private IEnumerator MemberAppear(float probability, int GroupId, int EnemyGroupIdx, int GenerateCount)
     {
-
         int Group_Normal = 0;//비행청소년, 사채업자, 부패경찰
         int Group_Special = 0;//음유시인, 분노조절장애농부, 소매치기
 
@@ -77,7 +76,6 @@ public class EnemyGroup : MonoBehaviour {
             }
 
             obj.GetComponentInChildren<Enemy>().isSeizure = (SecretManager.criteria < probability) ? false : true;
-            //Debug.Log("ID: "+GroupId+"Criteria: " + criteria + " Prob: " + probability);
             obj.GetComponentInChildren<Enemy>().Group = GroupId;
             obj.SetActive(false);
             obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
@@ -93,7 +91,9 @@ public class EnemyGroup : MonoBehaviour {
             info.UIEnemyHealth.HealthActvie(true);
             info.EnemyInit();
             info.PresentRoomidx = EnemyGroupIdx;
+            info.myCluster = EnemyClusterManager.clusterList[GenerateCount];
             enemyList.Add(info);
+            EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
         }
         int idx = enemyList[0].CheckAdjacentCount();
         for (int i = 0; i < enemyList.Count; i++) {
@@ -102,9 +102,9 @@ public class EnemyGroup : MonoBehaviour {
         Count++;
     }
 
-    public void GroupMemberInit(float probability, int GroupId, int EnemygroupIdx)
+    public void GroupMemberInit(float probability, int GroupId, int EnemygroupIdx, int GenerateCount)
     {
-        StartCoroutine(MemberAppear(probability, GroupId, EnemygroupIdx));
+        StartCoroutine(MemberAppear(probability, GroupId, EnemygroupIdx, GenerateCount));
     }
 
     //적군이 죽었을 때 List에서 삭제
@@ -130,7 +130,7 @@ public class EnemyGroup : MonoBehaviour {
         Enemy nextTarget = null;
         for (int i = 0; i < enemyList.Count; ++i)
         {
-            if (!enemyList[i].isDie)
+            if (!(enemyList[i].isDie || enemyList[i].isStolen || enemyList[i].isDefeated))
                 nextTarget = enemyList[i];
         }
 

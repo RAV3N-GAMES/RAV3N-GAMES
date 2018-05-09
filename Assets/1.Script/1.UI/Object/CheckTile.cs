@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckTile : MonoBehaviour {
-    [HideInInspector]
     public List<GameObject> lastColList;
 
-    GameObject lastCol;
+    public GameObject lastCol;
 
     public SpriteRenderer Warp;
     public SpriteRenderer WarpExit;
@@ -36,9 +35,9 @@ public class CheckTile : MonoBehaviour {
     public Transform findPivotCol()
     {
         int Cnt = lastColList.Count;
-        if (Cnt == 0)
-            return lastCol.transform;
-
+        if (Cnt == 0) 
+                return lastCol.transform;
+        
         GameObject tempPivot = lastColList[0];
 
         for (int i = 1; i < Cnt; i++)
@@ -293,7 +292,7 @@ public class CheckTile : MonoBehaviour {
     {
         if (col.gameObject.tag == "Tile")
         {
-            if (!objectInfo.isDisplay)
+            if (!objectInfo.isDisplay && !DayandNight.isDay)
             {
                 lastColList.Add(col.transform.parent.gameObject);
                 OnCheckTile();
@@ -305,7 +304,7 @@ public class CheckTile : MonoBehaviour {
     {
         if (col.gameObject.tag == "Tile")
         {
-            if (!objectInfo.isDisplay)
+            if (!objectInfo.isDisplay && !DayandNight.isDay)
             {
                 if (lastColList.Count == 1)
                     lastCol = lastColList[0];

@@ -63,6 +63,9 @@ public class ObjectInfo : MonoBehaviour
         }
 
         presentHP = totalHP;
+
+        InitFriend();
+        
     }
     
     public void InitObject(SaveObject objInfo) //설치된거 껐다 켜고 설치할때
@@ -72,6 +75,8 @@ public class ObjectInfo : MonoBehaviour
         totalHP = objInfo.totalHP;
         coordinate = objInfo.coordinate;
         DontDestroy = objInfo.DontDestroy;
+
+        InitFriend();
 
         isRotation = objInfo.isRotation;
 
@@ -198,6 +203,7 @@ public class ObjectInfo : MonoBehaviour
 
     public void OffDisplay()
     {
+        Debug.Log("OffDisplay on");
         isDisplay = false;
 
         GetComponent<CheckTile>().lastColList.Clear();
@@ -223,5 +229,83 @@ public class ObjectInfo : MonoBehaviour
         w.HP = presentHP;
         w.MaxHP = totalHP;
         w.WallSyncInfo();
+    }
+
+    private void InitFriend() {
+        Friendly fInfo;
+
+        try
+        {
+            fInfo = GetComponentInChildren<Friendly>(true);
+            switch (fInfo.transform.parent.transform.parent.name)
+            {
+                case "Guard":
+                    fInfo.Hp = presentHP;
+                    fInfo.Level = level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].SkillCool;
+                    fInfo.scollider.radius = 4;
+                    fInfo.StopDistance = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].AttackRange * 2;
+                    fInfo.setDelayTime = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].AttackPeriod;
+                    fInfo.defaultTime = fInfo.setDelayTime;
+                    fInfo.attackDelay = new WaitForSeconds(fInfo.setDelayTime);
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level - 1].SkillCool;
+                    break;
+                case "QuickReactionForces":
+                    fInfo.Hp = presentHP;
+                    fInfo.Level = level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].SkillCool;
+                    fInfo.scollider.radius = 4;
+                    fInfo.StopDistance = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].AttackRange*2;
+                    fInfo.setDelayTime = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].AttackPeriod;
+                    fInfo.defaultTime = fInfo.setDelayTime;
+                    fInfo.attackDelay = new WaitForSeconds(fInfo.setDelayTime);
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].SkillCool;
+                    break;
+                case "BiochemistryUnit":
+                    fInfo.Hp = presentHP;
+                    fInfo.Level = level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].SkillCool;
+                    fInfo.scollider.radius = 4;
+                    fInfo.StopDistance = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].AttackRange * 2;
+                    fInfo.setDelayTime = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].AttackPeriod;
+                    fInfo.defaultTime = fInfo.setDelayTime;
+                    fInfo.attackDelay = new WaitForSeconds(fInfo.setDelayTime);
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 199].SkillCool;
+                    break;
+                case "Researcher":
+                    fInfo.Hp = presentHP;
+                    fInfo.Level = level;
+                    fInfo.AttackDamage = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].Attack;
+                    fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].HP;
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].SkillCool;
+                    fInfo.scollider.radius = 4;
+                    fInfo.StopDistance = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].AttackRange * 2;
+                    fInfo.setDelayTime = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].AttackPeriod;
+                    fInfo.defaultTime = fInfo.setDelayTime;
+                    fInfo.attackDelay = new WaitForSeconds(fInfo.setDelayTime);
+                    fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 299].SkillCool;
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch { }
+    }
+
+    private void InitTrap() {
+    }
+
+    private void InitWall() {
+
+    }
+
+    private void InitSecret() {
+
     }
 }

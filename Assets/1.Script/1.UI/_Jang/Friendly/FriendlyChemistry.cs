@@ -6,20 +6,13 @@ public class FriendlyChemistry : Friendly {
 
 	private void Start()
 	{
-		FriendType = FRIEND_TYPE.Chemistry;
+        Clips = Resources.LoadAll<AudioClip>("Audio/Character/Friendly/BiochemistryUnit") as AudioClip[];
+        FriendType = FRIEND_TYPE.Chemistry;
 		effectType = EFFECT_TYPE.Hit;
-		StopDistance = 3;
-		setDelayTime = 1f;
-		defaultTime = setDelayTime;
-		attackDelay = new WaitForSeconds(setDelayTime);
-		AttackEventMax = 10;
 	}
 	public override void FriendlyInit()
 	{
 		isDie = false;
-		Hp = 130;
-		AttackDamage = 25;
-		AttackCount = 10;
 		UiHealth.ValueInit(Hp);
 		UiHealth.HealthActvie(true);
 	}

@@ -5,10 +5,12 @@ using UnityEngine;
 
 //
 public class EnemyMafia : Enemy {
-
-	private void Start()
+    
+    private void Start()
 	{
-		effectType = EFFECT_TYPE.Hit;
+        Clips = Resources.LoadAll<AudioClip>(path + "Enemy/Mafia") as AudioClip[];
+        DieClip = Resources.LoadAll<AudioClip>(path + "Die/Man") as AudioClip[];
+        effectType = EFFECT_TYPE.Hit;
 		attackDelay = new WaitForSeconds(1.2f);
 	}
 	public override void EnemyInit()

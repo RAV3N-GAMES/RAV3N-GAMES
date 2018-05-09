@@ -7,7 +7,6 @@ public class EnemyBody : MonoBehaviour {
         if (col.CompareTag("Tile"))
         {
             if (col.GetComponentInParent<EnemyGroup>().gameObject.activeSelf) {
-                Debug.Log(transform.parent.name+" Triggered : " + col.GetComponentInParent<EnemyGroup>().GroupIndex);
                 GetComponentInParent<Enemy>().PresentRoomidx = col.GetComponentInParent<EnemyGroup>().GroupIndex;
             }
         }

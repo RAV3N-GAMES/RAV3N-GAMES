@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
                 //    return;
                 genGroup.isGenerate = true;
 
-                genGroup.GroupMemberInit(probability, i, genGroup.GroupIndex);     //적 그룹을 생성하지않은 곳을 찾아 생성호출
+                genGroup.GroupMemberInit(probability, i, genGroup.GroupIndex, GenerateCount);     //적 그룹을 생성하지않은 곳을 찾아 생성호출
                 GenerateCount++;
             }
 

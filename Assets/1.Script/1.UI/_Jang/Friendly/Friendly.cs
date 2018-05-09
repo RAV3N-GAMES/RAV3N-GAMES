@@ -17,6 +17,9 @@ public enum FriendlyState
 */
 public class Friendly : MonoBehaviour
 {
+    public AudioSource Audio;
+    public AudioClip[] DieClip;
+    public AudioClip[] Clips;
     public FRIEND_TYPE FriendType;
     public FriendlyGroup GroupConductor;
     public HealthSystem UiHealth;
@@ -28,7 +31,6 @@ public class Friendly : MonoBehaviour
     public float Distance;
     public float StopDistance;          //정지할 거리 설정값
     public int DamageStack;
-    public int RoomIndex;
     public int Level;
     public int Hp;
     public int MaxHp;
@@ -43,13 +45,13 @@ public class Friendly : MonoBehaviour
     protected EFFECT_TYPE effectType;
     protected Animator anime;
     protected NavMeshAgent friendAi;
-    protected SphereCollider scollider;
+    public SphereCollider scollider;
     protected Vector3 dest;
     protected Vector3 start;
     protected FriendlyState currentState;
-    protected WaitForSeconds attackDelay;
-    protected float defaultTime;
-    protected float setDelayTime;
+    public WaitForSeconds attackDelay;
+    public float defaultTime;
+    public float setDelayTime;
     protected bool isShoot = false;
     protected bool isSkill = false;
     protected Vector3 PrevPos;
@@ -77,6 +79,8 @@ public class Friendly : MonoBehaviour
 
     private void Awake()
     {
+        Audio = GetComponent<AudioSource>();
+        DieClip= Resources.LoadAll<AudioClip>("Audio/Character/Die/Man") as AudioClip[];
         isLeft = true;
         faceLeft = true;
         PrevPos = Vector3.zero;
@@ -122,7 +126,8 @@ public class Friendly : MonoBehaviour
 
         if (targetEnemy.Health(AttackDamage))
         {
-            targetEnemy.Die();
+            if(targetEnemy)
+                targetEnemy.Die();
             if (NearEnemy.Count > 0)
                 targetEnemy = NearEnemy[1];
             else
@@ -137,6 +142,10 @@ public class Friendly : MonoBehaviour
         if (AttackCount >= AttackEventMax && !isSkill)
         {
             SkillEvent();
+            if (Clips.Length >= 1) { 
+                Audio.clip = Clips[Clips.Length - 1];
+                Audio.Play();
+            }
             return;
         }
         else
@@ -144,7 +153,12 @@ public class Friendly : MonoBehaviour
             ++AttackCount;
 
             Attack();
-
+            {
+                int idx;
+                idx=(transform.parent.name.Equals("Friendly_Guard")) ? 0: (int)Random.Range(0, 2);
+                Audio.clip = Clips[idx];
+                Audio.Play();
+            }
         }
 
     }
@@ -180,13 +194,16 @@ public class Friendly : MonoBehaviour
         UiHealth.HealthActvie(false);
         GroupConductor.RemoveFriendly(this);
         targetEnemy = null;
+        Audio.clip = DieClip[Random.Range(0, 100) % 3];
+        Audio.Play();
         StartCoroutine("DieEvent");
     }
     public bool Health(int damage)
     {
         Hp -= damage;
         UiHealth.ValueDecrease(damage);
-        DamageStack++;
+        if(damage>=0)
+            DamageStack++;
 
         if (Hp <= 0) {//죽으면 true
             GetComponentInParent<ObjectInfo>().presentHP = 0;

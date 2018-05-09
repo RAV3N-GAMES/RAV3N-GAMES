@@ -36,7 +36,7 @@ public class SecretManager : JsonReadWrite
         ReadMain(Path3);
         ReadMain(Path4);
         SecretList = new List<SecretActs>();
-
+        DontDestroyOnLoad(this);
         /*입력값 확인용 코드입니다. 지우지 마세요. 
                 for (int i = 0; i < 22 * 4; i++)
                 {

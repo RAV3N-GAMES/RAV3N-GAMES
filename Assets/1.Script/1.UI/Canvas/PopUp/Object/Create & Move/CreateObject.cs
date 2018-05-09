@@ -63,7 +63,7 @@ public class CreateObject : MonoBehaviour
             warp_Exit.GetComponent<ClickObject>().ChangePopUpManager = ChangePopUpManager;
             warp_Exit.GetComponent<ObjectInfo>().InitObject();
         }
-        //CreatePopUp.GetComponent<CreatePopUp>().Obj = newObj;
+
         newObj.GetComponent<ObjectMove>().isNewObj = true;
 
         newObj.GetComponent<ObjectMove>().StartCoroutine("ArrayObject");

@@ -10,21 +10,13 @@ public class FriendlyArmy : Friendly {
 
 	private void Start()
 	{
-		FriendType = FRIEND_TYPE.Army;
+        Clips = Resources.LoadAll<AudioClip>("Audio/Character/Friendly/QuickReactionForces") as AudioClip[];
+        FriendType = FRIEND_TYPE.Army;
 		effectType = EFFECT_TYPE.Hit;
-		StopDistance = 2;
-		setDelayTime = 1.2f;
-		defaultTime = setDelayTime;
-		attackDelay = new WaitForSeconds(setDelayTime);		
-		AttackEventMax = 8;
-		AttackCount = AttackEventMax;
 	}
 	public override void FriendlyInit()
 	{
-		AttackEventMax = 8;
-		AttackCount = AttackEventMax;
-		Hp = 120;
-		AttackDamage = 22;
+        AttackCount = AttackEventMax;
 		base.FriendlyInit();
 	}
 	protected override void SkillEvent()
