@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 public class Trap : MonoBehaviour{
+    public AudioSource Audio;
     public static int RoomMax=25;
     public Animator TrapAni;
     public double EffectContinuousTime;
@@ -12,8 +13,8 @@ public class Trap : MonoBehaviour{
     public int AttackDamage;
 
     // Use this for initialization
-    void Start () {
-        
+    void Awake () {
+        Audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -24,7 +25,8 @@ public class Trap : MonoBehaviour{
     void OnTriggerEnter(Collider col) {
         if (col.CompareTag("EnemyBody"))
         {
-            Acts(col);
+            if(!isCool)
+                Acts(col);
         }
     }
     void OnTriggerExit(Collider col) {

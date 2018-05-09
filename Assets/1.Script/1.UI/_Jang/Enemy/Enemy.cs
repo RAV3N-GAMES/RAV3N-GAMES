@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
     public SecretActs targetSecret;
     public List<Trap> NearTrap;
     public DayandNight DnN;
-
+    public bool Movable;
     public bool isHealer;
     public bool isEntered;
     public bool isLeft;
@@ -676,6 +676,7 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
+        Movable = true;
         Audio = GetComponent<AudioSource>();
         AppearClip= Resources.Load<AudioClip>("Audio/Character/Enemy/All") as AudioClip;
 
@@ -730,9 +731,9 @@ public class Enemy : MonoBehaviour {
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.CompareTag("Friendly"))
+        if (col.CompareTag("FriendlyBody"))
         {
-            Friendly e = col.GetComponent<Friendly>();
+            Friendly e = col.GetComponentInParent<Friendly>();
             if (!NearFriendly.Contains(e))
                 NearFriendly.Add(e);
         }
@@ -1088,6 +1089,10 @@ public class Enemy : MonoBehaviour {
                 }
                 
                 enemyAI.SetDestination(dest);
+                if (!Movable)
+                    enemyAI.isStopped = true;
+                else
+                    enemyAI.isStopped = false;
 
                 if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
                 {
@@ -1120,7 +1125,8 @@ public class Enemy : MonoBehaviour {
                     }
                     else
                     {
-                        enemyAI.isStopped = false;
+                        if (Movable)
+                            enemyAI.isStopped = false;
                         currentState = EnemyState.Walk;
                     }
                 }
@@ -1138,17 +1144,18 @@ public class Enemy : MonoBehaviour {
                 }
                 else if (!isHealer && targetFriend && !IsNear(NavObj, targetFriend.transform)) {
                     enemyAI.SetDestination(SetYZero(targetFriend.transform));
-                    enemyAI.isStopped = false;
+                    if (Movable)
+                        enemyAI.isStopped = false;
                     currentState = EnemyState.Walk;
                 }
                 else
                 {
-                    enemyAI.isStopped = false;
+                    if (Movable)
+                        enemyAI.isStopped = false;
                     currentState = EnemyState.Walk;
                 }
             }
         }
-
         AfterHeal:
         Distance = Vector3.Distance(start, dest);
         if (Distance <= enemyAI.stoppingDistance)
