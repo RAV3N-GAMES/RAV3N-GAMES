@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class RoomManager : MonoBehaviour {
     public Transform RoomParent;
@@ -308,12 +309,15 @@ public class RoomManager : MonoBehaviour {
         }
         //else if (Input.touchCount == 1)
         {
-            if (isMove && possibleDrag)
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                conPos = GetRay();
+                if (isMove && possibleDrag)
+                {
+                    conPos = GetRay();
 
-                Camera.main.transform.position += (prePos - conPos);
-                prePos = conPos;
+                    Camera.main.transform.position += (prePos - conPos);
+                    prePos = conPos;
+                }
             }
         }
     }

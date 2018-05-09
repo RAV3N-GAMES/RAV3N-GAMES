@@ -5,12 +5,13 @@ using UnityEngine.AI;
 
 public enum EnemyState
 {
-	Idle,
-	Walk,
-	Attack,
-	Die,
+    Idle,
+    Walk,
+    Attack,
+    Die,
 }
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
     public EnemyGroup GroupConductor;       //캐릭터의 그룹을 정하고 정보를 받고 쓰기 위한 
     public HealthSystem UIEnemyHealth;      //현재 캐릭터의 체력을 나타내는 UI정보
     public Transform NavObj;                //NavMesh 상에서 움직이는 객체의 위치정보
@@ -39,6 +40,8 @@ public class Enemy : MonoBehaviour {
     public float Speed;                     //이동 속도
     public float Distance;                  //거리 체크 
     public bool isDie;						//현재 죽은 상태 체크
+    public bool isDefeated;                 // 거점 들어온 경우
+    public bool isStolen;                 //기밀 들고 튄 경우
     public bool isSeizure;                  //탈취집단이면 true
     public int nextIdx;
     public int Exitdirection;
@@ -61,7 +64,7 @@ public class Enemy : MonoBehaviour {
         scollider.enabled = true;
         enemyAI.enabled = true;
         isDie = false;
-        NavObj=enemyAI.transform;
+        NavObj = enemyAI.transform;
         enemyAI.speed = Speed;
         UIEnemyHealth.ValueInit(Hp);
         MaxHp = Hp;
@@ -75,7 +78,8 @@ public class Enemy : MonoBehaviour {
 
     public void Hit()
     {
-        if (targetFriend) { 
+        if (targetFriend)
+        {
             if (targetFriend.Health(Attack))
             {
                 GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
@@ -88,10 +92,12 @@ public class Enemy : MonoBehaviour {
                 catch { }*/
             }
         }
-        else if (targetWall) {
+        else if (targetWall)
+        {
             targetWall.GetDamaged(Attack);
             GameManager.ParticleGenerate(effectType, targetWall.transform.position);
-            if (targetWall.IsDestroyed()) {
+            if (targetWall.IsDestroyed())
+            {
                 NearWall.Remove(targetWall);
                 targetWall.DestoryWall();
             }
@@ -106,7 +112,8 @@ public class Enemy : MonoBehaviour {
     public bool Health(int damage)
     {
         UIEnemyHealth.ValueDecrease(damage);
-        if (Hp <= 10) {
+        if (Hp <= 10)
+        {
             Hp = 0;
             return true;
         }
@@ -120,24 +127,27 @@ public class Enemy : MonoBehaviour {
 
         return false;
     }
-    private void KillGold() {
+    private void KillGold()
+    {
         Data_Player.addGold(ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].Reward_Kill);
     }
 
-    public void EscapeCoroutine() {
+    public void EscapeCoroutine()
+    {
         StartCoroutine(EscapeEvent());
     }
 
     protected IEnumerator DieEvent()
     {
-        Debug.Log("Die Event: "+ name);
+        Debug.Log("Die Event: " + name);
         isDie = true;
+        isStolen = false;
+        isDefeated = false;
         anime.SetTrigger("Die");
         enemyAI.enabled = false;
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
-        DayandNight.CreatedEnemy.Remove(this);
         DayandNight.DeadEnemy.Add(this);
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
@@ -146,60 +156,70 @@ public class Enemy : MonoBehaviour {
 
     protected IEnumerator EscapeEvent()
     {
-        Debug.Log("Escape Event: "+name);
-        isDie = true;
+        Debug.Log("Escape Event: " + name);
+        isDie = false;
+        isStolen = false;
+        isDefeated = true;
         anime.SetTrigger("Die");
         enemyAI.enabled = false;
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
-        DayandNight.CreatedEnemy.Remove(this);
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
     }
 
-    protected void ClearEnemies() {
+    protected void ClearEnemies()
+    {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++) {
+        for (int i = 0; i < enemies.Length; i++)
+        {
             enemies[i].GetComponentInChildren<Enemy>().EscapeCoroutine();
         }
     }
 
-    protected IEnumerator StealEvent() {
+    protected IEnumerator StealEvent()
+    {
         Debug.Log(name + ": StealEvent Triggered");
         GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
         List<Enemy> List = new List<Enemy>();
-        for (int i = 0; i < Enemies.Length; i++) {
+        for (int i = 0; i < Enemies.Length; i++)
+        {
             Enemy e = Enemies[i].GetComponentInChildren<Enemy>();
-            if (e.Group == Group && e != this) {
+            if (e.Group == Group && e != this)
+            {
                 List.Add(e);
             }
         }
 
-        for (int i = 0; i < List.Count; i++) { 
-            List[i].isDie = true;
+        for (int i = 0; i < List.Count; i++)
+        {
+            List[i].isDie = false;
+            List[i].isStolen = true;
+            List[i].isDefeated = false;
             List[i].anime.SetTrigger("Die");
             List[i].enemyAI.enabled = false;
             List[i].scollider.enabled = false;
             List[i].UIEnemyHealth.HealthActvie(false);
             List[i].GroupConductor.RemoveEnemy(this);
-            DayandNight.CreatedEnemy.Remove(List[i]);
             yield return new WaitForSeconds(0.5f);
             List[i].transform.parent.gameObject.SetActive(false);
             PoolManager.current.PushEnemy(List[i].NavObj.gameObject);
         }
-        isDie = true;
+        isDie = false;
+        isStolen = true;
+        isDefeated = false;
         anime.SetTrigger("Die");
         enemyAI.enabled = false;
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
-        DayandNight.CreatedEnemy.Remove(this);
         yield return new WaitForSeconds(0.5f);
         SecretManager.SecretList.Remove(targetSecret);
         SecretManager.SecretCount--;
-        if (targetSecret) { 
+        if (targetSecret)
+        {
             targetSecret.GetComponentInParent<DisplayObject>().DestroyObj(true);
             Destroy(targetSecret.transform.parent.gameObject);
         }
@@ -222,10 +242,11 @@ public class Enemy : MonoBehaviour {
             dest = new Vector3(targetTrap.transform.position.x, 0, targetTrap.transform.position.z);
         else if (Type == (int)ObjectType.Secret)
             dest = new Vector3(targetSecret.transform.position.x, 0, targetTrap.transform.position.z);
-        
+
         Distance = Vector3.Distance(dest, start);
 
-        if (Type == (int)ObjectType.Friendly && targetFriend != null) { // 없어도??
+        if (Type == (int)ObjectType.Friendly && targetFriend != null)
+        { // 없어도??
             if (targetFriend.NavObj.position.x > NavObj.position.x)
                 transform.localScale = new Vector3(-1, 0, 1);
             else
@@ -244,7 +265,8 @@ public class Enemy : MonoBehaviour {
                 return false;
             }
         }
-        else {
+        else
+        {
             if (Distance < enemyAI.stoppingDistance * 3)
             {
                 return true;
@@ -258,16 +280,21 @@ public class Enemy : MonoBehaviour {
         //false: 때릴 오브젝트가 없거나 붙어있지 않음.
     }
 
-    public SecretActs FindClosestSecret(Vector3 start) {
+    public SecretActs FindClosestSecret(Vector3 start)
+    {
         SecretActs Closest = null;
         float closest = float.MaxValue;
         float tmp = 0f;
 
-        foreach (SecretActs s in SecretManager.SecretList) {
-            if (s) { 
+        foreach (SecretActs s in SecretManager.SecretList)
+        {
+            if (s)
+            {
                 tmp = Vector3.Distance(start, s.transform.position);
-                if(s.GetComponent<SpriteRenderer>().sortingLayerName == PresentRoomidx.ToString()) { 
-                    if (tmp < closest) {
+                if (s.GetComponent<SpriteRenderer>().sortingLayerName == PresentRoomidx.ToString())
+                {
+                    if (tmp < closest)
+                    {
                         Closest = s;
                         closest = tmp;
                     }
@@ -282,17 +309,20 @@ public class Enemy : MonoBehaviour {
         yield return attackDelay;
         isShoot = false;
     }
-    
-    private bool IsNear(Transform NavObjPos, Transform targetPos) {
+
+    private bool IsNear(Transform NavObjPos, Transform targetPos)
+    {
         return (Vector3.Distance(NavObjPos.position, targetPos.position) <= enemyAI.stoppingDistance) ? true : false;
     }
 
-    private Vector3 SetYZero(Transform t) {
+    private Vector3 SetYZero(Transform t)
+    {
         return new Vector3(t.position.x, 0, t.position.z);
     }
 
-    public int CheckAdjacentCount() {
-        List<int> AdjacentList=new List<int>();
+    public int CheckAdjacentCount()
+    {
+        List<int> AdjacentList = new List<int>();
         int row = PresentRoomidx / 5;
         int col = PresentRoomidx % 5;
         int nrow, ncol;
@@ -300,16 +330,19 @@ public class Enemy : MonoBehaviour {
         int[] dx = { 0, 0, 1, -1 };
         int[] dy = { 1, -1, 0, 0 };
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             nrow = row + dx[i];
             ncol = col + dy[i];
 
-            if (nrow < 0 || nrow > 4 || ncol < 0 || ncol > 4) 
+            if (nrow < 0 || nrow > 4 || ncol < 0 || ncol > 4)
                 continue;
-           
+
             EnemyGroup eg = GameManager.current.enemyGroups[nrow * 5 + ncol];
-            if (eg.gameObject.activeSelf) {
-                if (Min > eg.Count) {
+            if (eg.gameObject.activeSelf)
+            {
+                if (Min > eg.Count)
+                {
                     Min = eg.Count;
                 }
             }
@@ -318,7 +351,8 @@ public class Enemy : MonoBehaviour {
         if (Min == int.MaxValue)//아무것도 활성화되지 않은 경우(없는 경우인거같음)
             return -1;
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             nrow = row + dx[i];
             ncol = col + dy[i];
             if (nrow < 0 || nrow > 4 || ncol < 0 || ncol > 4)
@@ -328,7 +362,7 @@ public class Enemy : MonoBehaviour {
             {
                 if (Min == eg.Count)
                 {
-                    AdjacentList.Add(nrow*5+ncol);
+                    AdjacentList.Add(nrow * 5 + ncol);
                 }
             }
         }
@@ -337,7 +371,8 @@ public class Enemy : MonoBehaviour {
         return result;
     }
 
-    public int FindExit() {
+    public int FindExit()
+    {
         int result = -1;
         int row = PresentRoomidx / 5;
         int col = PresentRoomidx % 5;
@@ -356,14 +391,15 @@ public class Enemy : MonoBehaviour {
         {
             result = 2;
         }
-        else if (row - 1 == nRow) {
+        else if (row - 1 == nRow)
+        {
             result = 3;
         }
 
 
         return result;
     }
-    
+
     private void SetStart()
     {
         start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
@@ -400,8 +436,9 @@ public class Enemy : MonoBehaviour {
 
         if (!isHealer)
         {
-            if (isSurrounded) {
-                
+            if (isSurrounded)
+            {
+
             }
 
             else
@@ -541,7 +578,7 @@ public class Enemy : MonoBehaviour {
                 enemyAI.SetDestination(SetYZero(targetTrap.transform));
                 break;
             case 1:
-                if(enemyAI.enabled)
+                if (enemyAI.enabled)
                     enemyAI.SetDestination(dest);
                 break;
             case 2:
@@ -566,7 +603,6 @@ public class Enemy : MonoBehaviour {
 
     protected void ArrivedAction()
     {//도착 시 취하는 액션
-        Debug.Log(name + " Arriveaction Called. Dest: "+dest);
         if (Vector3.Distance(SetYZero(NavObj), SetYZero(OriginalPoint.transform)) <= enemyAI.stoppingDistance)
         {
             ClearEnemies();//Find all Enemies and Escape them.
@@ -576,7 +612,8 @@ public class Enemy : MonoBehaviour {
         {
             StartCoroutine(StealEvent());
         }
-        else {
+        else
+        {
             Debug.Log(name + "Nextidx: " + nextIdx);
             if (nextIdx == -1)
                 return;
@@ -603,7 +640,8 @@ public class Enemy : MonoBehaviour {
         SetAction();
         SetAIDestination();
         Distance = Vector3.Distance(start, dest);
-        if (Distance <= enemyAI.stoppingDistance) {
+        if (Distance <= enemyAI.stoppingDistance)
+        {
             ArrivedAction();
         }
 
@@ -612,7 +650,8 @@ public class Enemy : MonoBehaviour {
         {
             PrevPos = transform.position;
         }
-        else {
+        else
+        {
             if (transform.position.x - PrevPos.x > 0.05)
             {
                 isLeft = false;
@@ -625,7 +664,7 @@ public class Enemy : MonoBehaviour {
             PrevPos = transform.position;
         }
     }
-    
+
     protected void ChangeAnimation()
     {
         anime.SetInteger("Action", (int)currentState);
@@ -653,9 +692,9 @@ public class Enemy : MonoBehaviour {
         UIEnemyHealth = GetComponentInParent<HealthSystem>();
     }
 
-    private void Update()
+    protected void Update()
     {
-        if (isDie)
+        if (isDie || isStolen || isDefeated)
             return;
         SetOrder();
         //        IsDeadEnd();
@@ -665,39 +704,47 @@ public class Enemy : MonoBehaviour {
         ChangeAnimation();
     }
 
-    private void OnTriggerExit(Collider col) {
-        if (col.CompareTag("Wall")) {
-            Wall w=col.GetComponent<Wall>();
-            if (NearWall.Contains(w)) {
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.CompareTag("Wall"))
+        {
+            Wall w = col.GetComponent<Wall>();
+            if (NearWall.Contains(w))
+            {
                 NearWall.Remove(w);
             }
         }
     }
 
-    private void OnTriggerEnter(Collider col) {
+    private void OnTriggerEnter(Collider col)
+    {
         if (col.CompareTag("Friendly"))
         {
             Friendly e = col.GetComponent<Friendly>();
-            if(!NearFriendly.Contains(e))
+            if (!NearFriendly.Contains(e))
                 NearFriendly.Add(e);
         }
 
-        if (col.CompareTag("Wall")) {
+        if (col.CompareTag("Wall"))
+        {
             Wall w = col.GetComponentInParent<Wall>();
-            if(!NearWall.Contains(w))
+            if (!NearWall.Contains(w))
                 NearWall.Add(w);
         }
     }
-    private void SetOrder() {
+    private void SetOrder()
+    {
         SetOrder_Wall();
         SetOrder_Trap();
         SetOrder_Friendly();
     }
 
-    protected void GetTrap() {
+    protected void GetTrap()
+    {
         GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
         Trap t;
-        for (int i = 0; i < Traps.Length; i++) {
+        for (int i = 0; i < Traps.Length; i++)
+        {
             SpriteRenderer s = Traps[i].GetComponent<SpriteRenderer>();
             if (!s)
                 continue;
@@ -707,7 +754,8 @@ public class Enemy : MonoBehaviour {
                 if (!NearTrap.Contains(t))
                     NearTrap.Add(t);
             }
-            else {
+            else
+            {
                 t = s.GetComponent<Trap>();
                 if (NearTrap.Contains(t))
                 {
@@ -717,11 +765,12 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    private void SetOrder_Trap() {
+    private void SetOrder_Trap()
+    {
         for (int i = 0; i < NearTrap.Count; i++)
         {
             if (!NearTrap[i].transform.parent.gameObject.activeSelf)
-            { 
+            {
                 NearTrap.Remove(NearTrap[i]);
                 i--;
             }
@@ -756,7 +805,8 @@ public class Enemy : MonoBehaviour {
         else
             targetTrap = null;
     }
-    private void SetOrder_Wall() {
+    private void SetOrder_Wall()
+    {
         if (NearWall.Count > 1)
         {
             NearWall.Sort(
@@ -821,15 +871,16 @@ public class Enemy : MonoBehaviour {
         }
         if (NearFriendly.Count > 0)
         {
-            targetFriend= NearFriendly[0];
+            targetFriend = NearFriendly[0];
         }
         else
             targetFriend = null;
     }
-    protected void IsDeadEnd() {
+    protected void IsDeadEnd()
+    {
         if (enemyAI.pathStatus == NavMeshPathStatus.PathPartial || enemyAI.pathStatus == NavMeshPathStatus.PathInvalid)
         {
-            if (dest == SetYZero(OriginalPoint) ||( targetSecret && dest == SetYZero(targetSecret.transform) ))
+            if (dest == SetYZero(OriginalPoint) || (targetSecret && dest == SetYZero(targetSecret.transform)))
                 isSurrounded = true;
             else
                 InnerSurrounded = true;
@@ -843,8 +894,9 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    
-    protected void ActionMain() {
+
+    protected void ActionMain()
+    {
         SetStart();
         SetDestination();
         Debug.Log(name + " NavMeshstatus: " + enemyAI.pathStatus);
@@ -903,7 +955,8 @@ public class Enemy : MonoBehaviour {
                 enemyAI.isStopped = false;
             }
         }
-        else {
+        else
+        {
             enemyAI.isStopped = false;
             currentState = EnemyState.Walk;
         }
@@ -934,13 +987,15 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    protected void SetDestination() {
+    protected void SetDestination()
+    {
         targetSecret = FindClosestSecret(NavObj.position);
         if (isSeizure && targetSecret)
         {
             dest = SetYZero(targetSecret.transform);
         }
-        else {
+        else
+        {
             dest = SetYZero(OriginalPoint.transform);
         }
         enemyAI.SetDestination(dest);
@@ -960,10 +1015,12 @@ public class Enemy : MonoBehaviour {
             isEntered = false;
         }
 
-        if (nextIdx != -1) {
+        if (nextIdx != -1)
+        {
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
-            { 
-                if (targetFriend && IsNear(NavObj, targetFriend.transform)) {
+            {
+                if (targetFriend && IsNear(NavObj, targetFriend.transform))
+                {
                     dest = SetYZero(targetFriend.transform);
                 }
                 else if (isSeizure && targetSecret)
@@ -979,7 +1036,7 @@ public class Enemy : MonoBehaviour {
                     else
                     {
                         Exitdirection = FindExit();
-                        if(PresentRoomidx>=0 && PresentRoomidx <=24)
+                        if (PresentRoomidx >= 0 && PresentRoomidx <= 24)
                             dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
                     }
                 }

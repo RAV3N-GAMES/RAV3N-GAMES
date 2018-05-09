@@ -71,24 +71,27 @@ public class CreateObject : MonoBehaviour
 
     public void MouseExit()
     {
-        if (id != "" && Input.GetMouseButton(0) && RoomManager.possibleDrag)
+        if (!DayandNight.isDay)
         {
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
-            //
-            //if (Physics.Raycast(ray, out hit))
-            //{
-            //    
-            //}
+            if (id != "" && Input.GetMouseButton(0) && RoomManager.possibleDrag)
+            {
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //RaycastHit hit;
+                //
+                //if (Physics.Raycast(ray, out hit))
+                //{
+                //    
+                //}
 
-            InitObject();
-            RoomManager.ChangeClickStatus(false);
+                InitObject();
+                RoomManager.ChangeClickStatus(false);
 
-            roomManager.SetClickColliderStatus(false);
+                roomManager.SetClickColliderStatus(false);
 
-            SetBoxRect(BoxRect.anchorMin.y + 0.02f);
-            isCreate = true;
-            id = "";
+                SetBoxRect(BoxRect.anchorMin.y + 0.02f);
+                isCreate = true;
+                id = "";
+            }
         }
     }
 }

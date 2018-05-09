@@ -22,7 +22,7 @@ public class ClickObject : MonoBehaviour
 
     void LongClick()
     {
-        if (objectInfo.isDisplay)
+        if (objectInfo.isDisplay && isPossibleClick)
         {
             if (!DayandNight.isDay) {
                 RoomManager.ChangeClickStatus(false);
@@ -39,7 +39,10 @@ public class ClickObject : MonoBehaviour
     {
         if (isPossibleClick)
         {
-            Invoke("LongClick", clickTime);
+            if (!RoomManager.isTransparency || GetComponent<ObjectInfo>().type != 0)
+            {
+                Invoke("LongClick", clickTime);
+            }
         }
     }
 

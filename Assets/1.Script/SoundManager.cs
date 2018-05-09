@@ -11,6 +11,8 @@ public class SoundManager : MonoBehaviour {
     public static AudioSource BGMAudio { get; private set; }
     public static AudioSource EffectAudio { get; private set; }
 
+    public List<int> DayandNightNum;
+
     string bgmName;
 
     void Awake()
@@ -37,6 +39,9 @@ public class SoundManager : MonoBehaviour {
             BGMAudio = tempAudio[(idx + 1) % 2];
             EffectAudio = tempAudio[idx % 2];
 
+            DayandNightNum = new List<int>();
+            InitDayandNightNum();
+
             soundManager = this;
         }
     }
@@ -50,22 +55,65 @@ public class SoundManager : MonoBehaviour {
         EffectAudio.mute = !isPossible;
     }
 
+    bool isPlayingBGM()
+    {
+        return BGMAudio.isPlaying;
+    }
+
+    IEnumerator DayAndNightMusic()
+    {
+        yield return new WaitWhile(isPlayingBGM);
+
+        if (DayandNight.isDay)
+            ChangeBGM("5_DAY");
+        else
+            ChangeBGM("7_NIGHT");
+
+        yield break;
+    }
+
+    void InitDayandNightNum()
+    {
+        DayandNightNum.Clear();
+
+        DayandNightNum.Add(1);
+        DayandNightNum.Add(2);
+        DayandNightNum.Add(3);
+        DayandNightNum.Add(4);
+    }
+
     public void ChangeBGM(string bgmName)
     {
         switch (bgmName)
         {
             case "5_DAY": case "7_NIGHT":
                 int random = Random.Range(0, 100);
-                random = (random % 4) + 1;
-                bgmName += random.ToString();
 
-                BGMAudio.loop = true;
-                break;
+                if (DayandNightNum.Count == 0)
+                    InitDayandNightNum();
+                random = (random % DayandNightNum.Count);
+
+                bgmName += DayandNightNum[random].ToString();
+
+                DayandNightNum.RemoveAt(random);
+
+                BGMAudio.loop = false;
+
+                SetBGMAudio(bgmName);
+                StartCoroutine(DayAndNightMusic());
+
+                return;
             case "4_DAY START":
-                this.bgmName = "5_DAY"; CancelInvoke("ChangeBGM"); Invoke("ChangeBGM", 2.5f);
+                this.bgmName = "5_DAY";
+                CancelInvoke("ChangeBGM");
+                InitDayandNightNum();
+                Invoke("ChangeBGM", 2.5f);
                 break;
             case "6_NIGHT START":
-                this.bgmName = "7_NIGHT"; CancelInvoke("ChangeBGM"); Invoke("ChangeBGM", 2.5f);
+                print("night start");
+                this.bgmName = "7_NIGHT"; CancelInvoke("ChangeBGM");
+                InitDayandNightNum();
+                Invoke("ChangeBGM", 2.5f);
                 break;
             case "39_RESULT":
                 BGMAudio.loop = false;

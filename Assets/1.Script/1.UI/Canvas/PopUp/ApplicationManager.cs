@@ -14,6 +14,8 @@ public class ApplicationManager : MonoBehaviour {
 
     List<GameObject> PopUpList;
 
+    public static bool isPossible = true;
+
     void Awake()
     {
         if (QuitPopUp != null)
@@ -57,11 +59,15 @@ public class ApplicationManager : MonoBehaviour {
 
     bool ClosePopUp()
     {
+        if (!isPossible)
+            return true;
         for(int i = 0; i < PopUpList.Count; i++)
         {
             if(PopUpList[i].activeInHierarchy)
             {
                 PopUpList[i].SetActive(false);
+                RoomManager.ChangeClickStatus(true);
+
                 return true;
             }
         }

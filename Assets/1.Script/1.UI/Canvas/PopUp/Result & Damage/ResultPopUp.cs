@@ -9,6 +9,8 @@ public class ResultPopUp : MonoBehaviour
     const int EnemyGroupKill_ExpReward = 10;
     const int Fail_Exp = -30;
 
+    bool isSuccess;
+
     public Button NextButton;
     public GameObject DamageReport;
     public List<GameObject> EnemyGroupList;
@@ -84,12 +86,16 @@ public class ResultPopUp : MonoBehaviour
                 break;
         }
 
+
+        int SeizureCnt = 0;
+        bool isStolen = true;
+
         for (int i = 0; i < EnemyCnt; i++)
         {
             string[] enemyId = new string[4];
             bool[] enemyActive = new bool[4];
 
-            int Cnt = 0;
+            int Cnt = 0;            
             for (int j = 0; j < createdEnemyCnt; j++)
             {
                 if (DayandNight.CreatedEnemy[j].Group == GroupId[i])
@@ -99,6 +105,19 @@ public class ResultPopUp : MonoBehaviour
 
                     if (DayandNight.CreatedEnemy[j].isDie)
                         DiedEnemeyCnt++;
+                    else
+                    {
+                        if (DayandNight.CreatedEnemy[j].isSeizure)
+                        {
+                            isStolen = isStolen & DayandNight.CreatedEnemy[j].isStolen;
+                        }
+                    }
+                    if (DayandNight.CreatedEnemy[j].isSeizure)
+                    {
+                        SeizureCnt++;
+                    }
+                    if (DayandNight.CreatedEnemy[j].isDefeated)
+                        isSuccess = false;
 
                     if (Cnt == 3)
                         break;
@@ -108,13 +127,26 @@ public class ResultPopUp : MonoBehaviour
             }
             enemyGroupResult[i].InitResult(enemyId, enemyActive);
         }
+
+        if (isSuccess)
+        {
+            if (SeizureCnt == DayandNight.CreatedEnemy.Count)
+            {
+                //모든 집단이 다 탈취 성공했는지 여부 판단
+                isSuccess = !isStolen;
+            }
+        }
     }
 
 
 
     public void InitResultPopUp()
     {
+        ApplicationManager.isPossible = false;
+
         enemyGroupResult.Clear();
+
+        isSuccess = false;
 
         Success.SetActive(false);
         Fail.SetActive(false);
@@ -154,6 +186,10 @@ public class ResultPopUp : MonoBehaviour
         RewardFail_Exp = 0;
 
         SetPlayerInfo();
+
+        if (!isSuccess)
+            SendMail();
+
         StartCoroutine("PlayResult");
     }
 
@@ -392,11 +428,6 @@ public class ResultPopUp : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
         //거점 성공 여부 띄움
-        bool isSuccess = false;
-
-        if (!isSuccess)
-            SendMail();
-
         SetSuccess(isSuccess); //true 아닌거 아님
         NextButton.enabled = true;
 

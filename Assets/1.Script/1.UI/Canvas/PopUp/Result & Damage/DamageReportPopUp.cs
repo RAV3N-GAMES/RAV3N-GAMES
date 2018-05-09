@@ -173,4 +173,9 @@ public class DamageReportPopUp : MonoBehaviour {
         InitDamageIdx();
         yield break;
     }
+
+    void OnDisable()
+    {
+        ApplicationManager.isPossible = true;
+    }
 }
