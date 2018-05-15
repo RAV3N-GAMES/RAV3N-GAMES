@@ -128,6 +128,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyFlyTeen.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyGroup.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyMafia.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyPickPocket.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySheriff.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySinger.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\Friendly.cs" />
