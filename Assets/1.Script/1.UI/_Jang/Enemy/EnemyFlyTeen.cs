@@ -20,6 +20,5 @@ public class EnemyFlyTeen : Enemy
         isHealer = false;
 		base.EnemyInit();
         enemyAI.stoppingDistance = 0.5f;
-
     }
 }

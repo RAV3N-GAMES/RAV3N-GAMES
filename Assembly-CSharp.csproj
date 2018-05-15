@@ -127,6 +127,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyClusterManager.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyFlyTeen.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyGroup.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyIDEFarmer.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyMafia.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyPickPocket.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySheriff.cs" />

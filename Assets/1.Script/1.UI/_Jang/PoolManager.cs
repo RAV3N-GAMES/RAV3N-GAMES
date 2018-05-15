@@ -28,7 +28,6 @@ public enum EFFECT_TYPE
 	Invisible,
 }
 
-
 public class PoolManager : MonoBehaviour {
     public static PoolManager current;
 	public GameObject[] EnemyPrefabs;

@@ -92,8 +92,6 @@ public class ObjectInfo : MonoBehaviour
                 DamageObjPos.SetActive(true);
         }
 
-        print( "tileCol : " + TileCollider.activeInHierarchy);
-
         if (HitCollider != null)
             HitCollider.SetActive(DayandNight.isDay);
 
@@ -103,7 +101,6 @@ public class ObjectInfo : MonoBehaviour
     IEnumerator Display()
     {
         yield return null;
-        print("tileCol : " + TileCollider.activeInHierarchy);
         OnDisplay();
 
         yield break;
@@ -203,7 +200,6 @@ public class ObjectInfo : MonoBehaviour
 
     public void OnDisplay()
     {
-        print("OnDisplay");
         isDisplay = true;
 
         //ClickCollider.SetActive(true);

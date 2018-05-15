@@ -292,13 +292,10 @@ public class CheckTile : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        print("enter");
         if (col.gameObject.tag == "Tile")
         {
-            //print("display : " + objectInfo.isDisplay + "isDay" + DayandNight.isDay);
             if (!objectInfo.isDisplay && !DayandNight.isDay)
             {
-                print("add ");
                 lastColList.Add(col.transform.parent.gameObject);
                 OnCheckTile();
             }

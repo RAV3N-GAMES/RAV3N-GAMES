@@ -77,7 +77,11 @@ public class Enemy : MonoBehaviour {
         NavObj = enemyAI.transform;
         enemyAI.speed = Speed;
         UIEnemyHealth.ValueInit(Hp);
-        MaxHp = Hp;
+        if (isSeizure) {
+            Hp = (int)Mathf.Ceil( Hp * 0.9f);
+            MaxHp = Hp;
+            Attack = (int)Mathf.Ceil(Hp * 0.9f);
+        }
         priority = -1;
     }
 
@@ -232,60 +236,6 @@ public class Enemy : MonoBehaviour {
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
     }
-
-    private bool DirDistance(GameObject g, int Type)
-    {//해당 게임 오브젝트한테 가는지 안가는지 결정.
-     //게임 오브젝트까지의 거리 Distance도 계산
-        if (g == null)
-            return false;
-
-        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
-        if (Type == (int)ObjectType.Friendly)
-            dest = new Vector3(targetFriend.NavObj.position.x, 0, targetFriend.NavObj.position.z);
-        else if (Type == (int)ObjectType.Building)
-            dest = new Vector3(targetWall.transform.position.x, 0, targetWall.transform.position.z);
-        else if (Type == (int)ObjectType.Trap)
-            dest = new Vector3(targetTrap.transform.position.x, 0, targetTrap.transform.position.z);
-        else if (Type == (int)ObjectType.Secret)
-            dest = new Vector3(targetSecret.transform.position.x, 0, targetTrap.transform.position.z);
-
-        Distance = Vector3.Distance(dest, start);
-
-        if (Type == (int)ObjectType.Friendly && targetFriend != null)
-        { // 없어도??
-            if (targetFriend.NavObj.position.x > NavObj.position.x)
-                transform.localScale = new Vector3(-1, 0, 1);
-            else
-                transform.localScale = new Vector3(1, 0, 1);
-        }
-        //Debug.Log(name + " - Distance: " + Distance + " StopDistance: " + StopDistance+ " DirDistance: "+ ((Distance<StopDistance)? true : false).ToString());
-
-        if (Type == (int)ObjectType.Building)
-        {
-            if (Distance < enemyAI.stoppingDistance * 3)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            if (Distance < enemyAI.stoppingDistance * 3)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        //true: 때릴 게임 오브젝트랑 붙어있음
-        //false: 때릴 오브젝트가 없거나 붙어있지 않음.
-    }
-
     public SecretActs FindClosestSecret(Vector3 start)
     {
         SecretActs Closest = null;
@@ -399,8 +349,6 @@ public class Enemy : MonoBehaviour {
         {
             result = 3;
         }
-
-
         return result;
     }
     
@@ -409,91 +357,6 @@ public class Enemy : MonoBehaviour {
         start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
     }
 
-    protected void SetDest(Enemy e)
-    {
-        /*
-         * 우선순위
-         * 소매치기 && 함정 존재 => 함정 (Priority: 0)
-         * Surrounded => 주변 벽(Priority: 1 - 힐러 포함)
-         * 공격수)
-         *  1. 주변 용병 (Priority : 2)
-         *      용병 내 우선순위는 소팅으로 정렬
-         *  1.1 경로 없는 경우 다음 방 입구(Priority : 1)
-         *  1.2 다음 방 입구까지 경로 없는 경우 (Priority: 6)
-         *  2.1 탈취단 && 기밀 존재 => 기밀(Priority: 3)
-         *  2.2 그 외 => 베이스(Priority: 4)
-         *  
-         *  힐러)
-         *   1. 주변 다친 아군(Priority: 2)
-         *   2. 탈취단 && 기밀 존재 => 기밀(Priority: 3)
-         *   3. 그 외 => 베이스(Priority: 4)
-         */
-        if (e == null)
-            return;
-
-        if (e.name == "PickPocket" && targetTrap)
-        {
-            dest = SetYZero(targetTrap.transform);
-            priority = 0;
-            return;
-        }
-
-        if (!isHealer)
-        {
-            if (isSurrounded)
-            {
-
-            }
-
-            else
-            {
-                if (isSeizure && (targetSecret = FindClosestSecret(start)))
-                {
-                    dest = SetYZero(targetSecret.transform);
-                    priority = 3;
-                }
-                else
-                {
-                    dest = SetYZero(OriginalPoint.transform);
-                    priority = 4;
-                }
-            }
-
-            /*if (targetFriend && IsNear(NavObj.transform, targetFriend.transform))
-            {//아군 용병이 공격범위 안에 있을 경우 dest는 용병
-                dest = SetYZero(targetFriend.transform);
-                priority = 2;
-            }
-            else if (isSurrounded)
-            {
-                nextIdx = CheckAdjacentCount();
-                Exitdirection = FindExit();
-                dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
-
-                if (targetWall && IsNear(NavObj.transform, targetWall.transform))
-                {
-                    
-                    // * Count 고려해서 dest 선정
-                    // *  1. 상하좌우 Count 최소값 확인
-                    // *  2. 최소값인 enemyGroup 특정
-                    // *  3. 섞어줌(필요없을수 있음)
-                    // *  4. 0번째 인덱스로 전진 
-                    // *      4.1 dest 는 0번째 인덱스로 가는 방문(해당 enemyGroup에 포인트를 정함)
-                    // *       4.1.1 dest까지 가는 경로가 다시 막혀있으면(PathInnerRoomDisabled가 true이면) => 
-                    // *             dest=targetWall
-                    // *      4.2 살아있는 모든 팀원이 모인 후에 다음 방으로 건너감
-                    // *       4.2.1 door를 포인트로 지정할 것이므로 거긴 막혀있지 않음.
-                     
-                    priority = 1;
-                    //dest = SetYZero(targetWall.transform);
-                }
-                else
-                {
-                    priority = 5;//경로는 없는데 주변에 벽이 없는 경우
-                    // => Count에 따라 옆 방으로 보냄
-                }*/
-        }
-    }
     protected void ArrivedAction()
     {//도착 시 취하는 액션
         if (Vector3.Distance(SetYZero(NavObj), SetYZero(OriginalPoint.transform)) <= enemyAI.stoppingDistance)
@@ -563,9 +426,6 @@ public class Enemy : MonoBehaviour {
         if (isDie || isStolen || isDefeated)
             return;
         SetOrder();
-        //        IsDeadEnd();
-        //        EnemyAction();
-        //        ActionMain();
         GroupActionMain();
         ChangeAnimation();
     }
@@ -605,7 +465,7 @@ public class Enemy : MonoBehaviour {
         SetOrder_Friendly();
     }
 
-    protected void GetTrap()
+    protected void GetTrap()//해당 방에 대한 trap 얻어옴
     {
         GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
         Trap t;
@@ -629,6 +489,12 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
+        if (NearTrap[0])
+        {
+            targetTrap = NearTrap[0];
+        }
+        else
+            targetTrap = null;
     }
 
     private void SetOrder_Trap()
@@ -742,23 +608,6 @@ public class Enemy : MonoBehaviour {
         else
             targetFriend = null;
     }
-    protected void IsDeadEnd()
-    {
-        if (enemyAI.pathStatus == NavMeshPathStatus.PathPartial || enemyAI.pathStatus == NavMeshPathStatus.PathInvalid)
-        {
-            if (dest == SetYZero(OriginalPoint) || (targetSecret && dest == SetYZero(targetSecret.transform)))
-                isSurrounded = true;
-            else
-                InnerSurrounded = true;
-        }
-        else
-        {
-            if (dest == SetYZero(OriginalPoint) || (targetSecret && dest == SetYZero(targetSecret.transform)))
-                isSurrounded = false;
-            else
-                InnerSurrounded = false;
-        }
-    }
     
     protected void SetDestination()
     {
@@ -819,7 +668,7 @@ public class Enemy : MonoBehaviour {
                 goto AfterHeal;
             }
         }
-
+        
         //힐 안한 힐러 && 딜러
         if (nextIdx != -1) {
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)

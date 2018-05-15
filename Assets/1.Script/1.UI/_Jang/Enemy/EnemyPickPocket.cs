@@ -14,12 +14,13 @@ public class EnemyPickPocket : Enemy {
     }
     public override void EnemyInit()
     {
-        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame - 4].AttackRange * 6;
-        Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame - 4].HP;
-        Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame - 4].Attack;
+        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange * 6;
+        Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].HP;
+        Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].Attack;
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = 0.5f;
+        enemyAI.stoppingDistance = 1.0f;
+        enemyAI.speed = 1.0f;
     }
 }
