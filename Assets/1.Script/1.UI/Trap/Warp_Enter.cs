@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Warp_Enter : Trap {
-    GameObject newObj;
-
+    public Warp_Exit WarpExit;
+    public GameObject Effect;
     // Use this for initialization
     void Start () {
-        //room Index 얻어올 방법?
-        //checkCount(0);
         TrapManager.TrapCount[0]++;
-
-        newObj = Instantiate(Resources.Load("Object/Warp_Exit") as GameObject);
         CoolTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame +18].CoolTime;
         EffectContinuousTime = TrapManager.Tbl_TrapSetup[Data_Player.Fame +18].EffectContinuousTime;
         isCool = false;
@@ -26,16 +22,17 @@ public class Warp_Enter : Trap {
     {
         isCool = true;
         yield return new WaitForSeconds((float)CoolTime);
+        Effect.SetActive(false);
+        WarpExit.Effect.SetActive(false);
         isCool = false;
     }
 
     public override void Acts(Collider col)
     {
-        if (!isCool) { 
-            col.transform.position = newObj.transform.position;
-            StartCoroutine(CoolTimeDelay(CoolTime));
-        }
-
+        Effect.SetActive(true);
+        WarpExit.Effect.SetActive(true);
+        Enemy e= col.GetComponentInParent<Enemy>();
+        e.enemyAI.Warp(WarpExit.transform.position);
+        StartCoroutine(CoolTimeDelay(CoolTime));
     }
-
 }

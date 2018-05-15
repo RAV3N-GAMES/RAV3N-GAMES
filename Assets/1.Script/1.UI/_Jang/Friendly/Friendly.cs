@@ -17,6 +17,7 @@ public enum FriendlyState
 */
 public class Friendly : MonoBehaviour
 {
+    public GameObject BodyCollider;
     public AudioSource Audio;
     public AudioClip[] DieClip;
     public AudioClip[] Clips;
@@ -129,7 +130,7 @@ public class Friendly : MonoBehaviour
             if(targetEnemy)
                 targetEnemy.Die();
             if (NearEnemy.Count > 0)
-                targetEnemy = NearEnemy[1];
+                targetEnemy = NearEnemy[0];
             else
                 targetEnemy = null;
         }
@@ -358,27 +359,12 @@ public class Friendly : MonoBehaviour
             }
             roomidx = int.Parse(col.transform.gameObject.GetComponentInParent<TileManager>().name);
         }
-        if (col.CompareTag("Enemy")) {
-            Enemy e = col.GetComponent<Enemy>();
+        if (col.CompareTag("EnemyBody")) {
+            Enemy e = col.GetComponentInParent<Enemy>();
             NearEnemy.Add(e);
         }
     }
 
-/*    private void OnTriggerStay(Collider col) {
-        if (col.CompareTag("Enemy")) {
-            if (!col.gameObject.activeSelf) {
-                NearEnemy.Remove(col.GetComponent<Enemy>());
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider col) {
-        if (col.CompareTag("Enemy")) {
-            NearEnemy.Remove(col.GetComponent<Enemy>());
-            Debug.Log("Enemy: " + col.name+" Escpaed");
-        }
-    }
-    */
     private void SetOrder() {
         for (int i = 0; i < NearEnemy.Count; i++) {
             if (!NearEnemy[i].transform.parent.gameObject.activeSelf)
@@ -414,5 +400,12 @@ public class Friendly : MonoBehaviour
         }
         else
             targetEnemy = null;
+    }
+
+    public void BodyCollierOn() {
+        BodyCollider.SetActive(true);
+    }
+    public void BodyColliderOff() {
+        BodyCollider.SetActive(false);
     }
 }

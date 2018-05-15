@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D0FF5B9C-9D7D-8296-9CCB-CA8B0440009C}</ProjectGuid>
+    <ProjectGuid>{89DE1756-DD99-95AE-9D84-0E61C8FE1A6E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -39,10 +39,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +128,7 @@
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyFlyTeen.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyGroup.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyMafia.cs" />
+     <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemyPickPocket.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySheriff.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Enemy\EnemySinger.cs" />
      <Compile Include="Assets\1.Script\1.UI\_Jang\Friendly\Friendly.cs" />
@@ -171,25 +172,31 @@
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle Multiply.shader" />
      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle AlphaBlend.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Common">
+ <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

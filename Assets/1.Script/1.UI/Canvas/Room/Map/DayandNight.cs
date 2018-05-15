@@ -14,7 +14,7 @@ public class DayandNight : MonoBehaviour
     public RoomManager roomManager;
     public GameObject ReadyButton;
     public GameObject InActReadyButton;
-
+    public Friendly[] FriendlyList;
     public ResultPopUp resultPopUp;
 
     public static bool isDay = false;
@@ -76,7 +76,6 @@ public class DayandNight : MonoBehaviour
 
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();
-            //WallSyncFromObjectInfo();
         }
         else {
             curtain.transform.Rotate(0, -90, 0);
