@@ -11,6 +11,8 @@ public class CreatePopUp : MonoBehaviour {
 
     public RoomManager roomManager;
 
+    public GameObject ExceedLimitAllot;
+
     void UsingTile(string id, int price)
     {
         if (!id.Equals("Warp"))
@@ -32,20 +34,11 @@ public class CreatePopUp : MonoBehaviour {
     {
         switch(type)
         {
-            case 0:
-                SoundManager.soundManager.OnEffectSound("10_BUILDING SET");
-                break;
-            case 2:
-                SoundManager.soundManager.OnEffectSound("48_SOLDIER SET");
-                break;
-            case 3:
-                SoundManager.soundManager.OnEffectSound("50_TRAP SET");
-                break;
-            case 4:
-                SoundManager.soundManager.OnEffectSound("52_SECRET SET");
-                break;
-            default:
-                break;
+            case 0: SoundManager.soundManager.OnEffectSound("10_BUILDING SET"); break;
+            case 2: SoundManager.soundManager.OnEffectSound("48_SOLDIER SET"); break;
+            case 3: SoundManager.soundManager.OnEffectSound("50_TRAP SET"); break;
+            case 4: SoundManager.soundManager.OnEffectSound("52_SECRET SET");  break;
+            default: break;
         }
     }
 
@@ -59,7 +52,15 @@ public class CreatePopUp : MonoBehaviour {
         
         if (Data_Player.isEnough_G(price))
         {
-            if (Obj.GetComponent<DisplayObject>().UsingTile())
+            if(!Obj.GetComponent<CheckTile>().tileManager.IsPossibleAllot(Obj.GetComponent<ObjectInfo>().type))
+            {
+                CancelPref();
+                ExceedLimitAllot.SetActive(true);
+                gameObject.SetActive(false);
+
+                return;
+            }
+            if (Obj.GetComponent<DisplayObject>().UsingTile(true))
             {
                 UsingTile(id, price);
 

@@ -11,7 +11,12 @@ public class SoundManager : MonoBehaviour {
     public static AudioSource BGMAudio { get; private set; }
     public static AudioSource EffectAudio { get; private set; }
 
+    public static bool isEffectMute;
+    public static bool isBGMMute;
+
     public List<int> DayandNightNum;
+
+    public ClickController BGMButton, EffectButton;
 
     string bgmName;
 
@@ -43,16 +48,55 @@ public class SoundManager : MonoBehaviour {
             InitDayandNightNum();
 
             soundManager = this;
+
+            SetOption();
         }
     }
 
-    public void OnOffBGM(bool isPossible)
+    void SetOption()
     {
-        BGMAudio.mute = !isPossible;
+        if (PlayerPrefs.GetInt("BGM") == 1)
+        {
+            BGMButton.OffButtonClick();
+            SetBGMMute(true);
+        }
+        else
+        {
+            BGMButton.OnButtonClick();
+            SetBGMMute(false);
+        }
+
+        if (PlayerPrefs.GetInt("Effect") == 1)
+        {
+            EffectButton.OffButtonClick();
+            SetEffectMute(true);
+        }
+        else
+        {
+            EffectButton.OnButtonClick();
+            SetEffectMute(false);
+        }
     }
-    public void OnOffEffectSound(bool isPossible)
+
+    public void SetBGMMute(bool isMute)
     {
-        EffectAudio.mute = !isPossible;
+        isBGMMute = isMute;
+        BGMAudio.mute = isBGMMute;
+
+        if (isBGMMute)
+            PlayerPrefs.SetInt("BGM", 1);
+        else
+            PlayerPrefs.SetInt("BGM", -1);
+    }
+    public void SetEffectMute(bool isMute)
+    {
+        isEffectMute = isMute;
+        EffectAudio.mute = isEffectMute;
+
+        if (isEffectMute)
+            PlayerPrefs.SetInt("Effect", 1);
+        else
+            PlayerPrefs.SetInt("Effect", -1);
     }
 
     bool isPlayingBGM()

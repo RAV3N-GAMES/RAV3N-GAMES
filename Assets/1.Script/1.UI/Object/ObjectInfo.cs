@@ -8,6 +8,7 @@ public class ObjectInfo : MonoBehaviour
     public GameObject ClickCollider;
     public GameObject TileCollider;
     public GameObject ObjectCollider;
+    public GameObject HitCollider;
 
     public GameObject DamageObjPos;
 
@@ -64,8 +65,10 @@ public class ObjectInfo : MonoBehaviour
 
         presentHP = totalHP;
 
-        InitFriend();
-        
+        if (type == 2)
+            InitFriend();
+        if (HitCollider != null)
+            HitCollider.SetActive(DayandNight.isDay);
     }
     
     public void InitObject(SaveObject objInfo) //설치된거 껐다 켜고 설치할때
@@ -76,7 +79,8 @@ public class ObjectInfo : MonoBehaviour
         coordinate = objInfo.coordinate;
         DontDestroy = objInfo.DontDestroy;
 
-        InitFriend();
+        if (type == 2)
+            InitFriend();
 
         isRotation = objInfo.isRotation;
 
@@ -88,13 +92,20 @@ public class ObjectInfo : MonoBehaviour
                 DamageObjPos.SetActive(true);
         }
 
+        print( "tileCol : " + TileCollider.activeInHierarchy);
+
+        if (HitCollider != null)
+            HitCollider.SetActive(DayandNight.isDay);
+
         StartCoroutine(Display());
     }
-    
+
     IEnumerator Display()
     {
         yield return null;
+        print("tileCol : " + TileCollider.activeInHierarchy);
         OnDisplay();
+
         yield break;
     }
 
@@ -192,9 +203,10 @@ public class ObjectInfo : MonoBehaviour
 
     public void OnDisplay()
     {
+        print("OnDisplay");
         isDisplay = true;
 
-        ClickCollider.SetActive(true);
+        //ClickCollider.SetActive(true);
         TileCollider.SetActive(false);
         ClickCollider.SetActive(!DayandNight.isDay);
         

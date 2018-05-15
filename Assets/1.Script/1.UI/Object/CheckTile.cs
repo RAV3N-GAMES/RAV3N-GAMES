@@ -35,8 +35,8 @@ public class CheckTile : MonoBehaviour {
     public Transform findPivotCol()
     {
         int Cnt = lastColList.Count;
-        if (Cnt == 0) 
-                return lastCol.transform;
+        if (Cnt == 0)
+            return lastCol.transform;
         
         GameObject tempPivot = lastColList[0];
 
@@ -99,7 +99,8 @@ public class CheckTile : MonoBehaviour {
         return pivotCoordinate;
     }
 
-    public bool UsingTile(int[] idx)
+
+    public bool UsingTile(int[] idx, bool isDisplay)
     {
         OnDisplayCheckTile();
 
@@ -125,7 +126,8 @@ public class CheckTile : MonoBehaviour {
                 }
             }
 
-            tileManager.UsingTile(gameObject, idx);
+            if (isDisplay)
+                tileManager.UsingTile(gameObject, idx);
             return true;
         }
         return false;
@@ -290,10 +292,13 @@ public class CheckTile : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        print("enter");
         if (col.gameObject.tag == "Tile")
         {
+            //print("display : " + objectInfo.isDisplay + "isDay" + DayandNight.isDay);
             if (!objectInfo.isDisplay && !DayandNight.isDay)
             {
+                print("add ");
                 lastColList.Add(col.transform.parent.gameObject);
                 OnCheckTile();
             }

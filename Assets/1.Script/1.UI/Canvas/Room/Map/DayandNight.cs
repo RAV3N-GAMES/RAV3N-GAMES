@@ -11,11 +11,13 @@ public enum Traps_Script { HumanTrap , Warp_Enter , Warp_Exit};
 
 public class DayandNight : MonoBehaviour
 {
+    public RoomManager roomManager;
     public GameObject ReadyButton;
+    public GameObject InActReadyButton;
 
     public ResultPopUp resultPopUp;
 
-    public static bool isDay;
+    public static bool isDay = false;
     public static bool DayTime;
     [HideInInspector]
     public static List<Enemy> CreatedEnemy;
@@ -54,16 +56,24 @@ public class DayandNight : MonoBehaviour
     public void changeState() {
         isDay = !isDay;
 
+        roomManager.OnOffHitCollider();
+
+        ReadyButton.SetActive(!isDay);
+        InActReadyButton.SetActive(isDay);
+
         if (!isDay)
         {
             Debug.Log("ResultPopup Active");
+
             resultPopUp.gameObject.SetActive(true);
+
             resultPopUp.InitResultPopUp();
         }
 
         if (isDay) {
             SoundManager.soundManager.ChangeBGM("4_DAY START");
-            ReadyButton.SetActive(false);
+
+
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();
             //WallSyncFromObjectInfo();

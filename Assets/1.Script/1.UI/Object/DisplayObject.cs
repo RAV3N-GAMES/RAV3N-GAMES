@@ -58,9 +58,9 @@ public class DisplayObject : MonoBehaviour
         return checkTile.DestroyObj(isDestroyed, makeIdx());
     }
 
-    public bool UsingTile()
+    public bool UsingTile(bool isDisplay)
     {
-        return checkTile.UsingTile(makeIdx());
+        return checkTile.UsingTile(makeIdx(), isDisplay);
     }
 
     void OnCheckButton()

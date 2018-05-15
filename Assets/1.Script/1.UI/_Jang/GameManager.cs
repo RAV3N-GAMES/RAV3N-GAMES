@@ -10,7 +10,6 @@ public enum DIRECTION
 }
 
 public class GameManager : MonoBehaviour {
-    public GameObject ReadyButton;
     public static GameManager current;
 	public delegate EnemyGroup GetEnemyGroup();
 	public static event GetEnemyGroup EnemyGroupEvent;
@@ -86,7 +85,6 @@ public class GameManager : MonoBehaviour {
                 break;
             }
         }
-        ReadyButton.SetActive(true);
 
         EnemyManager.EnemyGroupMax = ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber;
     }

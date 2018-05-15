@@ -17,5 +17,7 @@ public class MapRoom : MonoBehaviour {
         {
             mapManager.MoveRoom(roomNum);
         }
+
+        SoundManager.soundManager.OnEffectSound("8_CONTENTS");
     }
 }

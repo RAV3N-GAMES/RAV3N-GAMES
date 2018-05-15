@@ -97,14 +97,10 @@ public class MapManager : MonoBehaviour
 
         isOpen = new Type[STEP_MAX][];
         for (int i = 0; i < STEP_MAX; i++)
-        {
             isOpen[i] = new Type[STEP_MAX];
-        }
 
         for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
-        {
             isOpen[i / STEP_MAX][i % STEP_MAX] = (Type)map.isOpen[i];
-        }
 
         miniMapManager.InitMiniMap();
     }
@@ -180,11 +176,21 @@ public class MapManager : MonoBehaviour
     {
         switch (type)
         {
-            case 0: BuildingCnt += Cnt; BuildingText.text = BuildingCnt.ToString(); break;
-            case 2: OurForcesCnt += Cnt; OurForcesText.text = OurForcesCnt.ToString(); break;
-            case 3: TrapCnt += Cnt; TrapText.text = TrapCnt.ToString(); break;
-            case 4: SecretCnt += Cnt; SecretText.text = SecretCnt.ToString(); break;
+            case 0: BuildingCnt += Cnt; break;
+            case 2: OurForcesCnt += Cnt; break;
+            case 3: TrapCnt += Cnt; break;
+            case 4: SecretCnt += Cnt; break;
         }
+    }
+
+    void SetObjectCntText(int idx)
+    {
+        int[] objCnt = roomManager.GetObjectCnt(idx);
+
+        BuildingText.text = objCnt[0].ToString();
+        OurForcesText.text = objCnt[1].ToString();
+        TrapText.text = objCnt[2].ToString();
+        SecretText.text = objCnt[3].ToString();
     }
 
     public void InitObjectCnt()
@@ -407,6 +413,8 @@ public class MapManager : MonoBehaviour
         RoomList[conRoom].GetComponent<Image>().color = new Color(1, 1, 1, 1);
         RoomList[roomIdx].GetComponent<UnityEngine.UI.Image>().color = new Color(0, 1, 0, 1);
 
+        SetObjectCntText(idx);
+
         conRoom = roomIdx;
     }
 
@@ -415,6 +423,7 @@ public class MapManager : MonoBehaviour
     {
         MoveMapRoom(idx);
         roomManager.MoveRoom(idx);
+        SetObjectCntText(idx);
     }
 
     int GetOpenRoomCnt()
@@ -509,6 +518,7 @@ public class MapManager : MonoBehaviour
         }
 
         RoomList[conRoom].GetComponent<Image>().color = new Color(0, 1, 0, 1);
+
         miniMapManager.InitMap();
 
         WriteMapInfo();

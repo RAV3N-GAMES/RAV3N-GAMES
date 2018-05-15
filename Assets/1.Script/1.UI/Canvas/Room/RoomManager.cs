@@ -60,6 +60,7 @@ public class RoomManager : MonoBehaviour {
     private void RemoveGenPoint() {
 
     }
+
     void Awake()
     {
         possibleDrag = true;
@@ -83,10 +84,16 @@ public class RoomManager : MonoBehaviour {
         SoundManager.soundManager.ChangeBGM("7_NIGHT");
     }
 
+    public int[] GetObjectCnt(int idx)
+    {
+        return Room[idx].GetComponent<TileManager>().GetObjectCntArray();
+    }
+
     public void MoveRoom(int idx)
     {
         Camera.main.transform.position = new Vector3(Room[idx].transform.position.x, Camera.main.transform.position.y, Room[idx].transform.position.z);
     }
+
     public bool InitialRooms(int idx) {
         return (idx <= 1 || idx == 5 || idx == 6) ? true : false;//idx= 0 or 1 or 5 or 6 -> true
     }
@@ -222,6 +229,16 @@ public class RoomManager : MonoBehaviour {
         }
         touchDistance = Vector3.Distance(touch0.position, touch1.position);
     }
+
+    public void OnOffHitCollider()
+    {
+        for (int i = 0; i < Room.Count; i++)
+        {
+            if (Room[i].activeInHierarchy)
+                Room[i].GetComponent<TileManager>().OnOffHitCollider();
+        }
+    }
+
 
     public void ResetRoom()
     {

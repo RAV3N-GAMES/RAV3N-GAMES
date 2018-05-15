@@ -12,6 +12,7 @@ public class TileObject {
     public int parentRow;
     public int parentCol;
 
+
     public TileObject(GameObject _Obj, int row, int col, int parentRow, int parentCol)
     {
         mObject = _Obj;
@@ -29,6 +30,13 @@ public class TileObject {
         return new SaveObject(mObject.transform.position, objectInfo.DontDestroy, objectInfo.type, objectInfo.id, objectInfo.level,
                              objectInfo.presentHP, objectInfo.totalHP, mRow, mCol, objectInfo.coordinate, objectInfo.pivotObject.gameObject.name,
                           objectInfo.isRotation, parentRow, parentCol);
+    }
+
+    public int GetObjectType()
+    {
+        if (mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
+            return -1;
+        return mObject.GetComponent<ObjectInfo>().type;
     }
 
     public void Repair()
@@ -60,6 +68,15 @@ public class TileObject {
         }
 
         return repairCost;
+    }
+
+    public void OnOffHitCollider()
+    {
+        try
+        {
+            mObject.GetComponent<ObjectInfo>().HitCollider.SetActive(DayandNight.isDay);
+        }
+        catch{ }
     }
 
     public void OnTransparency(bool isTransparency)

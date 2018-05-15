@@ -23,12 +23,15 @@ public class ObjectMove : MonoBehaviour
 
     public bool isNewObj = false;
 
-    void Start()
+    void Awake()
     {
         lastCol = null;
         isMove = true;
         changePos = false;
+    }
 
+    void Start()
+    {
         checkTile = GetComponent<CheckTile>();
 
         canvasWidth = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta.x * GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.x;
@@ -127,9 +130,8 @@ public class ObjectMove : MonoBehaviour
                     WarpExit.transform.position = warpPos;
             }
 
-            yield return null;
-
             checkTile.OnCheckTile();
+            yield return null;
         }
     }
 

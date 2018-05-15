@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovePopUp : MonoBehaviour {
     //타일사용여부 해제 시점 알아야 함
     public GameObject RotationButton;
+    public GameObject ExceedLimitAllot;
 
     GameObject movingObj = null;
     int[] preIdx;
@@ -13,10 +14,10 @@ public class MovePopUp : MonoBehaviour {
 
     TileManager tileManager;
     
-    void SetSortingLayer()
-    {
-        movingObj.GetComponent<ObjectColor>().SetSortingLayer(tileManager.gameObject.name);
-    }
+    //void SetSortingLayer()
+    //{
+    //    movingObj.GetComponent<ObjectColor>().SetSortingLayer(tileManager.gameObject.name);
+    //}
 
     public void InitObject(GameObject obj)
     {
@@ -48,14 +49,15 @@ public class MovePopUp : MonoBehaviour {
         }
         
         movingObj.GetComponent<ObjectInfo>().OnDisplay();
-        SetSortingLayer();  //이거 굳이 해야하나
-        gameObject.SetActive(false);
+        //SetSortingLayer();  //이거 굳이 해야하나
 
         if(objectInfo.name.Equals("Warp"))
         {
             ObjectMove objectMove = movingObj.GetComponent<ObjectMove>();
             objectMove.WarpExit.transform.position = objectMove.warpPos;
         }
+
+        gameObject.SetActive(false);
 
         yield break;
     }
@@ -68,7 +70,6 @@ public class MovePopUp : MonoBehaviour {
             type += 0.5f;
 
         tileManager.SetMatrix(preIdx, type);
-
         RoomManager.ChangeClickStatus(true);
 
         StartCoroutine("ReturnDisplay");
@@ -76,7 +77,17 @@ public class MovePopUp : MonoBehaviour {
 
     public void MoveObj()
     {
-        if (movingObj.GetComponent<DisplayObject>().UsingTile())
+        if (movingObj.GetComponent<CheckTile>().tileManager.name != tileManager.name)
+        {
+            if (!movingObj.GetComponent<CheckTile>().tileManager.IsPossibleAllot(movingObj.GetComponent<ObjectInfo>().type))
+            {
+                ReturnObj();
+                ExceedLimitAllot.SetActive(true);
+                return;
+            }
+        }
+
+        if (movingObj.GetComponent<DisplayObject>().UsingTile(false))
         {
             TileManager newTileManger = movingObj.GetComponent<CheckTile>().tileManager;
 
@@ -84,6 +95,7 @@ public class MovePopUp : MonoBehaviour {
             movingObj.GetComponent<CheckTile>().DestroyObj(false, preIdx);
 
             movingObj.GetComponent<CheckTile>().tileManager = newTileManger;
+            movingObj.GetComponent<DisplayObject>().UsingTile(true);
 
             movingObj.GetComponent<ObjectInfo>().OnDisplay();
             RoomManager.ChangeClickStatus(true);

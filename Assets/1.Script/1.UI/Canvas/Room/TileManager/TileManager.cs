@@ -7,6 +7,11 @@ using System.IO;
 public class TileManager : MonoBehaviour
 {
     const int TILE_MAX = 20;
+
+    const int BUILDING_MAX = 20;
+    const int OURFORCES_MAX = 3;
+    const int TRAP_MAX = 5;
+
     float[][] tileMatrix;          //사용하지 않을 경우 -1 , 사용할 경우 type으로 한다.
 
     List<TileObject> objectList;
@@ -42,6 +47,36 @@ public class TileManager : MonoBehaviour
         InitMatrix();
 
         InitTileManager();
+    }
+
+    void Start()
+    {
+        OnOffHitCollider();
+    }
+
+    public void OnOffHitCollider()
+    {
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            objectList[i].OnOffHitCollider();
+        }
+    }
+
+    public int[] GetObjectCntArray()
+    {
+        int[] ObjectCnt = { 0, 0, 0, 0 };
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            switch (objectList[i].GetObjectType())
+            {
+                case 0: ObjectCnt[0]++; break;
+                case 2: ObjectCnt[1]++; break;
+                case 3: ObjectCnt[2]++; break;
+                case 4: ObjectCnt[3]++; break;
+            }
+        }
+
+        return ObjectCnt;
     }
 
     public void InitTileManager()
@@ -84,11 +119,29 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public int GetObjectCount()
+    public bool IsPossibleAllot(int type)
     {
-        if (objectList == null)
-            return 0;
-        return objectList.Count;
+        int ObjectCnt = 0;
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].GetObjectType() == type)
+                ObjectCnt++;
+        }
+
+        int Max = 0;
+
+        switch (type)
+        {
+            case 0: Max = BUILDING_MAX; break;
+            case 2: Max = OURFORCES_MAX; break;
+            case 3: Max = TRAP_MAX; break;
+            default: return true;
+        }
+
+        if (Max <= ObjectCnt)
+            return false;
+        else
+            return true;
     }
 
     public float[] GetObjectInfo(int idx) //0 : row, 1 : col, 2 : type 
@@ -225,19 +278,13 @@ public class TileManager : MonoBehaviour
             objectList[i].SetLayerDepth(i);
         }
 
-        //objectList.RemoveAt(layerDepth);
-        //
-        //for(int i = layerDepth; i < objectList.Count; i++)
-        //{
-        //    objectList[i].SetLayerDepth(i);
-        //}
-
         if (isDestroyed)
         {
             DamageReportPopUp.PlusDamage(objInfo.type, objInfo.id, objInfo.level);
         }
 
-        mapManager.SetObjectCnt(objInfo.type, -1);
+        if (objInfo.id != "Warp_Exit")
+            mapManager.SetObjectCnt(objInfo.type, -1);
 
         SaveTileObject();
         return true;
@@ -357,8 +404,8 @@ public class TileManager : MonoBehaviour
 
         //여기에서 정렬하면서 추가 -> Layer 변경
         SetOrderInLayer(new TileObject(Obj, idx[0], idx[1], warpRow, warpCol));
-
-        mapManager.SetObjectCnt(objInfo.type, 1);
+        if (objInfo.id != "Warp_Exit")
+            mapManager.SetObjectCnt(objInfo.type, 1);
         SaveTileObject();
     }
 
@@ -506,7 +553,7 @@ public class TileManager : MonoBehaviour
 
             try
             {
-                displayData = File.ReadAllText(Application.persistentDataPath + "/Room"+gameObject.name+".json");
+                displayData = File.ReadAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json");
 
             }
             catch
@@ -553,10 +600,5 @@ public class TileManager : MonoBehaviour
             JsonData newObj = JsonMapper.ToJson(saveObj);
             File.WriteAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json", newObj.ToString());
         }
-    }
-
-    void OnApplicationQuit()
-    {
-        SaveTileObject();
     }
 }

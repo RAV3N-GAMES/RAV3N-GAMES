@@ -31,5 +31,7 @@ public class MailObject : MonoBehaviour {
 
         mailBox.TakeMailPopUp.SetActive(true);
         mailBox.gameObject.SetActive(false);
+
+        SoundManager.soundManager.OnEffectSound("8_CONTENTS");
     }
 }
