@@ -668,9 +668,10 @@ public class Enemy : MonoBehaviour {
                 goto AfterHeal;
             }
         }
-        
+       
         //힐 안한 힐러 && 딜러
         if (nextIdx != -1) {
+            enemyAI.CalculatePath(dest, enemyAI.path);
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
             {
                 if (!isHealer && targetFriend && IsNear(NavObj, targetFriend.transform))
@@ -703,6 +704,7 @@ public class Enemy : MonoBehaviour {
                 else
                     enemyAI.isStopped = false;
 
+                enemyAI.CalculatePath(dest, enemyAI.path);
                 if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
                 {
                     if (!isHealer && targetWall && IsNear(NavObj, targetWall.transform))

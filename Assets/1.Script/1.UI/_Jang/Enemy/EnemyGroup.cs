@@ -8,6 +8,15 @@ public class EnemyGroup : MonoBehaviour {
     public bool isGenerate;
     public int isOpressed;//0: not opressed, 1: oppressed, 2: gold provided
     public int Count;
+    /*
+     * Genpoint
+      - 0번 방 제외하고 모든 방에 4방향 전부 존재
+      - 단, 초기 방(1, 5, 6)은 위치에 맞게 2개만 존재
+      - 그 외의 경우 저장될 때 해당 정보 저장해주니 상관 X
+
+     * Exitpoint
+      - 모든 방에 4방향 존재
+     */
     public List<Transform> GenPoint;
     public List<Transform> ExitPoint;
     List<Enemy> tmp;
