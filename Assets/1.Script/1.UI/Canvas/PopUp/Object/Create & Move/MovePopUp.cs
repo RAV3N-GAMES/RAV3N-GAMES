@@ -72,6 +72,8 @@ public class MovePopUp : MonoBehaviour {
         tileManager.SetMatrix(preIdx, type);
         RoomManager.ChangeClickStatus(true);
 
+        movingObj.GetComponent<ObjectColor>().SetSortingLayer(tileManager.name);
+
         StartCoroutine("ReturnDisplay");
     }
 

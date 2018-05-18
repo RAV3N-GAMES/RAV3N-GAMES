@@ -20,6 +20,8 @@ public class ApplicationManager : MonoBehaviour {
     {
         if (QuitPopUp != null)
         {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
             PopUpList = new List<GameObject>();
 
             PopUpList.Add(QuitPopUp);

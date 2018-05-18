@@ -48,12 +48,12 @@ public class ChangePopUp : MonoBehaviour {
             Obj.GetComponent<ObjectMove>().changePos = true;
             Obj.GetComponent<ObjectInfo>().isDisplay = false;
 
-            Obj.GetComponent<ObjectInfo>().TileCollider.SetActive(true);
             Obj.GetComponent<ObjectColor>().OnColor(true);
 
             Obj.GetComponent<DisplayObject>().CreateButton = MovePopUp;
 
             isMove = true;
+            Obj.GetComponent<ObjectInfo>().TileCollider.SetActive(true);
         }
         else
             DontDestroy.SetActive(true);

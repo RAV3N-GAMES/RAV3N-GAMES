@@ -9,18 +9,24 @@ public class LoadingScene : MonoBehaviour {
 
     public GameObject[] LoadingImage;
 
-	public void StartLoading()
+    string SceneName = "";
+    
+
+	public void StartLoading(string SceneName)
     {
         int random = Random.Range(0, 100);
         random = random % 2;
         
         LoadingImage[random].SetActive(true);
+
+        this.SceneName = SceneName;
+
         StartCoroutine("LoadScene");
     }
 	
     IEnumerator LoadScene()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync("UI");
+        AsyncOperation async = SceneManager.LoadSceneAsync(SceneName);
         async.allowSceneActivation = false;
 
         while (!async.isDone)
