@@ -9,6 +9,7 @@ public class ObjInfo_Trap : ObjInfoPopUp
     public Text CoolTime;
     public Text LvText;
     public Text UpgradePrice;
+    public Text Attack;
 
     public Text UpgradeIcon;
 
@@ -20,32 +21,67 @@ public class ObjInfo_Trap : ObjInfoPopUp
     public Image ActivationImage;
     public Text ActivationPrice;
 
+    void SetLVRect(RectTransform lvRect)
+    {
+        Vector2 min = Vector2.zero, max = Vector2.zero;
+        float minY = lvRect.anchorMin.y;
+        float maxY = lvRect.anchorMax.y;
+
+        switch (id)
+        {
+            case "FlameThrowingTrap": min = new Vector2(0.76f, minY); max = new Vector2(0.86f, maxY); break;
+            case "HumanTrap": min = new Vector2(0.73f, minY); max = new Vector2(0.83f, maxY); break;
+            case "ObstructMovementCurrent": min = new Vector2(0.75f, minY); max = new Vector2(0.85f, maxY); break;
+            case "Warp": min = new Vector2(0.66f, minY); max = new Vector2(0.76f, maxY); break;
+        }
+
+        lvRect.anchorMin = min;
+        lvRect.anchorMax = max;
+
+        lvRect.offsetMin = Vector2.zero;
+        lvRect.offsetMax = Vector2.zero;
+    }
+
     public override void InitObjInfoPopUp(string id, int type, SlotManager slotManager)
     {
         base.InitObjInfoPopUp(id, type, slotManager);
 
-        LvText.text = level.ToString();
 
-        TrapObject trap = JsonDataManager.GetTrapInfo(id, level);
-        
+        TrapObject trap;
 
+        if (level != 0)
+        {
+            trap = JsonDataManager.GetTrapInfo(id, level);
+            LvText.text = level.ToString();
+        }
+        else
+        {
+            trap = JsonDataManager.GetTrapInfo(id, 1);
+            LvText.text = "1";
+        }
+
+        SetLVRect(LvText.gameObject.GetComponent<RectTransform>());
 
         int upgradeCost = base.GetUpgradeCost();
         if (upgradeCost != -1)
         {
             UpgradeIcon.gameObject.SetActive(true);
             UpgradeIcon.text = upgradeCost.ToString();
-
-            DisassemblyTime.text = trap.DisassemblyTime.ToString();
-            CoolTime.text = trap.CoolTime.ToString();
         }
         else
         {
             UpgradeIcon.gameObject.SetActive(false);
+        }
 
-            DisassemblyTime.text = "";
-            CoolTime.text = "";
+        DisassemblyTime.text = trap.DisassemblyTime.ToString();
+        CoolTime.text = trap.CoolTime.ToString();
 
+        switch (id)
+        {
+            case "FlameThrowingTrap": case "ObstructMovementCurrent":
+                Attack.text = trap.Attack.ToString(); break;
+            default:
+                Attack.text = ""; break;
         }
     }
 

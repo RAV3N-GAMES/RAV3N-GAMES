@@ -39,6 +39,8 @@ public class Wall : MonoBehaviour {
         info.id = id;
         info.totalHP = MaxHP;
         info.type = Type;
+
+        info.SetHP(0);
         //더 추가할거 있으면 추후에 추가.
     }
 

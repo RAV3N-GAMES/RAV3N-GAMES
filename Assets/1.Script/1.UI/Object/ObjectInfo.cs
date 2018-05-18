@@ -92,13 +92,16 @@ public class ObjectInfo : MonoBehaviour
 
         if (HitCollider != null)
             HitCollider.SetActive(DayandNight.isDay);
-
+        SetHP(0);
         StartCoroutine(Display());
     }
 
     IEnumerator Display()
     {
         yield return null;
+
+        if (GetComponent<CheckTile>().lastColList.Count == 0)
+            print("lastCol == 0 tileCol" + TileCollider.activeInHierarchy);
         OnDisplay();
 
         yield break;
@@ -167,6 +170,14 @@ public class ObjectInfo : MonoBehaviour
             else
                 presentHP += changeHP;
         }
+        else
+        {
+            if (DamageObjPos != null)
+            {
+                if (changeHP + presentHP < totalHP)
+                    DamageObjPos.SetActive(true);
+            }
+        }
     }
 
     public void RepairObject(int repairHP)
@@ -209,7 +220,7 @@ public class ObjectInfo : MonoBehaviour
 
     public void OffDisplay()
     {
-        Debug.Log("OffDisplay on");
+        Debug.Log("OffDisplay");
         isDisplay = false;
 
         GetComponent<CheckTile>().lastColList.Clear();

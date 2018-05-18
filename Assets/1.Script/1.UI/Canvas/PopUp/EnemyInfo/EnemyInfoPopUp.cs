@@ -11,7 +11,12 @@ public class EnemyInfoPopUp : MonoBehaviour {
 
     public List<EnemyInfoText> enemyInfoText;
 
-    bool isSS = true;
+    bool isSS = false;
+
+    void Start()
+    {
+        ChangeStatus(true);
+    }
 
     public void ChangeChanceText()
     {
