@@ -98,7 +98,6 @@ public class Enemy : MonoBehaviour {
             if (targetFriend.Health(Attack))
             {
                 GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
-
                 targetFriend.Die();
             }
         }
@@ -354,7 +353,7 @@ public class Enemy : MonoBehaviour {
     
     protected void SetStart()
     {
-        start = new Vector3(NavObj.position.x, 0, NavObj.position.z);
+        start = SetYZero(NavObj);
     }
 
     protected void ArrivedAction()
@@ -426,7 +425,8 @@ public class Enemy : MonoBehaviour {
         if (isDie || isStolen || isDefeated)
             return;
         SetOrder();
-        GroupActionMain();
+        EnemyActionMain();
+//      GroupActionMain();
         ChangeAnimation();
     }
 
@@ -570,14 +570,6 @@ public class Enemy : MonoBehaviour {
     }
     private void SetOrder_Friendly()
     {
-        for (int i = 0; i < NearFriendly.Count; i++)
-        {
-            if (!NearFriendly[i].transform.parent.gameObject.activeSelf)
-            {
-                NearFriendly.Remove(NearFriendly[i]);
-                i--;
-            }
-        }
         if (NearFriendly.Count > 1)
         {
             NearFriendly.Sort(
@@ -611,7 +603,6 @@ public class Enemy : MonoBehaviour {
     
     protected void SetDestination()
     {
-        targetSecret = FindClosestSecret(NavObj.position);
         if (isSeizure && targetSecret)
         {
             dest = SetYZero(targetSecret.transform);
@@ -620,13 +611,23 @@ public class Enemy : MonoBehaviour {
         {
             dest = SetYZero(OriginalPoint.transform);
         }
-        enemyAI.SetDestination(dest);
+
+        if (isHealer)
+        {
+            Enemy e;
+            if ((e = myCluster.HurtEnemy()))
+            {
+                healTarget = e;
+                dest = SetYZero(healTarget.NavObj);
+            }
+        }
     }
 
-    protected void GroupActionMain()
-    {
+    protected void EnemyActionMain() {
+        if (nextIdx == -1)
+            return;
+
         SetStart();
-        SetDestination();
         if (isEntered)
         {
             //해당 방의 Trap / Secret 받아오기
@@ -635,45 +636,151 @@ public class Enemy : MonoBehaviour {
             targetSecret = FindClosestSecret(NavObj.transform.position);
             isEntered = false;
         }
+        SetDestination();
 
-        if (isHealer)
+        enemyAI.SetDestination(dest);
+        enemyAI.CalculatePath(dest, enemyAI.path);
+
+        if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
         {
-            Enemy e;
-            if ((e = myCluster.HurtEnemy()))
+            if (PresentRoomidx == 0 && (!isSeizure || (isSeizure && !targetSecret)))
             {
-                healTarget = e;
-
-                if (healTarget.NavObj.position.x > NavObj.position.x)
-                    transform.localScale = new Vector3(-1, 1, 1);
-                else
-                    transform.localScale = new Vector3(1, 1, 1);
-                dest = SetYZero(healTarget.NavObj);
-
-                if (IsNear(NavObj, healTarget.NavObj))
+                dest = SetYZero(OriginalPoint.transform);
+            }
+            else if (isSeizure && targetSecret)
+            {
+                dest = SetYZero(targetSecret.transform);
+            }
+            else
+            {
+                Exitdirection = FindExit();
+                if (PresentRoomidx >= 0 && PresentRoomidx <= 24)
                 {
-                    currentState = EnemyState.Idle;
-                    enemyAI.isStopped = true;
-                    if (!isHeal)
+                    dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+                }
+            }
+
+            enemyAI.SetDestination(dest);
+            enemyAI.CalculatePath(dest, enemyAI.path);
+            if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+            {
+                if (targetWall || targetFriend)
+                {
+                    if (!isShoot)
                     {
-                        isHeal = true;
-                        StartCoroutine(GiveHeal());
+                        enemyAI.isStopped = true;
+                        isShoot = true;
+                        currentState = EnemyState.Attack;
                     }
                 }
                 else
                 {
-                    enemyAI.isStopped = false;
                     currentState = EnemyState.Walk;
-                    enemyAI.SetDestination(dest);
+                    enemyAI.isStopped = true;
+                    transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
                 }
-                goto AfterHeal;
             }
         }
-       
+        else {
+            if (!isHealer && targetFriend)
+            {
+                if (!isShoot)
+                {
+                    enemyAI.isStopped = true;
+                    isShoot = true;
+                    currentState = EnemyState.Attack;
+                }
+            }
+            else { 
+                enemyAI.isStopped = false;
+                currentState = EnemyState.Walk;
+            }
+        }
+        
+        /* 용병 만날 경우 전투
+         * 길 막힌 경우 -> 방 내부에서 목적지 설정
+         *
+         * 소매치기 => 방 내부에 있는 함정 -> Exitpoint
+         *  그 외 => Exitpoint
+         *  
+         * 1. 방 내부에서 ExitPoint까지 경로 있는 경우
+         *  1.1 용병과 조우 시 공격
+         *  1.2 경로 끝 도착 시(ExitPoint) 살아있는 그룹 다 모였는지 확인 후 다음 방 진출
+         * 2. 방 내부에서 ExitPoint까지 경로 없는 경우
+         *  2.1 용병과 조우 시 공격
+         *  2.2 ExitPoint로 moveToward로 이동하며 벽 때려부숨
+         *  2.3 경로 끝 도착 시(ExitPoint) 살아있는 그룹 다 모였는지 확인 후 다음 방 진출
+         * 3. 방 내부에서 targetTrap까지 경로 있는 경우
+         *  3.1  함정 있으면 => 해체하러감
+         * 4. 방 내부에서 targetTrap까지 경로 없는 경우
+         *  4.1 아군이 전투중이면 => 전투에 합류
+         *  4.2 아군이 전투중 아니면 => 함정까지 movetoward로 이동하며 벽을 부숨
+        */
+
+        Distance = Vector3.Distance(start, dest);
+        if (Distance <= enemyAI.stoppingDistance)
+        {
+            ArrivedAction();
+        }
+
+        //진행 경로에 따라 좌우 변경
+        if (PrevPos == Vector3.zero)
+        {
+            PrevPos = transform.position;
+        }
+        else
+        {
+            if (transform.position.x - PrevPos.x > 0.01)
+            {
+                isLeft = false;
+            }
+            else
+                isLeft = true;
+            if (isLeft != faceLeft)
+                Flip();
+
+            PrevPos = transform.position;
+        }
+    }
+
+    protected void GroupActionMain()
+    {
+        SetStart();
+        if (isEntered)
+        {
+            //해당 방의 Trap / Secret 받아오기
+            NearTrap.Clear();
+            GetTrap();
+            targetSecret = FindClosestSecret(NavObj.transform.position);
+            isEntered = false;
+        }
+        SetDestination();
+
+        if (isHealer && healTarget) { 
+            if (IsNear(NavObj, healTarget.NavObj))
+            {
+                currentState = EnemyState.Idle;
+                enemyAI.isStopped = true;
+                if (!isHeal)
+                {
+                    isHeal = true;
+                    StartCoroutine(GiveHeal());
+                }
+            }
+            else
+            {
+                enemyAI.isStopped = false;
+                currentState = EnemyState.Walk;
+                enemyAI.SetDestination(dest);
+            }
+            goto AfterHeal;
+        }
         //힐 안한 힐러 && 딜러
         if (nextIdx != -1) {
             enemyAI.CalculatePath(dest, enemyAI.path);
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
-            {
+            {//전체 경로 막힘
+                // => 방 내부에서 경로 찾음
                 if (!isHealer && targetFriend && IsNear(NavObj, targetFriend.transform))
                 {
                     dest = SetYZero(targetFriend.transform);
@@ -694,6 +801,11 @@ public class Enemy : MonoBehaviour {
                         if (PresentRoomidx >= 0 && PresentRoomidx <= 24)
                         {
                             dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+                        }
+
+                        if (name.Equals("MonsterPickPocket2D") && targetTrap)
+                        {
+                            dest = SetYZero(targetTrap.transform);
                         }
                     }
                 }

@@ -89,7 +89,7 @@ public class ObjectMove : MonoBehaviour
         yield return new WaitUntil(isPossibleStart);
         yield return null;
 
-        Camera.main.transform.position = new Vector3( transform.position.x, Camera.main.transform.position.y, transform.position.z);
+        Camera.main.transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z);
 
         if (!name.Equals("Warp_Exit"))
             StartCoroutine("OnMove");
@@ -116,6 +116,8 @@ public class ObjectMove : MonoBehaviour
             yield return new WaitUntil(isPossibleMove);
 
             Vector3 movePos = lastCol.transform.position - objectInfo.pivotObject.position;
+            movePos = new Vector3(movePos.x, 0, movePos.z);
+
             transform.position += movePos;
 
             if (CameraMove())

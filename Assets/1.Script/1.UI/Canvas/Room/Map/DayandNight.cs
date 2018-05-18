@@ -11,6 +11,7 @@ public enum Traps_Script { HumanTrap , Warp_Enter , Warp_Exit};
 
 public class DayandNight : MonoBehaviour
 {
+    public EnemyClusterManager EC;
     public RoomManager roomManager;
     public GameObject ReadyButton;
     public GameObject InActReadyButton;
@@ -28,7 +29,7 @@ public class DayandNight : MonoBehaviour
     public const int EnumMax_Traps = (int)Traps_body.Trap_W+1;//얘도 함정 추가되면 바꿔줘야됨
     //DayTime은 추후에 json 파일에서 읽어올 수 있음.
     // Use this for initialization
-    void Awake() {
+    void Awake() {            
         CreatedEnemy = new List<Enemy>();
         DeadEnemy = new List<Enemy>();
         isDay = false;//밤부터 시작
@@ -51,9 +52,14 @@ public class DayandNight : MonoBehaviour
     }
     // Update is called once per frame
     void Update() {
+        if (EnemyClusterManager.IsStageEnd && isDay) {
+            changeState();
+            GameManager.GenerateComplete = false;
+        }
     }
 
     public void changeState() {
+        Debug.Log("Changestate Called");
         isDay = !isDay;
 
         roomManager.OnOffHitCollider();
@@ -85,12 +91,7 @@ public class DayandNight : MonoBehaviour
         EnemyEnable(isDay);
         CharacterEnable(isDay);
     }
-
-    IEnumerator DayCount(float a) {
-        yield return new WaitForSeconds(a);
-        changeState();
-    }
-
+    
     public void ClearEnemyData() {
         CreatedEnemy.Clear();
         DeadEnemy.Clear();

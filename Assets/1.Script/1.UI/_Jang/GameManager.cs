@@ -15,18 +15,16 @@ public class GameManager : MonoBehaviour {
 	public static event GetEnemyGroup EnemyGroupEvent;
 	public RoomManager roomManager;
 	private EnemyGroup genGroup = null;
-
 	public Transform GroupParent;
-	public Transform CommandPost;
-	
+	public Transform CommandPost;	
 	public EnemyGroup[]	enemyGroups;
 	public FriendlyGroup[] friendGroups;
-
-	
+    
 	public CubeObject getRayTrans;
 	private LayerMask tileMask;
 	private bool isFloorClick;
     public static int OppressedEnemy;
+    public static bool GenerateComplete;
 	
 	public int GetRoomIndex
 	{
@@ -34,7 +32,9 @@ public class GameManager : MonoBehaviour {
 	}
 	private void Awake()
 	{
-		if (current == null)
+        GenerateComplete = false;
+
+        if (current == null)
 			current = this;
 		else
 			Destroy(gameObject);

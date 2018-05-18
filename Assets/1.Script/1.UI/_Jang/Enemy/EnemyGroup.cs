@@ -93,8 +93,6 @@ public class EnemyGroup : MonoBehaviour {
             obj.transform.SetParent(null);
             info = obj.GetComponentInChildren<Enemy>();
             info.isEntered = true;
-            obj.SetActive(true);
-
             info.OriginalPoint = GameManager.current.CommandPost;
             info.GroupConductor = this;
             info.UIEnemyHealth.HealthActvie(true);
@@ -103,6 +101,8 @@ public class EnemyGroup : MonoBehaviour {
             info.myCluster = EnemyClusterManager.clusterList[GenerateCount];
             enemyList.Add(info);
             EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
+            obj.SetActive(true);
+            GameManager.GenerateComplete = true;
         }
         int idx = enemyList[0].CheckAdjacentCount();
         for (int i = 0; i < enemyList.Count; i++) {

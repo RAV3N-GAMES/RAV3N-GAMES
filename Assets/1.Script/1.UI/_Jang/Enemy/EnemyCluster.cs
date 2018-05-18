@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyCluster : MonoBehaviour {
     public List<Enemy> eList;
+    public Friendly targetFriend;
+    public Enemy healTarget;
+    public Trap targetTrap;
 
 	// Use this for initialization
 	void Awake () {
@@ -76,5 +79,19 @@ public class EnemyCluster : MonoBehaviour {
             return null;
         else 
             return e;
+    }
+
+    public bool isGathered() {
+        bool result = true;
+
+        for (int i = 0; i < eList.Count; i++) {
+            Enemy e = eList[i];
+            if (Vector3.Distance(e.GetComponentInChildren<EnemyBody>().transform.position, GameManager.current.enemyGroups[e.PresentRoomidx].ExitPoint[e.Exitdirection].transform.position) > e.enemyAI.stoppingDistance) { 
+                result = false;
+                break;
+            }
+        }
+
+        return result;
     }
 }

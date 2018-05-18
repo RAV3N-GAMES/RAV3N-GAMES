@@ -67,8 +67,6 @@ public class ObjectInfo : MonoBehaviour
 
         if (type == 2)
             InitFriend();
-        if (HitCollider != null)
-            HitCollider.SetActive(DayandNight.isDay);
     }
     
     public void InitObject(SaveObject objInfo) //설치된거 껐다 켜고 설치할때

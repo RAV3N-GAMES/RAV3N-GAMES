@@ -16,7 +16,7 @@ public class ActiveEnemyManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (DayandNight.isDay && IsCreated) {
+        /*if (DayandNight.isDay && IsCreated) {
             GameObject[] ActiveEnemyList = GameObject.FindGameObjectsWithTag("Enemy");
 
             if (ActiveEnemyList.Length > 0)
@@ -27,6 +27,6 @@ public class ActiveEnemyManager : MonoBehaviour {
                 ChangeLock = false;
                 Curtain.changeState();
             }
-        }
+        }*/
 	}
 }
