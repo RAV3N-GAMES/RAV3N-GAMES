@@ -24,10 +24,8 @@ public class Enemy : MonoBehaviour {
     public Transform NavObj;                //NavMesh 상에서 움직이는 객체의 위치정보
     public Friendly targetFriend;           //타겟의 정보를 가져오기 위한
     public Transform OriginalPoint;			//기본 타겟을 저장하기위한
-    public List<Friendly> NearFriendly;
     public List<Wall> NearWall;
     public Wall targetWall;
-    public Trap targetTrap;
     public Enemy healTarget;
     public SecretActs targetSecret;
     public List<Trap> NearTrap;
@@ -63,7 +61,7 @@ public class Enemy : MonoBehaviour {
     protected EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입
     public int PresentRoomidx;
-    private bool isShoot;                   //딜레이와 공격을 맞추기위한 
+    public bool isShoot;                   //딜레이와 공격을 맞추기위한 
     protected bool isHeal;
 
     protected Vector3 PrevPos;
@@ -367,10 +365,13 @@ public class Enemy : MonoBehaviour {
         {
             StartCoroutine(StealEvent());
         }
+        else if (myCluster.isGathered()) {//next room 출구에 다 모인 경우
+            myCluster.MoveToNextRoom(nextIdx, Exitdirection);
+        }
         else {
             if (nextIdx == -1)
                 return;
-            if(!(isHealer && healTarget)) { 
+            if (!(isHealer && healTarget)) {
                 Transform nextRoom = GameManager.current.enemyGroups[nextIdx].ExitPoint[Exitdirection];
                 enemyAI.SetDestination(nextRoom.position);
             }
@@ -394,7 +395,6 @@ public class Enemy : MonoBehaviour {
         Movable = true;
         Audio = GetComponent<AudioSource>();
         AppearClip= Resources.Load<AudioClip>("Audio/Character/Enemy/All") as AudioClip;
-
         ECM = GameObject.Find("Managers").GetComponent<EnemyClusterManager>();
         isDie = false;
         isStolen = false;
@@ -408,11 +408,8 @@ public class Enemy : MonoBehaviour {
         isSurrounded = false;
         InnerSurrounded = false;
         targetWall = null;
-        targetTrap = null;
         healTarget = null;
-        NearFriendly = new List<Friendly>();
         NearWall = new List<Wall>();
-        NearTrap = new List<Trap>();
         isShoot = false;
         enemyAI = GetComponentInParent<NavMeshAgent>();
         scollider = GetComponent<SphereCollider>();
@@ -424,298 +421,8 @@ public class Enemy : MonoBehaviour {
     {
         if (isDie || isStolen || isDefeated)
             return;
-        SetOrder();
-        EnemyActionMain();
-//      GroupActionMain();
+//        EnemyActionMain();
         ChangeAnimation();
-    }
-
-    private void OnTriggerExit(Collider col)
-    {
-        if (col.CompareTag("Wall"))
-        {
-            Wall w = col.GetComponent<Wall>();
-            if (NearWall.Contains(w))
-            {
-                NearWall.Remove(w);
-            }
-        }
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.CompareTag("FriendlyBody"))
-        {
-            Friendly e = col.GetComponentInParent<Friendly>();
-            if (!NearFriendly.Contains(e))
-                NearFriendly.Add(e);
-        }
-
-        if (col.CompareTag("Wall"))
-        {
-            Wall w = col.GetComponentInParent<Wall>();
-            if (!NearWall.Contains(w))
-                NearWall.Add(w);
-        }
-    }
-    private void SetOrder()
-    {
-        SetOrder_Wall();
-        SetOrder_Trap();
-        SetOrder_Friendly();
-    }
-
-    protected void GetTrap()//해당 방에 대한 trap 얻어옴
-    {
-        GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
-        Trap t;
-        for (int i = 0; i < Traps.Length; i++)
-        {
-            SpriteRenderer s = Traps[i].GetComponent<SpriteRenderer>();
-            if (!s)
-                continue;
-            if (s.sortingLayerName == PresentRoomidx.ToString())
-            {
-                t = s.GetComponent<Trap>();
-                if (!NearTrap.Contains(t))
-                    NearTrap.Add(t);
-            }
-            else
-            {
-                t = s.GetComponent<Trap>();
-                if (NearTrap.Contains(t))
-                {
-                    NearTrap.Remove(t);
-                }
-            }
-        }
-        if (NearTrap[0])
-        {
-            targetTrap = NearTrap[0];
-        }
-        else
-            targetTrap = null;
-    }
-
-    private void SetOrder_Trap()
-    {
-        for (int i = 0; i < NearTrap.Count; i++)
-        {
-            if (!NearTrap[i].transform.parent.gameObject.activeSelf)
-            {
-                NearTrap.Remove(NearTrap[i]);
-                i--;
-            }
-        }
-
-        if (NearTrap.Count > 1)
-        {
-            NearTrap.Sort(
-                delegate (Trap t1, Trap t2)
-                {
-                    if (t1 == null)
-                        return 1;
-                    else if (t2 == null)
-                        return -1;
-                    else
-                    {
-                        float d1, d2;
-                        d1 = Vector3.Distance(t1.transform.position, transform.position);
-                        d2 = Vector3.Distance(t2.transform.position, transform.position);
-                        if (d1 > d2)
-                            return 1;
-                        else if (d1 < d2)
-                            return -1;
-                        else
-                            return 0;
-                    }
-                });
-        }
-
-        if (NearTrap.Count > 0)
-            targetTrap = NearTrap[0];
-        else
-            targetTrap = null;
-    }
-    private void SetOrder_Wall()
-    {
-        if (NearWall.Count > 1)
-        {
-            NearWall.Sort(
-                delegate (Wall w1, Wall w2)
-                {
-                    if (w1 == null)
-                        return 1;
-                    else if (w2 == null)
-                        return -1;
-                    else
-                    {
-                        float d1, d2;
-                        d1 = Vector3.Distance(w1.transform.position, transform.position);
-                        d2 = Vector3.Distance(w2.transform.position, transform.position);
-                        if (d1 > d2)
-                            return 1;
-                        else if (d1 < d2)
-                            return -1;
-                        else
-                            return 0;
-                    }
-                });
-        }
-
-        if (NearWall.Count > 0)
-            targetWall = NearWall[0];
-        else
-            targetWall = null;
-    }
-    private void SetOrder_Friendly()
-    {
-        if (NearFriendly.Count > 1)
-        {
-            NearFriendly.Sort(
-                delegate (Friendly f1, Friendly f2)
-                {
-                    if (f1 == null)
-                        return 1;
-                    else if (f2 == null)
-                        return -1;
-                    else
-                    {
-                        float d1, d2;
-                        d1 = Vector3.Distance(f1.transform.position, transform.position);
-                        d2 = Vector3.Distance(f2.transform.position, transform.position);
-                        if (d1 > d2)
-                            return 1;
-                        else if (d1 < d2)
-                            return -1;
-                        else
-                            return 0;
-                    }
-                });
-        }
-        if (NearFriendly.Count > 0)
-        {
-            targetFriend = NearFriendly[0];
-        }
-        else
-            targetFriend = null;
-    }
-    
-    protected void SetDestination()
-    {
-        if (isSeizure && targetSecret)
-        {
-            dest = SetYZero(targetSecret.transform);
-        }
-        else
-        {
-            dest = SetYZero(OriginalPoint.transform);
-        }
-
-        if (isHealer)
-        {
-            Enemy e;
-            if ((e = myCluster.HurtEnemy()))
-            {
-                healTarget = e;
-                dest = SetYZero(healTarget.NavObj);
-            }
-        }
-    }
-
-    protected void EnemyActionMain() {
-        if (nextIdx == -1)
-            return;
-
-        SetStart();
-        if (isEntered)
-        {
-            //해당 방의 Trap / Secret 받아오기
-            NearTrap.Clear();
-            GetTrap();
-            targetSecret = FindClosestSecret(NavObj.transform.position);
-            isEntered = false;
-        }
-        SetDestination();
-
-        enemyAI.SetDestination(dest);
-        enemyAI.CalculatePath(dest, enemyAI.path);
-
-        if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
-        {
-            if (PresentRoomidx == 0 && (!isSeizure || (isSeizure && !targetSecret)))
-            {
-                dest = SetYZero(OriginalPoint.transform);
-            }
-            else if (isSeizure && targetSecret)
-            {
-                dest = SetYZero(targetSecret.transform);
-            }
-            else
-            {
-                Exitdirection = FindExit();
-                if (PresentRoomidx >= 0 && PresentRoomidx <= 24)
-                {
-                    dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
-                }
-            }
-
-            enemyAI.SetDestination(dest);
-            enemyAI.CalculatePath(dest, enemyAI.path);
-            if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
-            {
-                if (targetWall || targetFriend)
-                {
-                    if (!isShoot)
-                    {
-                        enemyAI.isStopped = true;
-                        isShoot = true;
-                        currentState = EnemyState.Attack;
-                    }
-                }
-                else
-                {
-                    currentState = EnemyState.Walk;
-                    enemyAI.isStopped = true;
-                    transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
-                }
-            }
-        }
-        else {
-            if (!isHealer && targetFriend)
-            {
-                if (!isShoot)
-                {
-                    enemyAI.isStopped = true;
-                    isShoot = true;
-                    currentState = EnemyState.Attack;
-                }
-            }
-            else { 
-                enemyAI.isStopped = false;
-                currentState = EnemyState.Walk;
-            }
-        }
-        
-        /* 용병 만날 경우 전투
-         * 길 막힌 경우 -> 방 내부에서 목적지 설정
-         *
-         * 소매치기 => 방 내부에 있는 함정 -> Exitpoint
-         *  그 외 => Exitpoint
-         *  
-         * 1. 방 내부에서 ExitPoint까지 경로 있는 경우
-         *  1.1 용병과 조우 시 공격
-         *  1.2 경로 끝 도착 시(ExitPoint) 살아있는 그룹 다 모였는지 확인 후 다음 방 진출
-         * 2. 방 내부에서 ExitPoint까지 경로 없는 경우
-         *  2.1 용병과 조우 시 공격
-         *  2.2 ExitPoint로 moveToward로 이동하며 벽 때려부숨
-         *  2.3 경로 끝 도착 시(ExitPoint) 살아있는 그룹 다 모였는지 확인 후 다음 방 진출
-         * 3. 방 내부에서 targetTrap까지 경로 있는 경우
-         *  3.1  함정 있으면 => 해체하러감
-         * 4. 방 내부에서 targetTrap까지 경로 없는 경우
-         *  4.1 아군이 전투중이면 => 전투에 합류
-         *  4.2 아군이 전투중 아니면 => 함정까지 movetoward로 이동하며 벽을 부숨
-        */
 
         Distance = Vector3.Distance(start, dest);
         if (Distance <= enemyAI.stoppingDistance)
@@ -743,7 +450,105 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    protected void GroupActionMain()
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.CompareTag("Wall"))
+        {
+            Wall w = col.GetComponent<Wall>();
+            if (myCluster.GroupNearWall.Contains(w))
+            {
+                myCluster.GroupNearWall.Remove(w);
+                myCluster.SetOrderWall();
+            }
+        }
+
+        if (col.CompareTag("FriendlyBody")) {
+            Friendly f = col.GetComponentInParent<Friendly>();
+
+            if (myCluster.GroupNearFriend.Contains(f)) {
+                myCluster.GroupNearFriend.Remove(f);
+                myCluster.SetOrderFriendly();
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("FriendlyBody"))
+        {
+            Friendly e = col.GetComponentInParent<Friendly>();
+            if (!myCluster.GroupNearFriend.Contains(e))
+            {
+                myCluster.GroupNearFriend.Add(e);
+                myCluster.SetOrderFriendly();
+            }
+        }
+
+        if (col.CompareTag("Wall"))
+        {
+            Wall w = col.GetComponentInParent<Wall>();
+            if (!myCluster.GroupNearWall.Contains(w))
+                myCluster.GroupNearWall.Add(w);
+        }
+    }
+    
+
+    protected void GetTrap()//해당 방에 대한 trap 얻어옴
+    {
+        GameObject[] Traps = GameObject.FindGameObjectsWithTag("Trap");
+        Trap t;
+        for (int i = 0; i < Traps.Length; i++)
+        {
+            SpriteRenderer s = Traps[i].GetComponent<SpriteRenderer>();
+            if (!s)
+                continue;
+            if (s.sortingLayerName == PresentRoomidx.ToString())
+            {
+                t = s.GetComponent<Trap>();
+                if (!myCluster.GroupNearTrap.Contains(t)) { 
+                    myCluster.GroupNearTrap.Add(t);
+                    myCluster.SetOrderTrap();
+                }
+            }
+            else
+            {
+                t = s.GetComponent<Trap>();
+                if (myCluster.GroupNearTrap.Contains(t))
+                {
+                    myCluster.GroupNearTrap.Remove(t);
+                    myCluster.SetOrderTrap();
+                }
+            }
+        }
+    }
+    
+    protected void SetDestination()
+    {
+        if (targetFriend && !IsNear(NavObj, targetFriend.transform)) {
+            dest = SetYZero(targetFriend.transform);
+        }
+        else if (isSeizure && targetSecret)
+        {
+            dest = SetYZero(targetSecret.transform);
+        }
+        else
+        {
+            dest = SetYZero(OriginalPoint.transform);
+        }
+
+        if (isHealer)
+        {
+            Enemy e;
+            if ((e = myCluster.HurtEnemy()))
+            {
+                healTarget = e;
+                dest = SetYZero(healTarget.NavObj);
+            }
+        }
+    }
+
+    
+/*    protected void GroupActionMain()
     {
         SetStart();
         if (isEntered)
@@ -905,6 +710,92 @@ public class Enemy : MonoBehaviour {
             PrevPos = transform.position;
         }
     }
-
+    */
     protected virtual IEnumerator GiveHeal() { yield return null; }
+
+    public void EnemyActionStart()
+    {
+        StartCoroutine(EnemyAction());
+    }
+
+    protected bool CalPath()
+    {
+        enemyAI.CalculatePath(dest, enemyAI.path);
+        return true;
+    }
+    
+    protected void SetDestination2nd() {
+        Exitdirection = FindExit();
+        if (PresentRoomidx >= 0 && PresentRoomidx <= 24)
+        {
+            dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+        }
+    }
+
+    IEnumerator EnemyAction()
+    {
+        while (!(isDie || isStolen || isDefeated))
+        {
+            SetStart();
+            SetDestination();
+            enemyAI.SetDestination(dest);
+            yield return new WaitUntil(CalPath);
+            if (isDie || isStolen || isDefeated)
+                break;
+            if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+            {
+                SetDestination2nd();
+                enemyAI.SetDestination(dest);
+                yield return new WaitUntil(CalPath);
+                if (isDie || isStolen || isDefeated)
+                    break;
+                if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    if (!targetFriend && !targetWall)
+                    {
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                        currentState = EnemyState.Walk;
+                        enemyAI.isStopped = false;
+                    }
+                    else
+                    {
+                        if (!isShoot)
+                        {
+                            currentState = EnemyState.Attack;
+                            isShoot = true;
+                            enemyAI.isStopped = true;
+                        }
+                    }
+                }
+                else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+                {
+                    if (!isShoot)
+                    {
+                        currentState = EnemyState.Attack;
+                        isShoot = true;
+                        enemyAI.isStopped = true;
+                    }
+                }
+                else
+                {
+                    currentState = EnemyState.Walk;
+                    enemyAI.isStopped = false;
+                }
+            }
+            else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+            {
+                if (!isShoot)
+                {
+                    currentState = EnemyState.Attack;
+                    isShoot = true;
+                    enemyAI.isStopped = true;
+                }
+            }
+            else
+            {
+                currentState = EnemyState.Walk;
+                enemyAI.isStopped = false;
+            }
+        }
+    }
 }

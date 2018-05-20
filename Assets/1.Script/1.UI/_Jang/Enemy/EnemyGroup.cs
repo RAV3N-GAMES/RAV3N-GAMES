@@ -102,6 +102,7 @@ public class EnemyGroup : MonoBehaviour {
             enemyList.Add(info);
             EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
             obj.SetActive(true);
+            obj.GetComponentInChildren<Enemy>().EnemyActionStart();
             GameManager.GenerateComplete = true;
         }
         int idx = enemyList[0].CheckAdjacentCount();

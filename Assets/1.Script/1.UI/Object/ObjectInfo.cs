@@ -96,9 +96,16 @@ public class ObjectInfo : MonoBehaviour
         StartCoroutine(Display());
     }
 
+    bool lastColCount()
+    {
+        if (GetComponent<CheckTile>().lastColList.Count == 0)
+            return false;
+        else
+            return true;
+    }
     IEnumerator Display()
     {
-        yield return null;
+        yield return new WaitUntil(lastColCount);
 
         if (GetComponent<CheckTile>().lastColList.Count == 0)
             print("lastCol == 0 tileCol" + TileCollider.activeInHierarchy);

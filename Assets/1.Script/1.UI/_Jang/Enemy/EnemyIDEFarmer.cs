@@ -19,7 +19,7 @@ public class EnemyIDEFarmer : Enemy {
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = 0.5f;
+        enemyAI.stoppingDistance = scollider.radius;
         enemyAI.speed = 1.0f;
     }
 }

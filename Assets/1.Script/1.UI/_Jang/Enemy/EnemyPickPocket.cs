@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPickPocket : Enemy {
+    public Trap targetTrap;
 
     // Use this for initialization
     private void Start()
@@ -11,6 +12,7 @@ public class EnemyPickPocket : Enemy {
         DieClip = Resources.LoadAll<AudioClip>(path + "Die/Man") as AudioClip[];
         effectType = EFFECT_TYPE.Approach;
         attackDelay = new WaitForSeconds(1f);
+        targetTrap = null;
     }
     public override void EnemyInit()
     {
@@ -20,7 +22,7 @@ public class EnemyPickPocket : Enemy {
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = 1.0f;
+        enemyAI.stoppingDistance = scollider.radius;
         enemyAI.speed = 1.0f;
     }
 }
