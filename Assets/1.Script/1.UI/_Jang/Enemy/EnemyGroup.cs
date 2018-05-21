@@ -54,6 +54,7 @@ public class EnemyGroup : MonoBehaviour {
 
         Enemy info = null;
         //Genopint =. GameManger에서 EnemyGroup으로 옮김
+        int idx=-1;
         Transform pos = GenPoint[Random.Range(0, GenPoint.Count)];
         for (int i = 0; i < GroupMemberMax; ++i)
         {
@@ -75,6 +76,9 @@ public class EnemyGroup : MonoBehaviour {
             }
 
             GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
+            if (i == 0)
+                idx = obj.GetComponentInChildren<Enemy>().CheckAdjacentCount();
+
             if (rand <= (int)(ENEMY_TYPE.Sheriff))
             {
                 Group_Normal++;
@@ -100,14 +104,11 @@ public class EnemyGroup : MonoBehaviour {
             info.PresentRoomidx = EnemyGroupIdx;
             info.myCluster = EnemyClusterManager.clusterList[GenerateCount];
             enemyList.Add(info);
+            info.nextIdx = idx;
             EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
             obj.SetActive(true);
             obj.GetComponentInChildren<Enemy>().EnemyActionStart();
             GameManager.GenerateComplete = true;
-        }
-        int idx = enemyList[0].CheckAdjacentCount();
-        for (int i = 0; i < enemyList.Count; i++) {
-            enemyList[i].nextIdx = idx;
         }
         Count++;
     }

@@ -489,6 +489,7 @@ public class Enemy : MonoBehaviour {
             Wall w = col.GetComponentInParent<Wall>();
             if (!myCluster.GroupNearWall.Contains(w))
                 myCluster.GroupNearWall.Add(w);
+                myCluster.SetOrderWall();
         }
     }
     
