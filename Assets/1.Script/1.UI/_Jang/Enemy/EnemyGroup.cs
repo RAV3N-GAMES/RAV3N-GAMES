@@ -8,6 +8,8 @@ public class EnemyGroup : MonoBehaviour {
     public bool isGenerate;
     public int isOpressed;//0: not opressed, 1: oppressed, 2: gold provided
     public int Count;
+    public List<Trap> Traps=new List<Trap>();
+    public List<SecretActs> Secrets = new List<SecretActs>();
     /*
      * Genpoint
       - 0번 방 제외하고 모든 방에 4방향 전부 존재

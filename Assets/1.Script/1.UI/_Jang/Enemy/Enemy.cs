@@ -10,6 +10,7 @@ public enum EnemyState
 	Attack,
 	Die,
     Heal,
+    Disassembly,
 }
 public class Enemy : MonoBehaviour {
     protected const string path = "Audio/Character/";
@@ -356,6 +357,25 @@ public class Enemy : MonoBehaviour {
 
     protected void ArrivedAction()
     {//도착 시 취하는 액션
+        if (name.Equals("MonsterPickPocket2D")) {
+            EnemyPickPocket epp = (EnemyPickPocket)this;
+            if (!epp.IsDisassemble) { 
+                if (epp.targetTrap && Vector3.Distance(dest, SetYZero(epp.targetTrap.transform)) < 0.1f)
+                {                
+                    StartCoroutine(epp.DisassemblyTrap());
+                }
+            }
+            else {
+                Actions();
+            }
+        }
+        else { 
+            Actions();
+        }
+    }
+
+    protected void Actions()
+    {
         if (Vector3.Distance(SetYZero(NavObj), SetYZero(OriginalPoint.transform)) <= enemyAI.stoppingDistance)
         {
             ClearEnemies();//Find all Enemies and Escape them.
@@ -365,17 +385,20 @@ public class Enemy : MonoBehaviour {
         {
             StartCoroutine(StealEvent());
         }
-        else if (myCluster.isGathered()) {//next room 출구에 다 모인 경우
+        else if (myCluster.isGathered())
+        {//next room 출구에 다 모인 경우
             myCluster.MoveToNextRoom(nextIdx, Exitdirection);
         }
-        else {
+        /*else
+        {
             if (nextIdx == -1)
                 return;
-            if (!(isHealer && healTarget)) {
+            if (!(isHealer && healTarget))
+            {
                 Transform nextRoom = GameManager.current.enemyGroups[nextIdx].ExitPoint[Exitdirection];
                 enemyAI.SetDestination(nextRoom.position);
             }
-        }
+        }*/
     }
 
     protected void Flip()
@@ -487,9 +510,10 @@ public class Enemy : MonoBehaviour {
         if (col.CompareTag("Wall"))
         {
             Wall w = col.GetComponentInParent<Wall>();
-            if (!myCluster.GroupNearWall.Contains(w))
+            if (!myCluster.GroupNearWall.Contains(w)) { 
                 myCluster.GroupNearWall.Add(w);
                 myCluster.SetOrderWall();
+            }
         }
     }
     
@@ -545,6 +569,23 @@ public class Enemy : MonoBehaviour {
                 healTarget = e;
                 dest = SetYZero(healTarget.NavObj);
             }
+        }
+
+        if (name.Equals("MonsterPickPocket2D")) {
+            if (isEntered) {
+                NearTrap= GameManager.current.enemyGroups[PresentRoomidx].Traps;
+                Debug.Log("Near Trap gathered. Present Roomnum: "+ PresentRoomidx+", Traps: "+ GameManager.current.enemyGroups[PresentRoomidx].Traps);
+                isEntered = false;
+            }
+            EnemyPickPocket epp = (EnemyPickPocket)this;
+            if (NearTrap.Count > 0)
+            {
+                epp.targetTrap = NearTrap[0];
+                if(epp.targetTrap)
+                    dest = SetYZero(epp.targetTrap.transform);
+            }
+            else
+                epp.targetTrap = null;
         }
     }
 
@@ -733,13 +774,17 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    IEnumerator EnemyAction()
+    protected virtual IEnumerator EnemyAction()
     {
         while (!(isDie || isStolen || isDefeated))
         {
             SetStart();
             SetDestination();
             enemyAI.SetDestination(dest);
+            if (!Movable)
+                enemyAI.isStopped = true;
+            else
+                enemyAI.isStopped = false;
             yield return new WaitUntil(CalPath);
             if (isDie || isStolen || isDefeated)
                 break;
@@ -747,6 +792,10 @@ public class Enemy : MonoBehaviour {
             {
                 SetDestination2nd();
                 enemyAI.SetDestination(dest);
+                if (!Movable)
+                    enemyAI.isStopped = true;
+                else
+                    enemyAI.isStopped = false;
                 yield return new WaitUntil(CalPath);
                 if (isDie || isStolen || isDefeated)
                     break;
@@ -756,7 +805,10 @@ public class Enemy : MonoBehaviour {
                     {
                         transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                         currentState = EnemyState.Walk;
-                        enemyAI.isStopped = false;
+                        if (!Movable)
+                            enemyAI.isStopped = true;
+                        else
+                            enemyAI.isStopped = false;
                     }
                     else
                     {
@@ -780,7 +832,10 @@ public class Enemy : MonoBehaviour {
                 else
                 {
                     currentState = EnemyState.Walk;
-                    enemyAI.isStopped = false;
+                    if (!Movable)
+                        enemyAI.isStopped = true;
+                    else
+                        enemyAI.isStopped = false;
                 }
             }
             else if (targetFriend && IsNear(NavObj, targetFriend.transform))
@@ -795,7 +850,10 @@ public class Enemy : MonoBehaviour {
             else
             {
                 currentState = EnemyState.Walk;
-                enemyAI.isStopped = false;
+                if (!Movable)
+                    enemyAI.isStopped = true;
+                else
+                    enemyAI.isStopped = false;
             }
         }
     }
