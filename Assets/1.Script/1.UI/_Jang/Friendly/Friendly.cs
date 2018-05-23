@@ -221,8 +221,9 @@ public class Friendly : MonoBehaviour
         GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < Enemies.Length; i++) {
             if (Enemies[i].GetComponentInChildren<Enemy>().
-                NearFriendly.Contains(this)) {
-                Enemies[i].GetComponentInChildren<Enemy>().NearFriendly.Remove(this);
+                myCluster.GroupNearFriend.Contains(this)) {
+                Enemies[i].GetComponentInChildren<Enemy>().myCluster.GroupNearFriend.Remove(this);
+
             }
         }
         tmp.DestroyObj(true);
@@ -253,7 +254,7 @@ public class Friendly : MonoBehaviour
                 if (currentState == FriendlyState.Attack)
                     return;
 
-                friendAi.enabled = true;
+                friendAi.isStopped = false;
                 currentState = FriendlyState.Run;
                 friendAi.SetDestination(targetEnemy.NavObj.position);
             }
@@ -302,15 +303,15 @@ public class Friendly : MonoBehaviour
 
         if (Distance < 1)
         {
-            if (friendAi.enabled)
-                friendAi.enabled = false;
+            if (!friendAi.isStopped)
+                friendAi.isStopped = true;
 
             currentState = FriendlyState.Idle;
         }
         else if (Distance > 0)
         {
-            if (!friendAi.enabled)
-                friendAi.enabled = true;
+            if (friendAi.isStopped)
+                friendAi.isStopped = false;
 
             currentState = FriendlyState.Run;
             friendAi.SetDestination(OriginalPoint.position);
@@ -336,12 +337,12 @@ public class Friendly : MonoBehaviour
 
         if (Distance <= StopDistance)
         {
-            friendAi.enabled = false;
+            friendAi.isStopped = true;
             return true;
         }
         else
         {
-            friendAi.enabled = true;
+            friendAi.isStopped = false;
             return false;
         }
     }

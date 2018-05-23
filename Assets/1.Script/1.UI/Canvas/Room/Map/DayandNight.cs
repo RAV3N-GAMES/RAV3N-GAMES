@@ -59,7 +59,6 @@ public class DayandNight : MonoBehaviour
     }
 
     public void changeState() {
-        Debug.Log("Changestate Called");
         isDay = !isDay;
 
         roomManager.OnOffHitCollider();
@@ -69,17 +68,12 @@ public class DayandNight : MonoBehaviour
 
         if (!isDay)
         {
-            Debug.Log("ResultPopup Active");
-
             resultPopUp.gameObject.SetActive(true);
-
             resultPopUp.InitResultPopUp();
         }
 
         if (isDay) {
             SoundManager.soundManager.ChangeBGM("4_DAY START");
-
-
             curtain.transform.Rotate(0, 90, 0);
             ClearEnemyData();
         }

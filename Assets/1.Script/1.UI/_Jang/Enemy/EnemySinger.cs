@@ -35,5 +35,69 @@ public class EnemySinger : Enemy {
 
         yield return healDelay;
         isHeal = false;
-    } 
+    }
+
+    protected override IEnumerator EnemyAction()
+    {
+        while (!(isDie || isStolen || isDefeated))
+        {
+            SetStart();
+            SetDestination();
+            enemyAI.SetDestination(dest);
+            yield return new WaitUntil(CalPath);
+            if (isDie || isStolen || isDefeated)
+                break;
+            if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+            {
+                SetDestination2nd();
+                enemyAI.SetDestination(dest);
+                yield return new WaitUntil(CalPath);
+                if (isDie || isStolen || isDefeated)
+                    break;
+                if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    if (!targetFriend && !targetWall)
+                    {
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                        currentState = EnemyState.Walk;
+                        enemyAI.isStopped = false;
+                    }
+                    else
+                    {
+                        currentState = EnemyState.Idle;
+                        enemyAI.isStopped = true;
+                    }
+                }
+                else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+                {
+                    currentState = EnemyState.Idle;
+                    enemyAI.isStopped = true;
+
+                }
+                else
+                {
+                    currentState = EnemyState.Walk;
+                    enemyAI.isStopped = false;
+                }
+            }
+            else if (healTarget && IsNear(NavObj, healTarget.transform)) {
+                if (!isHeal) {
+                    currentState = EnemyState.Heal;
+                    enemyAI.isStopped = true;
+                    isHeal = true;
+                    StartCoroutine(GiveHeal());
+                }
+            }
+            else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+            {
+                currentState = EnemyState.Idle;
+                enemyAI.isStopped = true;
+            }
+            else
+            {
+                currentState = EnemyState.Walk;
+                enemyAI.isStopped = false;
+            }
+        }
+    }
 }

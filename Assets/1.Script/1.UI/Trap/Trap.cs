@@ -11,7 +11,8 @@ public class Trap : MonoBehaviour{
     public double CoolTime;
     public bool isCool;
     public int AttackDamage;
-
+    public int setRoomidx;
+    public DisplayObject displayobject;
     // Use this for initialization
     void Awake () {
         Audio = GetComponent<AudioSource>();

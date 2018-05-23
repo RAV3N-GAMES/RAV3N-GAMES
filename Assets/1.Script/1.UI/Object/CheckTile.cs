@@ -290,12 +290,28 @@ public class CheckTile : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Tile")
+        if (col.gameObject.tag == "Tile") 
         {
             if (!objectInfo.isDisplay && !DayandNight.isDay)
             {
                 lastColList.Add(col.transform.parent.gameObject);
                 OnCheckTile();
+            }
+            if (tag.Equals("Trap")) {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                Trap t = GetComponentInChildren<Trap>();
+                t.setRoomidx = EG.GroupIndex;
+                if(!EG.Traps.Contains(t))
+                    EG.Traps.Add(t);
+            }
+
+            if (tag.Equals("Secret"))
+            {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                SecretActs s = GetComponentInChildren<SecretActs>();
+                s.setRoomidx = EG.GroupIndex;
+                if (!EG.Secrets.Contains(s))
+                    EG.Secrets.Add(s);
             }
         }
     }
@@ -309,6 +325,21 @@ public class CheckTile : MonoBehaviour {
                 if (lastColList.Count == 1)
                     lastCol = lastColList[0];
                 lastColList.Remove(col.transform.parent.gameObject);
+            }
+
+            if (tag.Equals("Trap"))
+            {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                Trap t = GetComponentInChildren<Trap>();
+                if (EG.Traps.Contains(t))
+                    EG.Traps.Remove(t);
+            }
+
+            if (tag.Equals("Secret")) {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                SecretActs s = GetComponentInChildren<SecretActs>();
+                if (EG.Secrets.Contains(s))
+                    EG.Secrets.Remove(s);
             }
         }
     }

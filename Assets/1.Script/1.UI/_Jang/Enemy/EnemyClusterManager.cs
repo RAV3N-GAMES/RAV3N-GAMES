@@ -20,7 +20,6 @@ public class EnemyClusterManager : MonoBehaviour {
     {
         if (GameManager.GenerateComplete) {
             IsStageEnd = IsEnd();   
-            Debug.Log("GameManaegr Generatecomplete true + isStage: " + IsStageEnd);
         }
     }
 

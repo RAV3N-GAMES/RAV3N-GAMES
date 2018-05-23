@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyPickPocket : Enemy {
+    public Trap targetTrap;
+    public bool IsDisassemble;
 
     // Use this for initialization
     private void Start()
@@ -11,6 +14,8 @@ public class EnemyPickPocket : Enemy {
         DieClip = Resources.LoadAll<AudioClip>(path + "Die/Man") as AudioClip[];
         effectType = EFFECT_TYPE.Approach;
         attackDelay = new WaitForSeconds(1f);
+        targetTrap = null;
+        IsDisassemble = false;
     }
     public override void EnemyInit()
     {
@@ -20,7 +25,165 @@ public class EnemyPickPocket : Enemy {
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = 1.0f;
+        enemyAI.stoppingDistance = scollider.radius;
         enemyAI.speed = 1.0f;
+    }
+
+    protected override IEnumerator EnemyAction()
+    {
+        while (!(isDie || isStolen || isDefeated))
+        {
+            SetStart();
+            SetDestination();
+            enemyAI.SetDestination(dest);
+            yield return new WaitUntil(CalPath);
+            if (isDie || isStolen || isDefeated)
+                break;
+            if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+            {
+                if (!targetTrap) {
+                    SetDestination2nd();
+                    enemyAI.SetDestination(dest);
+                }
+                yield return new WaitUntil(CalPath);
+                if (isDie || isStolen || isDefeated)
+                    break;
+                if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    if (targetTrap && !targetFriend)
+                    {
+                        if (!IsNear(NavObj, targetTrap.transform))
+                        {
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                            currentState = EnemyState.Walk;
+                            enemyAI.isStopped = false;
+                        }
+                    }
+                    else
+                    {
+                        if (!targetFriend && !targetWall)
+                        {
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                            currentState = EnemyState.Walk;
+                            enemyAI.isStopped = false;
+                        }
+                        else
+                        {
+                            if (!isShoot)
+                            {
+                                currentState = EnemyState.Attack;
+                                isShoot = true;
+                                enemyAI.isStopped = true;
+                            }
+                        }
+                    }
+                }
+                else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+                {
+                    if (!isShoot)
+                    {
+                        currentState = EnemyState.Attack;
+                        isShoot = true;
+                        enemyAI.isStopped = true;
+                    }
+                }
+                else
+                {
+                    currentState = EnemyState.Walk;
+                    enemyAI.isStopped = false;
+                }
+            }
+            else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+            {
+                if (!isShoot)
+                {
+                    currentState = EnemyState.Attack;
+                    isShoot = true;
+                    enemyAI.isStopped = true;
+                }
+            }
+            else
+            {
+                currentState = EnemyState.Walk;
+                enemyAI.isStopped = false;
+            }
+        }
+    }
+
+    public IEnumerator DisassemblyTrap() {
+        IsDisassemble = true;
+        yield return new WaitForSeconds(5.0f);
+        Trap tmp = targetTrap;
+        if(targetTrap && NearTrap.Contains(targetTrap))
+            NearTrap.Remove(targetTrap);
+        if (NearTrap.Count > 0)
+            targetTrap = NearTrap[0];
+        else
+            targetTrap = null;
+        if (tmp) {
+            tmp.displayobject.DestroyObj(true);
+            Destroy(tmp.transform.parent.gameObject);
+        } 
+        IsDisassemble = false;
+    }
+
+    
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("FriendlyBody"))
+        {
+            Friendly e = col.GetComponentInParent<Friendly>();
+            if (!myCluster.GroupNearFriend.Contains(e))
+            {
+                myCluster.GroupNearFriend.Add(e);
+                myCluster.SetOrderFriendly();
+            }
+        }
+
+        if (col.CompareTag("Wall"))
+        {
+            Wall w = col.GetComponentInParent<Wall>();
+            if (!myCluster.GroupNearWall.Contains(w)) { 
+                myCluster.GroupNearWall.Add(w);
+                myCluster.SetOrderWall();
+            }
+
+            if (!NearWall.Contains(w))
+            {
+                NearWall.Add(w);
+                targetWall = w;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.CompareTag("Wall"))
+        {
+            Wall w = col.GetComponent<Wall>();
+            if (myCluster.GroupNearWall.Contains(w))
+            {
+                myCluster.GroupNearWall.Remove(w);
+                myCluster.SetOrderWall();
+            }
+
+            if (NearWall.Contains(w)) {
+                NearWall.Remove(w);
+            }
+
+            if (NearWall.Count > 0)
+                targetWall = NearWall[0];
+        }
+
+        if (col.CompareTag("FriendlyBody"))
+        {
+            Friendly f = col.GetComponentInParent<Friendly>();
+
+            if (myCluster.GroupNearFriend.Contains(f))
+            {
+                myCluster.GroupNearFriend.Remove(f);
+                myCluster.SetOrderFriendly();
+            }
+        }
     }
 }

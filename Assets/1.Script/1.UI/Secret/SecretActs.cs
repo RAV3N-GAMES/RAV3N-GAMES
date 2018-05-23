@@ -12,6 +12,7 @@ public class SecretActs : MonoBehaviour {
      */
     public double Chance;//기밀이 목적인 적 출현 확률
     public static bool secretSeizured;//기밀 탈취되었을 시 true => 이를 판단하는 스크립트 GameManager(가명)에서 판단
+    public int setRoomidx;
 
     // Use this for initialization
     void Start () {
@@ -87,5 +88,4 @@ public class SecretActs : MonoBehaviour {
         }
         Chance /= 100;
     }
-
 }

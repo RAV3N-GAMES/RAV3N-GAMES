@@ -104,6 +104,7 @@ public class ObjectInfo : MonoBehaviour
             return true;
     }
 
+
     IEnumerator Display()
     {
         yield return new WaitUntil(lastColCount);

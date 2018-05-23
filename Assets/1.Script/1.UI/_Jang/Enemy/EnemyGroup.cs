@@ -8,6 +8,8 @@ public class EnemyGroup : MonoBehaviour {
     public bool isGenerate;
     public int isOpressed;//0: not opressed, 1: oppressed, 2: gold provided
     public int Count;
+    public List<Trap> Traps=new List<Trap>();
+    public List<SecretActs> Secrets = new List<SecretActs>();
     /*
      * Genpoint
       - 0번 방 제외하고 모든 방에 4방향 전부 존재
@@ -54,6 +56,7 @@ public class EnemyGroup : MonoBehaviour {
 
         Enemy info = null;
         //Genopint =. GameManger에서 EnemyGroup으로 옮김
+        int idx=-1;
         Transform pos = GenPoint[Random.Range(0, GenPoint.Count)];
         for (int i = 0; i < GroupMemberMax; ++i)
         {
@@ -75,6 +78,9 @@ public class EnemyGroup : MonoBehaviour {
             }
 
             GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
+            if (i == 0)
+                idx = obj.GetComponentInChildren<Enemy>().CheckAdjacentCount();
+
             if (rand <= (int)(ENEMY_TYPE.Sheriff))
             {
                 Group_Normal++;
@@ -100,13 +106,11 @@ public class EnemyGroup : MonoBehaviour {
             info.PresentRoomidx = EnemyGroupIdx;
             info.myCluster = EnemyClusterManager.clusterList[GenerateCount];
             enemyList.Add(info);
+            info.nextIdx = idx;
             EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
             obj.SetActive(true);
+            obj.GetComponentInChildren<Enemy>().EnemyActionStart();
             GameManager.GenerateComplete = true;
-        }
-        int idx = enemyList[0].CheckAdjacentCount();
-        for (int i = 0; i < enemyList.Count; i++) {
-            enemyList[i].nextIdx = idx;
         }
         Count++;
     }

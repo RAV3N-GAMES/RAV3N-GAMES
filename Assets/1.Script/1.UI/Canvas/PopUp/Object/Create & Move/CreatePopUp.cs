@@ -130,13 +130,13 @@ public class CreatePopUp : MonoBehaviour {
         {
             GameObject Warp = Obj.transform.parent.gameObject;
             bool temp = Warp.GetComponent<DisplayObject>().DestroyObj(false);
-
-            print(temp);
-
+            
             Destroy(Warp);
         }
-        else
+        else {
+            
             Destroy(Obj);
+        }
 
         roomManager.SetClickColliderStatus(true);
         RoomManager.ChangeClickStatus(true);
