@@ -39,7 +39,8 @@ public class ObjectMove : MonoBehaviour
 
         if (!name.Equals("Warp_Exit") && !isNewObj)
         {
-            StartCoroutine("OnMove");
+            this.enabled = false;
+            //StartCoroutine("OnMove");
         }
 
         objectInfo = GetComponent<ObjectInfo>();

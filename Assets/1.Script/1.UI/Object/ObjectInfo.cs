@@ -14,7 +14,7 @@ public class ObjectInfo : MonoBehaviour
 
     public string id;
     public int type;
-    
+
     public int level;
     public int presentHP;
     public int totalHP;
@@ -46,8 +46,8 @@ public class ObjectInfo : MonoBehaviour
             tmpId = "Warp";
 
         level = JsonDataManager.slotInfoList[tmpId].level;
-        
-        switch(type)
+
+        switch (type)
         {
             case 0:
                 totalHP = JsonDataManager.GetBuildingInfo(tmpId, level).HP;
@@ -68,7 +68,7 @@ public class ObjectInfo : MonoBehaviour
         if (type == 2)
             InitFriend();
     }
-    
+
     public void InitObject(SaveObject objInfo) //설치된거 껐다 켜고 설치할때
     {
         level = objInfo.level;
@@ -96,10 +96,18 @@ public class ObjectInfo : MonoBehaviour
         StartCoroutine(Display());
     }
 
+    bool lastColCount()
+    {
+        if (GetComponent<CheckTile>().lastColList.Count == 0)
+            return false;
+        else
+            return true;
+    }
+
     IEnumerator Display()
     {
-        yield return null;
-
+        yield return new WaitUntil(lastColCount);
+        //yield return null;
         if (GetComponent<CheckTile>().lastColList.Count == 0)
             print("lastCol == 0 tileCol" + TileCollider.activeInHierarchy);
         OnDisplay();
@@ -155,7 +163,7 @@ public class ObjectInfo : MonoBehaviour
 
     public void SetHP(int changeHP)
     {
-        if(changeHP < 0)
+        if (changeHP < 0)
         {
             if (DamageObjPos != null)
                 DamageObjPos.SetActive(true);
@@ -197,24 +205,27 @@ public class ObjectInfo : MonoBehaviour
         if (presentHP == totalHP && DamageObjPos != null)
             DamageObjPos.SetActive(false);
 
-        Friendly f=GetComponentInChildren<Friendly>();
-        Wall w=GetComponentInChildren<Wall>();
-        if (f) {
+        Friendly f = GetComponentInChildren<Friendly>();
+        Wall w = GetComponentInChildren<Wall>();
+        if (f)
+        {
             f.Hp = presentHP;
         }
-        if (w) {
+        if (w)
+        {
             w.HP = presentHP;
         }
     }
 
     public void OnDisplay()
     {
+        print("OnDisplay");
         isDisplay = true;
 
         //ClickCollider.SetActive(true);
         TileCollider.SetActive(false);
         ClickCollider.SetActive(!DayandNight.isDay);
-        
+
         GetComponent<ObjectColor>().OffColor();
     }
 
@@ -240,7 +251,8 @@ public class ObjectInfo : MonoBehaviour
         DontDestroy--;
     }
 
-    public void SynctoWall() {
+    public void SynctoWall()
+    {
         Wall w = GetComponentInChildren<Wall>();
         w.Level = level;
         w.HP = presentHP;
@@ -248,7 +260,8 @@ public class ObjectInfo : MonoBehaviour
         w.WallSyncInfo();
     }
 
-    private void InitFriend() {
+    private void InitFriend()
+    {
         Friendly fInfo;
 
         try
@@ -276,7 +289,7 @@ public class ObjectInfo : MonoBehaviour
                     fInfo.MaxHp = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].HP;
                     fInfo.AttackEventMax = OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].SkillCool;
                     fInfo.scollider.radius = 4;
-                    fInfo.StopDistance = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].AttackRange*2;
+                    fInfo.StopDistance = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].AttackRange * 2;
                     fInfo.setDelayTime = (float)OurForcesManager.Tbl_OurForceSetup[fInfo.Level + 99].AttackPeriod;
                     fInfo.defaultTime = fInfo.setDelayTime;
                     fInfo.attackDelay = new WaitForSeconds(fInfo.setDelayTime);
@@ -315,14 +328,17 @@ public class ObjectInfo : MonoBehaviour
         catch { }
     }
 
-    private void InitTrap() {
+    private void InitTrap()
+    {
     }
 
-    private void InitWall() {
+    private void InitWall()
+    {
 
     }
 
-    private void InitSecret() {
+    private void InitSecret()
+    {
 
     }
 }

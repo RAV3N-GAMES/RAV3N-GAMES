@@ -13,6 +13,10 @@ public class CreatePopUp : MonoBehaviour {
 
     public GameObject ExceedLimitAllot;
 
+    public bool isTutorial = false;
+    public TutorialTile tutorialTile;
+    public TaskManager taskManager;
+
     void UsingTile(string id, int price)
     {
         if (!id.Equals("Warp"))
@@ -45,6 +49,21 @@ public class CreatePopUp : MonoBehaviour {
     public void CreatePref()
     {
         string id = Obj.GetComponent<ObjectInfo>().id;
+
+        if (isTutorial)
+        {
+            if(!tutorialTile.isSuccess()) // tutorial tile과 닿았는지
+            {
+                print("설치 안됨");
+                CancelPref();
+                gameObject.SetActive(false);
+                return;
+            }
+            else
+            {
+                taskManager.SetTutorialTile();
+            }
+        }
 
         if (id.Equals("Warp_Exit"))
             id = "Warp";
@@ -101,6 +120,12 @@ public class CreatePopUp : MonoBehaviour {
 
     public void CancelPref()
     {
+        if (isTutorial)
+        {
+            tutorialTile.lastColList.Clear();
+            taskManager.SetClickSlot(true);
+        }
+
         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
         {
             GameObject Warp = Obj.transform.parent.gameObject;
@@ -115,6 +140,10 @@ public class CreatePopUp : MonoBehaviour {
 
         roomManager.SetClickColliderStatus(true);
         RoomManager.ChangeClickStatus(true);
+
+        if (isTutorial)
+            ClickObject.isPossibleClick = false;
+
 
         gameObject.SetActive(false);
     }

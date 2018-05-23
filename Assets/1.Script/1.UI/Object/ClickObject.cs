@@ -13,11 +13,14 @@ public class ClickObject : MonoBehaviour
     [HideInInspector]
     public GameObject ChangePopUpManager;
 
+    TaskManager taskManager;
+
     void Awake()
     {
         clickTime = 1f;
 
         objectInfo = GetComponent<ObjectInfo>();
+        taskManager = FindObjectOfType<TaskManager>();
     }
 
     void LongClick()
@@ -26,13 +29,15 @@ public class ClickObject : MonoBehaviour
         {
             if (!DayandNight.isDay) {
                 RoomManager.ChangeClickStatus(false);
-
                 SoundManager.soundManager.OnEffectSound("8_CONTENTS");
 
                 ChangePopUpManager.transform.parent.gameObject.SetActive(true);
                 ChangePopUpManager.GetComponent<ChangePopUpManager>().InitChangePopUp(gameObject, GetComponent<ObjectInfo>().type);
 
                 GetComponent<ObjectColor>().OnRecognizeRage(true);
+
+                if (taskManager != null)
+                    taskManager.OnLongSelect();
             }
         }
     }

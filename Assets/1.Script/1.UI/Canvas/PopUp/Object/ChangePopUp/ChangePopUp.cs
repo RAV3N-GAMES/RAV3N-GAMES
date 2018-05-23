@@ -30,7 +30,6 @@ public class ChangePopUp : MonoBehaviour {
     public virtual void InitPopUp()
     {
         objInfo = Obj.GetComponent<ObjectInfo>();
-
         if (objInfo.id.Equals("Warp_Exit"))
             id = "Warp";
         else

@@ -95,7 +95,8 @@ public class ResultPopUp : MonoBehaviour
             string[] enemyId = new string[4];
             bool[] enemyActive = new bool[4];
 
-            int Cnt = 0;            
+            int Cnt = 0;
+            bool isSeizure = false;
             for (int j = 0; j < createdEnemyCnt; j++)
             {
                 if (DayandNight.CreatedEnemy[j].Group == GroupId[i])
@@ -114,8 +115,11 @@ public class ResultPopUp : MonoBehaviour
                     }
                     if (DayandNight.CreatedEnemy[j].isSeizure)
                     {
+                        isSeizure = true;
                         SeizureCnt++;
                     }
+                    else
+                        isSeizure = false;
                     if (DayandNight.CreatedEnemy[j].isDefeated)
                         isSuccess = false;
 
@@ -125,7 +129,7 @@ public class ResultPopUp : MonoBehaviour
                         Cnt++;
                 }
             }
-            enemyGroupResult[i].InitResult(enemyId, enemyActive);
+            enemyGroupResult[i].InitResult(enemyId, enemyActive, isSeizure);
         }
 
         if (isSuccess)

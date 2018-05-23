@@ -11,6 +11,7 @@ public class EnemyGroupResult : MonoBehaviour {
     public GameObject Fail;
 
     public List<Image> Enemy;
+    public Image isSeizure;
 
     public bool isDone;
     public bool isSuccess;
@@ -46,7 +47,7 @@ public class EnemyGroupResult : MonoBehaviour {
         yield break;
     }
 
-    public void InitResult(string[] enemyId, bool[] active)
+    public void InitResult(string[] enemyId, bool[] active, bool isSeizure)
     {
         this.active = active;
 
@@ -54,6 +55,11 @@ public class EnemyGroupResult : MonoBehaviour {
         Fail.SetActive(false);
 
         isSuccess = true;
+
+        if (isSeizure)
+            this.isSeizure.color = Color.blue;
+        else
+            this.isSeizure.color = Color.red;
 
         if (enemyId[0] == null)
             return;

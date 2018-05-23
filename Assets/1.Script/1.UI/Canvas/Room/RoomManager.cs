@@ -15,8 +15,10 @@ public class RoomManager : MonoBehaviour {
     public static bool possibleDrag;
     bool isMove;
 
-    Vector3 prePos;
-    Vector3 conPos;
+    [HideInInspector]
+    public Vector3 prePos;
+    [HideInInspector]
+    public Vector3 conPos;
 
     Touch touch0;
     Touch touch1;
@@ -209,6 +211,24 @@ public class RoomManager : MonoBehaviour {
         CenterRoomIdx = idx;
     }
 
+    public bool isCameraInRoom()
+    {
+        Vector3 cameraPos = Camera.main.transform.position;
+        cameraPos.y = 0;
+
+        cameraPos += (prePos - conPos);
+        for (int i = 0; i < Room.Count; i++)
+        {
+            if (Room[i].activeInHierarchy)
+            {
+                if ((cameraPos - Room[i].transform.position).magnitude < 10f)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     public void ZoomInOut() //이거 직교로 수정해야함
     {
         touch0 = Input.GetTouch(0);
@@ -330,8 +350,8 @@ public class RoomManager : MonoBehaviour {
                 if (isMove && possibleDrag)
                 {
                     conPos = GetRay();
-
-                    Camera.main.transform.position += (prePos - conPos);
+                    if (isCameraInRoom())
+                        Camera.main.transform.position += (prePos - conPos);
                     prePos = conPos;
                 }
             }
@@ -339,7 +359,6 @@ public class RoomManager : MonoBehaviour {
     }
     void LateUpdate()
     {
-
         if (isMove && possibleDrag)
         {
             conPos = GetRay();

@@ -15,7 +15,6 @@ public class ResourceManager_Player : JsonReadWrite
     void Awake()
     {
         ReadMain(Path);
-        DontDestroyOnLoad(this);
     }
 
     // Use this for initialization

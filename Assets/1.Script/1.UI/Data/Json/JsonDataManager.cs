@@ -6,6 +6,8 @@ using LitJson;
 
 
 public class JsonDataManager : MonoBehaviour {
+    public bool isSave;
+    static bool isSaveForSave;
     public static Dictionary<string, SlotInfo> slotInfoList { get; private set; }   //현재까지 오브젝트 업데이트 정보및 슬롯관련 정보
                                                                                     //<id, SlotInfo>의 데이터 쌍
     public static Dictionary<string, Sprite> slotImage { get; private set; }
@@ -29,6 +31,11 @@ public class JsonDataManager : MonoBehaviour {
         LoadData();
     }
 
+    void Start()
+    {
+        isSaveForSave = isSave;
+    }
+
     SlotInfo InitSlotInfo(JsonData data)
     {
         int type = int.Parse(data["type"].ToString());
@@ -43,15 +50,22 @@ public class JsonDataManager : MonoBehaviour {
     void LoadSlotData()
     {
         string slotObj;
-        try
-        {
-            slotObj = File.ReadAllText(Application.persistentDataPath + "/SlotInfo.json");
-            
-        }
-        catch
+        if (!isSave)
         {
             TextAsset textAsset = Resources.Load("Data/SlotInfo") as TextAsset;
             slotObj = textAsset.ToString();
+        }
+        else
+        {
+            try
+            {
+                slotObj = File.ReadAllText(Application.persistentDataPath + "/SlotInfo.json");
+            }
+            catch
+            {
+                TextAsset textAsset = Resources.Load("Data/SlotInfo") as TextAsset;
+                slotObj = textAsset.ToString();
+            }
         }
 
         JsonData slotData = JsonMapper.ToObject(slotObj);
@@ -92,16 +106,19 @@ public class JsonDataManager : MonoBehaviour {
 
     static void SaveData()
     {
-        List<SlotInfo> tmp = new List<SlotInfo>();
-        
-        foreach(var slot in slotInfoList)
+        if (isSaveForSave)
         {
-            tmp.Add(slot.Value);
-        }
+            List<SlotInfo> tmp = new List<SlotInfo>();
 
-        JsonData newObj = JsonMapper.ToJson(tmp);
-        
-        File.WriteAllText(Application.persistentDataPath + "/SlotInfo.json", newObj.ToString());
+            foreach (var slot in slotInfoList)
+            {
+                tmp.Add(slot.Value);
+            }
+
+            JsonData newObj = JsonMapper.ToJson(tmp);
+
+            File.WriteAllText(Application.persistentDataPath + "/SlotInfo.json", newObj.ToString());
+        }
     }
     
     public static BuildingObject GetBuildingInfo(string id, int level)
@@ -254,23 +271,21 @@ public class JsonDataManager : MonoBehaviour {
 
     public void Reset()
     {
-        //플레이어 정보 초기화
-        ResetSlotInfo();
-        for (int i = 0; i < slotManager.Count; i++)
-            slotManager[i].RefreshInfo();
+        //+플레이어 정보 초기화
+        if (isSave)
+        {
+            ResetSlotInfo();
+            for (int i = 0; i < slotManager.Count; i++)
+                slotManager[i].RefreshInfo();
 
-        ResetSaveObject();
-        roomManager.ResetRoom();
+            ResetSaveObject();
+            roomManager.ResetRoom();
 
-        ResetMapInfo();
-        mapManager.InitMapManager();
+            ResetMapInfo();
+            mapManager.InitMapManager();
 
-        ResetMailList();
-        mailBox.RewardCoinList.Clear();
-    }
-
-    void OnApplicationQuit()
-    {
-        SaveData();
+            ResetMailList();
+            mailBox.RewardCoinList.Clear();
+        }
     }
 }

@@ -26,6 +26,8 @@ public class Map
 
 public class MapManager : MonoBehaviour
 {
+    public bool isSave;
+
     public Transform MapCameraPos;
     public Camera MapCamera;
 
@@ -37,7 +39,7 @@ public class MapManager : MonoBehaviour
     public MiniMapManager miniMapManager;
 
     //index : Step..? , value : 활성화되는 Fame
-    static int[] Fame = { 0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 8 };
+    //static int[] Fame = { 0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 8 };
 
     public static int tempFame = 0;
     public Text tempFameText;
@@ -87,7 +89,6 @@ public class MapManager : MonoBehaviour
         tempFame = map.tempFame;
 
         tempFameText.text = tempFame.ToString();
-
 
         conRoom = 0;
 
@@ -144,16 +145,24 @@ public class MapManager : MonoBehaviour
     Map ReadMapInfo()
     {
         string strMap;
-        try
-        {
-            strMap = File.ReadAllText(Application.persistentDataPath + "/MapInfo.json");
-        }
-        catch
+
+        if (!isSave)
         {
             TextAsset textAsset = Resources.Load("Data/MapInfo") as TextAsset;
             strMap = textAsset.ToString();
         }
-
+        else
+        {
+            try
+            {
+                strMap = File.ReadAllText(Application.persistentDataPath + "/MapInfo.json");
+            }
+            catch
+            {
+                TextAsset textAsset = Resources.Load("Data/MapInfo") as TextAsset;
+                strMap = textAsset.ToString();
+            }
+        }
         JsonData mapData = JsonMapper.ToObject(strMap);
         return InitMapInfo(mapData);
     }
@@ -161,14 +170,17 @@ public class MapManager : MonoBehaviour
 
     void WriteMapInfo()
     {
-        int[] mapOpen = new int[STEP_MAX * STEP_MAX];
-        for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
-            mapOpen[i] = (int)GetIsOpen(i);
+        if (isSave)
+        {
+            int[] mapOpen = new int[STEP_MAX * STEP_MAX];
+            for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
+                mapOpen[i] = (int)GetIsOpen(i);
 
-        Map map = new Map(tempFame, Step, Edge, mapOpen);
-        JsonData newObj = JsonMapper.ToJson(map);
+            Map map = new Map(tempFame, Step, Edge, mapOpen);
+            JsonData newObj = JsonMapper.ToJson(map);
 
-        File.WriteAllText(Application.persistentDataPath + "/MapInfo.json", newObj.ToString());
+            File.WriteAllText(Application.persistentDataPath + "/MapInfo.json", newObj.ToString());
+        }
     }
 
 

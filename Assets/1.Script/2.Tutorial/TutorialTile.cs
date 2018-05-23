@@ -1,0 +1,39 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TutorialTile : MonoBehaviour {
+    public List<GameObject> lastColList;
+    public string objName;
+    public int Cnt;
+
+    void Awake()
+    {
+        lastColList = new List<GameObject>();
+    }
+
+    public bool isSuccess()
+    {
+        if (lastColList.Count == Cnt)
+            return true;
+        return false;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Tile")
+        {
+            if (col.gameObject.transform.parent.parent.name == objName)
+                lastColList.Add(col.transform.parent.gameObject);
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Tile")
+        {
+            if (col.gameObject.transform.parent.parent.name == objName)
+                lastColList.Remove(col.transform.parent.gameObject);
+        }
+    }
+}

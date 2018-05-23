@@ -24,7 +24,6 @@ public class BuildingManager : JsonReadWrite
         ReadMain(Path2);
         ReadMain(Path3);
         ReadMain(Path4);
-        DontDestroyOnLoad(this);
     }
 	
 	// Update is called once per frame

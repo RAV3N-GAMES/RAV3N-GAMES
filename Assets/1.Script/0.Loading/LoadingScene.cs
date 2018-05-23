@@ -9,6 +9,8 @@ public class LoadingScene : MonoBehaviour {
 
     public GameObject[] LoadingImage;
 
+    public GameObject Managers;
+
     string SceneName = "";
     
 
@@ -20,6 +22,8 @@ public class LoadingScene : MonoBehaviour {
         LoadingImage[random].SetActive(true);
 
         this.SceneName = SceneName;
+
+        DontDestroyOnLoad(Managers);
 
         StartCoroutine("LoadScene");
     }

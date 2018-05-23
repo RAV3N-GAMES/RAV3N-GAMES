@@ -13,7 +13,6 @@ public class EnemyClusterManager : MonoBehaviour {
             ec = gameObject.AddComponent<EnemyCluster>();
             clusterList.Add(ec);
         }
-        DontDestroyOnLoad(this);
     }
 	
 	// Update is called once per frame

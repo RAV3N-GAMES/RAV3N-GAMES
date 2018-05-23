@@ -12,7 +12,6 @@ public class CheckTile : MonoBehaviour {
 
     ObjectInfo objectInfo;
     ObjectColor objectColor;
-    DisplayObject displayObject;
 
     [HideInInspector]
     public TileManager tileManager;
@@ -27,7 +26,6 @@ public class CheckTile : MonoBehaviour {
 
         objectInfo = GetComponent<ObjectInfo>();
         objectColor = GetComponent<ObjectColor>();
-        displayObject = GetComponent<DisplayObject>();
 
         TileCnt = objectInfo.coordinate.Length / 2;
     }

@@ -20,6 +20,8 @@ public class ObjInfo_OurForces : ObjInfoPopUp {
     public Image ActivationImage;
     public Text ActivationPrice;
 
+    public List<GameObject> ActivationButton;
+
     void SetLVRect(RectTransform lvRect)
     {
         Vector2 min = Vector2.zero, max = Vector2.zero;
@@ -92,6 +94,16 @@ public class ObjInfo_OurForces : ObjInfoPopUp {
     {
         ActivationImage.transform.parent.gameObject.SetActive(true);
         ActivationImage.sprite = JsonDataManager.activationImage[id];
+
+        for (int i = 0; i < ActivationButton.Count; i++)
+            ActivationButton[i].SetActive(false);
+
+        switch (type)
+        {
+            case 0: ActivationButton[0].SetActive(true); break;
+            case 2: ActivationButton[1].SetActive(true); break;
+            case 3: ActivationButton[2].SetActive(true); break;
+        }
 
         ActivationPrice.text = JsonDataManager.GetOurForcesInfo(id, 1).ActiveCost.ToString();
     }

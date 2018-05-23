@@ -5,6 +5,8 @@ using System.IO;
 using LitJson;
 
 public class MailBox : MonoBehaviour {
+    public bool isSave;
+
     public Transform Box;
     public GameObject MailPref;
 
@@ -36,16 +38,23 @@ public class MailBox : MonoBehaviour {
     void ReadJsonData()
     {
         string strMail;
-        try
+        if (!isSave)
         {
-            strMail = File.ReadAllText(Application.persistentDataPath + "/MailList.json");
+            TextAsset textAsset = Resources.Load("Data/MailList") as TextAsset;
+            strMail = textAsset.ToString();
         }
-        catch
+        else
         {
-          TextAsset textAsset = Resources.Load("Data/MailList") as TextAsset;
-          strMail = textAsset.ToString();
+            try
+            {
+                strMail = File.ReadAllText(Application.persistentDataPath + "/MailList.json");
+            }
+            catch
+            {
+                TextAsset textAsset = Resources.Load("Data/MailList") as TextAsset;
+                strMail = textAsset.ToString();
+            }
         }
-
         JsonData mailData = JsonMapper.ToObject(strMail);
 
         for (int i = 0; i < mailData.Count; i++)
@@ -54,9 +63,11 @@ public class MailBox : MonoBehaviour {
 
     void WriteJsonData()
     {
-        JsonData newObj = JsonMapper.ToJson(RewardCoinList);
-
-        File.WriteAllText(Application.persistentDataPath + "/MailList.json", newObj.ToString());
+        if (isSave)
+        {
+            JsonData newObj = JsonMapper.ToJson(RewardCoinList);
+            File.WriteAllText(Application.persistentDataPath + "/MailList.json", newObj.ToString());
+        }
     }
 
     void OnEnable()

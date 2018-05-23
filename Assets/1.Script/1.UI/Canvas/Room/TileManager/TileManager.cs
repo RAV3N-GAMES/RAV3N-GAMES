@@ -6,6 +6,7 @@ using System.IO;
 
 public class TileManager : MonoBehaviour
 {
+    public bool isSave;
     const int TILE_MAX = 20;
 
     const int BUILDING_MAX = 20;
@@ -248,7 +249,6 @@ public class TileManager : MonoBehaviour
     public bool DestroyObj(bool isDestroyed, GameObject Obj, int[] idx)
     {
         ObjectInfo objInfo = Obj.GetComponent<ObjectInfo>();
-        int layerDepth = objInfo.layerDepth;
 
         if (objInfo.DontDestroy != 0)
             return false;
@@ -551,23 +551,29 @@ public class TileManager : MonoBehaviour
         {
             string displayData;
 
-            try
-            {
-                displayData = File.ReadAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json");
-
-            }
-            catch
+            if (!isSave)
             {
                 TextAsset textAsset = Resources.Load("Data/Room" + gameObject.name) as TextAsset;
                 displayData = textAsset.ToString();
             }
+            else
+            {
+                try
+                {
+                    displayData = File.ReadAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json");
 
+                }
+                catch
+                {
+                    TextAsset textAsset = Resources.Load("Data/Room" + gameObject.name) as TextAsset;
+                    displayData = textAsset.ToString();
+                }
+            }
             JsonData displayObj = JsonMapper.ToObject(displayData);
 
             for (int i = 0; i < displayObj.Count; i++)
             {
                 SaveObject obj = GetSaveObject(displayObj[i]);
-
                 //saveObj 리스트에 순서가 문제가 될수도 있음
                 UsingTile(InitObj(obj, GetVector(obj.pos)), makeIdx(obj.mRow, obj.mCol, obj.coordinate));
             }
@@ -581,24 +587,27 @@ public class TileManager : MonoBehaviour
 
     void SaveTileObject()
     {
-        if (saveObj != null)
+        if (isSave)
         {
-            saveObj.Clear();
-
-            for (int i = 0; i < objectList.Count; i++)
+            if (saveObj != null)
             {
-                if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
-                    saveObj.Add(objectList[i].GetSaveObj());
-            }
+                saveObj.Clear();
 
-            for (int i = 0; i < objectList.Count; i++)
-            {
-                if (objectList[i].mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
-                    saveObj.Add(objectList[i].GetSaveObj());
-            }
+                for (int i = 0; i < objectList.Count; i++)
+                {
+                    if (objectList[i].mObject.GetComponent<ObjectInfo>().id != "Warp_Exit")
+                        saveObj.Add(objectList[i].GetSaveObj());
+                }
 
-            JsonData newObj = JsonMapper.ToJson(saveObj);
-            File.WriteAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json", newObj.ToString());
+                for (int i = 0; i < objectList.Count; i++)
+                {
+                    if (objectList[i].mObject.GetComponent<ObjectInfo>().id == "Warp_Exit")
+                        saveObj.Add(objectList[i].GetSaveObj());
+                }
+
+                JsonData newObj = JsonMapper.ToJson(saveObj);
+                File.WriteAllText(Application.persistentDataPath + "/Room" + gameObject.name + ".json", newObj.ToString());
+            }
         }
     }
 }

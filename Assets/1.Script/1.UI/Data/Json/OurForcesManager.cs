@@ -54,7 +54,6 @@ public class OurForcesManager : JsonReadWrite
                     Debug.Log(i + "th index: " + Tbl_OurForceSetup[i].Level+" " + Tbl_OurForceSetup[i].HP + " " + Tbl_OurForceSetup[i].Attack + " " + Tbl_OurForceSetup[i].SkillCool + " " + Tbl_OurForceSetup[i].Price + " " + Tbl_OurForceSetup[i].UpgradeCost+ " " + Tbl_OurForceSetup[i].HealCost + " " + Tbl_OurForceSetup[i].id + " " + Tbl_OurForceSetup[i].Type + " " + Tbl_OurForceSetup[i].ActiveCost + " " + Tbl_OurForceSetup[i].AttackRange + " " + Tbl_OurForceSetup[i].AttackAngle + " " + Tbl_OurForceSetup[i].HitConstrain+ " " + Tbl_OurForceSetup[i].AttackCool+ " " + Tbl_OurForceSetup[i].EnemyRecognizeRangeHalf + " " + Tbl_OurForceSetup[i].MoveSpeed + " ");
                 }
         */
-        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
