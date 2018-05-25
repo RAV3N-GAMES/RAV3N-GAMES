@@ -61,6 +61,8 @@ public class DayandNight : MonoBehaviour
     public void changeState() {
         isDay = !isDay;
 
+        print("changeState" + isDay);
+
         roomManager.OnOffHitCollider();
 
         ReadyButton.SetActive(!isDay);
@@ -82,7 +84,8 @@ public class DayandNight : MonoBehaviour
         }
         
         TrapEnable(isDay);
-        EnemyEnable(isDay);
+        if (FindObjectOfType<TaskManager>() == null)
+            EnemyEnable(isDay);
         CharacterEnable(isDay);
     }
     

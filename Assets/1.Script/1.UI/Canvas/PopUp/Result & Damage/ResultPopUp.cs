@@ -27,6 +27,7 @@ public class ResultPopUp : MonoBehaviour
     public MailBox mailBox;
 
     public RoomManager roomManager;
+    public TaskManager taskManager;
 
     List<EnemyGroupResult> enemyGroupResult = new List<EnemyGroupResult>();
 
@@ -150,51 +151,66 @@ public class ResultPopUp : MonoBehaviour
 
         enemyGroupResult.Clear();
 
-        isSuccess = false;
-
-        Success.SetActive(false);
-        Fail.SetActive(false);
-
-        NextButton.enabled = false;
-
-        Exp.text = Data_Player.Experience.ToString();
-        Coin.text = Data_Player.Gold.ToString();
-        Fame.text = Data_Player.Fame.ToString();
-
-        //필요한 데이터
-        //int      EnemyCnt    : 적군 집단 수
-        //string[] enemyId     : 집단 별 적군 종류 id
-        //bool[]   enemyActive : 집단 별 적군 종류 별 제압 성공 여부 
-
-        int tempEnemyNum = EnemyManager.EnemyGroupMax;
-        SetEnemyListActive(tempEnemyNum);
-
-        for (int i = 0; i < EnemyCnt; i++)
+        if (EnemyGroupList.Count == 1)
         {
-            enemyGroupResult.Add(EnemyGroupList[EnemyCnt - 1].transform.GetChild(i).GetComponent<EnemyGroupResult>());
-        }
+            isSuccess = true;
+            enemyGroupResult.Add(EnemyGroupList[0].transform.GetChild(0).GetComponent<EnemyGroupResult>());
+            enemyGroupResult[0].InitResult(new string[] { "MonsterFlyTeen2D" }, new bool[] { false }, true);
 
-        if (DayandNight.CreatedEnemy.Count < 4)
+            PlayerExp = Data_Player.Experience;
+            PlayerCoin = Data_Player.Gold;
+
+            SetUI(0, 0);
+            StartCoroutine(TutorialResult());
+        }
+        else
         {
-            gameObject.SetActive(false);
-            return;
+            isSuccess = false;
+
+            Success.SetActive(false);
+            Fail.SetActive(false);
+
+            NextButton.enabled = false;
+
+            Exp.text = Data_Player.Experience.ToString();
+            Coin.text = Data_Player.Gold.ToString();
+            Fame.text = Data_Player.Fame.ToString();
+
+            //필요한 데이터
+            //int      EnemyCnt    : 적군 집단 수
+            //string[] enemyId     : 집단 별 적군 종류 id
+            //bool[]   enemyActive : 집단 별 적군 종류 별 제압 성공 여부 
+
+            int tempEnemyNum = EnemyManager.EnemyGroupMax;
+            SetEnemyListActive(tempEnemyNum);
+
+            for (int i = 0; i < EnemyCnt; i++)
+            {
+                enemyGroupResult.Add(EnemyGroupList[EnemyCnt - 1].transform.GetChild(i).GetComponent<EnemyGroupResult>());
+            }
+
+            if (DayandNight.CreatedEnemy.Count < 4)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
+            InitEnemyGroupResult();
+
+            PlayerExp = Data_Player.Experience;
+            PlayerCoin = Data_Player.Gold;
+
+            RewardEnemy_Gold = 0; RewardEnemy_Exp = 0;
+            RewardGroup_Gold = 0; RewardGroup_Exp = 0;
+            RewardFail_Exp = 0;
+
+            SetPlayerInfo();
+
+            if (!isSuccess)
+                SendMail();
+
+            StartCoroutine("PlayResult");
         }
-
-        InitEnemyGroupResult();
-
-        PlayerExp = Data_Player.Experience;
-        PlayerCoin = Data_Player.Gold;
-
-        RewardEnemy_Gold = 0; RewardEnemy_Exp = 0;
-        RewardGroup_Gold = 0; RewardGroup_Exp = 0;
-        RewardFail_Exp = 0;
-
-        SetPlayerInfo();
-
-        if (!isSuccess)
-            SendMail();
-
-        StartCoroutine("PlayResult");
     }
 
 
@@ -326,6 +342,30 @@ public class ResultPopUp : MonoBehaviour
         SetUI(0, 0);
     }
 
+    IEnumerator TutorialResult()
+    {
+        //없앤 적군 표시
+        enemyGroupResult[0].isDone = false;
+        enemyGroupResult[0].StartCoroutine("SetEnemyActive");
+
+        yield return new WaitUntil(enemyGroupResult[0].GetIsDone);
+        yield return new WaitForSeconds(1f);
+
+        //제압 성공한 적군 집단 표시
+        SoundManager.soundManager.OnEffectSound("40_RESULT SIGN");
+        enemyGroupResult[0].SetSuccess();
+        yield return new WaitForSeconds(1f);
+
+        //거점 성공 여부 띄움
+        SetSuccess(isSuccess);
+        NextButton.enabled = true;
+
+        yield return new WaitForSeconds(1f);
+        taskManager.isCompleted = true;
+
+        yield break;
+    }
+
     IEnumerator PlayResult()
     {
         //없앤 적군 표시
@@ -432,7 +472,7 @@ public class ResultPopUp : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
         //거점 성공 여부 띄움
-        SetSuccess(isSuccess); //true 아닌거 아님
+        SetSuccess(isSuccess);
         NextButton.enabled = true;
 
         yield break;

@@ -124,6 +124,8 @@ public class CreatePopUp : MonoBehaviour {
         {
             tutorialTile.lastColList.Clear();
             taskManager.SetClickSlot(true);
+            taskManager.StopCoroutine(taskManager.DisplayTask());
+            taskManager.SetDisplayWarp();
         }
 
         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))

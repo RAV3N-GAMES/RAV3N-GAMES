@@ -43,10 +43,8 @@ public class CreateObject : MonoBehaviour
     {
         if (isTutorial) {
             taskManager.isCompleted = tutorialTile.isSuccess();
-            if(!taskManager.isCompleted)
-            {
-                
-            }
+            if (!taskManager.isCompleted)
+                taskManager.StopCoroutine(taskManager.DisplayTask());
         }
         id = "";
         SetBoxRect(MaxY);
@@ -68,6 +66,8 @@ public class CreateObject : MonoBehaviour
             warp_Exit.GetComponent<DisplayObject>().CreateButton = CreatePopUp;
             warp_Exit.GetComponent<ClickObject>().ChangePopUpManager = ChangePopUpManager;
             warp_Exit.GetComponent<ObjectInfo>().InitObject();
+
+            warp_Exit.GetComponent<ObjectMove>().isNewObj = true;
         }
 
         newObj.GetComponent<ObjectMove>().isNewObj = true;
@@ -77,6 +77,8 @@ public class CreateObject : MonoBehaviour
 
     public void MouseExit()
     {
+        print("MouseExit");
+
         if (!DayandNight.isDay)
         {
             print(id + " : " + RoomManager.possibleDrag);

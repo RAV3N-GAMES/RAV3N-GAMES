@@ -11,6 +11,7 @@ public class ClickSlot : MonoBehaviour, IPointerDownHandler {
 
     public void OnPointerDown(PointerEventData data)
     {
+        print("ClickSlot isTask : " + isTask + " name :" + id);
         if (isTask)
             taskManager.OnSlotClick();
 

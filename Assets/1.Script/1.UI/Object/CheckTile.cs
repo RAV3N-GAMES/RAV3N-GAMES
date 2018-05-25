@@ -297,22 +297,22 @@ public class CheckTile : MonoBehaviour {
                 lastColList.Add(col.transform.parent.gameObject);
                 OnCheckTile();
             }
-            if (tag.Equals("Trap")) {
-                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-                Trap t = GetComponentInChildren<Trap>();
-                t.setRoomidx = EG.GroupIndex;
-                if(!EG.Traps.Contains(t))
-                    EG.Traps.Add(t);
-            }
-
-            if (tag.Equals("Secret"))
-            {
-                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-                SecretActs s = GetComponentInChildren<SecretActs>();
-                s.setRoomidx = EG.GroupIndex;
-                if (!EG.Secrets.Contains(s))
-                    EG.Secrets.Add(s);
-            }
+            //if (tag.Equals("Trap")) {
+            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+            //    Trap t = GetComponentInChildren<Trap>();
+            //    t.setRoomidx = EG.GroupIndex;
+            //    if(!EG.Traps.Contains(t))
+            //        EG.Traps.Add(t);
+            //}
+            //
+            //if (tag.Equals("Secret"))
+            //{
+            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+            //    SecretActs s = GetComponentInChildren<SecretActs>();
+            //    s.setRoomidx = EG.GroupIndex;
+            //    if (!EG.Secrets.Contains(s))
+            //        EG.Secrets.Add(s);
+            //}
         }
     }
 
@@ -327,20 +327,20 @@ public class CheckTile : MonoBehaviour {
                 lastColList.Remove(col.transform.parent.gameObject);
             }
 
-            if (tag.Equals("Trap"))
-            {
-                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-                Trap t = GetComponentInChildren<Trap>();
-                if (EG.Traps.Contains(t))
-                    EG.Traps.Remove(t);
-            }
-
-            if (tag.Equals("Secret")) {
-                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-                SecretActs s = GetComponentInChildren<SecretActs>();
-                if (EG.Secrets.Contains(s))
-                    EG.Secrets.Remove(s);
-            }
+            //if (tag.Equals("Trap"))
+            //{
+            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+            //    Trap t = GetComponentInChildren<Trap>();
+            //    if (EG.Traps.Contains(t))
+            //        EG.Traps.Remove(t);
+            //}
+            //
+            //if (tag.Equals("Secret")) {
+            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+            //    SecretActs s = GetComponentInChildren<SecretActs>();
+            //    if (EG.Secrets.Contains(s))
+            //        EG.Secrets.Remove(s);
+            //}
         }
     }
 }

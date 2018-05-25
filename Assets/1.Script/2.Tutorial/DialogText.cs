@@ -10,6 +10,11 @@ public class DialogText : MonoBehaviour {
     [Range(0f, 1f)]
     public float speed;
 
+    void OnDisable()
+    {
+        InitText();
+    }
+
     public void InitText()
     {
         for (int i = 0; i < Line.Length; i++)
@@ -26,7 +31,10 @@ public class DialogText : MonoBehaviour {
 
     public void OnNextButton()
     {
-        StartCoroutine(AnimateNextButton());
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(AnimateNextButton());
+        else
+            InitText();
     }
 
     IEnumerator AnimateNextButton()

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyGroupResult : MonoBehaviour {
-    const int EnemyCnt = 4;
+    int EnemyCnt;
 
     public GameObject Success;
     public GameObject Fail;
@@ -17,6 +17,11 @@ public class EnemyGroupResult : MonoBehaviour {
     public bool isSuccess;
 
     bool[] active;
+
+    void Awake()
+    {
+        EnemyCnt = Enemy.Count;
+    }
 
     public bool GetIsDone()
     {
@@ -50,6 +55,7 @@ public class EnemyGroupResult : MonoBehaviour {
     public void InitResult(string[] enemyId, bool[] active, bool isSeizure)
     {
         this.active = active;
+        EnemyCnt = Enemy.Count;
 
         Success.SetActive(false);
         Fail.SetActive(false);

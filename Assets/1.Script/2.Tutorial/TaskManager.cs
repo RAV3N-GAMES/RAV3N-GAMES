@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 public class TaskManager : MonoBehaviour
 {
+    public List<GameObject> WarpTutorialTile;
+    public List<Transform> WarpButton;
+    public List<GameObject> WarpDisplayObject;
+
+
+    public GameObject ExpandMap;
+    public GameObject OriginalMap;
+
     public CreateObject createObject;
     public Transform CreatePopUpParent;
     public CreatePopUp createPopUp;
     public List<GameObject> Sign;
+
+    public Transform Display;
     public List<GameObject> DisplayObject;
     public GameObject Dialog;
 
@@ -18,6 +28,7 @@ public class TaskManager : MonoBehaviour
     public List<GameObject> TutorialTileList;
 
     Transform ButtonParent;
+    int ButtonSiblingIdx;
 
     public RoomManager roomManager;
 
@@ -45,7 +56,8 @@ public class TaskManager : MonoBehaviour
         Slide,
         Select,
         LongSelect,
-        Slide2
+        Slide2,
+        None
     }
 
     int[] TaskIdx =
@@ -69,13 +81,29 @@ public class TaskManager : MonoBehaviour
           45,   //선택하세요 -> 화살표 44 -> 45
           48,   //선택하세요 -> 슬라이드(용병 설치) -> 화살표 47 -> 48
           51,   //선택하세요 50 -> 51
+          52,   //선택하세요 -> 선택하세요 -> 싸우고 결과창 다뜨면 끝 51 -> 52
+          58,   //선택하세요 57 -> 58
+          60,   //선택하세요 -> 선택하세요 -> 화살표 59 -> 60
+          62,   //화살표 61 -> 62
+          64,   //선택하세요 63 -> 64
+          66,   //화살표 65 -> 66
+          68,   //맵 확장 시 ON
+          70,   //화살표 69 -> 70
+          71,   //맵 확장 시 OFF
+          72,   //선택하세요(방) 71 -> 72
+          73,   //선택하세요 72 -> 73
+          79,   //선택하세요 -> 슬라이드(워프 설치) -> 슬라이드(워프 설치)
     };
 
-    int conIdx;
+    public int conIdx;
 
     void Awake()
     {
         RoomManager.ChangeClickStatus(isClickStatus);
+
+        int Cnt = Display.childCount;
+        for (int i = 0; i < Cnt; i++)
+            DisplayObject.Add(Display.GetChild(i).gameObject);
     }
 
     public bool OnTask(int idx)
@@ -98,6 +126,8 @@ public class TaskManager : MonoBehaviour
         {
             isClick = false;
             ButtonParent = ButtonList[0].parent;
+            ButtonSiblingIdx = ButtonList[0].GetSiblingIndex();
+
             ButtonList[0].SetParent(Mask);
             if (ButtonList[0].gameObject.GetComponent<SlotManager>() != null)
             {
@@ -110,6 +140,8 @@ public class TaskManager : MonoBehaviour
         else
         {
             ButtonList[0].SetParent(ButtonParent);
+            ButtonList[0].SetSiblingIndex(ButtonSiblingIdx);
+
             if (ButtonList[0].gameObject.GetComponent<SlotManager>() != null)
             {
                 ButtonList[0].gameObject.GetComponent<SlotManager>().taskManager = this;
@@ -125,6 +157,7 @@ public class TaskManager : MonoBehaviour
 
     public void SetClickSlot(bool isPossible)
     {
+        print("SetClickSlot : " + isPossible + " btn name : " + ButtonList[0].name);
         if (isPossible)
         {
             isClick = false;
@@ -169,6 +202,22 @@ public class TaskManager : MonoBehaviour
         Sign[(int)Type.Slide].SetActive(false);
     }
 
+    public void SetDisplayWarp()
+    {
+        if(conIdx == -4)
+        {
+            StopCoroutine(DisplayWarp());
+
+            TutorialTileList.Insert(0, WarpTutorialTile[0]);
+            ButtonList.InsertRange(1, WarpButton);
+            DisplayObject.InsertRange(1, WarpDisplayObject);
+
+            conIdx = 79;
+            SetButton(true);
+            StartCoroutine(DisplayTask());
+        }
+    }
+
     public void OnClick()
     {
         isClick = true;
@@ -191,6 +240,9 @@ public class TaskManager : MonoBehaviour
             case 17:
             case 18:
             case 20:
+            case 62:
+            case 66:
+            case 70:
                 StartCoroutine(DisplayArrow());
                 break;
             case 19:
@@ -212,8 +264,28 @@ public class TaskManager : MonoBehaviour
             case 45:
             case 48:
             case 51:
-                SetButton(true);
+            case 52:
+            case 58:
+            case 60:
+            case 64:
+            case 72:
+            case 73:
+            case 79:
+                if (idx == 72)
+                    ButtonList.Insert(0, OriginalMap.transform.GetChild(2));
                 StartCoroutine(ClickTask());
+                break;
+            case 68:
+                DisplayObject[0].SetActive(false);
+                DisplayObject.RemoveAt(0);
+                ExpandMap.SetActive(true);
+                OriginalMap.SetActive(false);
+                break;
+            case 71:
+                DisplayObject[0].SetActive(false);
+                DisplayObject.RemoveAt(0);
+                ExpandMap.SetActive(false);
+                OriginalMap.SetActive(true);
                 break;
         }
     }
@@ -231,7 +303,7 @@ public class TaskManager : MonoBehaviour
     {
         float preDistance = (new Vector3(14.9f, 10f, 7.4f) - roomManager.prePos).magnitude;
         float postDistance = (new Vector3(14.9f, 10f, 7.4f) - roomManager.conPos).magnitude;
-        if (preDistance < postDistance)
+        if (preDistance <= postDistance)
             return true;
         return false;
     }
@@ -254,7 +326,7 @@ public class TaskManager : MonoBehaviour
                 return false;
             }
         }
-        else if(conIdx == 36 || conIdx == 40 || conIdx == 48)
+        else if (conIdx == 36 || conIdx == 40 || conIdx == 48 || conIdx == 79 || conIdx == -3 || conIdx == -4)
         {
             return isCompleted;
         }
@@ -266,8 +338,80 @@ public class TaskManager : MonoBehaviour
         return isClick;
     }
 
+    bool MouseDown()
+    {
+        return Input.GetMouseButtonDown(0) || Input.GetMouseButton(0);
+    }
+
+    bool isSuccessDisplayWarp()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            return createPopUp.tutorialTile.isSuccess();
+        }
+        else
+            return false;
+    }
+
+    public IEnumerator DisplayWarp()
+    {
+        isMove = true;
+        isDone = false;
+        isCompleted = false;
+
+        RoomManager.possibleDrag = true;
+        Dialog.SetActive(false);
+
+        TutorialTileList[0].SetActive(true);
+        createPopUp.tutorialTile = TutorialTileList[0].GetComponent<TutorialTile>();
+        createPopUp.isTutorial = true;
+
+        SetClickSlot(true);
+        Sign[(int)Type.Slide].SetActive(true);
+
+        if (DisplayObject[0].activeInHierarchy)
+        {
+            DisplayObject[0].SetActive(false);
+            DisplayObject.RemoveAt(0);
+        }
+
+        while (true)
+        {
+            if (MouseDown()) break;
+            DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);
+            if (MouseDown()) break;
+            yield return new WaitForSeconds(loopArrowSpeed);
+        }
+
+        if (DisplayObject.Count != 0)
+            DisplayObject[0].SetActive(false);
+        OnSlotClick();
+
+        RoomManager.possibleDrag = false;
+
+        yield return new WaitUntil(isSuccessDisplayWarp);
+        SetClickSlot(false);
+
+        ButtonList[0].gameObject.GetComponent<ClickSlot>().isTask = false;
+        ButtonList[0].gameObject.GetComponent<Button>().enabled = true;
+        ButtonList.RemoveAt(0);
+
+        if (conIdx == 36)
+            createObject.isTutorial = false;
+        createPopUp.transform.SetParent(CreatePopUpParent);
+
+        isMove = false;
+        conIdx = -5;
+        StartCoroutine(ClickTask());
+
+        print("DisplayWarp");
+        yield break;
+    }
+
     IEnumerator ClickTask()
     {
+        SetButton(true);
+
         isDone = false;
         Dialog.SetActive(false);
 
@@ -291,24 +435,33 @@ public class TaskManager : MonoBehaviour
 
         if (conIdx == 27 || conIdx == 32 || conIdx == 35 || conIdx == 39 || conIdx == 45)
             StartCoroutine(DisplayArrow());
-        else if (conIdx == 30 || conIdx == 34)
+        else if (conIdx == 30 || conIdx == 34 || conIdx == 60)
         {
-            SetButton(true);
+            if (conIdx == 60)
+                yield return new WaitForSeconds(2.3f);
             StartCoroutine(ClickTask());
             conIdx = -1;
         }
-        else if(conIdx == 44)
+        else if (conIdx == 52)
         {
-            SetButton(true);
+            StartCoroutine(ClickTask());
+            conIdx = -3;
+        }
+        else if (conIdx == 44)
+        {
             StartCoroutine(ClickTask());
             conIdx = -2;
         }
-        else if(conIdx == 36 || conIdx == 48)
+        else if (conIdx == 36 || conIdx == 48 || conIdx == 79)
         {
             StartCoroutine(DisplayTask());
         }
-        else if(conIdx == -1)
+        else if (conIdx == -1)
             StartCoroutine(DisplayArrow());
+        else if (conIdx == -3)
+            StartCoroutine(TakeTask(Type.None));
+        else if (conIdx == -4)
+            StartCoroutine(DisplayWarp());
         else
         {
             yield return new WaitForSeconds(clickTime);
@@ -321,14 +474,16 @@ public class TaskManager : MonoBehaviour
 
     public void SetTutorialTile()
     {
-        TutorialTileList[0].SetActive(false);
-        TutorialTileList.RemoveAt(0);
-
+        if (conIdx != 79)
+        {
+            TutorialTileList[0].SetActive(false);
+            TutorialTileList.RemoveAt(0);
+        }
         createPopUp.isTutorial = false;
         isCompleted = true;
     }
 
-    IEnumerator DisplayTask()
+    public IEnumerator DisplayTask()
     {
         isMove = true;
         isDone = false;
@@ -340,7 +495,7 @@ public class TaskManager : MonoBehaviour
         createPopUp.tutorialTile = TutorialTileList[0].GetComponent<TutorialTile>();
         createPopUp.isTutorial = true;
 
-        if(conIdx == 36 || conIdx == 48)
+        if (conIdx == 36 || conIdx == 48 || conIdx == 79)
         {
             createObject.isTutorial = true;
             createObject.taskManager = this;
@@ -365,18 +520,18 @@ public class TaskManager : MonoBehaviour
         }
         if (DisplayObject.Count != 0)
             DisplayObject[0].SetActive(false);
+        OnSlotClick();
 
+        RoomManager.possibleDrag = false;
         yield return new WaitUntil(GetIsCompleted);
-
         SetClickSlot(false);
+        
         ButtonList[0].gameObject.GetComponent<ClickSlot>().isTask = false;
         ButtonList[0].gameObject.GetComponent<Button>().enabled = true;
         ButtonList.RemoveAt(0);
 
         if (conIdx == 36)
             createObject.isTutorial = false;
-
-        RoomManager.possibleDrag = false;
         createPopUp.transform.SetParent(CreatePopUpParent);
 
         isMove = false;
@@ -385,6 +540,11 @@ public class TaskManager : MonoBehaviour
         {
             createObject.isTutorial = false;
             StartCoroutine(DisplayArrow());
+        }
+        else if (conIdx == 79)
+        {
+            conIdx = -4;
+            StartCoroutine(ClickTask());
         }
         else
         {
@@ -407,27 +567,41 @@ public class TaskManager : MonoBehaviour
             DisplayObject.RemoveAt(0);
         }
 
-        for (int i = 0; i < 5; i++)
+        if (type != Type.None)
+            Sign[(int)type].SetActive(true);
+        for (int i = 0; i < 3; i++)
         {
             DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);
             yield return new WaitForSeconds(arrowSpeed);
         }
 
-        Sign[(int)type].SetActive(true);
+        //if (conIdx == 19)
+        //    cameraPos = Camera.main.transform.position;
+
+        //////////////////////////임시//////////////////////
+        if (conIdx == -3)
+        {
+            yield return new WaitForSeconds(1f);
+            FindObjectOfType<DayandNight>().changeState();
+        }
+        ////////////////////////////////////////////////////
 
         if (conIdx == 19)
-            cameraPos = Camera.main.transform.position;
-
+        {
+            roomManager.prePos = GetRay();
+            roomManager.conPos = GetRay();
+        }
         yield return new WaitUntil(GetIsCompleted);
 
         DisplayObject[0].SetActive(false);
         DisplayObject.RemoveAt(0);
 
-        Sign[(int)type].SetActive(false);
+        if (type != Type.None)
+            Sign[(int)type].SetActive(false);
 
         if (conIdx == 19)
             StartCoroutine(DisplayArrow());
-        else if(conIdx == 40)
+        else if (conIdx == 40)
         {
             isClickStatus = false;
             StartCoroutine(DisplayArrow());
@@ -443,6 +617,7 @@ public class TaskManager : MonoBehaviour
 
     IEnumerator DisplayArrow()
     {
+        print("displayArrow");
         isDone = false;
         Dialog.SetActive(false);
         yield return new WaitForSeconds(0.2f);
@@ -453,11 +628,12 @@ public class TaskManager : MonoBehaviour
             DisplayObject.RemoveAt(0);
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);
             yield return new WaitForSeconds(arrowSpeed);
         }
+
 
         Dialog.SetActive(true);
         isDone = true;

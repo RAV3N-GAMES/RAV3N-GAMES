@@ -75,7 +75,12 @@ public class JsonDataManager : MonoBehaviour {
             SlotInfo newSlot = InitSlotInfo(slotData[i]);
             slotInfoList.Add(newSlot.id, newSlot);
         }
-
+        if(!isSave)
+        {
+            SetSlotInfo(3, "Warp", 1);
+            SetSlotInfo(3, "ObstructMovementCurrent", 1);
+            SetSlotInfo(3, "FlameThrowingTrap", 1);
+        }
         GameObject[] sprite = Resources.LoadAll<GameObject>("ChangePopUp");
 
         for(int i = 0; i < sprite.Length; i++)
