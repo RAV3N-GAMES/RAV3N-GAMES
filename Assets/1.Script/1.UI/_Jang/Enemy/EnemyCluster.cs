@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyCluster : MonoBehaviour {
     public List<Enemy> eList;
@@ -14,6 +15,8 @@ public class EnemyCluster : MonoBehaviour {
     public Trap targetTrap;
     public SecretActs targetSecret;
     public Wall targetWall;
+    public int roomPassCount;
+    public int EnterOrder;
 
 	// Use this for initialization
 	void Awake () {
@@ -28,6 +31,8 @@ public class EnemyCluster : MonoBehaviour {
         healTarget = null;
         targetTrap = null;
         targetSecret = null;
+        roomPassCount = 0;
+        EnterOrder = 0;
     }
 
     // Update is called once per frame
@@ -39,6 +44,7 @@ public class EnemyCluster : MonoBehaviour {
         if (targetWall)
             clusterSetNextTargetWall(targetWall);
         clusterSetNextTargetSecret();
+        EnterCheck();
     }
 
     public void clusterSetNextIdx(int idx)
@@ -140,9 +146,17 @@ public class EnemyCluster : MonoBehaviour {
     public bool IsBattle() {
         bool result = false;
         for (int i = 0; i < eList.Count; i++) {
-            if (eList[i].targetFriend && eList[i].IsNear(eList[i].NavObj, eList[i].targetFriend.transform)) { 
+            if (eList[i].targetFriend && eList[i].IsNear(eList[i].NavObj, eList[i].targetFriend.transform))
+            {
                 result = true;
                 break;
+            }
+            else if (eList[i].name.Equals("MonsterPickPocket2D")) {
+                EnemyPickPocket Epp = (EnemyPickPocket)eList[i];
+                if (Epp.targetTrap) {
+                    result = true;
+                    break;
+                }
             }
         }
         return result;
@@ -258,5 +272,38 @@ public class EnemyCluster : MonoBehaviour {
             targetWall = GroupNearWall[0];
         else
             targetWall = null;
+    }
+
+    private void EnterCheck() {
+        bool IsAllEntered = true;
+        for (int i = 0; i < eList.Count; i++) {
+            if (!eList[i].isEntered)
+            {
+                IsAllEntered = false;
+                break;
+            }
+        }
+
+        if (eList.Count <= 0)
+            IsAllEntered = false;
+
+        if (IsAllEntered) {
+            for (int i = 0; i < eList.Count; i++)
+            {
+                eList[i].isEntered = false;
+            }
+
+            try
+            {
+                 for (int i = 0; i < eList.Count; i++) {
+                    if (eList[i].EnterOrder == roomPassCount) {
+                        eList[i].GetComponentInParent<EnemyDialogue>().doDialogue();
+                        break;
+                    }
+                }
+            }
+            catch { }
+            roomPassCount++;
+        }
     }
 }

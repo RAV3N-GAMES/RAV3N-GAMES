@@ -5,7 +5,9 @@ using UnityEngine;
 public class UIManager : MonoBehaviour {
 	public static UIManager current;
 	public GameObject UIBarPrefab;
+    public GameObject UIDialogue;
 	public Transform UIBarParent;
+    public Transform UIDialogueParent;
 
     public GameObject ArrivalOfNewMail;
 
