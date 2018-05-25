@@ -16,6 +16,10 @@ public class EnemyPickPocket : Enemy {
         attackDelay = new WaitForSeconds(1f);
         targetTrap = null;
         IsDisassemble = false;
+        diaglogue[0] = "함정이있다고? 분해하는게 내 전문이야";
+        diaglogue[1] = "현상금의 지분은 저도 꽤 있습니다";
+        diaglogue[2] = "눈 깜빡하면 내가 훔쳐간다구";
+        diaglogue[3] = "내 손은 눈보다 빠르지";
     }
     public override void EnemyInit()
     {
@@ -114,12 +118,15 @@ public class EnemyPickPocket : Enemy {
         IsDisassemble = true;
         yield return new WaitForSeconds(5.0f);
         Trap tmp = targetTrap;
-        if(targetTrap && NearTrap.Contains(targetTrap))
+        if(targetTrap && NearTrap.Contains(targetTrap)) { 
             NearTrap.Remove(targetTrap);
-        if (NearTrap.Count > 0)
+        }
+        if (NearTrap.Count > 0) { 
             targetTrap = NearTrap[0];
-        else
+        }
+        else { 
             targetTrap = null;
+        }
         if (tmp) {
             tmp.displayobject.DestroyObj(true);
             Destroy(tmp.transform.parent.gameObject);

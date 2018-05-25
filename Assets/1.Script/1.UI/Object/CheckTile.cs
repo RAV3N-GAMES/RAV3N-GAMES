@@ -299,10 +299,18 @@ public class CheckTile : MonoBehaviour {
             }
             if (tag.Equals("Trap")) {
                 EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-                Trap t = GetComponentInChildren<Trap>();
-                t.setRoomidx = EG.GroupIndex;
-                if(!EG.Traps.Contains(t))
-                    EG.Traps.Add(t);
+                try
+                {
+                    Trap t = GetComponentInChildren<Trap>();
+                    if (name.Equals("Trap_W"))
+                        return;
+
+                    t.setRoomidx =
+                        EG.GroupIndex;
+                    if (!EG.Traps.Contains(t))
+                        EG.Traps.Add(t);
+                }
+                catch { }
             }
 
             if (tag.Equals("Secret"))

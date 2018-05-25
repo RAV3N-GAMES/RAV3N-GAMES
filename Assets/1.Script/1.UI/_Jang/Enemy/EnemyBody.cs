@@ -12,6 +12,10 @@ public class EnemyBody : MonoBehaviour {
                     GetComponentInParent<Enemy>().PresentRoomidx = col.GetComponentInParent<EnemyGroup>().GroupIndex;
                 }
                 e.isEntered = true;
+                e.EnterOrder = e.myCluster.EnterOrder++;
+                if (e.myCluster.EnterOrder == e.myCluster.eList.Count) {
+                    e.myCluster.EnterOrder = 0;
+                }
             }
         }
     }

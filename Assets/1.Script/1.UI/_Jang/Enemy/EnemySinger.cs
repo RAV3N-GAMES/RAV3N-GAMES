@@ -12,7 +12,11 @@ public class EnemySinger : Enemy {
         DieClip = Resources.LoadAll<AudioClip>(path + "Die/Woman") as AudioClip[];
         effectType = EFFECT_TYPE.Heal;
 		isDie = false;
-	}
+        diaglogue[0] = "현상금을 받아서 전시회를 열거야";
+        diaglogue[1] = "내 싸인 미리 받아 놓는게 좋을걸";
+        diaglogue[2] = "외계인이 나에게 영감을 줄 것 같아..";
+        diaglogue[3] = "외계인 목소리가 듣고 싶어";
+    }
 	public override void EnemyInit()
 	{
         scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].AttackRange * 2;

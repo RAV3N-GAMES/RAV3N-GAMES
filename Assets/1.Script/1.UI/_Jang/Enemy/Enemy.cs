@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour {
     public AudioSource Audio;
     public AudioClip[] Clips;
     public AudioClip[] DieClip;
+    public string[] diaglogue=new string[4];//입장대사. 0, 1 -> 명예집단 대사, 2, 3 -> 기밀탈취단 대사
     public AudioClip AppearClip;
     public EnemyClusterManager ECM;
     public EnemyCluster myCluster;
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour {
     public bool Movable;
     public bool isHealer;
     public bool isEntered;
+    public int EnterOrder;
     public bool isLeft;
     public bool faceLeft;
     public bool isSurrounded;// 목적지(Secret / Base)까지의 경로가 막혔을 때 true
@@ -389,6 +391,12 @@ public class Enemy : MonoBehaviour {
         {//next room 출구에 다 모인 경우
             myCluster.MoveToNextRoom(nextIdx, Exitdirection);
         }
+        else {
+            if (IsNearExit()) {
+                enemyAI.isStopped = true;
+            }
+        }
+        
         /*else
         {
             if (nextIdx == -1)
@@ -574,8 +582,6 @@ public class Enemy : MonoBehaviour {
         if (name.Equals("MonsterPickPocket2D")) {
             if (isEntered) {
                 NearTrap= GameManager.current.enemyGroups[PresentRoomidx].Traps;
-                Debug.Log("Near Trap gathered. Present Roomnum: "+ PresentRoomidx+", Traps: "+ GameManager.current.enemyGroups[PresentRoomidx].Traps);
-                isEntered = false;
             }
             EnemyPickPocket epp = (EnemyPickPocket)this;
             if (NearTrap.Count > 0)
@@ -856,5 +862,10 @@ public class Enemy : MonoBehaviour {
                     enemyAI.isStopped = false;
             }
         }
+    }
+
+    public bool IsNearExit() {
+        bool result = Vector3.Distance(GetComponentInChildren<EnemyBody>().transform.position, GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].transform.position) > 0.5f;
+        return (result)? false:true;
     }
 }

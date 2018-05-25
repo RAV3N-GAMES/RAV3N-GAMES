@@ -98,6 +98,7 @@ public class EnemyGroup : MonoBehaviour {
 
             obj.transform.SetParent(null);
             info = obj.GetComponentInChildren<Enemy>();
+            info.EnterOrder = i;
             info.isEntered = true;
             info.OriginalPoint = GameManager.current.CommandPost;
             info.GroupConductor = this;
