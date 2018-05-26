@@ -49,7 +49,7 @@ public class EnemyInfoText : MonoBehaviour
             {
                 HP.text = (Mathf.CeilToInt(enemyObject.HP * 0.9f)).ToString();
                 AttackPoint.text = (Mathf.CeilToInt(enemyObject.Attack * 0.9f)).ToString();
-                AttackSpeed.text = ((float)(enemyObject.AttackPeriod * 0.9f)).ToString();
+                AttackSpeed.text = ((float)(enemyObject.AttackPeriod)).ToString();
             }
             else
             {

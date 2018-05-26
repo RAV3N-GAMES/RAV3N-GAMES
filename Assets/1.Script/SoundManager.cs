@@ -18,8 +18,6 @@ public class SoundManager : MonoBehaviour {
 
     public ClickController BGMButton, EffectButton;
 
-    public bool isSave;
-
     string bgmName;
 
     void Awake()

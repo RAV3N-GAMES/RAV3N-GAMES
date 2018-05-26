@@ -13,14 +13,13 @@ public class ClickObject : MonoBehaviour
     [HideInInspector]
     public GameObject ChangePopUpManager;
 
-    TaskManager taskManager;
+    public static TaskObject taskObject;
 
     void Awake()
     {
         clickTime = 1f;
 
         objectInfo = GetComponent<ObjectInfo>();
-        taskManager = FindObjectOfType<TaskManager>();
     }
 
     void LongClick()
@@ -36,8 +35,8 @@ public class ClickObject : MonoBehaviour
 
                 GetComponent<ObjectColor>().OnRecognizeRage(true);
 
-                if (taskManager != null)
-                    taskManager.OnLongSelect();
+                if (taskObject != null)
+                    taskObject.OnLongSelect();
             }
         }
     }

@@ -14,11 +14,8 @@ public class SlotManager : MonoBehaviour {
 
     public GameObject LackOfCoin;
 
-    public bool isTask;
-    public TaskManager taskManager;
-
-    //public delegate void Task();
-    //public Task task;
+    public TaskObject taskObject;
+    public bool isClick;
 
     public void Start()
     {
@@ -31,10 +28,10 @@ public class SlotManager : MonoBehaviour {
     public void OnExplain()
     {
         ObjInfoPopUpManager objInfoPopUp = ObjInfoPopUp.transform.GetChild(0).GetComponent<ObjInfoPopUpManager>();
-
-        if (isTask)
-            taskManager.OnClick();
         objInfoPopUp.InitObjInfoPopUp(id, type, this);
+
+        if (isClick)
+            taskObject.OnButtonClick();
 
         RoomManager.ChangeClickStatus(false);
         ObjInfoPopUp.SetActive(true);
