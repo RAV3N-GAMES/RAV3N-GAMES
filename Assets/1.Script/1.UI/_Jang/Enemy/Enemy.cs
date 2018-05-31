@@ -61,12 +61,12 @@ public class Enemy : MonoBehaviour {
     protected int destType;                 //목적지 타입. enum ObjectType을 따름.
     protected Vector3 start;                //시작 좌표
     protected WaitForSeconds attackDelay;   //코루틴에서
-    protected EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
+    public EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입
     public int PresentRoomidx;
     public bool isShoot;                   //딜레이와 공격을 맞추기위한 
     protected bool isHeal;
-
+    
     protected Vector3 PrevPos;
     //기능 초기화
     public virtual void EnemyInit()
@@ -452,7 +452,7 @@ public class Enemy : MonoBehaviour {
     {
         if (isDie || isStolen || isDefeated)
             return;
-//        EnemyActionMain();
+
         ChangeAnimation();
 
         Distance = Vector3.Distance(start, dest);

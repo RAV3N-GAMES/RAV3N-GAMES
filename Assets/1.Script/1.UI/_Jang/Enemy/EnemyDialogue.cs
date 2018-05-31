@@ -16,6 +16,7 @@ public class EnemyDialogue : MonoBehaviour {
         Dialogue.color = Color.gray;
         dialogueObject.transform.SetParent(UIManager.current.UIDialogueParent);
         rectTransform = Dialogue.GetComponent<RectTransform>();
+        rectTransform.localScale = new Vector3(5, 3, 1);
         IsDestroyed = false;
         dialogueObject.SetActive(false);
     }
@@ -25,7 +26,7 @@ public class EnemyDialogue : MonoBehaviour {
         if (!dialogueObject)
             return;
         targetPos = Camera.main.WorldToScreenPoint(transform.position);
-        rectTransform.position = targetPos + Vector3.up * 200;
+        rectTransform.position = targetPos + Vector3.up * 100;
         Debug.Log("targetPos: " +targetPos);
         Debug.Log("rectTransform.position: " + rectTransform.position);
     }
@@ -47,10 +48,6 @@ public class EnemyDialogue : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
         IsDestroyed = true;
         dialogueObject.SetActive(false);
-/*        Destroy(dialogueObject);
-        dialogueObject = null;
-        rectTransform = null;
-        Dialogue = null;*/
     }
 
     IEnumerator ChangePos() {
