@@ -61,7 +61,7 @@ public class DayandNight : MonoBehaviour
     public void changeState() {
         isDay = !isDay;
 
-        print("changeState" + isDay);
+        print("changeState " + isDay);
 
         roomManager.OnOffHitCollider();
 

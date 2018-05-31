@@ -10,8 +10,9 @@ public class TutorialEnemy : MonoBehaviour {
     public TutorialTile Tt;
     public bool Created = false;
     void Update() {
-        if (E.isDie) {
+        if (Created && E.isDie) {
             Curtain.changeState();
+            E.isDie = false;
         }
         if (DayandNight.isDay && !Created )
         {
@@ -28,12 +29,9 @@ public class TutorialEnemy : MonoBehaviour {
         E.GroupConductor = GameManager.current.enemyGroups[1];
         E.myCluster= EnemyClusterManager.clusterList[0];
         GameObject g = GameObject.Find("RecognizeRange").transform.parent.gameObject;
-        Debug.Log("G: " + g);
-        Debug.Log(g.transform.Find("Friendly_Guard"));
-        Debug.Log(g.transform.Find("Friendly_Guard").gameObject.activeSelf);
         yield return new WaitUntil( () => g.transform.Find("Friendly_Guard").gameObject.activeSelf);
         F=g.GetComponentInChildren<Friendly>();//가드 외 다른거 할 경우 변경
-        Debug.Log("F: " + F);
+        E.targetFriend = F;
         EnemyPref.SetActive(true);
         TutorialEnemyAction();
     }

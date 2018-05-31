@@ -69,7 +69,6 @@ public class TaskObject : MonoBehaviour {
         
         while(Cnt < TaskList.Count)
         {
-            print("Cnt" + Cnt);
             isDone = false;
             switch (TaskList[Cnt])
             {
