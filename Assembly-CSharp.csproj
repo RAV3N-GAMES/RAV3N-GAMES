@@ -147,6 +147,7 @@
      <Compile Include="Assets\1.Script\2.Tutorial\DialogManager.cs" />
      <Compile Include="Assets\1.Script\2.Tutorial\DialogText.cs" />
      <Compile Include="Assets\1.Script\2.Tutorial\TaskManager.cs" />
+     <Compile Include="Assets\1.Script\2.Tutorial\TaskObject.cs" />
      <Compile Include="Assets\1.Script\2.Tutorial\TutorialEnemy.cs" />
      <Compile Include="Assets\1.Script\2.Tutorial\TutorialTile.cs" />
      <Compile Include="Assets\1.Script\PathTest.cs" />

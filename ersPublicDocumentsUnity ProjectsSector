@@ -1,0 +1,2755 @@
+[1mdiff --git a/.vs/Secret of 51 v0.97/v14/.suo b/.vs/Secret of 51 v0.97/v14/.suo[m
+[1mnew file mode 100644[m
+[1mindex 00000000..c8086ef9[m
+Binary files /dev/null and b/.vs/Secret of 51 v0.97/v14/.suo differ
+[1mdiff --git a/.vs/Sector/v15/Server/sqlite3/storage.ide b/.vs/Sector/v15/Server/sqlite3/storage.ide[m
+[1mindex 2e44e38c..cde4e895 100644[m
+Binary files a/.vs/Sector/v15/Server/sqlite3/storage.ide and b/.vs/Sector/v15/Server/sqlite3/storage.ide differ
+[1mdiff --git a/Assembly-CSharp-Editor.csproj b/Assembly-CSharp-Editor.csproj[m
+[1mindex 7e6e4ebb..66a32717 100644[m
+[1m--- a/Assembly-CSharp-Editor.csproj[m
+[1m+++ b/Assembly-CSharp-Editor.csproj[m
+[36m@@ -6,7 +6,7 @@[m
+     <ProductVersion>10.0.20506</ProductVersion>[m
+     <SchemaVersion>2.0</SchemaVersion>[m
+     <RootNamespace></RootNamespace>[m
+[31m-    <ProjectGuid>{8899B785-B4E3-ABD6-8063-EF2358E883BB}</ProjectGuid>[m
+[32m+[m[32m    <ProjectGuid>{91D4DCC8-2338-B2E2-DBC0-BDFDB6C7FB57}</ProjectGuid>[m
+     <OutputType>Library</OutputType>[m
+     <AppDesignerFolder>Properties</AppDesignerFolder>[m
+     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>[m
+[36m@@ -39,10 +39,10 @@[m
+     <Reference Include="System.Runtime.Serialization" />[m
+     <Reference Include="System.Xml.Linq" />[m
+     <Reference Include="UnityEngine">[m
+[31m-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>[m
+[32m+[m[32m      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>[m
+     </Reference>[m
+     <Reference Include="UnityEditor">[m
+[31m-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>[m
+[32m+[m[32m      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>[m
+     </Reference>[m
+   </ItemGroup>[m
+   <ItemGroup>[m
+[36m@@ -60,75 +60,66 @@[m
+      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle Multiply.shader" />[m
+      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle AlphaBlend.shader" />[m
+  <Reference Include="UnityEditor.Advertisements">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.UI">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.UI">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.Networking">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.Networking">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.TestRunner">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.TestRunner">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="nunit.framework">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.TreeEditor">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.Analytics">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.Analytics">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/Editor/UnityEditor.Analytics.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/Editor/UnityEditor.Analytics.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.HoloLens">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.HoloLens">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.Purchasing">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/Editor/UnityEditor.Purchasing.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/Editor/UnityEditor.Purchasing.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.VR">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.VR">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.Graphs">[m
+[31m- <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.Android.Extensions">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>[m
+[31m- </Reference>[m
+[31m- <Reference Include="UnityEditor.iOS.Extensions">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEditor.WindowsStandalone.Extensions">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>[m
+[31m- </Reference>[m
+[31m- <Reference Include="UnityEditor.iOS.Extensions.Xcode">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>[m
+[31m- </Reference>[m
+[31m- <Reference Include="UnityEditor.iOS.Extensions.Common">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>[m
+  </Reference>[m
+   </ItemGroup>[m
+   <ItemGroup>[m
+     <ProjectReference Include="Assembly-CSharp.csproj">[m
+[31m-      <Project>{89DE1756-DD99-95AE-9D84-0E61C8FE1A6E}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>[m
+[32m+[m[32m      <Project>{4A11FB68-E99E-3533-9384-BA6280D21A09}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>[m
+   </ItemGroup>[m
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />[m
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. [m
+[1mdiff --git a/Assembly-CSharp.csproj b/Assembly-CSharp.csproj[m
+[1mindex 05307f68..36f154ed 100644[m
+[1m--- a/Assembly-CSharp.csproj[m
+[1m+++ b/Assembly-CSharp.csproj[m
+[36m@@ -6,7 +6,7 @@[m
+     <ProductVersion>10.0.20506</ProductVersion>[m
+     <SchemaVersion>2.0</SchemaVersion>[m
+     <RootNamespace></RootNamespace>[m
+[31m-    <ProjectGuid>{89DE1756-DD99-95AE-9D84-0E61C8FE1A6E}</ProjectGuid>[m
+[32m+[m[32m    <ProjectGuid>{4A11FB68-E99E-3533-9384-BA6280D21A09}</ProjectGuid>[m
+     <OutputType>Library</OutputType>[m
+     <AppDesignerFolder>Properties</AppDesignerFolder>[m
+     <AssemblyName>Assembly-CSharp</AssemblyName>[m
+[36m@@ -39,10 +39,10 @@[m
+     <Reference Include="System.Runtime.Serialization" />[m
+     <Reference Include="System.Xml.Linq" />[m
+     <Reference Include="UnityEngine">[m
+[31m-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>[m
+[32m+[m[32m      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>[m
+     </Reference>[m
+     <Reference Include="UnityEditor">[m
+[31m-      <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>[m
+[32m+[m[32m      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>[m
+     </Reference>[m
+   </ItemGroup>[m
+   <ItemGroup>[m
+[36m@@ -147,7 +147,7 @@[m
+      <Compile Include="Assets\1.Script\2.Tutorial\DialogManager.cs" />[m
+      <Compile Include="Assets\1.Script\2.Tutorial\DialogText.cs" />[m
+      <Compile Include="Assets\1.Script\2.Tutorial\TaskManager.cs" />[m
+[31m-     <Compile Include="Assets\1.Script\2.Tutorial\TutorialEnemy.cs" />[m
+[32m+[m[32m     <Compile Include="Assets\1.Script\2.Tutorial\TaskObject.cs" />[m
+      <Compile Include="Assets\1.Script\2.Tutorial\TutorialTile.cs" />[m
+      <Compile Include="Assets\1.Script\PathTest.cs" />[m
+      <Compile Include="Assets\1.Script\SoundManager.cs" />[m
+[36m@@ -180,31 +180,25 @@[m
+      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle Multiply.shader" />[m
+      <None Include="Assets\JMO Assets\Shape FX\Shaders\CbFX Particle AlphaBlend.shader" />[m
+  <Reference Include="UnityEngine.UI">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.Networking">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.TestRunner">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="nunit.framework">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.Analytics">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.HoloLens">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>[m
+  </Reference>[m
+  <Reference Include="UnityEngine.VR">[m
+[31m- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>[m
+[31m- </Reference>[m
+[31m- <Reference Include="UnityEditor.iOS.Extensions.Xcode">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>[m
+[31m- </Reference>[m
+[31m- <Reference Include="UnityEditor.iOS.Extensions.Common">[m
+[31m- <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>[m
+[32m+[m[32m <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>[m
+  </Reference>[m
+   </ItemGroup>[m
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />[m
+[1mdiff --git a/Assets/0.Scene/Tutorial.meta b/Assets/0.Scene/Tutorial.meta[m
+[1mdeleted file mode 100644[m
+[1mindex 9d020c94..00000000[m
+[1m--- a/Assets/0.Scene/Tutorial.meta[m
+[1m+++ /dev/null[m
+[36m@@ -1,9 +0,0 @@[m
+[31m-fileFormatVersion: 2[m
+[31m-guid: 7571b7fd7b75a7a408ab6543f67aa859[m
+[31m-folderAsset: yes[m
+[31m-timeCreated: 1527263867[m
+[31m-licenseType: Free[m
+[31m-DefaultImporter:[m
+[31m-  userData: [m
+[31m-  assetBundleName: [m
+[31m-  assetBundleVariant: [m
+[1mdiff --git a/Assets/0.Scene/Tutorial.unity b/Assets/0.Scene/Tutorial.unity[m
+[1mindex f088038f..ef6ac604 100644[m
+Binary files a/Assets/0.Scene/Tutorial.unity and b/Assets/0.Scene/Tutorial.unity differ
+[1mdiff --git a/Assets/0.Scene/Tutorial/NavMesh.asset b/Assets/0.Scene/Tutorial/NavMesh.asset[m
+[1mdeleted file mode 100644[m
+[1mindex cced62d3..00000000[m
+Binary files a/Assets/0.Scene/Tutorial/NavMesh.asset and /dev/null differ
+[1mdiff --git a/Assets/0.Scene/Tutorial/NavMesh.asset.meta b/Assets/0.Scene/Tutorial/NavMesh.asset.meta[m
+[1mdeleted file mode 100644[m
+[1mindex 6cfc7885..00000000[m
+[1m--- a/Assets/0.Scene/Tutorial/NavMesh.asset.meta[m
+[1m+++ /dev/null[m
+[36m@@ -1,9 +0,0 @@[m
+[31m-fileFormatVersion: 2[m
+[31m-guid: e3888cb8e520de1478caf4098e9d36b8[m
+[31m-timeCreated: 1527263867[m
+[31m-licenseType: Free[m
+[31m-NativeFormatImporter:[m
+[31m-  mainObjectFileID: 23800000[m
+[31m-  userData: [m
+[31m-  assetBundleName: [m
+[31m-  assetBundleVariant: [m
+[1mdiff --git a/Assets/0.Scene/UI.unity b/Assets/0.Scene/UI.unity[m
+[1mindex 1bb3d9c6..8469290d 100644[m
+Binary files a/Assets/0.Scene/UI.unity and b/Assets/0.Scene/UI.unity differ
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/PopUp/EnemyInfo/EnemyInfoText.cs b/Assets/1.Script/1.UI/Canvas/PopUp/EnemyInfo/EnemyInfoText.cs[m
+[1mindex fa6993fa..0a840131 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/PopUp/EnemyInfo/EnemyInfoText.cs[m
+[1m+++ b/Assets/1.Script/1.UI/Canvas/PopUp/EnemyInfo/EnemyInfoText.cs[m
+[36m@@ -49,7 +49,7 @@[m [mpublic class EnemyInfoText : MonoBehaviour[m
+             {[m
+                 HP.text = (Mathf.CeilToInt(enemyObject.HP * 0.9f)).ToString();[m
+                 AttackPoint.text = (Mathf.CeilToInt(enemyObject.Attack * 0.9f)).ToString();[m
+[31m-                AttackSpeed.text = ((float)(enemyObject.AttackPeriod * 0.9f)).ToString();[m
+[32m+[m[32m                AttackSpeed.text = ((float)(enemyObject.AttackPeriod)).ToString();[m
+             }[m
+             else[m
+             {[m
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/ClickSlot.cs b/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/ClickSlot.cs[m
+[1mindex eb17e553..25d3236d 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/ClickSlot.cs[m	
+[1m+++ b/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/ClickSlot.cs[m	
+[36m@@ -6,15 +6,14 @@[m [musing UnityEngine.EventSystems;[m
+ public class ClickSlot : MonoBehaviour, IPointerDownHandler {[m
+     public string id;[m
+     public CreateObject createObject;[m
+[31m-    public TaskManager taskManager;[m
+[31m-    public bool isTask;[m
+[32m+[m
+[32m+[m[32m    public TaskObject taskObject;[m
+[32m+[m[32m    public bool isDisplay;[m
+ [m
+     public void OnPointerDown(PointerEventData data)[m
+     {[m
+[31m-        print("ClickSlot isTask : " + isTask + " name :" + id);[m
+[31m-        if (isTask)[m
+[31m-            taskManager.OnSlotClick();[m
+[31m-[m
+[32m+[m[32m        if (isDisplay)[m
+[32m+[m[32m            taskObject.StartDisplay();[m
+         SlotInfo slotInfo = JsonDataManager.slotInfoList[id];[m
+         if (slotInfo.type == 4)[m
+         {[m
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreateObject.cs b/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreateObject.cs[m
+[1mindex 216d3fa2..f07ed4a6 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreateObject.cs[m	
+[1m+++ b/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreateObject.cs[m	
+[36m@@ -17,9 +17,8 @@[m [mpublic class CreateObject : MonoBehaviour[m
+ [m
+     public RoomManager roomManager;[m
+ [m
+[31m-    public bool isTutorial = false;[m
+[32m+[m[32m    public TaskObject taskObject;[m
+     public TutorialTile tutorialTile;[m
+[31m-    public TaskManager taskManager;[m
+ [m
+     void Awake()[m
+     {[m
+[36m@@ -41,11 +40,9 @@[m [mpublic class CreateObject : MonoBehaviour[m
+ [m
+     public void MouseUp()[m
+     {[m
+[31m-        if (isTutorial) {[m
+[31m-            taskManager.isCompleted = tutorialTile.isSuccess();[m
+[31m-            if (!taskManager.isCompleted)[m
+[31m-                taskManager.StopCoroutine(taskManager.DisplayTask());[m
+[31m-        }[m
+[32m+[m[32m        if (taskObject != null)[m
+[32m+[m[32m            taskObject.OnDisplay(tutorialTile.isSuccess());[m
+[32m+[m
+         id = "";[m
+         SetBoxRect(MaxY);[m
+         isCreate = false;[m
+[36m@@ -77,16 +74,13 @@[m [mpublic class CreateObject : MonoBehaviour[m
+ [m
+     public void MouseExit()[m
+     {[m
+[31m-        print("MouseExit");[m
+[31m-[m
+         if (!DayandNight.isDay)[m
+         {[m
+[31m-            print(id + " : " + RoomManager.possibleDrag);[m
+             if (id != "" && Input.GetMouseButton(0) && RoomManager.possibleDrag)[m
+             {[m
+                 InitObject();[m
+[31m-                RoomManager.ChangeClickStatus(false);[m
+ [m
+[32m+[m[32m                RoomManager.ChangeClickStatus(false);[m
+                 roomManager.SetClickColliderStatus(false);[m
+ [m
+                 SetBoxRect(BoxRect.anchorMin.y + 0.02f);[m
+[36m@@ -98,7 +92,7 @@[m [mpublic class CreateObject : MonoBehaviour[m
+ [m
+     void Update()[m
+     {[m
+[31m-        if(Input.GetMouseButtonUp(0))[m
+[32m+[m[32m        if (Input.GetMouseButtonUp(0))[m
+         {[m
+             if (BoxRect.anchorMax.y != MaxY)[m
+                 MouseUp();[m
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreatePopUp.cs b/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreatePopUp.cs[m
+[1mindex 002624d9..1a76fef3 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreatePopUp.cs[m	
+[1m+++ b/Assets/1.Script/1.UI/Canvas/PopUp/Object/Create & Move/CreatePopUp.cs[m	
+[36m@@ -2,7 +2,8 @@[m
+ using System.Collections.Generic;[m
+ using UnityEngine;[m
+ [m
+[31m-public class CreatePopUp : MonoBehaviour {[m
+[32m+[m[32mpublic class CreatePopUp : MonoBehaviour[m
+[32m+[m[32m{[m
+     [HideInInspector][m
+     public GameObject Obj;[m
+ [m
+[36m@@ -15,7 +16,7 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+ [m
+     public bool isTutorial = false;[m
+     public TutorialTile tutorialTile;[m
+[31m-    public TaskManager taskManager;[m
+[32m+[m[32m    public TaskObject taskObject;[m
+ [m
+     void UsingTile(string id, int price)[m
+     {[m
+[36m@@ -36,12 +37,12 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+ [m
+     void OnEffectSound_Create(int type)[m
+     {[m
+[31m-        switch(type)[m
+[32m+[m[32m        switch (type)[m
+         {[m
+             case 0: SoundManager.soundManager.OnEffectSound("10_BUILDING SET"); break;[m
+             case 2: SoundManager.soundManager.OnEffectSound("48_SOLDIER SET"); break;[m
+             case 3: SoundManager.soundManager.OnEffectSound("50_TRAP SET"); break;[m
+[31m-            case 4: SoundManager.soundManager.OnEffectSound("52_SECRET SET");  break;[m
+[32m+[m[32m            case 4: SoundManager.soundManager.OnEffectSound("52_SECRET SET"); break;[m
+             default: break;[m
+         }[m
+     }[m
+[36m@@ -52,7 +53,7 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+ [m
+         if (isTutorial)[m
+         {[m
+[31m-            if(!tutorialTile.isSuccess()) // tutorial tile과 닿았는지[m
+[32m+[m[32m            if (!tutorialTile.isSuccess()) // tutorial tile과 닿았는지[m
+             {[m
+                 print("설치 안됨");[m
+                 CancelPref();[m
+[36m@@ -61,17 +62,17 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+             }[m
+             else[m
+             {[m
+[31m-                taskManager.SetTutorialTile();[m
+[32m+[m[32m                //taskManager.SetTutorialTile();[m
+             }[m
+         }[m
+ [m
+         if (id.Equals("Warp_Exit"))[m
+             id = "Warp";[m
+         int price = JsonDataManager.slotInfoList[id].price;[m
+[31m-        [m
+[32m+[m
+         if (Data_Player.isEnough_G(price))[m
+         {[m
+[31m-            if(!Obj.GetComponent<CheckTile>().tileManager.IsPossibleAllot(Obj.GetComponent<ObjectInfo>().type))[m
+[32m+[m[32m            if (!Obj.GetComponent<CheckTile>().tileManager.IsPossibleAllot(Obj.GetComponent<ObjectInfo>().type))[m
+             {[m
+                 CancelPref();[m
+                 ExceedLimitAllot.SetActive(true);[m
+[36m@@ -88,7 +89,7 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+             else[m
+                 CancelPref();[m
+ [m
+[31m-            if(!Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))[m
+[32m+[m[32m            if (!Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))[m
+                 RoomManager.ChangeClickStatus(true);[m
+         }[m
+         else[m
+[36m@@ -96,7 +97,7 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+             Destroy(Obj);[m
+             LackOfCoin.SetActive(true);[m
+         }[m
+[31m-        [m
+[32m+[m
+ [m
+         roomManager.SetClickColliderStatus(true);[m
+         gameObject.SetActive(false);[m
+[36m@@ -123,20 +124,19 @@[m [mpublic class CreatePopUp : MonoBehaviour {[m
+         if (isTutorial)[m
+         {[m
+             tutorialTile.lastColList.Clear();[m
+[31m-            taskManager.SetClickSlot(true);[m
+[31m-            taskManager.StopCoroutine(taskManager.DisplayTask());[m
+[31m-            taskManager.SetDisplayWarp();[m
+[32m+[m[32m            taskObject.SetSlotStatus(true);[m
+[32m+[m[32m            taskObject.SetWarpExit();[m
+         }[m
+ [m
+         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))[m
+         {[m
+             GameObject Warp = Obj.transform.parent.gameObject;[m
+             bool temp = Warp.GetComponent<DisplayObject>().DestroyObj(false);[m
+[31m-            [m
+[32m+[m
+             Destroy(Warp);[m
+         }[m
+[31m-        else {[m
+[31m-            [m
+[32m+[m[32m        else[m
+[32m+[m[32m        {[m
+             Destroy(Obj);[m
+         }[m
+ [m
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/PopUp/Result & Damage/ResultPopUp.cs b/Assets/1.Script/1.UI/Canvas/PopUp/Result & Damage/ResultPopUp.cs[m
+[1mindex bf5b1551..508b34cf 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/PopUp/Result & Damage/ResultPopUp.cs[m	
+[1m+++ b/Assets/1.Script/1.UI/Canvas/PopUp/Result & Damage/ResultPopUp.cs[m	
+[36m@@ -27,7 +27,7 @@[m [mpublic class ResultPopUp : MonoBehaviour[m
+     public MailBox mailBox;[m
+ [m
+     public RoomManager roomManager;[m
+[31m-    public TaskManager taskManager;[m
+[32m+[m[32m    public TaskObject taskObject;[m
+ [m
+     List<EnemyGroupResult> enemyGroupResult = new List<EnemyGroupResult>();[m
+ [m
+[36m@@ -361,7 +361,7 @@[m [mpublic class ResultPopUp : MonoBehaviour[m
+         NextButton.enabled = true;[m
+ [m
+         yield return new WaitForSeconds(1f);[m
+[31m-        taskManager.isCompleted = true;[m
+[32m+[m[32m        taskObject.OnResult();[m
+ [m
+         yield break;[m
+     }[m
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/Room/Map/MapManager.cs b/Assets/1.Script/1.UI/Canvas/Room/Map/MapManager.cs[m
+[1mindex 55c9e7ab..9c33c9ae 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/Room/Map/MapManager.cs[m
+[1m+++ b/Assets/1.Script/1.UI/Canvas/Room/Map/MapManager.cs[m
+[36m@@ -53,6 +53,8 @@[m [mpublic class MapManager : MonoBehaviour[m
+     public Text OurForcesText;[m
+     public Text TrapText;[m
+     public Text SecretText;[m
+[32m+[m[32m    public Text BuildigMax;[m
+[32m+[m[32m    public Text OurForcesMax;[m
+ [m
+     public Text AllRepairCost;[m
+ [m
+[36m@@ -231,9 +233,13 @@[m [mpublic class MapManager : MonoBehaviour[m
+         AllRepairButton.SetActive(!isActiveAllRepair);[m
+         ActivedDamageButton.SetActive(!isActiveAllRepair);[m
+ [m
+[32m+[m
+         TrapText.transform.parent.gameObject.SetActive(isActiveAllRepair);[m
+         SecretText.transform.parent.gameObject.SetActive(isActiveAllRepair);[m
+ [m
+[32m+[m[32m        BuildigMax.gameObject.SetActive(isActiveAllRepair);[m
+[32m+[m[32m        OurForcesMax.gameObject.SetActive(isActiveAllRepair);[m
+[32m+[m
+         if (isActiveAllRepair)[m
+         {[m
+             MapCamera.cullingMask = LayerMask.GetMask("ObjPos");[m
+[1mdiff --git a/Assets/1.Script/1.UI/Canvas/Slot/SlotManager.cs b/Assets/1.Script/1.UI/Canvas/Slot/SlotManager.cs[m
+[1mindex 1fefa147..43fa235c 100644[m
+[1m--- a/Assets/1.Script/1.UI/Canvas/Slot/SlotManager.cs[m
+[1m+++ b/Assets/1.Script/1.UI/Canvas/Slot/SlotManager.cs[m
+[36m@@ -14,11 +14,8 @@[m [mpublic class SlotManager : MonoBehaviour {[m
+ [m
+     public GameObject LackOfCoin;[m
+ [m
+[31m-    public bool isTask;[m
+[31m-    public TaskManager taskManager;[m
+[31m-[m
+[31m-    //public delegate void Task();[m
+[31m-    //public Task task;[m
+[32m+[m[32m    public TaskObject taskObject;[m
+[32m+[m[32m    public bool isClick;[m
+ [m
+     public void Start()[m
+     {[m
+[36m@@ -31,11 +28,11 @@[m [mpublic class SlotManager : MonoBehaviour {[m
+     public void OnExplain()[m
+     {[m
+         ObjInfoPopUpManager objInfoPopUp = ObjInfoPopUp.transform.GetChild(0).GetComponent<ObjInfoPopUpManager>();[m
+[31m-[m
+[31m-        if (isTask)[m
+[31m-            taskManager.OnClick();[m
+         objInfoPopUp.InitObjInfoPopUp(id, type, this);[m
+ [m
+[32m+[m[32m        if (isClick)[m
+[32m+[m[32m            taskObject.OnButtonClick();[m
+[32m+[m
+         RoomManager.ChangeClickStatus(false);[m
+         ObjInfoPopUp.SetActive(true);[m
+     }[m
+[1mdiff --git a/Assets/1.Script/1.UI/Object/ClickObject.cs b/Assets/1.Script/1.UI/Object/ClickObject.cs[m
+[1mindex c61ba90a..b1c66e70 100644[m
+[1m--- a/Assets/1.Script/1.UI/Object/ClickObject.cs[m
+[1m+++ b/Assets/1.Script/1.UI/Object/ClickObject.cs[m
+[36m@@ -13,14 +13,13 @@[m [mpublic class ClickObject : MonoBehaviour[m
+     [HideInInspector][m
+     public GameObject ChangePopUpManager;[m
+ [m
+[31m-    TaskManager taskManager;[m
+[32m+[m[32m    public static TaskObject taskObject;[m
+ [m
+     void Awake()[m
+     {[m
+         clickTime = 1f;[m
+ [m
+         objectInfo = GetComponent<ObjectInfo>();[m
+[31m-        taskManager = FindObjectOfType<TaskManager>();[m
+     }[m
+ [m
+     void LongClick()[m
+[36m@@ -36,8 +35,8 @@[m [mpublic class ClickObject : MonoBehaviour[m
+ [m
+                 GetComponent<ObjectColor>().OnRecognizeRage(true);[m
+ [m
+[31m-                if (taskManager != null)[m
+[31m-                    taskManager.OnLongSelect();[m
+[32m+[m[32m                if (taskObject != null)[m
+[32m+[m[32m                    taskObject.OnLongSelect();[m
+             }[m
+         }[m
+     }[m
+[1mdiff --git a/Assets/1.Script/1.UI/Object/ObjectMove.cs b/Assets/1.Script/1.UI/Object/ObjectMove.cs[m
+[1mindex f84f64fe..1b106e4b 100644[m
+[1m--- a/Assets/1.Script/1.UI/Object/ObjectMove.cs[m
+[1m+++ b/Assets/1.Script/1.UI/Object/ObjectMove.cs[m
+[36m@@ -55,7 +55,7 @@[m [mpublic class ObjectMove : MonoBehaviour[m
+ [m
+         if (Physics.Raycast(ray, out hit))[m
+         {[m
+[31m-            if (hit.collider.tag == "Tile" || hit.collider.tag == "Door")[m
+[32m+[m[32m            if (hit.collider.tag == "Tile" || hit.collider.tag == "Door" || hit.collider.tag == "TutorialTile")[m
+             {[m
+                 if (hit.collider != lastCol)[m
+                 {[m
+[1mdiff --git a/Assets/1.Script/1.UI/_Jang/Enemy/Enemy.cs b/Assets/1.Script/1.UI/_Jang/Enemy/Enemy.cs[m
+[1mindex 15eb4762..32dcb086 100644[m
+[1m--- a/Assets/1.Script/1.UI/_Jang/Enemy/Enemy.cs[m
+[1m+++ b/Assets/1.Script/1.UI/_Jang/Enemy/Enemy.cs[m
+[36m@@ -61,12 +61,12 @@[m [mpublic class Enemy : MonoBehaviour {[m
+     protected int destType;                 //목적지 타입. enum ObjectType을 따름.[m
+     protected Vector3 start;                //시작 좌표[m
+     protected WaitForSeconds attackDelay;   //코루틴에서[m
+[31m-    public EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 [m
+[32m+[m[32m    protected EnemyState currentState;      //현재 캐릭터에 상태를 나타내는[m[41m [m
+     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입[m
+     public int PresentRoomidx;[m
+     public bool isShoot;                   //딜레이와 공격을 맞추기위한 [m
+     protected bool isHeal;[m
+[31m-    [m
+[32m+[m
+     protected Vector3 PrevPos;[m
+     //기능 초기화[m
+     public virtual void EnemyInit()[m
+[36m@@ -452,7 +452,7 @@[m [mpublic class Enemy : MonoBehaviour {[m
+     {[m
+         if (isDie || isStolen || isDefeated)[m
+             return;[m
+[31m-[m
+[32m+[m[32m//        EnemyActionMain();[m
+         ChangeAnimation();[m
+ [m
+         Distance = Vector3.Distance(start, dest);[m
+[1mdiff --git a/Assets/1.Script/1.UI/_Jang/Enemy/EnemyDialogue.cs b/Assets/1.Script/1.UI/_Jang/Enemy/EnemyDialogue.cs[m
+[1mindex 97b2d097..c71072a1 100644[m
+[1m--- a/Assets/1.Script/1.UI/_Jang/Enemy/EnemyDialogue.cs[m
+[1m+++ b/Assets/1.Script/1.UI/_Jang/Enemy/EnemyDialogue.cs[m
+[36m@@ -16,7 +16,6 @@[m [mpublic class EnemyDialogue : MonoBehaviour {[m
+         Dialogue.color = Color.gray;[m
+         dialogueObject.transform.SetParent(UIManager.current.UIDialogueParent);[m
+         rectTransform = Dialogue.GetComponent<RectTransform>();[m
+[31m-        rectTransform.localScale = new Vector3(5, 3, 1);[m
+         IsDestroyed = false;[m
+         dialogueObject.SetActive(false);[m
+     }[m
+[36m@@ -26,7 +25,7 @@[m [mpublic class EnemyDialogue : MonoBehaviour {[m
+         if (!dialogueObject)[m
+             return;[m
+         targetPos = Camera.main.WorldToScreenPoint(transform.position);[m
+[31m-        rectTransform.position = targetPos + Vector3.up * 100;[m
+[32m+[m[32m        rectTransform.position = targetPos + Vector3.up * 200;[m
+         Debug.Log("targetPos: " +targetPos);[m
+         Debug.Log("rectTransform.position: " + rectTransform.position);[m
+     }[m
+[36m@@ -48,6 +47,10 @@[m [mpublic class EnemyDialogue : MonoBehaviour {[m
+         yield return new WaitForSeconds(2.0f);[m
+         IsDestroyed = true;[m
+         dialogueObject.SetActive(false);[m
+[32m+[m[32m/*        Destroy(dialogueObject);[m
+[32m+[m[32m        dialogueObject = null;[m
+[32m+[m[32m        rectTransform = null;[m
+[32m+[m[32m        Dialogue = null;*/[m
+     }[m
+ [m
+     IEnumerator ChangePos() {[m
+[1mdiff --git a/Assets/1.Script/2.Tutorial/TaskManager.cs b/Assets/1.Script/2.Tutorial/TaskManager.cs[m
+[1mindex 9f7fe9da..4e4a29bd 100644[m
+[1m--- a/Assets/1.Script/2.Tutorial/TaskManager.cs[m
+[1m+++ b/Assets/1.Script/2.Tutorial/TaskManager.cs[m
+[36m@@ -5,10 +5,19 @@[m [musing UnityEngine.UI;[m
+ [m
+ public class TaskManager : MonoBehaviour[m
+ {[m
+[31m-    public List<GameObject> WarpTutorialTile;[m
+[31m-    public List<Transform> WarpButton;[m
+[31m-    public List<GameObject> WarpDisplayObject;[m
+[32m+[m[32m    public static TaskManager taskManager;[m
+ [m
+[32m+[m[32m    public List<GameObject> Sign;[m
+[32m+[m
+[32m+[m[32m    public GameObject TaskObjectParent;[m
+[32m+[m[32m    TaskObject[] TaskObjectArray;[m
+[32m+[m
+[32m+[m[32m    public GameObject Dialog;[m
+[32m+[m[32m    public Transform Mask;[m
+[32m+[m
+[32m+[m[32m    public ResultPopUp resultPopUp;[m
+[32m+[m[32m    public DayandNight dayAndNight;[m
+[32m+[m[32m    public RoomManager roomManager;[m
+ [m
+     public GameObject ExpandMap;[m
+     public GameObject OriginalMap;[m
+[36m@@ -16,40 +25,23 @@[m [mpublic class TaskManager : MonoBehaviour[m
+     public CreateObject createObject;[m
+     public Transform CreatePopUpParent;[m
+     public CreatePopUp createPopUp;[m
+[31m-    public List<GameObject> Sign;[m
+ [m
+     public Transform Display;[m
+[31m-    public List<GameObject> DisplayObject;[m
+[31m-    public GameObject Dialog;[m
+[31m-[m
+[31m-    public Transform Mask;[m
+[31m-    public List<Transform> ButtonList;[m
+[31m-[m
+[31m-    public List<GameObject> TutorialTileList;[m
+[31m-[m
+[31m-    Transform ButtonParent;[m
+[31m-    int ButtonSiblingIdx;[m
+[31m-[m
+[31m-    public RoomManager roomManager;[m
+[31m-[m
+[31m-    public bool isCompleted = false;[m
+[32m+[m[32m    List<GameObject> DisplayObject;[m
+ [m
+     public static bool isDone = true;[m
+[31m-    [HideInInspector][m
+[31m-    public bool isClick = false;[m
+ [m
+     [Range(0f, 2f)][m
+     public float clickTime;[m
+     [Range(0f, 2f)][m
+     public float arrowSpeed;[m
+[31m-[m
+     [Range(0f, 2f)][m
+     public float loopArrowSpeed;[m
+ [m
+[31m-    Vector3 cameraPos;[m
+[31m-    bool isMove = false;[m
+[31m-[m
+[31m-    bool isClickStatus = false;[m
+[32m+[m[32m    [HideInInspector][m
+[32m+[m[32m    public bool isMove = false;[m
+[32m+[m[32m    [HideInInspector][m
+[32m+[m[32m    public bool isPossibleClick = false;[m
+ [m
+     public enum Type[m
+     {[m
+[36m@@ -60,233 +52,64 @@[m [mpublic class TaskManager : MonoBehaviour[m
+         None[m
+     }[m
+ [m
+[31m-    int[] TaskIdx =[m
+[31m-        { 8,    //화살표 7 -> 8[m
+[31m-          10,   //화살표 9 -> 10[m
+[31m-          16,   //화살표 15 -> 16[m
+[31m-          17,   //화살표 16 -> 17[m
+[31m-          18,   //화살표 17 -> 18[m
+[31m-          19,   //슬라이드 하세요. -> 화살표 18 -> 19[m
+[31m-          20,   //화살표 19 -> 20[m
+[31m-          23,   //선택하세요 22 -> 23[m
+[31m-          27,   //선택하세요 -> 화살표 26 -> 27[m
+[31m-          30,   //선택하세요 -> 선택하세요 -> 화살표 29 -> 30[m
+[31m-          32,   //선택하세요 -> 화살표 31 -> 32[m
+[31m-          34,   //선택하세요 -> 선택하세요 -> 화살표 33 -> 34[m
+[31m-          35,   //선택하세요 -> 화살표 34 -> 35[m
+[31m-          36,   //선택하세요 -> 슬라이드(건물 설치) 35 -> 36[m
+[31m-          39,   //선택하세요 -> 화살표 38 -> 39[m
+[31m-          40,   //길게선택하세요 -> 화살표 39 -> 40[m
+[31m-          44,   //선택하세요 -> 선택하세요 43 -> 44[m
+[31m-          45,   //선택하세요 -> 화살표 44 -> 45[m
+[31m-          48,   //선택하세요 -> 슬라이드(용병 설치) -> 화살표 47 -> 48[m
+[31m-          51,   //선택하세요 50 -> 51[m
+[31m-          52,   //선택하세요 -> 선택하세요 -> 싸우고 결과창 다뜨면 끝 51 -> 52[m
+[31m-          58,   //선택하세요 57 -> 58[m
+[31m-          60,   //선택하세요 -> 선택하세요 -> 화살표 59 -> 60[m
+[31m-          62,   //화살표 61 -> 62[m
+[31m-          64,   //선택하세요 63 -> 64[m
+[31m-          66,   //화살표 65 -> 66[m
+[31m-          68,   //맵 확장 시 ON[m
+[31m-          70,   //화살표 69 -> 70[m
+[31m-          71,   //맵 확장 시 OFF[m
+[31m-          72,   //선택하세요(방) 71 -> 72[m
+[31m-          73,   //선택하세요 72 -> 73[m
+[31m-          79,   //선택하세요 -> 슬라이드(워프 설치) -> 슬라이드(워프 설치)[m
+[31m-    };[m
+[31m-[m
+[31m-    public int conIdx;[m
+[32m+[m[32m    public void OnOffSign(Type type, bool isOn)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        Sign[(int)type].SetActive(isOn);[m
+[32m+[m[32m    }[m
+ [m
+     void Awake()[m
+     {[m
+[31m-        RoomManager.ChangeClickStatus(isClickStatus);[m
+[32m+[m[32m        if (taskManager == null)[m
+[32m+[m[32m            taskManager = this;[m
+[32m+[m[32m        RoomManager.ChangeClickStatus(false);[m
+[32m+[m
+[32m+[m[32m        DisplayObject = new List<GameObject>();[m
+ [m
+         int Cnt = Display.childCount;[m
+         for (int i = 0; i < Cnt; i++)[m
+             DisplayObject.Add(Display.GetChild(i).gameObject);[m
+[31m-    }[m
+ [m
+[31m-    public bool OnTask(int idx)[m
+[31m-    {[m
+[31m-        for (int i = 0; i < TaskIdx.Length; i++)[m
+[31m-        {[m
+[31m-            if (TaskIdx[i] == idx)[m
+[31m-            {[m
+[31m-                conIdx = idx;[m
+[31m-                StartTask(idx);[m
+[31m-                return true;[m
+[31m-            }[m
+[31m-        }[m
+[31m-        return false;[m
+[32m+[m[32m        TaskObjectArray = TaskObjectParent.GetComponents<TaskObject>();[m
+     }[m
+ [m
+[31m-    public void SetButton(bool isPossible)[m
+[32m+[m[32m    public bool OnTask(int idx)[m
+     {[m
+[31m-        if (isPossible)[m
+[32m+[m[32m        if(idx == 68)[m
+         {[m
+[31m-            isClick = false;[m
+[31m-            ButtonParent = ButtonList[0].parent;[m
+[31m-            ButtonSiblingIdx = ButtonList[0].GetSiblingIndex();[m
+[31m-[m
+[31m-            ButtonList[0].SetParent(Mask);[m
+[31m-            if (ButtonList[0].gameObject.GetComponent<SlotManager>() != null)[m
+[31m-            {[m
+[31m-                ButtonList[0].gameObject.GetComponent<SlotManager>().taskManager = this;[m
+[31m-                ButtonList[0].gameObject.GetComponent<SlotManager>().isTask = true;[m
+[31m-            }[m
+[31m-            else[m
+[31m-                ButtonList[0].gameObject.GetComponent<Button>().onClick.AddListener(OnClick);[m
+[31m-        }[m
+[31m-        else[m
+[31m-        {[m
+[31m-            ButtonList[0].SetParent(ButtonParent);[m
+[31m-            ButtonList[0].SetSiblingIndex(ButtonSiblingIdx);[m
+[31m-[m
+[31m-            if (ButtonList[0].gameObject.GetComponent<SlotManager>() != null)[m
+[31m-            {[m
+[31m-                ButtonList[0].gameObject.GetComponent<SlotManager>().taskManager = this;[m
+[31m-                ButtonList[0].gameObject.GetComponent<SlotManager>().isTask = false;[m
+[31m-            }[m
+[31m-            else[m
+[31m-                ButtonList[0].gameObject.GetComponent<Button>().onClick.RemoveListener(OnClick);[m
+[32m+[m[32m            ExpandMap.SetActive(true);[m
+[32m+[m[32m            OriginalMap.SetActive(false);[m
+ [m
+[31m-            ButtonList.RemoveAt(0);[m
+[32m+[m[32m            return true;[m
+         }[m
+[31m-[m
+[31m-    }[m
+[31m-[m
+[31m-    public void SetClickSlot(bool isPossible)[m
+[31m-    {[m
+[31m-        print("SetClickSlot : " + isPossible + " btn name : " + ButtonList[0].name);[m
+[31m-        if (isPossible)[m
+[32m+[m[32m        else if(idx == 71)[m
+         {[m
+[31m-            isClick = false;[m
+[31m-            ButtonParent = ButtonList[0].parent;[m
+[31m-            ButtonList[0].SetParent(Mask);[m
+[31m-[m
+[31m-            ButtonList[0].gameObject.GetComponent<ClickSlot>().taskManager = this;[m
+[31m-            ButtonList[0].gameObject.GetComponent<ClickSlot>().isTask = true;[m
+[32m+[m[32m            ExpandMap.SetActive(false);[m
+[32m+[m[32m            OriginalMap.SetActive(true);[m
+[32m+[m[32m            OffDisplayObject();[m
+ [m
+[31m-            ButtonList[0].gameObject.GetComponent<Button>().enabled = false;[m
+[31m-[m
+[31m-            createPopUp.transform.SetParent(Mask);[m
+[31m-        }[m
+[31m-        else[m
+[31m-        {[m
+[31m-            ButtonList[0].SetParent(ButtonParent);[m
+[32m+[m[32m            return true;[m
+         }[m
+[31m-[m
+[31m-    }[m
+[31m-[m
+[31m-    public void OnLongSelect()[m
+[31m-    {[m
+[31m-        isCompleted = true;[m
+[31m-        Sign[(int)Type.LongSelect].SetActive(false);[m
+[31m-    }[m
+[31m-[m
+[31m-    public void OnSlotClick()[m
+[31m-    {[m
+[31m-        isClick = true;[m
+[31m-[m
+[31m-        SetClickSlot(false);[m
+[31m-[m
+[31m-        if (DisplayObject.Count != 0)[m
+[32m+[m[41m        [m
+[32m+[m[32m        for (int i = 0; i < TaskObjectArray.Length; i++)[m
+         {[m
+[31m-            if (Sign[(int)Type.Slide].activeInHierarchy)[m
+[32m+[m[32m            if (TaskObjectArray[i].Idx == idx)[m
+             {[m
+[31m-                DisplayObject[0].SetActive(false);[m
+[31m-                DisplayObject.RemoveAt(0);[m
+[31m-            }[m
+[31m-        }[m
+[31m-[m
+[31m-        Sign[(int)Type.Slide].SetActive(false);[m
+[31m-    }[m
+[31m-[m
+[31m-    public void SetDisplayWarp()[m
+[31m-    {[m
+[31m-        if(conIdx == -4)[m
+[31m-        {[m
+[31m-            StopCoroutine(DisplayWarp());[m
+[32m+[m[32m                Dialog.SetActive(false);[m
+ [m
+[31m-            TutorialTileList.Insert(0, WarpTutorialTile[0]);[m
+[31m-            ButtonList.InsertRange(1, WarpButton);[m
+[31m-            DisplayObject.InsertRange(1, WarpDisplayObject);[m
+[31m-[m
+[31m-            conIdx = 79;[m
+[31m-            SetButton(true);[m
+[31m-            StartCoroutine(DisplayTask());[m
+[32m+[m[32m                OffDisplayObject();[m
+[32m+[m[32m                TaskObjectArray[i].InitTask(roomManager, resultPopUp, dayAndNight);[m
+[32m+[m[32m                return true;[m
+[32m+[m[32m            }[m
+         }[m
+[32m+[m[32m        return false;[m
+     }[m
+ [m
+[31m-    public void OnClick()[m
+[31m-    {[m
+[31m-        isClick = true;[m
+[31m-[m
+[31m-        DisplayObject[0].SetActive(false);[m
+[31m-        DisplayObject.RemoveAt(0);[m
+[31m-[m
+[31m-        Sign[(int)Type.Select].SetActive(false);[m
+[31m-[m
+[31m-        SetButton(false);[m
+[31m-    }[m
+[31m-[m
+[31m-    public void StartTask(int idx)[m
+[32m+[m[32m    void OffDisplayObject()[m
+     {[m
+[31m-        switch (idx)[m
+[32m+[m[32m        for (int i = 0; i < DisplayObject.Count; i++)[m
+         {[m
+[31m-            case 8:[m
+[31m-            case 10:[m
+[31m-            case 16:[m
+[31m-            case 17:[m
+[31m-            case 18:[m
+[31m-            case 20:[m
+[31m-            case 62:[m
+[31m-            case 66:[m
+[31m-            case 70:[m
+[31m-                StartCoroutine(DisplayArrow());[m
+[31m-                break;[m
+[31m-            case 19:[m
+[31m-                StartCoroutine(TakeTask(Type.Slide));[m
+[31m-                break;[m
+[31m-            case 40:[m
+[31m-                isClickStatus = true;[m
+[31m-                StartCoroutine(TakeTask(Type.LongSelect));[m
+[31m-                break;[m
+[31m-            case 23:[m
+[31m-            case 27:[m
+[31m-            case 30:[m
+[31m-            case 32:[m
+[31m-            case 34:[m
+[31m-            case 35:[m
+[31m-            case 36:[m
+[31m-            case 39:[m
+[31m-            case 44:[m
+[31m-            case 45:[m
+[31m-            case 48:[m
+[31m-            case 51:[m
+[31m-            case 52:[m
+[31m-            case 58:[m
+[31m-            case 60:[m
+[31m-            case 64:[m
+[31m-            case 72:[m
+[31m-            case 73:[m
+[31m-            case 79:[m
+[31m-                if (idx == 72)[m
+[31m-                    ButtonList.Insert(0, OriginalMap.transform.GetChild(2));[m
+[31m-                StartCoroutine(ClickTask());[m
+[31m-                break;[m
+[31m-            case 68:[m
+[31m-                DisplayObject[0].SetActive(false);[m
+[31m-                DisplayObject.RemoveAt(0);[m
+[31m-                ExpandMap.SetActive(true);[m
+[31m-                OriginalMap.SetActive(false);[m
+[31m-                break;[m
+[31m-            case 71:[m
+[31m-                DisplayObject[0].SetActive(false);[m
+[31m-                DisplayObject.RemoveAt(0);[m
+[31m-                ExpandMap.SetActive(false);[m
+[31m-                OriginalMap.SetActive(true);[m
+[31m-                break;[m
+[32m+[m[32m            if (DisplayObject[i].activeInHierarchy)[m
+[32m+[m[32m                DisplayObject[i].SetActive(false);[m
+         }[m
+     }[m
+ [m
+[36m@@ -299,352 +122,10 @@[m [mpublic class TaskManager : MonoBehaviour[m
+         return pos;[m
+     }[m
+ [m
+[31m-    bool isRightDirection()[m
+[31m-    {[m
+[31m-        float preDistance = (new Vector3(14.9f, 10f, 7.4f) - roomManager.prePos).magnitude;[m
+[31m-        float postDistance = (new Vector3(14.9f, 10f, 7.4f) - roomManager.conPos).magnitude;[m
+[31m-        if (preDistance <= postDistance)[m
+[31m-            return true;[m
+[31m-        return false;[m
+[31m-    }[m
+[31m-[m
+[31m-    bool GetIsCompleted()[m
+[31m-    {[m
+[31m-        if (conIdx == 19)[m
+[31m-        {[m
+[31m-            if ((Camera.main.transform.position - new Vector3(14.9f, 10f, 7.4f)).magnitude < 2f)[m
+[31m-                return true;[m
+[31m-            else[m
+[31m-            {[m
+[31m-                if (Input.GetMouseButton(0))[m
+[31m-                {[m
+[31m-                    roomManager.conPos = GetRay();[m
+[31m-                    if (isRightDirection())[m
+[31m-                        Camera.main.transform.position += (roomManager.prePos - roomManager.conPos);[m
+[31m-                    roomManager.prePos = roomManager.conPos;[m
+[31m-                }[m
+[31m-                return false;[m
+[31m-            }[m
+[31m-        }[m
+[31m-        else if (conIdx == 36 || conIdx == 40 || conIdx == 48 || conIdx == 79 || conIdx == -3 || conIdx == -4)[m
+[31m-        {[m
+[31m-            return isCompleted;[m
+[31m-        }[m
+[31m-        return true;[m
+[31m-    }[m
+[31m-[m
+[31m-    bool ClickStatus()[m
+[31m-    {[m
+[31m-        return isClick;[m
+[31m-    }[m
+[31m-[m
+[31m-    bool MouseDown()[m
+[31m-    {[m
+[31m-        return Input.GetMouseButtonDown(0) || Input.GetMouseButton(0);[m
+[31m-    }[m
+[31m-[m
+[31m-    bool isSuccessDisplayWarp()[m
+[31m-    {[m
+[31m-        if (Input.GetMouseButtonUp(0))[m
+[31m-        {[m
+[31m-            return createPopUp.tutorialTile.isSuccess();[m
+[31m-        }[m
+[31m-        else[m
+[31m-            return false;[m
+[31m-    }[m
+[31m-[m
+[31m-    public IEnumerator DisplayWarp()[m
+[31m-    {[m
+[31m-        isMove = true;[m
+[31m-        isDone = false;[m
+[31m-        isCompleted = false;[m
+[31m-[m
+[31m-        RoomManager.possibleDrag = true;[m
+[31m-        Dialog.SetActive(false);[m
+[31m-[m
+[31m-        TutorialTileList[0].SetActive(true);[m
+[31m-        createPopUp.tutorialTile = TutorialTileList[0].GetComponent<TutorialTile>();[m
+[31m-        createPopUp.isTutorial = true;[m
+[31m-[m
+[31m-        SetClickSlot(true);[m
+[31m-        Sign[(int)Type.Slide].SetActive(true);[m
+[31m-[m
+[31m-        if (DisplayObject[0].activeInHierarchy)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-            DisplayObject.RemoveAt(0);[m
+[31m-        }[m
+[31m-[m
+[31m-        while (true)[m
+[31m-        {[m
+[31m-            if (MouseDown()) break;[m
+[31m-            DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);[m
+[31m-            if (MouseDown()) break;[m
+[31m-            yield return new WaitForSeconds(loopArrowSpeed);[m
+[31m-        }[m
+[31m-[m
+[31m-        if (DisplayObject.Count != 0)[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-        OnSlotClick();[m
+[31m-[m
+[31m-        RoomManager.possibleDrag = false;[m
+[31m-[m
+[31m-        yield return new WaitUntil(isSuccessDisplayWarp);[m
+[31m-        SetClickSlot(false);[m
+[31m-[m
+[31m-        ButtonList[0].gameObject.GetComponent<ClickSlot>().isTask = false;[m
+[31m-        ButtonList[0].gameObject.GetComponent<Button>().enabled = true;[m
+[31m-        ButtonList.RemoveAt(0);[m
+[31m-[m
+[31m-        if (conIdx == 36)[m
+[31m-            createObject.isTutorial = false;[m
+[31m-        createPopUp.transform.SetParent(CreatePopUpParent);[m
+[31m-[m
+[31m-        isMove = false;[m
+[31m-        conIdx = -5;[m
+[31m-        StartCoroutine(ClickTask());[m
+[31m-[m
+[31m-        print("DisplayWarp");[m
+[31m-        yield break;[m
+[31m-    }[m
+[31m-[m
+[31m-    IEnumerator ClickTask()[m
+[31m-    {[m
+[31m-        SetButton(true);[m
+[31m-[m
+[31m-        isDone = false;[m
+[31m-        Dialog.SetActive(false);[m
+[31m-[m
+[31m-        if (DisplayObject[0].activeInHierarchy)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-            DisplayObject.RemoveAt(0);[m
+[31m-        }[m
+[31m-[m
+[31m-        Sign[(int)Type.Select].SetActive(true);[m
+[31m-[m
+[31m-        while (true)[m
+[31m-        {[m
+[31m-            if (ClickStatus()) break;[m
+[31m-            DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);[m
+[31m-            yield return new WaitForSeconds(loopArrowSpeed);[m
+[31m-            if (ClickStatus()) break;[m
+[31m-        }[m
+[31m-        if (DisplayObject.Count != 0)[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-[m
+[31m-        if (conIdx == 27 || conIdx == 32 || conIdx == 35 || conIdx == 39 || conIdx == 45)[m
+[31m-            StartCoroutine(DisplayArrow());[m
+[31m-        else if (conIdx == 30 || conIdx == 34 || conIdx == 60)[m
+[31m-        {[m
+[31m-            if (conIdx == 60)[m
+[31m-                yield return new WaitForSeconds(2.3f);[m
+[31m-            StartCoroutine(ClickTask());[m
+[31m-            conIdx = -1;[m
+[31m-        }[m
+[31m-        else if (conIdx == 52)[m
+[31m-        {[m
+[31m-            StartCoroutine(ClickTask());[m
+[31m-            conIdx = -3;[m
+[31m-        }[m
+[31m-        else if (conIdx == 44)[m
+[31m-        {[m
+[31m-            StartCoroutine(ClickTask());[m
+[31m-            conIdx = -2;[m
+[31m-        }[m
+[31m-        else if (conIdx == 36 || conIdx == 48 || conIdx == 79)[m
+[31m-        {[m
+[31m-            StartCoroutine(DisplayTask());[m
+[31m-        }[m
+[31m-        else if (conIdx == -1)[m
+[31m-            StartCoroutine(DisplayArrow());[m
+[31m-        else if (conIdx == -3)[m
+[31m-            StartCoroutine(TakeTask(Type.None));[m
+[31m-        else if (conIdx == -4)[m
+[31m-            StartCoroutine(DisplayWarp());[m
+[31m-        else[m
+[31m-        {[m
+[31m-            yield return new WaitForSeconds(clickTime);[m
+[31m-            Dialog.SetActive(true);[m
+[31m-            isDone = true;[m
+[31m-        }[m
+[31m-[m
+[31m-        yield break;[m
+[31m-    }[m
+[31m-[m
+[31m-    public void SetTutorialTile()[m
+[31m-    {[m
+[31m-        if (conIdx != 79)[m
+[31m-        {[m
+[31m-            TutorialTileList[0].SetActive(false);[m
+[31m-            TutorialTileList.RemoveAt(0);[m
+[31m-        }[m
+[31m-        createPopUp.isTutorial = false;[m
+[31m-        isCompleted = true;[m
+[31m-    }[m
+[31m-[m
+[31m-    public IEnumerator DisplayTask()[m
+[31m-    {[m
+[31m-        isMove = true;[m
+[31m-        isDone = false;[m
+[31m-        isCompleted = false;[m
+[31m-        RoomManager.possibleDrag = true;[m
+[31m-        Dialog.SetActive(false);[m
+[31m-[m
+[31m-        TutorialTileList[0].SetActive(true);[m
+[31m-        createPopUp.tutorialTile = TutorialTileList[0].GetComponent<TutorialTile>();[m
+[31m-        createPopUp.isTutorial = true;[m
+[31m-[m
+[31m-        if (conIdx == 36 || conIdx == 48 || conIdx == 79)[m
+[31m-        {[m
+[31m-            createObject.isTutorial = true;[m
+[31m-            createObject.taskManager = this;[m
+[31m-            createObject.tutorialTile = TutorialTileList[0].GetComponent<TutorialTile>();[m
+[31m-        }[m
+[31m-[m
+[31m-        SetClickSlot(true);[m
+[31m-        Sign[(int)Type.Slide].SetActive(true);[m
+[31m-[m
+[31m-        if (DisplayObject[0].activeInHierarchy)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-            DisplayObject.RemoveAt(0);[m
+[31m-        }[m
+[31m-[m
+[31m-        while (true)[m
+[31m-        {[m
+[31m-            if (ClickStatus()) break;[m
+[31m-            DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);[m
+[31m-            if (ClickStatus()) break;[m
+[31m-            yield return new WaitForSeconds(loopArrowSpeed);[m
+[31m-        }[m
+[31m-        if (DisplayObject.Count != 0)[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-        OnSlotClick();[m
+[31m-[m
+[31m-        RoomManager.possibleDrag = false;[m
+[31m-        yield return new WaitUntil(GetIsCompleted);[m
+[31m-        SetClickSlot(false);[m
+[31m-        [m
+[31m-        ButtonList[0].gameObject.GetComponent<ClickSlot>().isTask = false;[m
+[31m-        ButtonList[0].gameObject.GetComponent<Button>().enabled = true;[m
+[31m-        ButtonList.RemoveAt(0);[m
+[31m-[m
+[31m-        if (conIdx == 36)[m
+[31m-            createObject.isTutorial = false;[m
+[31m-        createPopUp.transform.SetParent(CreatePopUpParent);[m
+[31m-[m
+[31m-        isMove = false;[m
+[31m-[m
+[31m-        if (conIdx == 48)[m
+[31m-        {[m
+[31m-            createObject.isTutorial = false;[m
+[31m-            StartCoroutine(DisplayArrow());[m
+[31m-        }[m
+[31m-        else if (conIdx == 79)[m
+[31m-        {[m
+[31m-            conIdx = -4;[m
+[31m-            StartCoroutine(ClickTask());[m
+[31m-        }[m
+[31m-        else[m
+[31m-        {[m
+[31m-            Dialog.SetActive(true);[m
+[31m-            isDone = true;[m
+[31m-        }[m
+[31m-[m
+[31m-        yield break;[m
+[31m-    }[m
+[31m-[m
+[31m-    IEnumerator TakeTask(Type type)[m
+[31m-    {[m
+[31m-        isDone = false;[m
+[31m-        isCompleted = false;[m
+[31m-        Dialog.SetActive(false);[m
+[31m-[m
+[31m-        if (DisplayObject[0].activeInHierarchy)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-            DisplayObject.RemoveAt(0);[m
+[31m-        }[m
+[31m-[m
+[31m-        if (type != Type.None)[m
+[31m-            Sign[(int)type].SetActive(true);[m
+[31m-        for (int i = 0; i < 3; i++)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);[m
+[31m-            yield return new WaitForSeconds(arrowSpeed);[m
+[31m-        }[m
+[31m-[m
+[31m-        //if (conIdx == 19)[m
+[31m-        //    cameraPos = Camera.main.transform.position;[m
+[31m-[m
+[31m-        //////////////////////////임시//////////////////////[m
+[31m-        if (conIdx == -3)[m
+[31m-        {[m
+[31m-            yield return new WaitForSeconds(1f);[m
+[31m-            FindObjectOfType<DayandNight>().changeState();[m
+[31m-        }[m
+[31m-        ////////////////////////////////////////////////////[m
+[31m-[m
+[31m-        if (conIdx == 19)[m
+[31m-        {[m
+[31m-            roomManager.prePos = GetRay();[m
+[31m-            roomManager.conPos = GetRay();[m
+[31m-        }[m
+[31m-        yield return new WaitUntil(GetIsCompleted);[m
+[31m-[m
+[31m-        DisplayObject[0].SetActive(false);[m
+[31m-        DisplayObject.RemoveAt(0);[m
+[31m-[m
+[31m-        if (type != Type.None)[m
+[31m-            Sign[(int)type].SetActive(false);[m
+[31m-[m
+[31m-        if (conIdx == 19)[m
+[31m-            StartCoroutine(DisplayArrow());[m
+[31m-        else if (conIdx == 40)[m
+[31m-        {[m
+[31m-            isClickStatus = false;[m
+[31m-            StartCoroutine(DisplayArrow());[m
+[31m-        }[m
+[31m-        else[m
+[31m-        {[m
+[31m-            Dialog.SetActive(true);[m
+[31m-            isDone = true;[m
+[31m-        }[m
+[31m-[m
+[31m-        yield break;[m
+[31m-    }[m
+[31m-[m
+[31m-    IEnumerator DisplayArrow()[m
+[31m-    {[m
+[31m-        print("displayArrow");[m
+[31m-        isDone = false;[m
+[31m-        Dialog.SetActive(false);[m
+[31m-        yield return new WaitForSeconds(0.2f);[m
+[31m-[m
+[31m-        if (DisplayObject[0].activeInHierarchy)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(false);[m
+[31m-            DisplayObject.RemoveAt(0);[m
+[31m-        }[m
+[31m-[m
+[31m-        for (int i = 0; i < 3; i++)[m
+[31m-        {[m
+[31m-            DisplayObject[0].SetActive(!DisplayObject[0].activeInHierarchy);[m
+[31m-            yield return new WaitForSeconds(arrowSpeed);[m
+[31m-        }[m
+[31m-[m
+[31m-[m
+[31m-        Dialog.SetActive(true);[m
+[31m-        isDone = true;[m
+[31m-[m
+[31m-        yield break;[m
+[31m-    }[m
+[31m-[m
+     void Update()[m
+     {[m
+[31m-        if (ClickObject.isPossibleClick != isClickStatus)[m
+[31m-            RoomManager.ChangeClickStatus(isClickStatus);[m
+[32m+[m[32m        if (isPossibleClick != ClickObject.isPossibleClick)[m
+[32m+[m[32m            ClickObject.isPossibleClick = isPossibleClick;[m
+         if (isMove)[m
+         {[m
+             if (RoomManager.possibleDrag)[m
+[1mdiff --git a/Assets/1.Script/2.Tutorial/TaskObject.cs b/Assets/1.Script/2.Tutorial/TaskObject.cs[m
+[1mnew file mode 100644[m
+[1mindex 00000000..e26e3392[m
+[1m--- /dev/null[m
+[1m+++ b/Assets/1.Script/2.Tutorial/TaskObject.cs[m
+[36m@@ -0,0 +1,466 @@[m
+[32m+[m[32m﻿using System.Collections;[m
+[32m+[m[32musing System.Collections.Generic;[m
+[32m+[m[32musing UnityEngine;[m
+[32m+[m[32musing UnityEngine.UI;[m
+[32m+[m
+[32m+[m[32mpublic class TaskObject : MonoBehaviour {[m
+[32m+[m[32m    public List<TaskType> TaskList;[m
+[32m+[m[32m    public int Idx;[m
+[32m+[m[32m    public List<GameObject> DisplayObject;[m
+[32m+[m[32m    public List<Transform> ButtonList;[m
+[32m+[m[32m    public List<GameObject> TutorialTile;[m
+[32m+[m
+[32m+[m[32m    Transform ButtonParent;[m
+[32m+[m[32m    int ButtonSiblingIdx;[m
+[32m+[m
+[32m+[m[32m    int DisplayIdx = 0;[m
+[32m+[m[32m    int ButtonIdx = 0;[m
+[32m+[m[32m    int TutorialTileIdx = 0;[m
+[32m+[m
+[32m+[m[32m    bool isDone = false;[m
+[32m+[m[32m    int Cnt = 0;[m
+[32m+[m
+[32m+[m[32m    bool isClick = false; //Select 용 & Display시 Slot 눌렀는지 여부 판단[m
+[32m+[m[32m    bool isLongClick = false; //LongSelect 용[m
+[32m+[m
+[32m+[m[32m    bool isDisplay = false; //내려놓았을 때 성공한 위치인지[m
+[32m+[m
+[32m+[m[32m    bool isResult = false;[m
+[32m+[m
+[32m+[m[32m    RoomManager roomManager;[m
+[32m+[m[32m    DayandNight dayAndNight;[m
+[32m+[m[32m    ResultPopUp resultPopUp;[m
+[32m+[m
+[32m+[m[32m    public enum TaskType[m
+[32m+[m[32m    {[m
+[32m+[m[32m        Arrow,[m
+[32m+[m[32m        Select,[m
+[32m+[m[32m        LongSelect,[m
+[32m+[m[32m        Display,[m
+[32m+[m[32m        MoveMap,[m
+[32m+[m[32m        Fight[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsDone()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return isDone;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void InitTask(RoomManager room, ResultPopUp result, DayandNight dayandNight)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (roomManager == null)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            roomManager = room;[m
+[32m+[m[32m            dayAndNight = dayandNight;[m
+[32m+[m[32m            resultPopUp = result;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        DisplayIdx = 0;[m
+[32m+[m[32m        ButtonIdx = 0;[m
+[32m+[m[32m        TutorialTileIdx = 0;[m
+[32m+[m
+[32m+[m[32m        Cnt = 0;[m
+[32m+[m[32m        StartCoroutine(TakeTask());[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator TakeTask()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        TaskManager.isDone = false;[m
+[32m+[m[41m        [m
+[32m+[m[32m        while(Cnt < TaskList.Count)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            print("Cnt" + Cnt);[m
+[32m+[m[32m            isDone = false;[m
+[32m+[m[32m            switch (TaskList[Cnt])[m
+[32m+[m[32m            {[m
+[32m+[m[32m                case TaskType.Arrow: StartCoroutine(Arrow()); break;[m
+[32m+[m[32m                case TaskType.Display: StartCoroutine(Display()); break;[m
+[32m+[m[32m                case TaskType.Fight: StartCoroutine(Fight()); break;[m
+[32m+[m[32m                case TaskType.LongSelect: StartCoroutine(LongSelect()); break;[m
+[32m+[m[32m                case TaskType.MoveMap: StartCoroutine(MoveMap()); break;[m
+[32m+[m[32m                case TaskType.Select: StartCoroutine(Select()); break;[m
+[32m+[m[32m            }[m
+[32m+[m[32m            Cnt++;[m
+[32m+[m[32m            yield return new WaitUntil(IsDone);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        TaskManager.isDone = true;[m
+[32m+[m[32m        TaskManager.taskManager.Dialog.SetActive(true);[m
+[32m+[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator Arrow()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        for (int i = 0; i < 3; i++)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            DisplayObject[DisplayIdx].SetActive(!DisplayObject[DisplayIdx].activeInHierarchy);[m
+[32m+[m[32m            yield return new WaitForSeconds(TaskManager.taskManager.arrowSpeed);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        DisplayIdx++;[m
+[32m+[m
+[32m+[m[32m        yield return new WaitForSeconds(TaskManager.taskManager.clickTime);[m
+[32m+[m[32m        isDone = true;[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void SetSlotStatus(bool isPossible) //설치를 위한 슬롯 세팅[m
+[32m+[m[32m    {[m
+[32m+[m[32m        ClickSlot clickSlot = ButtonList[ButtonIdx].GetComponent<ClickSlot>();[m
+[32m+[m
+[32m+[m[32m        ButtonList[ButtonIdx].GetComponent<Button>().enabled = !isPossible;[m
+[32m+[m[32m        clickSlot.isDisplay = isPossible;[m
+[32m+[m
+[32m+[m[32m        if (isPossible)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            clickSlot.taskObject = this;[m
+[32m+[m
+[32m+[m[32m            ButtonParent = ButtonList[ButtonIdx].parent;[m
+[32m+[m[32m            ButtonSiblingIdx = ButtonList[ButtonIdx].GetSiblingIndex();[m
+[32m+[m
+[32m+[m[32m            ButtonList[ButtonIdx].SetParent(TaskManager.taskManager.Mask);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        else[m
+[32m+[m[32m        {[m
+[32m+[m[32m            clickSlot.taskObject = null;[m
+[32m+[m
+[32m+[m[32m            ButtonList[ButtonIdx].SetParent(ButtonParent);[m
+[32m+[m[32m            ButtonList[ButtonIdx].SetSiblingIndex(ButtonSiblingIdx);[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void SetWarpExit()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (TutorialTile[TutorialTileIdx].GetComponent<TutorialTile>().objName.Equals("Warp_Exit"))[m
+[32m+[m[32m        {[m
+[32m+[m[32m            InitDisplay(false);[m
+[32m+[m[32m            SetButton(false);[m
+[32m+[m
+[32m+[m[32m            TutorialTile[0].GetComponent<TutorialTile>().lastColList.Clear();[m
+[32m+[m
+[32m+[m[32m            Cnt = 1;[m
+[32m+[m[32m            DisplayIdx = 1;[m
+[32m+[m[32m            ButtonIdx = 1;[m
+[32m+[m[32m            TutorialTileIdx = 0;[m
+[32m+[m
+[32m+[m[32m            StopAllCoroutines();[m
+[32m+[m[32m            print("All Stop + Start");[m
+[32m+[m[32m            StartCoroutine(TakeTask());[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void StartDisplay() //워프 엑싯의 경우에는 ClickSlot이 아니라 MouseDown으로 처리[m
+[32m+[m[32m    {[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, false);[m
+[32m+[m[41m        [m
+[32m+[m[32m        DisplayObject[DisplayIdx].SetActive(false);[m
+[32m+[m[32m        isClick = true;[m
+[32m+[m[32m        SetSlotStatus(false);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void OnDisplay(bool isDisplay) //워프 엑싯의 경우에는 CreateObject가 아니라 MouseUp으로 처리[m
+[32m+[m[32m    {[m
+[32m+[m[32m        this.isDisplay = isDisplay;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsDisplay()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return isDisplay;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsDisplayWarpExit()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (Input.GetMouseButtonUp(0))[m
+[32m+[m[32m        {[m
+[32m+[m[32m            return TutorialTile[TutorialTileIdx].GetComponent<TutorialTile>().isSuccess();[m
+[32m+[m[32m        }[m
+[32m+[m[32m        else[m
+[32m+[m[32m            return false;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    void InitDisplay(bool isStart)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        TaskManager.taskManager.isMove = isStart;[m
+[32m+[m[32m        RoomManager.possibleDrag = isStart;[m
+[32m+[m
+[32m+[m[32m        TutorialTile[TutorialTileIdx].SetActive(isStart);[m
+[32m+[m[32m        TaskManager.taskManager.createPopUp.isTutorial = isStart;[m
+[32m+[m
+[32m+[m[32m        if (isStart)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            TaskManager.taskManager.createPopUp.tutorialTile = TutorialTile[TutorialTileIdx].GetComponent<TutorialTile>();[m
+[32m+[m[32m            TaskManager.taskManager.createPopUp.taskObject = this;[m
+[32m+[m
+[32m+[m[32m            TaskManager.taskManager.createObject.tutorialTile = TutorialTile[TutorialTileIdx].GetComponent<TutorialTile>();[m
+[32m+[m[32m            TaskManager.taskManager.createObject.taskObject = this;[m
+[32m+[m
+[32m+[m[32m            TaskManager.taskManager.createPopUp.transform.SetParent(TaskManager.taskManager.Mask);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        else[m
+[32m+[m[32m        {[m
+[32m+[m[32m            TaskManager.taskManager.createPopUp.tutorialTile = null;[m
+[32m+[m[32m            TaskManager.taskManager.createPopUp.taskObject = null;[m
+[32m+[m
+[32m+[m[32m            TaskManager.taskManager.createObject.tutorialTile = null;[m
+[32m+[m[32m            TaskManager.taskManager.createObject.taskObject = null;[m
+[32m+[m
+[32m+[m[32m            TaskManager.taskManager.createPopUp.transform.SetParent(TaskManager.taskManager.CreatePopUpParent);[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsMouseDown()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return Input.GetMouseButtonDown(0) || Input.GetMouseButton(0);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator MouseDown()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        yield return new WaitUntil(IsMouseDown);[m
+[32m+[m[32m        StartDisplay();[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    IEnumerator Display()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isDisplay = false;[m
+[32m+[m[32m        isClick = false;[m
+[32m+[m[32m        InitDisplay(true);[m
+[32m+[m
+[32m+[m[32m        bool isWarpExit = TutorialTile[TutorialTileIdx].GetComponent<TutorialTile>().objName.Equals("Warp_Exit");[m
+[32m+[m[32m        if (isWarpExit)[m
+[32m+[m[32m            RoomManager.possibleDrag = false;[m
+[32m+[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, true);[m
+[32m+[m[32m        SetSlotStatus(true);[m
+[32m+[m
+[32m+[m[32m        if (!isWarpExit)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            while (!isClick)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                DisplayObject[DisplayIdx].SetActive(!DisplayObject[DisplayIdx].activeInHierarchy);[m
+[32m+[m[32m                yield return new WaitForSeconds(TaskManager.taskManager.loopArrowSpeed);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m[32m        else[m
+[32m+[m[32m        {[m
+[32m+[m[32m            StartCoroutine(MouseDown());[m
+[32m+[m[32m            while (!isClick)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                DisplayObject[DisplayIdx].SetActive(!DisplayObject[DisplayIdx].activeInHierarchy);[m
+[32m+[m[32m                yield return new WaitForSeconds(TaskManager.taskManager.loopArrowSpeed);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if (!isWarpExit)[m
+[32m+[m[32m            yield return new WaitUntil(IsDisplay);[m
+[32m+[m[32m        else[m
+[32m+[m[32m            yield return new WaitUntil(IsDisplayWarpExit);[m
+[32m+[m
+[32m+[m[32m        DisplayIdx++;[m
+[32m+[m
+[32m+[m[32m        InitDisplay(false);[m
+[32m+[m[32m        SetSlotStatus(false);[m
+[32m+[m[32m        TutorialTileIdx++;[m
+[32m+[m[32m        ButtonIdx++;[m
+[32m+[m
+[32m+[m[32m        isDone = true;[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void OnResult()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isResult = true;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsResult()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return isResult;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator Fight()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isResult = false;[m
+[32m+[m[32m        resultPopUp.taskObject = this;[m
+[32m+[m
+[32m+[m[32m        //yield return new WaitForSeconds(2f);[m
+[32m+[m[32m        //dayAndNight.changeState();[m
+[32m+[m
+[32m+[m[32m        yield return new WaitUntil(IsResult);[m
+[32m+[m[32m        resultPopUp.taskObject = null;[m
+[32m+[m[32m        isDone = true;[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsLongClick()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return isLongClick;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void OnLongSelect()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isLongClick = true;[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.LongSelect, false);[m
+[32m+[m[32m        DisplayObject[DisplayIdx].SetActive(false);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator LongSelect()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isLongClick = false;[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.LongSelect, true);[m
+[32m+[m
+[32m+[m[32m        ClickObject.taskObject = this;[m
+[32m+[m[32m        ClickObject.isPossibleClick = true;[m
+[32m+[m[32m        TaskManager.taskManager.isPossibleClick = true;[m
+[32m+[m
+[32m+[m
+[32m+[m[32m        while (!isLongClick)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            DisplayObject[DisplayIdx].SetActive(!DisplayObject[DisplayIdx].activeInHierarchy);[m
+[32m+[m[32m            yield return new WaitForSeconds(TaskManager.taskManager.loopArrowSpeed);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        DisplayIdx++;[m
+[32m+[m
+[32m+[m[32m        ClickObject.taskObject = null;[m
+[32m+[m[32m        ClickObject.isPossibleClick = false;[m
+[32m+[m[32m        TaskManager.taskManager.isPossibleClick = false;[m
+[32m+[m
+[32m+[m[32m        isDone = true;[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    Vector3 GetRay()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        Vector3 mousePos = Input.mousePosition;[m
+[32m+[m[32m        mousePos.z = 0;[m
+[32m+[m[32m        Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);[m
+[32m+[m
+[32m+[m[32m        return pos;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool isRightDirection()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        float preDistance = (new Vector3(14.9f, 10f, 7.4f) - roomManager.prePos).magnitude;[m
+[32m+[m[32m        float postDistance = (new Vector3(14.9f, 10f, 7.4f) - roomManager.conPos).magnitude;[m
+[32m+[m[32m        if (preDistance <= postDistance)[m
+[32m+[m[32m            return true;[m
+[32m+[m[32m        return false;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool isMoveMap()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if ((Camera.main.transform.position - new Vector3(14.9f, 10f, 7.4f)).magnitude < 2f)[m
+[32m+[m[32m            return true;[m
+[32m+[m[32m        else[m
+[32m+[m[32m        {[m
+[32m+[m[32m            if (Input.GetMouseButton(0))[m
+[32m+[m[32m            {[m
+[32m+[m[32m                roomManager.conPos = GetRay();[m
+[32m+[m[32m                if (isRightDirection())[m
+[32m+[m[32m                    Camera.main.transform.position += (roomManager.prePos - roomManager.conPos);[m
+[32m+[m[32m                roomManager.prePos = roomManager.conPos;[m
+[32m+[m[32m            }[m
+[32m+[m[32m            return false;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator MoveMap()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, true);[m
+[32m+[m
+[32m+[m[32m        for (int i = 0; i < 3; i++)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            DisplayObject[DisplayIdx].SetActive(!DisplayObject[DisplayIdx].activeInHierarchy);[m
+[32m+[m[32m            yield return new WaitForSeconds(TaskManager.taskManager.arrowSpeed);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        roomManager.prePos = GetRay();[m
+[32m+[m[32m        roomManager.conPos = GetRay();[m
+[32m+[m
+[32m+[m[32m        yield return new WaitUntil(isMoveMap);[m
+[32m+[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, false);[m
+[32m+[m[32m        DisplayObject[DisplayIdx].SetActive(false);[m
+[32m+[m[32m        DisplayIdx++;[m
+[32m+[m
+[32m+[m[32m        isDone = true;[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    void SetButton(bool isPossible)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        SlotManager slotManager = ButtonList[ButtonIdx].GetComponent<SlotManager>();[m
+[32m+[m
+[32m+[m[32m        if (isPossible)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            ButtonParent = ButtonList[ButtonIdx].parent;[m
+[32m+[m[32m            ButtonSiblingIdx = ButtonList[ButtonIdx].GetSiblingIndex();[m
+[32m+[m[32m            if (slotManager != null)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                slotManager.taskObject = this;[m
+[32m+[m[32m                slotManager.isClick = true;[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else[m
+[32m+[m[32m                ButtonList[ButtonIdx].GetComponent<Button>().onClick.AddListener(OnButtonClick);[m
+[32m+[m
+[32m+[m[32m            ButtonList[ButtonIdx].SetParent(TaskManager.taskManager.Mask);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        else[m
+[32m+[m[32m        {[m
+[32m+[m[32m            if (slotManager != null)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                slotManager.taskObject = null;[m
+[32m+[m[32m                slotManager.isClick = false;[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else[m
+[32m+[m[32m                ButtonList[ButtonIdx].GetComponent<Button>().onClick.RemoveListener(OnButtonClick);[m
+[32m+[m
+[32m+[m[32m            ButtonList[ButtonIdx].SetParent(ButtonParent);[m
+[32m+[m[32m            ButtonList[ButtonIdx].SetSiblingIndex(ButtonSiblingIdx);[m
+[32m+[m
+[32m+[m[32m            ButtonIdx++;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    bool IsClick()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        return isClick;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void OnButtonClick()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isClick = true;[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.Select, false);[m
+[32m+[m[32m        DisplayObject[DisplayIdx].SetActive(false);[m
+[32m+[m
+[32m+[m[32m        SetButton(false);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    IEnumerator Select()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        isClick = false;[m
+[32m+[m
+[32m+[m[32m        if (ButtonList.Count == 0)[m
+[32m+[m[32m            ButtonList.Insert(0, TaskManager.taskManager.OriginalMap.transform.GetChild(2));[m
+[32m+[m[32m        else if (ButtonList[ButtonIdx].name.Equals("MiniMap"))[m
+[32m+[m[32m            yield return new WaitForSeconds(2.3f);[m
+[32m+[m[41m        [m
+[32m+[m
+[32m+[m[32m        SetButton(true);[m
+[32m+[m[32m        TaskManager.taskManager.OnOffSign(TaskManager.Type.Select, true);[m
+[32m+[m
+[32m+[m[32m        while(!isClick)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            DisplayObject[DisplayIdx].SetActive(!DisplayObject[DisplayIdx].activeInHierarchy);[m
+[32m+[m[32m            yield return new WaitForSeconds(TaskManager.taskManager.loopArrowSpeed);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        DisplayIdx++;[m
+[32m+[m
+[32m+[m[32m        isDone = true;[m
+[32m+[m[32m        yield break;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/Assets/1.Script/2.Tutorial/TutorialEnemy.cs.meta b/Assets/1.Script/2.Tutorial/TaskObject.cs.meta[m
+[1msimilarity index 76%[m
+[1mrename from Assets/1.Script/2.Tutorial/TutorialEnemy.cs.meta[m
+[1mrename to Assets/1.Script/2.Tutorial/TaskObject.cs.meta[m
+[1mindex e2b38fba..ce3858ed 100644[m
+[1m--- a/Assets/1.Script/2.Tutorial/TutorialEnemy.cs.meta[m
+[1m+++ b/Assets/1.Script/2.Tutorial/TaskObject.cs.meta[m
+[36m@@ -1,6 +1,6 @@[m
+ fileFormatVersion: 2[m
+[31m-guid: 25677aa3d152e95488d8bb246bcb705f[m
+[31m-timeCreated: 1527233410[m
+[32m+[m[32mguid: 03ca103b097928b49bb17e8dab166120[m
+[32m+[m[32mtimeCreated: 1527256701[m
+ licenseType: Free[m
+ MonoImporter:[m
+   serializedVersion: 2[m
+[1mdiff --git a/Assets/1.Script/2.Tutorial/TutorialEnemy.cs b/Assets/1.Script/2.Tutorial/TutorialEnemy.cs[m
+[1mdeleted file mode 100644[m
+[1mindex db2e652b..00000000[m
+[1m--- a/Assets/1.Script/2.Tutorial/TutorialEnemy.cs[m
+[1m+++ /dev/null[m
+[36m@@ -1,44 +0,0 @@[m
+[31m-﻿using System.Collections;[m
+[31m-using System.Collections.Generic;[m
+[31m-using UnityEngine;[m
+[31m-[m
+[31m-public class TutorialEnemy : MonoBehaviour {[m
+[31m-    public GameObject EnemyPref;[m
+[31m-    public Enemy E;//Enemy 스크립트랑 navmesh만 붙은 전용 Enemy 생성. 체력 1[m
+[31m-    public Friendly F;[m
+[31m-    public DayandNight Curtain;[m
+[31m-    public TutorialTile Tt;[m
+[31m-    public bool Created = false;[m
+[31m-    void Update() {[m
+[31m-        if (E.isDie) {[m
+[31m-            Curtain.changeState();[m
+[31m-        }[m
+[31m-        if (DayandNight.isDay && !Created )[m
+[31m-        {[m
+[31m-            StartCoroutine(CreateEnemy());[m
+[31m-            Created = true;[m
+[31m-        }[m
+[31m-    }[m
+[31m-    [m
+[31m-    public IEnumerator CreateEnemy() {[m
+[31m-        EnemyPref.transform.position = Tt.transform.position + Vector3.right * 10;[m
+[31m-        E.Hp = 1;[m
+[31m-        E.isDie = false;[m
+[31m-        E.Attack = 0;[m
+[31m-        GameObject g = GameObject.Find("RecognizeRange").transform.parent.gameObject;[m
+[31m-        Debug.Log("G: " + g);[m
+[31m-        Debug.Log(g.transform.Find("Friendly_Guard"));[m
+[31m-        Debug.Log(g.transform.Find("Friendly_Guard").gameObject.activeSelf);[m
+[31m-        yield return new WaitUntil( () => g.transform.Find("Friendly_Guard").gameObject.activeSelf);[m
+[31m-        F=g.GetComponentInChildren<Friendly>();//가드 외 다른거 할 경우 변경[m
+[31m-        Debug.Log("F: " + F);[m
+[31m-        EnemyPref.SetActive(true);[m
+[31m-        TutorialEnemyAction();[m
+[31m-    }[m
+[31m-[m
+[31m-    public void TutorialEnemyAction() {[m
+[31m-        E.dest = E.SetYZero(F.NavObj.transform);[m
+[31m-        E.enemyAI.SetDestination(E.dest);[m
+[31m-        E.currentState = EnemyState.Walk;[m
+[31m-    }[m
+[31m-}[m
+[1mdiff --git a/Assets/1.Script/SoundManager.cs b/Assets/1.Script/SoundManager.cs[m
+[1mindex c76538ac..aa19bbea 100644[m
+[1m--- a/Assets/1.Script/SoundManager.cs[m
+[1m+++ b/Assets/1.Script/SoundManager.cs[m
+[36m@@ -18,8 +18,6 @@[m [mpublic class SoundManager : MonoBehaviour {[m
+ [m
+     public ClickController BGMButton, EffectButton;[m
+ [m
+[31m-    public bool isSave;[m
+[31m-[m
+     string bgmName;[m
+ [m
+     void Awake()[m
+[1mdiff --git a/Library/CurrentLayout.dwlt b/Library/CurrentLayout.dwlt[m
+[1mindex 541cefe4..7e38a71c 100644[m
+[1m--- a/Library/CurrentLayout.dwlt[m
+[1m+++ b/Library/CurrentLayout.dwlt[m
+[36m@@ -15,8 +15,8 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 43[m
+[31m-    width: 1280[m
+[31m-    height: 677[m
+[32m+[m[32m    width: 1536[m
+[32m+[m[32m    height: 781[m
+   m_ShowMode: 4[m
+   m_Title: [m
+   m_RootView: {fileID: 6}[m
+[36m@@ -37,14 +37,14 @@[m [mMonoBehaviour:[m
+   m_Position:[m
+     serializedVersion: 2[m
+     x: 0[m
+[31m-    y: 399[m
+[31m-    width: 760[m
+[31m-    height: 228[m
+[32m+[m[32m    y: 487[m
+[32m+[m[32m    width: 876[m
+[32m+[m[32m    height: 244[m
+   m_MinSize: {x: 100, y: 100}[m
+   m_MaxSize: {x: 4000, y: 4000}[m
+[31m-  m_ActualView: {fileID: 14}[m
+[32m+[m[32m  m_ActualView: {fileID: 13}[m
+   m_Panes:[m
+[31m-  - {fileID: 14}[m
+[32m+[m[32m  - {fileID: 13}[m
+   m_Selected: 0[m
+   m_LastSelected: 0[m
+ --- !u!114 &3[m
+[36m@@ -65,12 +65,12 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 0[m
+[31m-    width: 760[m
+[31m-    height: 627[m
+[32m+[m[32m    width: 876[m
+[32m+[m[32m    height: 731[m
+   m_MinSize: {x: 202, y: 342}[m
+   m_MaxSize: {x: 4002, y: 8042}[m
+   vertical: 1[m
+[31m-  controlID: 43[m
+[32m+[m[32m  controlID: 143[m
+ --- !u!114 &4[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+[36m@@ -86,14 +86,14 @@[m [mMonoBehaviour:[m
+   m_Position:[m
+     serializedVersion: 2[m
+     x: 0[m
+[31m-    y: 356[m
+[31m-    width: 234[m
+[32m+[m[32m    y: 460[m
+[32m+[m[32m    width: 383[m
+     height: 271[m
+   m_MinSize: {x: 234, y: 271}[m
+   m_MaxSize: {x: 10004, y: 10021}[m
+[31m-  m_ActualView: {fileID: 17}[m
+[32m+[m[32m  m_ActualView: {fileID: 16}[m
+   m_Panes:[m
+[31m-  - {fileID: 17}[m
+[32m+[m[32m  - {fileID: 16}[m
+   m_Selected: 0[m
+   m_LastSelected: 0[m
+ --- !u!114 &5[m
+[36m@@ -112,14 +112,14 @@[m [mMonoBehaviour:[m
+   - {fileID: 4}[m
+   m_Position:[m
+     serializedVersion: 2[m
+[31m-    x: 760[m
+[32m+[m[32m    x: 876[m
+     y: 0[m
+[31m-    width: 234[m
+[31m-    height: 627[m
+[32m+[m[32m    width: 383[m
+[32m+[m[32m    height: 731[m
+   m_MinSize: {x: 234, y: 492}[m
+   m_MaxSize: {x: 10004, y: 14042}[m
+   vertical: 1[m
+[31m-  controlID: 77[m
+[32m+[m[32m  controlID: 70[m
+ --- !u!114 &6[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+[36m@@ -139,8 +139,8 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 0[m
+[31m-    width: 1280[m
+[31m-    height: 677[m
+[32m+[m[32m    width: 1536[m
+[32m+[m[32m    height: 781[m
+   m_MinSize: {x: 950, y: 300}[m
+   m_MaxSize: {x: 10000, y: 10000}[m
+ --- !u!114 &7[m
+[36m@@ -159,7 +159,7 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 0[m
+[31m-    width: 1280[m
+[32m+[m[32m    width: 1536[m
+     height: 30[m
+   m_MinSize: {x: 0, y: 0}[m
+   m_MaxSize: {x: 0, y: 0}[m
+[36m@@ -183,12 +183,12 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 30[m
+[31m-    width: 1280[m
+[31m-    height: 627[m
+[32m+[m[32m    width: 1536[m
+[32m+[m[32m    height: 731[m
+   m_MinSize: {x: 713, y: 492}[m
+   m_MaxSize: {x: 18008, y: 14042}[m
+   vertical: 0[m
+[31m-  controlID: 76[m
+[32m+[m[32m  controlID: 142[m
+ --- !u!114 &9[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+[36m@@ -204,8 +204,8 @@[m [mMonoBehaviour:[m
+   m_Position:[m
+     serializedVersion: 2[m
+     x: 0[m
+[31m-    y: 657[m
+[31m-    width: 1280[m
+[32m+[m[32m    y: 761[m
+[32m+[m[32m    width: 1536[m
+     height: 20[m
+   m_MinSize: {x: 0, y: 0}[m
+   m_MaxSize: {x: 0, y: 0}[m
+[36m@@ -225,13 +225,13 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 0[m
+[31m-    width: 234[m
+[31m-    height: 356[m
+[32m+[m[32m    width: 383[m
+[32m+[m[32m    height: 460[m
+   m_MinSize: {x: 200, y: 200}[m
+   m_MaxSize: {x: 4000, y: 4000}[m
+[31m-  m_ActualView: {fileID: 15}[m
+[32m+[m[32m  m_ActualView: {fileID: 14}[m
+   m_Panes:[m
+[31m-  - {fileID: 15}[m
+[32m+[m[32m  - {fileID: 14}[m
+   m_Selected: 0[m
+   m_LastSelected: 0[m
+ --- !u!114 &11[m
+[36m@@ -248,18 +248,17 @@[m [mMonoBehaviour:[m
+   m_Children: [][m
+   m_Position:[m
+     serializedVersion: 2[m
+[31m-    x: 994[m
+[32m+[m[32m    x: 1259[m
+     y: 0[m
+[31m-    width: 286[m
+[31m-    height: 627[m
+[32m+[m[32m    width: 277[m
+[32m+[m[32m    height: 731[m
+   m_MinSize: {x: 277, y: 71}[m
+   m_MaxSize: {x: 4002, y: 4021}[m
+[31m-  m_ActualView: {fileID: 16}[m
+[32m+[m[32m  m_ActualView: {fileID: 15}[m
+   m_Panes:[m
+[31m-  - {fileID: 16}[m
+[31m-  - {fileID: 13}[m
+[32m+[m[32m  - {fileID: 15}[m
+   m_Selected: 0[m
+[31m-  m_LastSelected: 1[m
+[32m+[m[32m  m_LastSelected: 0[m
+ --- !u!114 &12[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+[36m@@ -276,43 +275,17 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 0[m
+[31m-    width: 760[m
+[31m-    height: 399[m
+[31m-  m_MinSize: {x: 202, y: 221}[m
+[31m-  m_MaxSize: {x: 4002, y: 4021}[m
+[31m-  m_ActualView: {fileID: 19}[m
+[32m+[m[32m    width: 876[m
+[32m+[m[32m    height: 487[m
+[32m+[m[32m  m_MinSize: {x: 200, y: 200}[m
+[32m+[m[32m  m_MaxSize: {x: 4000, y: 4000}[m
+[32m+[m[32m  m_ActualView: {fileID: 18}[m
+   m_Panes:[m
+[31m-  - {fileID: 19}[m
+   - {fileID: 18}[m
+[32m+[m[32m  - {fileID: 17}[m
+   m_Selected: 0[m
+   m_LastSelected: 1[m
+ --- !u!114 &13[m
+[31m-MonoBehaviour:[m
+[31m-  m_ObjectHideFlags: 52[m
+[31m-  m_PrefabParentObject: {fileID: 0}[m
+[31m-  m_PrefabInternal: {fileID: 0}[m
+[31m-  m_GameObject: {fileID: 0}[m
+[31m-  m_Enabled: 1[m
+[31m-  m_EditorHideFlags: 1[m
+[31m-  m_Script: {fileID: 12141, guid: 0000000000000000e000000000000000, type: 0}[m
+[31m-  m_Name: [m
+[31m-  m_EditorClassIdentifier: [m
+[31m-  m_AutoRepaintOnSceneChange: 0[m
+[31m-  m_MinSize: {x: 300, y: 360}[m
+[31m-  m_MaxSize: {x: 4000, y: 4000}[m
+[31m-  m_TitleContent:[m
+[31m-    m_Text: Navigation[m
+[31m-    m_Image: {fileID: 7874161543223113035, guid: 0000000000000000d000000000000000,[m
+[31m-      type: 0}[m
+[31m-    m_Tooltip: [m
+[31m-  m_DepthBufferBits: 0[m
+[31m-  m_Pos:[m
+[31m-    serializedVersion: 2[m
+[31m-    x: 1005[m
+[31m-    y: 92[m
+[31m-    width: 275[m
+[31m-    height: 606[m
+[31m---- !u!114 &14[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+   m_PrefabParentObject: {fileID: 0}[m
+[36m@@ -335,10 +308,10 @@[m [mMonoBehaviour:[m
+   m_Pos:[m
+     serializedVersion: 2[m
+     x: 0[m
+[31m-    y: 491[m
+[31m-    width: 758[m
+[31m-    height: 207[m
+[31m---- !u!114 &15[m
+[32m+[m[32m    y: 579[m
+[32m+[m[32m    width: 874[m
+[32m+[m[32m    height: 223[m
+[32m+[m[32m--- !u!114 &14[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+   m_PrefabParentObject: {fileID: 0}[m
+[36m@@ -360,29 +333,29 @@[m [mMonoBehaviour:[m
+   m_DepthBufferBits: 0[m
+   m_Pos:[m
+     serializedVersion: 2[m
+[31m-    x: 762[m
+[32m+[m[32m    x: 878[m
+     y: 92[m
+[31m-    width: 230[m
+[31m-    height: 335[m
+[32m+[m[32m    width: 379[m
+[32m+[m[32m    height: 439[m
+   m_TreeViewState:[m
+     scrollPos: {x: 0, y: 0}[m
+[31m-    m_SelectedIDs: f42d0000[m
+[32m+[m[32m    m_SelectedIDs: 20070000[m
+     m_LastClickedID: 0[m
+[31m-    m_ExpandedIDs: deb6fcffdcfbffff00000000[m
+[32m+[m[32m    m_ExpandedIDs: 306bddffe4b2e0ff92f6e3ff30f7e3ff084ae7ff7486f1ff6281f5ff5883f5ff66c9f8ffa030fcffca6dfcff5e71fcff6271fcff6671fcff6a71fcff6e71fcff7271fcff7671fcff7a71fcffd672fcffda72fcffde72fcffe272fcffe672fcffea72fcffee72fcfff272fcfffe74fcff0275fcff0675fcff0a75fcff0e75fcff1275fcff1675fcff1a75fcff1e75fcff2275fcff2675fcff2a75fcff2e75fcff3275fcff3675fcff3a75fcffae79fcffb279fcffb679fcffba79fcffbe79fcffc279fcffc679fcffca79fcff267bfcff2a7bfcff2e7bfcff327bfcff367bfcff3a7bfcff3e7bfcff427bfcfff27cfcfff67cfcfffa7cfcfffe7cfcff027dfcff067dfcff0a7dfcff0e7dfcffbe7efcffc27efcffc67efcffca7efcffce7efcffd27efcffd67efcffda7efcffde7efcffe27efcffe67efcffea7efcffee7efcfff27efcfff67efcfffa7efcffa083fcffa483fcffa883fcffac83fcffb083fcffb483fcffb883fcffbc83fcff5085fcff5485fcff5885fcff5c85fcff6085fcff6485fcff6885fcff6c85fcff7085fcff7485fcff7885fcff7c85fcff8085fcff8485fcff8885fcff8c85fcff6089fcff6489fcff6889fcff6c89fcff7089fcff7489fcff7889fcff7c89fcffcc8cfcffd08cfcffd48cfcffd88cfcffdc8cfcffe08cfcffe48cfcffe88cfcff5ca7ffffdaa7ffff34a9fffff4b0ffffe6b5fffff2beffff72c1ffffd8c7ffffb0caffffd8caffff6ed8ffff3cdaffff08ecffffaeefffffe4f1ffff5cfaffffe2fbffff000000006c6504007266040082660400ea6604000c670400b66804005ca90400f0ec0400[m
+     m_RenameOverlay:[m
+       m_UserAcceptedRename: 0[m
+[31m-      m_Name: [m
+[31m-      m_OriginalName: [m
+[32m+[m[32m      m_Name: EnemyGroupInfo[m
+[32m+[m[32m      m_OriginalName: EnemyGroupInfo[m
+       m_EditFieldRect:[m
+         serializedVersion: 2[m
+         x: 0[m
+         y: 0[m
+         width: 0[m
+         height: 0[m
+[31m-      m_UserData: 0[m
+[32m+[m[32m      m_UserData: 21414[m
+       m_IsWaitingForDelay: 0[m
+       m_IsRenaming: 0[m
+[31m-      m_OriginalEventType: 11[m
+[32m+[m[32m      m_OriginalEventType: 0[m
+       m_IsRenamingFilename: 0[m
+       m_ClientGUIView: {fileID: 10}[m
+     m_SearchString: [m
+[36m@@ -391,7 +364,7 @@[m [mMonoBehaviour:[m
+   m_CurrenRootInstanceID: 0[m
+   m_Locked: 0[m
+   m_CurrentSortingName: TransformSorting[m
+[31m---- !u!114 &16[m
+[32m+[m[32m--- !u!114 &15[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+   m_PrefabParentObject: {fileID: 0}[m
+[36m@@ -413,10 +386,10 @@[m [mMonoBehaviour:[m
+   m_DepthBufferBits: 0[m
+   m_Pos:[m
+     serializedVersion: 2[m
+[31m-    x: 996[m
+[32m+[m[32m    x: 1261[m
+     y: 92[m
+[31m-    width: 284[m
+[31m-    height: 606[m
+[32m+[m[32m    width: 275[m
+[32m+[m[32m    height: 710[m
+   m_ScrollPosition: {x: 0, y: 0}[m
+   m_InspectorMode: 0[m
+   m_PreviewResizer:[m
+[36m@@ -424,7 +397,7 @@[m [mMonoBehaviour:[m
+     m_ControlHash: -371814159[m
+     m_PrefName: Preview_InspectorPreview[m
+   m_PreviewWindow: {fileID: 0}[m
+[31m---- !u!114 &17[m
+[32m+[m[32m--- !u!114 &16[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+   m_PrefabParentObject: {fileID: 0}[m
+[36m@@ -446,12 +419,12 @@[m [mMonoBehaviour:[m
+   m_DepthBufferBits: 0[m
+   m_Pos:[m
+     serializedVersion: 2[m
+[31m-    x: 762[m
+[31m-    y: 448[m
+[31m-    width: 230[m
+[32m+[m[32m    x: 878[m
+[32m+[m[32m    y: 552[m
+[32m+[m[32m    width: 379[m
+     height: 250[m
+   m_SearchFilter:[m
+[31m-    m_NameFilter: [m
+[32m+[m[32m    m_NameFilter: TaskOb[m
+     m_ClassNames: [][m
+     m_AssetLabels: [][m
+     m_AssetBundleNames: [][m
+[36m@@ -463,17 +436,17 @@[m [mMonoBehaviour:[m
+     m_Folders:[m
+     - Assets/0.Scene[m
+   m_ViewMode: 1[m
+[31m-  m_StartGridSize: 16[m
+[32m+[m[32m  m_StartGridSize: 64[m
+   m_LastFolders:[m
+   - Assets/0.Scene[m
+[31m-  m_LastFoldersGridSize: 16[m
+[31m-  m_LastProjectPath: C:\Users\Public\Documents\Unity Projects\Sector[m
+[32m+[m[32m  m_LastFoldersGridSize: -1[m
+[32m+[m[32m  m_LastProjectPath: D:\Secret of 51 v0.97[m
+   m_IsLocked: 0[m
+   m_FolderTreeState:[m
+[31m-    scrollPos: {x: 0, y: 0}[m
+[31m-    m_SelectedIDs: 5a290000[m
+[31m-    m_LastClickedID: 10586[m
+[31m-    m_ExpandedIDs: 00000000d0250000c026000098280000522900005a290000242a0000d22a0000fa2b00005c2d0000982d0000dc2d00004c2e00004a2f0000143000004e30000004320000283400008e340000e8340000fa3400007c350000803500001a360000663600006c37000036380000183a0000b03a0000f43a0000603b0000083c0000823c00007ea2030080a2030082a2030000ca9a3bffffff7f[m
+[32m+[m[32m    scrollPos: {x: 0, y: 571}[m
+[32m+[m[32m    m_SelectedIDs:[m[41m [m
+[32m+[m[32m    m_LastClickedID: 0[m
+[32m+[m[32m    m_ExpandedIDs: 00000000d4250000c42600009c28000056290000282a0000d62a0000fe2b0000602d00009c2d0000e02d0000502e00004e2f0000183000005230000008320000c4320000ae3300002a34000090340000ea340000fc3400007e350000823500001c36000068360000863600006e3700003838000022390000183a0000b03a0000f43a0000603b0000083c0000823c0000503e0000523e0000543e000000ca9a3bffffff7f[m
+     m_RenameOverlay:[m
+       m_UserAcceptedRename: 0[m
+       m_Name: [m
+[36m@@ -489,7 +462,7 @@[m [mMonoBehaviour:[m
+       m_IsRenaming: 0[m
+       m_OriginalEventType: 11[m
+       m_IsRenamingFilename: 1[m
+[31m-      m_ClientGUIView: {fileID: 4}[m
+[32m+[m[32m      m_ClientGUIView: {fileID: 0}[m
+     m_SearchString: [m
+     m_CreateAssetUtility:[m
+       m_EndAction: {fileID: 0}[m
+[36m@@ -501,7 +474,7 @@[m [mMonoBehaviour:[m
+     scrollPos: {x: 0, y: 0}[m
+     m_SelectedIDs: [m
+     m_LastClickedID: 0[m
+[31m-    m_ExpandedIDs: 00000000d0250000c026000098280000522900005a290000242a0000d22a0000fa2b00005c2d0000982d0000dc2d00004c2e00004a2f0000143000004e30000004320000283400008e340000e8340000fa3400007c350000803500001a360000663600006c37000036380000183a0000b03a0000f43a0000603b0000083c0000823c00007ea2030080a2030082a20300[m
+[32m+[m[32m    m_ExpandedIDs: 00000000d4250000c42600009c28000056290000282a0000d62a0000fe2b0000602d00009c2d0000e02d0000502e00004e2f0000183000005230000008320000c4320000ae3300002a34000090340000ea340000fc3400007e350000823500001c36000068360000863600006e3700003838000022390000183a0000b03a0000f43a0000603b0000083c0000823c0000503e0000523e0000543e0000[m
+     m_RenameOverlay:[m
+       m_UserAcceptedRename: 0[m
+       m_Name: [m
+[36m@@ -532,18 +505,18 @@[m [mMonoBehaviour:[m
+     m_ExpandedInstanceIDs: [m
+     m_RenameOverlay:[m
+       m_UserAcceptedRename: 0[m
+[31m-      m_Name: [m
+[31m-      m_OriginalName: [m
+[32m+[m[32m      m_Name: Tutorial[m
+[32m+[m[32m      m_OriginalName: Tutorial[m
+       m_EditFieldRect:[m
+         serializedVersion: 2[m
+         x: 0[m
+         y: 0[m
+         width: 0[m
+         height: 0[m
+[31m-      m_UserData: 0[m
+[32m+[m[32m      m_UserData: 10912[m
+       m_IsWaitingForDelay: 0[m
+       m_IsRenaming: 0[m
+[31m-      m_OriginalEventType: 11[m
+[32m+[m[32m      m_OriginalEventType: 0[m
+       m_IsRenamingFilename: 1[m
+       m_ClientGUIView: {fileID: 4}[m
+     m_CreateAssetUtility:[m
+[36m@@ -554,9 +527,9 @@[m [mMonoBehaviour:[m
+       m_ResourceFile: [m
+     m_NewAssetIndexInList: -1[m
+     m_ScrollPosition: {x: 0, y: 0}[m
+[31m-    m_GridSize: 16[m
+[31m-  m_DirectoriesAreaWidth: 110[m
+[31m---- !u!114 &18[m
+[32m+[m[32m    m_GridSize: 64[m
+[32m+[m[32m  m_DirectoriesAreaWidth: 213[m
+[32m+[m[32m--- !u!114 &17[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+   m_PrefabParentObject: {fileID: 0}[m
+[36m@@ -580,20 +553,20 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 92[m
+[31m-    width: 758[m
+[31m-    height: 378[m
+[32m+[m[32m    width: 874[m
+[32m+[m[32m    height: 466[m
+   m_MaximizeOnPlay: 0[m
+   m_Gizmos: 0[m
+   m_Stats: 0[m
+[31m-  m_SelectedSizes: 00000000000000000000000010000000000000000000000000000000000000000000000000000000[m
+[32m+[m[32m  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000[m
+   m_TargetDisplay: 0[m
+   m_ZoomArea:[m
+     m_HRangeLocked: 0[m
+     m_VRangeLocked: 0[m
+[31m-    m_HBaseRangeMin: -1280[m
+[31m-    m_HBaseRangeMax: 1280[m
+[31m-    m_VBaseRangeMin: -720[m
+[31m-    m_VBaseRangeMax: 720[m
+[32m+[m[32m    m_HBaseRangeMin: -437[m
+[32m+[m[32m    m_HBaseRangeMax: 437[m
+[32m+[m[32m    m_VBaseRangeMin: -224.5[m
+[32m+[m[32m    m_VBaseRangeMax: 224.5[m
+     m_HAllowExceedBaseRangeMin: 1[m
+     m_HAllowExceedBaseRangeMax: 1[m
+     m_VAllowExceedBaseRangeMin: 1[m
+[36m@@ -602,7 +575,7 @@[m [mMonoBehaviour:[m
+     m_HSlider: 0[m
+     m_VSlider: 0[m
+     m_IgnoreScrollWheelUntilClicked: 0[m
+[31m-    m_EnableMouseInput: 0[m
+[32m+[m[32m    m_EnableMouseInput: 1[m
+     m_EnableSliderZoom: 0[m
+     m_UniformScale: 1[m
+     m_UpDirection: 1[m
+[36m@@ -610,29 +583,29 @@[m [mMonoBehaviour:[m
+       serializedVersion: 2[m
+       x: 0[m
+       y: 17[m
+[31m-      width: 758[m
+[31m-      height: 361[m
+[31m-    m_Scale: {x: 0.25069445, y: 0.25069445}[m
+[31m-    m_Translation: {x: 379, y: 180.5}[m
+[32m+[m[32m      width: 874[m
+[32m+[m[32m      height: 449[m
+[32m+[m[32m    m_Scale: {x: 1, y: 1}[m
+[32m+[m[32m    m_Translation: {x: 437, y: 224.5}[m
+     m_MarginLeft: 0[m
+     m_MarginRight: 0[m
+     m_MarginTop: 0[m
+     m_MarginBottom: 0[m
+     m_LastShownAreaInsideMargins:[m
+       serializedVersion: 2[m
+[31m-      x: -1511.8005[m
+[31m-      y: -720[m
+[31m-      width: 3023.601[m
+[31m-      height: 1440[m
+[32m+[m[32m      x: -437[m
+[32m+[m[32m      y: -224.5[m
+[32m+[m[32m      width: 874[m
+[32m+[m[32m      height: 449[m
+     m_MinimalGUI: 1[m
+[31m-  m_defaultScale: 0.25069445[m
+[32m+[m[32m  m_defaultScale: 1[m
+   m_TargetTexture: {fileID: 0}[m
+   m_CurrentColorSpace: 0[m
+[31m-  m_LastWindowPixelSize: {x: 758, y: 378}[m
+[32m+[m[32m  m_LastWindowPixelSize: {x: 874, y: 466}[m
+   m_ClearInEditMode: 1[m
+   m_NoCameraWarning: 1[m
+   m_LowResolutionForAspectRatios: 01000000000100000100[m
+[31m---- !u!114 &19[m
+[32m+[m[32m--- !u!114 &18[m
+ MonoBehaviour:[m
+   m_ObjectHideFlags: 52[m
+   m_PrefabParentObject: {fileID: 0}[m
+[36m@@ -656,17 +629,17 @@[m [mMonoBehaviour:[m
+     serializedVersion: 2[m
+     x: 0[m
+     y: 92[m
+[31m-    width: 758[m
+[31m-    height: 378[m
+[32m+[m[32m    width: 874[m
+[32m+[m[32m    height: 466[m
+   m_SceneLighting: 1[m
+[31m-  lastFramingTime: 5376.9722809242685[m
+[31m-  m_2DMode: 0[m
+[32m+[m[32m  lastFramingTime: 1852.290001975464[m
+[32m+[m[32m  m_2DMode: 1[m
+   m_isRotationLocked: 0[m
+   m_AudioPlay: 0[m
+   m_Position:[m
+[31m-    m_Target: {x: 11.915, y: -0.000009536743, z: 8.9}[m
+[32m+[m[32m    m_Target: {x: 438, y: 224.49997, z: 0}[m
+     speed: 2[m
+[31m-    m_Value: {x: 11.915, y: -0.000009536743, z: 8.9}[m
+[32m+[m[32m    m_Value: {x: 438, y: 224.49997, z: 0}[m
+   m_RenderMode: 0[m
+   m_ValidateTrueMetals: 0[m
+   m_SceneViewState:[m
+[36m@@ -681,26 +654,26 @@[m [mMonoBehaviour:[m
+       speed: 2[m
+       m_Value: 0[m
+     yGrid:[m
+[31m-      m_Target: 1[m
+[31m-      speed: 2[m
+[31m-      m_Value: 1[m
+[31m-    zGrid:[m
+       m_Target: 0[m
+       speed: 2[m
+       m_Value: 0[m
+[32m+[m[32m    zGrid:[m
+[32m+[m[32m      m_Target: 1[m
+[32m+[m[32m      speed: 2[m
+[32m+[m[32m      m_Value: 1[m
+   m_Rotation:[m
+[31m-    m_Target: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}[m
+[32m+[m[32m    m_Target: {x: 0, y: 0, z: 0, w: 1}[m
+     speed: 2[m
+[31m-    m_Value: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}[m
+[32m+[m[32m    m_Value: {x: 0, y: 0, z: 0, w: 1}[m
+   m_Size:[m
+[31m-    m_Target: 16.00416[m
+[32m+[m[32m    m_Target: 490.60437[m
+     speed: 2[m
+[31m-    m_Value: 16.00416[m
+[32m+[m[32m    m_Value: 490.60437[m
+   m_Ortho:[m
+[31m-    m_Target: 0[m
+[32m+[m[32m    m_Target: 1[m
+     speed: 2[m
+[31m-    m_Value: 0[m
+[31m-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}[m
+[32m+[m[32m    m_Value: 1[m
+[32m+[m[32m  m_LastSceneViewRotation: {x: 0.5216251, y: -0.036319613, z: 0.022233302, w: 0.85211146}[m
+   m_LastSceneViewOrtho: 0[m
+   m_ReplacementShader: {fileID: 0}[m
+   m_ReplacementString: [m
+[1mdiff --git a/Library/InspectorExpandedItems.asset b/Library/InspectorExpandedItems.asset[m
+[1mindex ce4c78a3..82113a29 100644[m
+Binary files a/Library/InspectorExpandedItems.asset and b/Library/InspectorExpandedItems.asset differ
+[1mdiff --git a/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb b/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb[m
+[1mindex 890ea0d8..7438747d 100644[m
+Binary files a/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb and b/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb differ
+[1mdiff --git a/Library/ScriptAssemblies/Assembly-CSharp.dll b/Library/ScriptAssemblies/Assembly-CSharp.dll[m
+[1mindex e11bb8f6..1bbaf988 100644[m
+Binary files a/Library/ScriptAssemblies/Assembly-CSharp.dll and b/Library/ScriptAssemblies/Assembly-CSharp.dll differ
+[1mdiff --git a/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb b/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb[m
+[1mindex ae6abd0d..a66fc0cb 100644[m
+Binary files a/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb and b/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb differ
+[1mdiff --git a/Library/assetDatabase3 b/Library/assetDatabase3[m
+[1mindex 565abcf4..2c1d5da6 100644[m
+Binary files a/Library/assetDatabase3 and b/Library/assetDatabase3 differ
+[1mdiff --git a/Library/expandedItems b/Library/expandedItems[m
+[1mindex 34fd9444..1f09556e 100644[m
+Binary files a/Library/expandedItems and b/Library/expandedItems differ
+[1mdiff --git a/Library/metadata/00/00000000000000002000000000000000 b/Library/metadata/00/00000000000000002000000000000000[m
+[1mindex d945bc01..d6081555 100644[m
+Binary files a/Library/metadata/00/00000000000000002000000000000000 and b/Library/metadata/00/00000000000000002000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000003000000000000000 b/Library/metadata/00/00000000000000003000000000000000[m
+[1mindex adb163ba..7b8b778e 100644[m
+Binary files a/Library/metadata/00/00000000000000003000000000000000 and b/Library/metadata/00/00000000000000003000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000004000000000000000 b/Library/metadata/00/00000000000000004000000000000000[m
+[1mindex bbaf4076..e11d8ed9 100644[m
+Binary files a/Library/metadata/00/00000000000000004000000000000000 and b/Library/metadata/00/00000000000000004000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000004100000000000000 b/Library/metadata/00/00000000000000004100000000000000[m
+[1mindex 04c9570f..d8444347 100644[m
+Binary files a/Library/metadata/00/00000000000000004100000000000000 and b/Library/metadata/00/00000000000000004100000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000005000000000000000 b/Library/metadata/00/00000000000000005000000000000000[m
+[1mindex 55119cf6..b7602c94 100644[m
+Binary files a/Library/metadata/00/00000000000000005000000000000000 and b/Library/metadata/00/00000000000000005000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000005100000000000000 b/Library/metadata/00/00000000000000005100000000000000[m
+[1mindex 7acc99dc..d4788341 100644[m
+Binary files a/Library/metadata/00/00000000000000005100000000000000 and b/Library/metadata/00/00000000000000005100000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000006000000000000000 b/Library/metadata/00/00000000000000006000000000000000[m
+[1mindex e19b6de4..8f375c73 100644[m
+Binary files a/Library/metadata/00/00000000000000006000000000000000 and b/Library/metadata/00/00000000000000006000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000006100000000000000 b/Library/metadata/00/00000000000000006100000000000000[m
+[1mindex ced972e1..f03d794b 100644[m
+Binary files a/Library/metadata/00/00000000000000006100000000000000 and b/Library/metadata/00/00000000000000006100000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000007000000000000000 b/Library/metadata/00/00000000000000007000000000000000[m
+[1mindex cf4b61f5..226b2fab 100644[m
+Binary files a/Library/metadata/00/00000000000000007000000000000000 and b/Library/metadata/00/00000000000000007000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000007100000000000000 b/Library/metadata/00/00000000000000007100000000000000[m
+[1mindex 297dd21c..922b32aa 100644[m
+Binary files a/Library/metadata/00/00000000000000007100000000000000 and b/Library/metadata/00/00000000000000007100000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000008000000000000000 b/Library/metadata/00/00000000000000008000000000000000[m
+[1mindex 592ed866..2452a5f4 100644[m
+Binary files a/Library/metadata/00/00000000000000008000000000000000 and b/Library/metadata/00/00000000000000008000000000000000 differ
+[1mdiff --git a/Library/metadata/00/00000000000000009000000000000000 b/Library/metadata/00/00000000000000009000000000000000[m
+[1mindex 59ccb97a..efb5650f 100644[m
+Binary files a/Library/metadata/00/00000000000000009000000000000000 and b/Library/metadata/00/00000000000000009000000000000000 differ
+[1mdiff --git a/Library/metadata/00/0000000000000000a000000000000000 b/Library/metadata/00/0000000000000000a000000000000000[m
+[1mindex e3f54321..d4c53d0a 100644[m
+Binary files a/Library/metadata/00/0000000000000000a000000000000000 and b/Library/metadata/00/0000000000000000a000000000000000 differ
+[1mdiff --git a/Library/metadata/00/0000000000000000a100000000000000 b/Library/metadata/00/0000000000000000a100000000000000[m
+[1mindex dac9cf2b..0d8f54ee 100644[m
+Binary files a/Library/metadata/00/0000000000000000a100000000000000 and b/Library/metadata/00/0000000000000000a100000000000000 differ
+[1mdiff --git a/Library/metadata/00/0000000000000000b000000000000000 b/Library/metadata/00/0000000000000000b000000000000000[m
+[1mindex 85988a01..21689fb8 100644[m
+Binary files a/Library/metadata/00/0000000000000000b000000000000000 and b/Library/metadata/00/0000000000000000b000000000000000 differ
+[1mdiff --git a/Library/metadata/00/0000000000000000c000000000000000 b/Library/metadata/00/0000000000000000c000000000000000[m
+[1mindex f7d44da8..6ac82a87 100644[m
+Binary files a/Library/metadata/00/0000000000000000c000000000000000 and b/Library/metadata/00/0000000000000000c000000000000000 differ
+[1mdiff --git a/Library/metadata/01/01eada42c49a2ce4baa64ac82282adbd b/Library/metadata/01/01eada42c49a2ce4baa64ac82282adbd[m
+[1mindex be5ca399..8aaa5d7d 100644[m
+Binary files a/Library/metadata/01/01eada42c49a2ce4baa64ac82282adbd and b/Library/metadata/01/01eada42c49a2ce4baa64ac82282adbd differ
+[1mdiff --git a/Library/metadata/03/03ca103b097928b49bb17e8dab166120 b/Library/metadata/03/03ca103b097928b49bb17e8dab166120[m
+[1mnew file mode 100644[m
+[1mindex 00000000..c11ccf33[m
+Binary files /dev/null and b/Library/metadata/03/03ca103b097928b49bb17e8dab166120 differ
+[1mdiff --git a/Library/metadata/25/25677aa3d152e95488d8bb246bcb705f.info b/Library/metadata/03/03ca103b097928b49bb17e8dab166120.info[m
+[1msimilarity index 72%[m
+[1mrename from Library/metadata/25/25677aa3d152e95488d8bb246bcb705f.info[m
+[1mrename to Library/metadata/03/03ca103b097928b49bb17e8dab166120.info[m
+[1mindex 991993ac..0ed0985a 100644[m
+Binary files a/Library/metadata/25/25677aa3d152e95488d8bb246bcb705f.info and b/Library/metadata/03/03ca103b097928b49bb17e8dab166120.info differ
+[1mdiff --git a/Library/metadata/0d/0d3bb855445e36e479c85976fc88383a b/Library/metadata/0d/0d3bb855445e36e479c85976fc88383a[m
+[1mindex b3af5c10..97bedb2e 100644[m
+Binary files a/Library/metadata/0d/0d3bb855445e36e479c85976fc88383a and b/Library/metadata/0d/0d3bb855445e36e479c85976fc88383a differ
+[1mdiff --git a/Library/metadata/0f/0f8917b1875f46146b42e17e57f56680 b/Library/metadata/0f/0f8917b1875f46146b42e17e57f56680[m
+[1mindex 705011f0..a3ca8c6c 100644[m
+Binary files a/Library/metadata/0f/0f8917b1875f46146b42e17e57f56680 and b/Library/metadata/0f/0f8917b1875f46146b42e17e57f56680 differ
+[1mdiff --git a/Library/metadata/12/12fd8a0055b84bb59e84c9835a37e333 b/Library/metadata/12/12fd8a0055b84bb59e84c9835a37e333[m
+[1mindex 5aa205d7..b1d0f9d9 100644[m
+Binary files a/Library/metadata/12/12fd8a0055b84bb59e84c9835a37e333 and b/Library/metadata/12/12fd8a0055b84bb59e84c9835a37e333 differ
+[1mdiff --git a/Library/metadata/16/160ae48043f660d48a466feddcb8ca38 b/Library/metadata/16/160ae48043f660d48a466feddcb8ca38[m
+[1mindex e8d11e60..ae6e0149 100644[m
+Binary files a/Library/metadata/16/160ae48043f660d48a466feddcb8ca38 and b/Library/metadata/16/160ae48043f660d48a466feddcb8ca38 differ
+[1mdiff --git a/Library/metadata/1c/1c6d1fbb51834b64847b1b73a75bfc77 b/Library/metadata/1c/1c6d1fbb51834b64847b1b73a75bfc77[m
+[1mindex d87ac5e4..170f83e7 100644[m
+Binary files a/Library/metadata/1c/1c6d1fbb51834b64847b1b73a75bfc77 and b/Library/metadata/1c/1c6d1fbb51834b64847b1b73a75bfc77 differ
+[1mdiff --git a/Library/metadata/21/21eff446d50eaf44a85985cd4c0b6fa1 b/Library/metadata/21/21eff446d50eaf44a85985cd4c0b6fa1[m
+[1mindex 10f02e3c..96afaa15 100644[m
+Binary files a/Library/metadata/21/21eff446d50eaf44a85985cd4c0b6fa1 and b/Library/metadata/21/21eff446d50eaf44a85985cd4c0b6fa1 differ
+[1mdiff --git a/Library/metadata/25/25677aa3d152e95488d8bb246bcb705f b/Library/metadata/25/25677aa3d152e95488d8bb246bcb705f[m
+[1mdeleted file mode 100644[m
+[1mindex 2481133b..00000000[m
+Binary files a/Library/metadata/25/25677aa3d152e95488d8bb246bcb705f and /dev/null differ
+[1mdiff --git a/Library/metadata/26/2682a692a2be7e14e901a738c7806da0 b/Library/metadata/26/2682a692a2be7e14e901a738c7806da0[m
+[1mindex 1184e56e..39f4f920 100644[m
+Binary files a/Library/metadata/26/2682a692a2be7e14e901a738c7806da0 and b/Library/metadata/26/2682a692a2be7e14e901a738c7806da0 differ
+[1mdiff --git a/Library/metadata/2f/2fe3476eabbbb6c448e6b55a2cc471f5 b/Library/metadata/2f/2fe3476eabbbb6c448e6b55a2cc471f5[m
+[1mindex 276d34f1..ce77465b 100644[m
+Binary files a/Library/metadata/2f/2fe3476eabbbb6c448e6b55a2cc471f5 and b/Library/metadata/2f/2fe3476eabbbb6c448e6b55a2cc471f5 differ
+[1mdiff --git a/Library/metadata/30/307433eba81a469ab1e2084d52d1a5a2 b/Library/metadata/30/307433eba81a469ab1e2084d52d1a5a2[m
+[1mindex 5010f0ed..0a54b8b7 100644[m
+Binary files a/Library/metadata/30/307433eba81a469ab1e2084d52d1a5a2 and b/Library/metadata/30/307433eba81a469ab1e2084d52d1a5a2 differ
+[1mdiff --git a/Library/metadata/32/32188fd89022c154c81befa2f0e00be0 b/Library/metadata/32/32188fd89022c154c81befa2f0e00be0[m
+[1mindex 966851c2..b8ecfc59 100644[m
+Binary files a/Library/metadata/32/32188fd89022c154c81befa2f0e00be0 and b/Library/metadata/32/32188fd89022c154c81befa2f0e00be0 differ
+[1mdiff --git a/Library/metadata/32/328cc881519068e4eb7db4bb907ad2d9 b/Library/metadata/32/328cc881519068e4eb7db4bb907ad2d9[m
+[1mindex 319609e4..d6f53c86 100644[m
+Binary files a/Library/metadata/32/328cc881519068e4eb7db4bb907ad2d9 and b/Library/metadata/32/328cc881519068e4eb7db4bb907ad2d9 differ
+[1mdiff --git a/Library/metadata/38/38c8faf1788024c02930a0c68a6e0edc b/Library/metadata/38/38c8faf1788024c02930a0c68a6e0edc[m
+[1mindex 06254962..c026a366 100644[m
+Binary files a/Library/metadata/38/38c8faf1788024c02930a0c68a6e0edc and b/Library/metadata/38/38c8faf1788024c02930a0c68a6e0edc differ
+[1mdiff --git a/Library/metadata/40/405b9b51bb344a128608d968297df79c b/Library/metadata/40/405b9b51bb344a128608d968297df79c[m
+[1mindex 7ad7dfa3..d46870ed 100644[m
+Binary files a/Library/metadata/40/405b9b51bb344a128608d968297df79c and b/Library/metadata/40/405b9b51bb344a128608d968297df79c differ
+[1mdiff --git a/Library/metadata/41/4113173d5e95493ab8765d7b08371de4 b/Library/metadata/41/4113173d5e95493ab8765d7b08371de4[m
+[1mindex f26f7032..1cad4108 100644[m
+Binary files a/Library/metadata/41/4113173d5e95493ab8765d7b08371de4 and b/Library/metadata/41/4113173d5e95493ab8765d7b08371de4 differ
+[1mdiff --git a/Library/metadata/42/4277762b3c154fab9f2e968e868bbbd7 b/Library/metadata/42/4277762b3c154fab9f2e968e868bbbd7[m
+[1mindex 20d42375..7edb820d 100644[m
+Binary files a/Library/metadata/42/4277762b3c154fab9f2e968e868bbbd7 and b/Library/metadata/42/4277762b3c154fab9f2e968e868bbbd7 differ
+[1mdiff --git a/Library/metadata/49/49f5766d0d4954f44b85d4bbd7131677 b/Library/metadata/49/49f5766d0d4954f44b85d4bbd7131677[m
+[1mindex 51f40b8d..3286911b 100644[m
+Binary files a/Library/metadata/49/49f5766d0d4954f44b85d4bbd7131677 and b/Library/metadata/49/49f5766d0d4954f44b85d4bbd7131677 differ
+[1mdiff --git a/Library/metadata/4b/4ba2329b63d54f0187bcaa12486b1b0f b/Library/metadata/4b/4ba2329b63d54f0187bcaa12486b1b0f[m
+[1mindex 64a3dd4c..d0e869dc 100644[m
+Binary files a/Library/metadata/4b/4ba2329b63d54f0187bcaa12486b1b0f and b/Library/metadata/4b/4ba2329b63d54f0187bcaa12486b1b0f differ
+[1mdiff --git a/Library/metadata/51/517af1b5b81b93b43b9745d58f017562 b/Library/metadata/51/517af1b5b81b93b43b9745d58f017562[m
+[1mindex 4a7b088d..eade893b 100644[m
+Binary files a/Library/metadata/51/517af1b5b81b93b43b9745d58f017562 and b/Library/metadata/51/517af1b5b81b93b43b9745d58f017562 differ
+[1mdiff --git a/Library/metadata/53/53ebcfaa2e1e4e2dbc85882cd5a73fa1 b/Library/metadata/53/53ebcfaa2e1e4e2dbc85882cd5a73fa1[m
+[1mindex db796b2d..3af500b1 100644[m
+Binary files a/Library/metadata/53/53ebcfaa2e1e4e2dbc85882cd5a73fa1 and b/Library/metadata/53/53ebcfaa2e1e4e2dbc85882cd5a73fa1 differ
+[1mdiff --git a/Library/metadata/57/5782f9e9e6e0bb94bac99aeea24814fc b/Library/metadata/57/5782f9e9e6e0bb94bac99aeea24814fc[m
+[1mindex 81ff79bc..fa78fefe 100644[m
+Binary files a/Library/metadata/57/5782f9e9e6e0bb94bac99aeea24814fc and b/Library/metadata/57/5782f9e9e6e0bb94bac99aeea24814fc differ
+[1mdiff --git a/Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7 b/Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7[m
+[1mindex c61e5803..04b6c74c 100644[m
+Binary files a/Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7 and b/Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7 differ
+[1mdiff --git a/Library/metadata/69/6981461fe431401459211818212a29cf b/Library/metadata/69/6981461fe431401459211818212a29cf[m
+[1mindex a6af938e..32efbc1a 100644[m
+Binary files a/Library/metadata/69/6981461fe431401459211818212a29cf and b/Library/metadata/69/6981461fe431401459211818212a29cf differ
+[1mdiff --git a/Library/metadata/6a/6abf4b4cbfd0454e850ffc1ec9140b58 b/Library/metadata/6a/6abf4b4cbfd0454e850ffc1ec9140b58[m
+[1mindex 3a50497f..8ee4f185 100644[m
+Binary files a/Library/metadata/6a/6abf4b4cbfd0454e850ffc1ec9140b58 and b/Library/metadata/6a/6abf4b4cbfd0454e850ffc1ec9140b58 differ
+[1mdiff --git a/Library/metadata/6c/6cdf1e5c78d14720aaadccd4c792df96 b/Library/metadata/6c/6cdf1e5c78d14720aaadccd4c792df96[m
+[1mindex 8d002634..1be41bab 100644[m
+Binary files a/Library/metadata/6c/6cdf1e5c78d14720aaadccd4c792df96 and b/Library/metadata/6c/6cdf1e5c78d14720aaadccd4c792df96 differ
+[1mdiff --git a/Library/metadata/73/739bbd9f364b4268874f9fd86ab3beef b/Library/metadata/73/739bbd9f364b4268874f9fd86ab3beef[m
+[1mindex d6a8d20b..61fc22c1 100644[m
+Binary files a/Library/metadata/73/739bbd9f364b4268874f9fd86ab3beef and b/Library/metadata/73/739bbd9f364b4268874f9fd86ab3beef differ
+[1mdiff --git a/Library/metadata/75/7571b7fd7b75a7a408ab6543f67aa859 b/Library/metadata/75/7571b7fd7b75a7a408ab6543f67aa859[m
+[1mdeleted file mode 100644[m
+[1mindex 74cc5e62..00000000[m
+Binary files a/Library/metadata/75/7571b7fd7b75a7a408ab6543f67aa859 and /dev/null differ
+[1mdiff --git a/Library/metadata/75/7571b7fd7b75a7a408ab6543f67aa859.info b/Library/metadata/75/7571b7fd7b75a7a408ab6543f67aa859.info[m
+[1mdeleted file mode 100644[m
+[1mindex 271f3729..00000000[m
+Binary files a/Library/metadata/75/7571b7fd7b75a7a408ab6543f67aa859.info and /dev/null differ
+[1mdiff --git a/Library/metadata/76/76381484615d07e4bba1fac805803cf2 b/Library/metadata/76/76381484615d07e4bba1fac805803cf2[m
+[1mindex d6368dbb..9d080422 100644[m
+Binary files a/Library/metadata/76/76381484615d07e4bba1fac805803cf2 and b/Library/metadata/76/76381484615d07e4bba1fac805803cf2 differ
+[1mdiff --git a/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f b/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f[m
+[1mindex 3460f8a5..74c8d971 100644[m
+Binary files a/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f and b/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f differ
+[1mdiff --git a/Library/metadata/83/8382b2bb260241859771b69b7f377a8d b/Library/metadata/83/8382b2bb260241859771b69b7f377a8d[m
+[1mindex e7f2d0fe..0dcaf03c 100644[m
+Binary files a/Library/metadata/83/8382b2bb260241859771b69b7f377a8d and b/Library/metadata/83/8382b2bb260241859771b69b7f377a8d differ
+[1mdiff --git a/Library/metadata/84/84ca94c19f25ae14d83aa41bb3654390 b/Library/metadata/84/84ca94c19f25ae14d83aa41bb3654390[m
+[1mindex c8fc5e63..9e5e166d 100644[m
+Binary files a/Library/metadata/84/84ca94c19f25ae14d83aa41bb3654390 and b/Library/metadata/84/84ca94c19f25ae14d83aa41bb3654390 differ
+[1mdiff --git a/Library/metadata/85/852e56802eb941638acbb491814497b0 b/Library/metadata/85/852e56802eb941638acbb491814497b0[m
+[1mindex abb1f78d..dbef8107 100644[m
+Binary files a/Library/metadata/85/852e56802eb941638acbb491814497b0 and b/Library/metadata/85/852e56802eb941638acbb491814497b0 differ
+[1mdiff --git a/Library/metadata/86/86f4de9468454445ac2f39e207fafa3a b/Library/metadata/86/86f4de9468454445ac2f39e207fafa3a[m
+[1mindex 9e5ed408..65597883 100644[m
+Binary files a/Library/metadata/86/86f4de9468454445ac2f39e207fafa3a and b/Library/metadata/86/86f4de9468454445ac2f39e207fafa3a differ
+[1mdiff --git a/Library/metadata/87/870353891bb340e2b2a9c8707e7419ba b/Library/metadata/87/870353891bb340e2b2a9c8707e7419ba[m
+[1mindex ade43e9f..c1dca1b1 100644[m
+Binary files a/Library/metadata/87/870353891bb340e2b2a9c8707e7419ba and b/Library/metadata/87/870353891bb340e2b2a9c8707e7419ba differ
+[1mdiff --git a/Library/metadata/8e/8e0cd8ed44d4412cbe0642067abc9e44 b/Library/metadata/8e/8e0cd8ed44d4412cbe0642067abc9e44[m
+[1mindex 6582646e..12f6de47 100644[m
+Binary files a/Library/metadata/8e/8e0cd8ed44d4412cbe0642067abc9e44 and b/Library/metadata/8e/8e0cd8ed44d4412cbe0642067abc9e44 differ
+[1mdiff --git a/Library/metadata/8e/8e7066e382b0fc749b25dbb1a3004dfe b/Library/metadata/8e/8e7066e382b0fc749b25dbb1a3004dfe[m
+[1mindex 3bf327ac..7ba4fee6 100644[m
+Binary files a/Library/metadata/8e/8e7066e382b0fc749b25dbb1a3004dfe and b/Library/metadata/8e/8e7066e382b0fc749b25dbb1a3004dfe differ
+[1mdiff --git a/Library/metadata/90/9078b7128e594410d9b89e5b24cffd01 b/Library/metadata/90/9078b7128e594410d9b89e5b24cffd01[m
+[1mindex 60c2dc31..f4cb6955 100644[m
+Binary files a/Library/metadata/90/9078b7128e594410d9b89e5b24cffd01 and b/Library/metadata/90/9078b7128e594410d9b89e5b24cffd01 differ
+[1mdiff --git a/Library/metadata/94/943a146106616ff48a700d429b399e73 b/Library/metadata/94/943a146106616ff48a700d429b399e73[m
+[1mindex 420a6758..1ef29ce0 100644[m
+Binary files a/Library/metadata/94/943a146106616ff48a700d429b399e73 and b/Library/metadata/94/943a146106616ff48a700d429b399e73 differ
+[1mdiff --git a/Library/metadata/97/97decbdab0634cdd991f8d23ddf0dead b/Library/metadata/97/97decbdab0634cdd991f8d23ddf0dead[m
+[1mindex 4affff2b..1eb516cc 100644[m
+Binary files a/Library/metadata/97/97decbdab0634cdd991f8d23ddf0dead and b/Library/metadata/97/97decbdab0634cdd991f8d23ddf0dead differ
+[1mdiff --git a/Library/metadata/9c/9c0b5db6db0bdaa42874e386dbbcc875 b/Library/metadata/9c/9c0b5db6db0bdaa42874e386dbbcc875[m
+[1mindex b18ce662..942c5b0f 100644[m
+Binary files a/Library/metadata/9c/9c0b5db6db0bdaa42874e386dbbcc875 and b/Library/metadata/9c/9c0b5db6db0bdaa42874e386dbbcc875 differ
+[1mdiff --git a/Library/metadata/a1/a1c8a01bba48e3d48b12f4f5770e958d b/Library/metadata/a1/a1c8a01bba48e3d48b12f4f5770e958d[m
+[1mindex 02d4b86e..b16cef2d 100644[m
+Binary files a/Library/metadata/a1/a1c8a01bba48e3d48b12f4f5770e958d and b/Library/metadata/a1/a1c8a01bba48e3d48b12f4f5770e958d differ
+[1mdiff --git a/Library/metadata/a7/a76c021ccd1cca240890fa6235efa7fb b/Library/metadata/a7/a76c021ccd1cca240890fa6235efa7fb[m
+[1mindex 8e607526..af1e7d4f 100644[m
+Binary files a/Library/metadata/a7/a76c021ccd1cca240890fa6235efa7fb and b/Library/metadata/a7/a76c021ccd1cca240890fa6235efa7fb differ
+[1mdiff --git a/Library/metadata/a9/a923ce2d1fa369041a02a6f76b98ba5b b/Library/metadata/a9/a923ce2d1fa369041a02a6f76b98ba5b[m
+[1mindex a91e78f9..e1555e21 100644[m
+Binary files a/Library/metadata/a9/a923ce2d1fa369041a02a6f76b98ba5b and b/Library/metadata/a9/a923ce2d1fa369041a02a6f76b98ba5b differ
+[1mdiff --git a/Library/metadata/ac/ac480fd8186c59546bb96fed5639f96c b/Library/metadata/ac/ac480fd8186c59546bb96fed5639f96c[m
+[1mindex cc3972f4..e36322e0 100644[m
+Binary files a/Library/metadata/ac/ac480fd8186c59546bb96fed5639f96c and b/Library/metadata/ac/ac480fd8186c59546bb96fed5639f96c differ
+[1mdiff --git a/Library/metadata/ac/ac6640e0319853b4690169dd0b6c94a6 b/Library/metadata/ac/ac6640e0319853b4690169dd0b6c94a6[m
+[1mindex d1a60225..b1a662b3 100644[m
+Binary files a/Library/metadata/ac/ac6640e0319853b4690169dd0b6c94a6 and b/Library/metadata/ac/ac6640e0319853b4690169dd0b6c94a6 differ
+[1mdiff --git a/Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f b/Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f[m
+[1mindex 76b1173e..c0b1946c 100644[m
+Binary files a/Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f and b/Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f differ
+[1mdiff --git a/Library/metadata/b2/b2b693dffac3a4433b3114fea0b7fd4e b/Library/metadata/b2/b2b693dffac3a4433b3114fea0b7fd4e[m
+[1mindex 153cb2be..a47e4003 100644[m
+Binary files a/Library/metadata/b2/b2b693dffac3a4433b3114fea0b7fd4e and b/Library/metadata/b2/b2b693dffac3a4433b3114fea0b7fd4e differ
+[1mdiff --git a/Library/metadata/b2/b2bead50dbf86924f8e51f03ddbebf70 b/Library/metadata/b2/b2bead50dbf86924f8e51f03ddbebf70[m
+[1mindex 7a9a8379..1618eb9c 100644[m
+Binary files a/Library/metadata/b2/b2bead50dbf86924f8e51f03ddbebf70 and b/Library/metadata/b2/b2bead50dbf86924f8e51f03ddbebf70 differ
+[1mdiff --git a/Library/metadata/ca/ca5e503f6d641374d8fda58857e6e1b7 b/Library/metadata/ca/ca5e503f6d641374d8fda58857e6e1b7[m
+[1mindex 988de76e..1a4f2685 100644[m
+Binary files a/Library/metadata/ca/ca5e503f6d641374d8fda58857e6e1b7 and b/Library/metadata/ca/ca5e503f6d641374d8fda58857e6e1b7 differ
+[1mdiff --git a/Library/metadata/d0/d05b96cee66e14240838de167097537a b/Library/metadata/d0/d05b96cee66e14240838de167097537a[m
+[1mindex ac0582ab..1bdce78e 100644[m
+Binary files a/Library/metadata/d0/d05b96cee66e14240838de167097537a and b/Library/metadata/d0/d05b96cee66e14240838de167097537a differ
+[1mdiff --git a/Library/metadata/d9/d91035c548f23744c9bfb107348ed1c0 b/Library/metadata/d9/d91035c548f23744c9bfb107348ed1c0[m
+[1mindex 42e73561..d10d1e10 100644[m
+Binary files a/Library/metadata/d9/d91035c548f23744c9bfb107348ed1c0 and b/Library/metadata/d9/d91035c548f23744c9bfb107348ed1c0 differ
+[1mdiff --git a/Library/metadata/db/dbaffff848e4e1d4ebcb8d2094f5dad2 b/Library/metadata/db/dbaffff848e4e1d4ebcb8d2094f5dad2[m
+[1mindex 048ebfa4..fa700455 100644[m
+Binary files a/Library/metadata/db/dbaffff848e4e1d4ebcb8d2094f5dad2 and b/Library/metadata/db/dbaffff848e4e1d4ebcb8d2094f5dad2 differ
+[1mdiff --git a/Library/metadata/dc/dc443db3e92b4983b9738c1131f555cb b/Library/metadata/dc/dc443db3e92b4983b9738c1131f555cb[m
+[1mindex 032bdce2..f74dc6a3 100644[m
+Binary files a/Library/metadata/dc/dc443db3e92b4983b9738c1131f555cb and b/Library/metadata/dc/dc443db3e92b4983b9738c1131f555cb differ
+[1mdiff --git a/Library/metadata/e1/e1007cd261c84053beb0c3537782908d b/Library/metadata/e1/e1007cd261c84053beb0c3537782908d[m
+[1mindex a70ebb7b..efc57dc1 100644[m
+Binary files a/Library/metadata/e1/e1007cd261c84053beb0c3537782908d and b/Library/metadata/e1/e1007cd261c84053beb0c3537782908d differ
+[1mdiff --git a/Library/metadata/e3/e3888cb8e520de1478caf4098e9d36b8 b/Library/metadata/e3/e3888cb8e520de1478caf4098e9d36b8[m
+[1mdeleted file mode 100644[m
+[1mindex 9cc286b9..00000000[m
+Binary files a/Library/metadata/e3/e3888cb8e520de1478caf4098e9d36b8 and /dev/null differ
+[1mdiff --git a/Library/metadata/e3/e3888cb8e520de1478caf4098e9d36b8.info b/Library/metadata/e3/e3888cb8e520de1478caf4098e9d36b8.info[m
+[1mdeleted file mode 100644[m
+[1mindex 15586419..00000000[m
+Binary files a/Library/metadata/e3/e3888cb8e520de1478caf4098e9d36b8.info and /dev/null differ
+[1mdiff --git a/Library/metadata/ed/edd3eb6b08950ed488f33d1f595f6178 b/Library/metadata/ed/edd3eb6b08950ed488f33d1f595f6178[m
+[1mindex e390049b..18b73346 100644[m
+Binary files a/Library/metadata/ed/edd3eb6b08950ed488f33d1f595f6178 and b/Library/metadata/ed/edd3eb6b08950ed488f33d1f595f6178 differ
+[1mdiff --git a/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8 b/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8[m
+[1mindex 1446ba95..1cdb0867 100644[m
+Binary files a/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8 and b/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8 differ
+[1mdiff --git a/Library/metadata/f7/f70555f144d8491a825f0804e09c671c b/Library/metadata/f7/f70555f144d8491a825f0804e09c671c[m
+[1mindex 9cc70101..fe457161 100644[m
+Binary files a/Library/metadata/f7/f70555f144d8491a825f0804e09c671c and b/Library/metadata/f7/f70555f144d8491a825f0804e09c671c differ
+[1mdiff --git a/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc b/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc[m
+[1mindex 3cb6b629..8950c6b8 100644[m
+Binary files a/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc and b/Library/metadata/f7/f7b54ff4a43d4fcf81b4538b678e0bcc differ
+[1mdiff --git a/Library/metadata/fb/fb26ead2d821448459ec49da9b8d33db b/Library/metadata/fb/fb26ead2d821448459ec49da9b8d33db[m
+[1mindex 10b1a999..b781ebfe 100644[m
+Binary files a/Library/metadata/fb/fb26ead2d821448459ec49da9b8d33db and b/Library/metadata/fb/fb26ead2d821448459ec49da9b8d33db differ
+[1mdiff --git a/Library/shadercompiler-UnityShaderCompiler.exe0.log b/Library/shadercompiler-UnityShaderCompiler.exe0.log[m
+[1mindex 7da73853..5be4fabe 100644[m
+[1m--- a/Library/shadercompiler-UnityShaderCompiler.exe0.log[m
+[1m+++ b/Library/shadercompiler-UnityShaderCompiler.exe0.log[m
+[36m@@ -1,2 +1,2 @@[m
+[31m-Base path: D:/Unity/Editor/Data[m
+[32m+[m[32mBase path: C:/Program Files/Unity/Editor/Data[m
+ Cmd: initializeCompiler[m
+[1mdiff --git a/ProjectSettings/TagManager.asset b/ProjectSettings/TagManager.asset[m
+[1mindex 111d498d..b8ca0126 100644[m
+Binary files a/ProjectSettings/TagManager.asset and b/ProjectSettings/TagManager.asset differ
+[1mdiff --git a/Secret of 51 v0.97.sln b/Secret of 51 v0.97.sln[m
+[1mnew file mode 100644[m
+[1mindex 00000000..65d4a4d8[m
+[1m--- /dev/null[m
+[1m+++ b/Secret of 51 v0.97.sln[m	
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32m﻿[m
+[32m+[m[32mMicrosoft Visual Studio Solution File, Format Version 11.00[m
+[32m+[m[32m# Visual Studio 2010[m
+[32m+[m[32mProject("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secret of 51 v0.97", "Assembly-CSharp.csproj", "{4A11FB68-E99E-3533-9384-BA6280D21A09}"[m
+[32m+[m[32mEndProject[m
+[32m+[m[32mProject("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secret of 51 v0.97", "Assembly-CSharp-Editor.csproj", "{91D4DCC8-2338-B2E2-DBC0-BDFDB6C7FB57}"[m
+[32m+[m[32mEndProject[m
+[32m+[m[32mGlobal[m
+[32m+[m	[32mGlobalSection(SolutionConfigurationPlatforms) = preSolution[m
+[32m+[m		[32mDebug|Any CPU = Debug|Any CPU[m
+[32m+[m		[32mRelease|Any CPU = Release|Any CPU[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m	[32mGlobalSection(ProjectConfigurationPlatforms) = postSolution[m
+[32m+[m		[32m{4A11FB68-E99E-3533-9384-BA6280D21A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU[m
+[32m+[m		[32m{4A11FB68-E99E-3533-9384-BA6280D21A09}.Debug|Any CPU.Build.0 = Debug|Any CPU[m
+[32m+[m		[32m{4A11FB68-E99E-3533-9384-BA6280D21A09}.Release|Any CPU.ActiveCfg = Release|Any CPU[m
+[32m+[m		[32m{4A11FB68-E99E-3533-9384-BA6280D21A09}.Release|Any CPU.Build.0 = Release|Any CPU[m
+[32m+[m		[32m{91D4DCC8-2338-B2E2-DBC0-BDFDB6C7FB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU[m
+[32m+[m		[32m{91D4DCC8-2338-B2E2-DBC0-BDFDB6C7FB57}.Debug|Any CPU.Build.0 = Debug|Any CPU[m
+[32m+[m		[32m{91D4DCC8-2338-B2E2-DBC0-BDFDB6C7FB57}.Release|Any CPU.ActiveCfg = Release|Any CPU[m
+[32m+[m		[32m{91D4DCC8-2338-B2E2-DBC0-BDFDB6C7FB57}.Release|Any CPU.Build.0 = Release|Any CPU[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m	[32mGlobalSection(SolutionProperties) = preSolution[m
+[32m+[m		[32mHideSolutionNode = FALSE[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m	[32mGlobalSection(MonoDevelopProperties) = preSolution[m
+[32m+[m		[32mStartupItem = Assembly-CSharp.csproj[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m[32mEndGlobal[m
+[1mdiff --git a/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache b/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache[m
+[1mindex e6d6ca94..959b2955 100644[m
+Binary files a/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache and b/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache differ
+[1mdiff --git a/obj/Debug/build.force b/obj/Debug/build.force[m
+[1mnew file mode 100644[m
+[1mindex 00000000..e69de29b[m

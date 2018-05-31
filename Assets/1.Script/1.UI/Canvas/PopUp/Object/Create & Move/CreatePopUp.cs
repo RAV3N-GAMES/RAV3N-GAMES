@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatePopUp : MonoBehaviour {
+public class CreatePopUp : MonoBehaviour
+{
     [HideInInspector]
     public GameObject Obj;
 
@@ -15,7 +16,7 @@ public class CreatePopUp : MonoBehaviour {
 
     public bool isTutorial = false;
     public TutorialTile tutorialTile;
-    public TaskManager taskManager;
+    public TaskObject taskObject;
 
     void UsingTile(string id, int price)
     {
@@ -36,12 +37,12 @@ public class CreatePopUp : MonoBehaviour {
 
     void OnEffectSound_Create(int type)
     {
-        switch(type)
+        switch (type)
         {
             case 0: SoundManager.soundManager.OnEffectSound("10_BUILDING SET"); break;
             case 2: SoundManager.soundManager.OnEffectSound("48_SOLDIER SET"); break;
             case 3: SoundManager.soundManager.OnEffectSound("50_TRAP SET"); break;
-            case 4: SoundManager.soundManager.OnEffectSound("52_SECRET SET");  break;
+            case 4: SoundManager.soundManager.OnEffectSound("52_SECRET SET"); break;
             default: break;
         }
     }
@@ -52,7 +53,7 @@ public class CreatePopUp : MonoBehaviour {
 
         if (isTutorial)
         {
-            if(!tutorialTile.isSuccess()) // tutorial tile과 닿았는지
+            if (!tutorialTile.isSuccess()) // tutorial tile과 닿았는지
             {
                 print("설치 안됨");
                 CancelPref();
@@ -61,17 +62,17 @@ public class CreatePopUp : MonoBehaviour {
             }
             else
             {
-                taskManager.SetTutorialTile();
+                //taskManager.SetTutorialTile();
             }
         }
 
         if (id.Equals("Warp_Exit"))
             id = "Warp";
         int price = JsonDataManager.slotInfoList[id].price;
-        
+
         if (Data_Player.isEnough_G(price))
         {
-            if(!Obj.GetComponent<CheckTile>().tileManager.IsPossibleAllot(Obj.GetComponent<ObjectInfo>().type))
+            if (!Obj.GetComponent<CheckTile>().tileManager.IsPossibleAllot(Obj.GetComponent<ObjectInfo>().type))
             {
                 CancelPref();
                 ExceedLimitAllot.SetActive(true);
@@ -88,7 +89,7 @@ public class CreatePopUp : MonoBehaviour {
             else
                 CancelPref();
 
-            if(!Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
+            if (!Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
                 RoomManager.ChangeClickStatus(true);
         }
         else
@@ -96,7 +97,7 @@ public class CreatePopUp : MonoBehaviour {
             Destroy(Obj);
             LackOfCoin.SetActive(true);
         }
-        
+
 
         roomManager.SetClickColliderStatus(true);
         gameObject.SetActive(false);
@@ -123,20 +124,19 @@ public class CreatePopUp : MonoBehaviour {
         if (isTutorial)
         {
             tutorialTile.lastColList.Clear();
-            taskManager.SetClickSlot(true);
-            taskManager.StopCoroutine(taskManager.DisplayTask());
-            taskManager.SetDisplayWarp();
+            taskObject.SetSlotStatus(true);
+            taskObject.SetWarpExit();
         }
 
         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
         {
             GameObject Warp = Obj.transform.parent.gameObject;
             bool temp = Warp.GetComponent<DisplayObject>().DestroyObj(false);
-            
+
             Destroy(Warp);
         }
-        else {
-            
+        else
+        {
             Destroy(Obj);
         }
 

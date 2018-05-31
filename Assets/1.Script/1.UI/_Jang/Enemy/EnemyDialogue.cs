@@ -27,8 +27,6 @@ public class EnemyDialogue : MonoBehaviour {
             return;
         targetPos = Camera.main.WorldToScreenPoint(transform.position);
         rectTransform.position = targetPos + Vector3.up * 100;
-        Debug.Log("targetPos: " +targetPos);
-        Debug.Log("rectTransform.position: " + rectTransform.position);
     }
 
     public void doDialogue() {

@@ -55,7 +55,7 @@ public class ObjectMove : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.tag == "Tile" || hit.collider.tag == "Door")
+            if (hit.collider.tag == "Tile" || hit.collider.tag == "Door" || hit.collider.tag == "TutorialTile")
             {
                 if (hit.collider != lastCol)
                 {

@@ -17,9 +17,8 @@ public class CreateObject : MonoBehaviour
 
     public RoomManager roomManager;
 
-    public bool isTutorial = false;
+    public TaskObject taskObject;
     public TutorialTile tutorialTile;
-    public TaskManager taskManager;
 
     void Awake()
     {
@@ -41,11 +40,9 @@ public class CreateObject : MonoBehaviour
 
     public void MouseUp()
     {
-        if (isTutorial) {
-            taskManager.isCompleted = tutorialTile.isSuccess();
-            if (!taskManager.isCompleted)
-                taskManager.StopCoroutine(taskManager.DisplayTask());
-        }
+        if (taskObject != null)
+            taskObject.OnDisplay(tutorialTile.isSuccess());
+
         id = "";
         SetBoxRect(MaxY);
         isCreate = false;
@@ -77,16 +74,13 @@ public class CreateObject : MonoBehaviour
 
     public void MouseExit()
     {
-        print("MouseExit");
-
         if (!DayandNight.isDay)
         {
-            print(id + " : " + RoomManager.possibleDrag);
             if (id != "" && Input.GetMouseButton(0) && RoomManager.possibleDrag)
             {
                 InitObject();
-                RoomManager.ChangeClickStatus(false);
 
+                RoomManager.ChangeClickStatus(false);
                 roomManager.SetClickColliderStatus(false);
 
                 SetBoxRect(BoxRect.anchorMin.y + 0.02f);
@@ -98,7 +92,7 @@ public class CreateObject : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             if (BoxRect.anchorMax.y != MaxY)
                 MouseUp();

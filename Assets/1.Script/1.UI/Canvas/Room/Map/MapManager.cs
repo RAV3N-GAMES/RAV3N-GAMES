@@ -53,6 +53,8 @@ public class MapManager : MonoBehaviour
     public Text OurForcesText;
     public Text TrapText;
     public Text SecretText;
+    public Text BuildigMax;
+    public Text OurForcesMax;
 
     public Text AllRepairCost;
 
@@ -231,8 +233,12 @@ public class MapManager : MonoBehaviour
         AllRepairButton.SetActive(!isActiveAllRepair);
         ActivedDamageButton.SetActive(!isActiveAllRepair);
 
+
         TrapText.transform.parent.gameObject.SetActive(isActiveAllRepair);
         SecretText.transform.parent.gameObject.SetActive(isActiveAllRepair);
+
+        BuildigMax.gameObject.SetActive(isActiveAllRepair);
+        OurForcesMax.gameObject.SetActive(isActiveAllRepair);
 
         if (isActiveAllRepair)
         {

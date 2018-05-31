@@ -6,15 +6,14 @@ using UnityEngine.EventSystems;
 public class ClickSlot : MonoBehaviour, IPointerDownHandler {
     public string id;
     public CreateObject createObject;
-    public TaskManager taskManager;
-    public bool isTask;
+
+    public TaskObject taskObject;
+    public bool isDisplay;
 
     public void OnPointerDown(PointerEventData data)
     {
-        print("ClickSlot isTask : " + isTask + " name :" + id);
-        if (isTask)
-            taskManager.OnSlotClick();
-
+        if (isDisplay)
+            taskObject.StartDisplay();
         SlotInfo slotInfo = JsonDataManager.slotInfoList[id];
         if (slotInfo.type == 4)
         {

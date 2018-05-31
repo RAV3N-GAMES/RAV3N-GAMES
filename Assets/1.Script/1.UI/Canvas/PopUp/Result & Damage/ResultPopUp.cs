@@ -27,7 +27,7 @@ public class ResultPopUp : MonoBehaviour
     public MailBox mailBox;
 
     public RoomManager roomManager;
-    public TaskManager taskManager;
+    public TaskObject taskObject;
 
     List<EnemyGroupResult> enemyGroupResult = new List<EnemyGroupResult>();
 
@@ -361,7 +361,7 @@ public class ResultPopUp : MonoBehaviour
         NextButton.enabled = true;
 
         yield return new WaitForSeconds(1f);
-        taskManager.isCompleted = true;
+        taskObject.OnResult();
 
         yield break;
     }
