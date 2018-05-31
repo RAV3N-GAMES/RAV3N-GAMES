@@ -21,6 +21,7 @@ public class Friendly : MonoBehaviour
     public AudioSource Audio;
     public AudioClip[] DieClip;
     public AudioClip[] Clips;
+    public Sprite[] Weapons;
     public FRIEND_TYPE FriendType;
     public FriendlyGroup GroupConductor;
     public HealthSystem UiHealth;
@@ -41,6 +42,7 @@ public class Friendly : MonoBehaviour
     public int roomidx;//현재 위치한 room의 idx
     public int TargetIdx;//Lv4 벽(Core Building) 등반 시 타겟으로 삼게 되는 Room idx
 
+    public SpriteRenderer Weapon;
     public bool isLeft;
     public bool faceLeft;
     protected EFFECT_TYPE effectType;
@@ -117,10 +119,26 @@ public class Friendly : MonoBehaviour
     {
         if (isDie)
             return;
+        WeaponChange();
         SetOrder();
         FriendlyAction();
         ChangeAnimation();
     }
+
+    protected void WeaponChange() {
+        if (Level >= 1 && Level <= 34)
+        {
+            Weapon.sprite = Weapons[0];
+        }
+        else if (Level <= 69)
+        {
+            Weapon.sprite = Weapons[1];
+        }
+        else {
+            Weapon.sprite = Weapons[2];
+        }
+    }
+
     protected virtual void Attack()
     {
         GameManager.ParticleGenerate(effectType, targetEnemy.NavObj.position);
