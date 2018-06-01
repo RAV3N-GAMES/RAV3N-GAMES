@@ -58,6 +58,7 @@ public class Friendly : MonoBehaviour
     protected bool isShoot = false;
     protected bool isSkill = false;
     protected Vector3 PrevPos;
+    protected Animator Ani;
 
     public float AISpeed
     {
@@ -119,23 +120,30 @@ public class Friendly : MonoBehaviour
     {
         if (isDie)
             return;
-        WeaponChange();
         SetOrder();
         FriendlyAction();
         ChangeAnimation();
     }
 
+    private void LateUpdate() {
+        WeaponChange();
+    }
+
     protected void WeaponChange() {
+        
         if (Level >= 1 && Level <= 34)
         {
             Weapon.sprite = Weapons[0];
+            Debug.Log("Weapon 1");
         }
         else if (Level <= 69)
         {
             Weapon.sprite = Weapons[1];
+            Debug.Log("Weapon 2");
         }
         else {
             Weapon.sprite = Weapons[2];
+            Debug.Log("Weapon 3");
         }
     }
 
