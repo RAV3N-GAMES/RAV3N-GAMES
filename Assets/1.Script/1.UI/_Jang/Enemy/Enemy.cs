@@ -150,9 +150,7 @@ public class Enemy : MonoBehaviour {
 
     public IEnumerator DieEvent()
     {
-        Debug.Log("Enemy Die");
         isDie = true;
-        Debug.Log("Is Die right after: " + isDie);
         isStolen = false;
         isDefeated = false;
         anime.SetTrigger("Die");
@@ -165,7 +163,6 @@ public class Enemy : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
-        Debug.Log("Is Die some after: " + isDie);
     }
 
     public IEnumerator EscapeEvent()
@@ -501,7 +498,7 @@ public class Enemy : MonoBehaviour {
 
             if (myCluster.GroupNearFriend.Contains(f)) {
                 myCluster.GroupNearFriend.Remove(f);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
     }
@@ -514,7 +511,7 @@ public class Enemy : MonoBehaviour {
             if (!myCluster.GroupNearFriend.Contains(e))
             {
                 myCluster.GroupNearFriend.Add(e);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
 

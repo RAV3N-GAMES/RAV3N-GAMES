@@ -143,7 +143,7 @@ public class EnemyPickPocket : Enemy {
             if (!myCluster.GroupNearFriend.Contains(e))
             {
                 myCluster.GroupNearFriend.Add(e);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
 
@@ -189,7 +189,7 @@ public class EnemyPickPocket : Enemy {
             if (myCluster.GroupNearFriend.Contains(f))
             {
                 myCluster.GroupNearFriend.Remove(f);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
     }

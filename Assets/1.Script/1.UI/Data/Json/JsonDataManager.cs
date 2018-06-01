@@ -51,7 +51,6 @@ public class JsonDataManager : MonoBehaviour {
     void LoadSlotData()
     {
         string slotObj;
-        print("LoadSlot");
 
         if (!isSave)
         {

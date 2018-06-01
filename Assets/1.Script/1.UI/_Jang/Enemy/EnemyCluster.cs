@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyCluster : MonoBehaviour {
+    public int myIdx;
     public List<Enemy> eList;
     public List<Friendly> GroupNearFriend;
     public List<Trap> GroupNearTrap;
@@ -305,5 +306,39 @@ public class EnemyCluster : MonoBehaviour {
             catch { }
             roomPassCount++;
         }
+    }
+
+    public void GetPriorFriend() {
+        Friendly target;
+        int DamageMax = 0;
+
+        target = (GroupNearFriend.Count > 0) ? GroupNearFriend[0] : null;
+
+        /*
+         연구원 먼저 서치
+         */
+        for (int i = 0; i < GroupNearFriend.Count; i++) {
+            if (GroupNearFriend[i].transform.parent.name.Equals("Friendly_ResearchStudent")) {
+                target = GroupNearFriend[i];
+                targetFriend= target;
+                return;
+            }
+
+            if (GroupNearFriend[i].ClusterDamageStack[myIdx] > DamageMax)
+            {
+                target = GroupNearFriend[i];
+                DamageMax = GroupNearFriend[i].ClusterDamageStack[myIdx];
+            }
+        }
+
+        /*
+         연구원 없으면 딜 많이 넣은놈 서치
+          -> 딜 얼마나 넣었는지 봐야됨
+          -> Friendly 에서 hit 함수 발동 시 EnemyCluster에 있는 데미지 스택이랑 연동
+          Friendly에 pair로 <클러스터 인덱스, 누적데미지> 저장
+         */
+
+        targetFriend= target;
+        return;
     }
 }

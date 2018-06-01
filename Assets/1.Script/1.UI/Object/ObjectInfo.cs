@@ -220,7 +220,6 @@ public class ObjectInfo : MonoBehaviour
 
     public void OnDisplay()
     {
-        print("OnDisplay");
         isDisplay = true;
 
         //ClickCollider.SetActive(true);

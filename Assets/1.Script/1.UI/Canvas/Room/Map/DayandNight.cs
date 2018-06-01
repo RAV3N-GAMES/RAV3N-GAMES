@@ -61,8 +61,6 @@ public class DayandNight : MonoBehaviour
     public void changeState() {
         isDay = !isDay;
 
-        print("changeState " + isDay);
-
         roomManager.OnOffHitCollider();
 
         ReadyButton.SetActive(!isDay);
@@ -117,6 +115,10 @@ public class DayandNight : MonoBehaviour
                     if (spriteObject != null)
                     {
                         spriteObject.SetActive(true);
+                        Friendly F = animationObject.GetComponentInChildren<Friendly>();
+                        for (int j = 0; j < ResourceManager_Player.ClusterMax; j++) {
+                            F.ClusterDamageStack[j] = 0;
+                        }
                         animationObject.SetActive(false);
                         //ObjectInfoSyncToObject(OurForces[i], (int)ObjectType.Friendly);
                     }

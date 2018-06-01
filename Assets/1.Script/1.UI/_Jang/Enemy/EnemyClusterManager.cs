@@ -12,6 +12,7 @@ public class EnemyClusterManager : MonoBehaviour {
         for (int i = 0; i < ResourceManager_Player.ClusterMax; i++) {
             ec = gameObject.AddComponent<EnemyCluster>();
             clusterList.Add(ec);
+            ec.myIdx = i;
         }
     }
 	
