@@ -332,7 +332,15 @@ public class CheckTile : MonoBehaviour {
             {
                 if (lastColList.Count == 1)
                     lastCol = lastColList[0];
-                lastColList.Remove(col.transform.parent.gameObject);
+
+                for(int i = 0; i < lastColList.Count; i++)
+                {
+                    if(lastColList[i].transform.position == col.gameObject.transform.parent.position)
+                        lastColList.RemoveAt(i);
+                }
+
+                if (lastColList.Count < TileCnt)
+                    OnCheckTile();
             }
 
             //if (tag.Equals("Trap"))

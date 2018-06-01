@@ -101,12 +101,15 @@ public class SoundManager : MonoBehaviour {
 
     bool isPlayingBGM()
     {
-        return BGMAudio.isPlaying;
+        return !BGMAudio.isPlaying;
     }
 
     IEnumerator DayAndNightMusic()
     {
-        yield return new WaitWhile(isPlayingBGM);
+        yield return new WaitUntil(isPlayingBGM);
+
+        if (!BGMAudio.loop)
+            yield break;
 
         if (DayandNight.isDay)
             ChangeBGM("5_DAY");

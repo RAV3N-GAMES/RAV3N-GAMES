@@ -124,6 +124,7 @@ public class ObjectMove : MonoBehaviour
             if (CameraMove())
             {
                 Camera.main.transform.position += movePos;
+                yield return new WaitForSeconds(0.1f);
             }
             yield return null;
 
@@ -173,6 +174,8 @@ public class ObjectMove : MonoBehaviour
         {
             if (isMove)
             {
+                print("isMove : " + isMove);
+
                 isMove = false;
                 changePos = false;
 

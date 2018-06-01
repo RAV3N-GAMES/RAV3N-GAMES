@@ -15,7 +15,14 @@ public class TutorialTile : MonoBehaviour {
     public bool isSuccess()
     {
         if (lastColList.Count == Cnt)
+        {
+            if (objName.Equals("Guard"))
+            {
+                print("Minus HP");
+                lastColList[0].GetComponent<ObjectInfo>().SetHP(-1);
+            }
             return true;
+        }
         return false;
     }
 
@@ -24,7 +31,7 @@ public class TutorialTile : MonoBehaviour {
         if (col.gameObject.tag == "Tile")
         {
             if (col.gameObject.transform.parent.parent.name == objName)
-                lastColList.Add(col.transform.parent.gameObject);
+                lastColList.Add(col.transform.parent.parent.gameObject);
         }
     }
 
@@ -33,7 +40,7 @@ public class TutorialTile : MonoBehaviour {
         if (col.gameObject.tag == "Tile")
         {
             if (col.gameObject.transform.parent.parent.name == objName)
-                lastColList.Remove(col.transform.parent.gameObject);
+                lastColList.Remove(col.transform.parent.parent.gameObject);
         }
     }
 }
