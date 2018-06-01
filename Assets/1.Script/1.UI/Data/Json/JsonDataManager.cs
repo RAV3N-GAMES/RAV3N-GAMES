@@ -26,14 +26,15 @@ public class JsonDataManager : MonoBehaviour {
         upgradeImage = new Dictionary<string, Sprite>();
         activationImage = new Dictionary<string, Sprite>();
 
-        Data_Player.addGold(100000);
-        Data_Player.Fame = 4;
         LoadData();
     }
 
     void Start()
     {
         isSaveForSave = isSave;
+
+        Data_Player.addGold(100000);
+        Data_Player.Fame = 4;
     }
 
     SlotInfo InitSlotInfo(JsonData data)
@@ -50,6 +51,8 @@ public class JsonDataManager : MonoBehaviour {
     void LoadSlotData()
     {
         string slotObj;
+        print("LoadSlot");
+
         if (!isSave)
         {
             TextAsset textAsset = Resources.Load("Data/SlotInfo") as TextAsset;

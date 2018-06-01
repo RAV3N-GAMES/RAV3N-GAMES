@@ -37,6 +37,7 @@ public class LoadingScene : MonoBehaviour {
         {
             float progress = (async.progress / 0.9f) * 100.0f;
             int pRounded = Mathf.RoundToInt(progress);
+
             loadingPercentage.text = pRounded.ToString();
 
             if(async.progress >= 0.90f)
