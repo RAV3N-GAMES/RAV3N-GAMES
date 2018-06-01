@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour {
     protected SphereCollider scollider;     //2D캐릭터에 붙어있는 콜라이더
     public Vector3 dest;                 //목적지 좌표
     protected int destType;                 //목적지 타입. enum ObjectType을 따름.
-    protected Vector3 start;                //시작 좌표
+    public Vector3 start;                //시작 좌표
     protected WaitForSeconds attackDelay;   //코루틴에서
     public EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입
@@ -150,7 +150,9 @@ public class Enemy : MonoBehaviour {
 
     public IEnumerator DieEvent()
     {
+        Debug.Log("Enemy Die");
         isDie = true;
+        Debug.Log("Is Die right after: " + isDie);
         isStolen = false;
         isDefeated = false;
         anime.SetTrigger("Die");
@@ -163,6 +165,7 @@ public class Enemy : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
+        Debug.Log("Is Die some after: " + isDie);
     }
 
     public IEnumerator EscapeEvent()
@@ -557,7 +560,7 @@ public class Enemy : MonoBehaviour {
     
     protected void SetDestination()
     {
-        if (targetFriend && !IsNear(NavObj, targetFriend.transform)) {
+        if (targetFriend) {
             dest = SetYZero(targetFriend.transform);
         }
         else if (isSeizure && targetSecret)

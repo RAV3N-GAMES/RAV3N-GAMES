@@ -26,8 +26,10 @@ public class TutorialEnemy : MonoBehaviour {
         E.Hp = 1;
         E.isDie = false;
         E.Attack = 0;
+        E.enemyAI.stoppingDistance += 0.5f;
+        E.start = E.NavObj.position;
         E.GroupConductor = GameManager.current.enemyGroups[1];
-        E.myCluster= EnemyClusterManager.clusterList[0];
+        E.myCluster = EnemyClusterManager.clusterList[0];
         GameObject g = GameObject.Find("RecognizeRange").transform.parent.gameObject;
         yield return new WaitUntil( () => g.transform.Find("Friendly_Guard").gameObject.activeSelf);
         F=g.GetComponentInChildren<Friendly>();//가드 외 다른거 할 경우 변경
@@ -40,5 +42,27 @@ public class TutorialEnemy : MonoBehaviour {
         E.dest = E.SetYZero(F.NavObj.transform);
         E.enemyAI.SetDestination(E.dest);
         E.currentState = EnemyState.Walk;
+        StartCoroutine(TutorialAction());
+    }
+
+    IEnumerator TutorialAction() {
+        while (true)
+        {
+            if (E.IsNear(E.NavObj, E.targetFriend.transform))
+            {
+                if (E.enemyAI.isActiveAndEnabled && E.enemyAI.isOnNavMesh)
+                {
+                    E.currentState = EnemyState.Attack;
+                    E.enemyAI.isStopped = true;
+                }
+            }
+
+            if (E.isDie)
+            {
+                E.isStolen = true;
+                break;
+            }
+            yield return null;
+        }
     }
 }
