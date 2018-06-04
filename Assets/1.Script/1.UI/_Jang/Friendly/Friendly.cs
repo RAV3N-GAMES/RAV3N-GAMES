@@ -58,6 +58,7 @@ public class Friendly : MonoBehaviour
     protected bool isShoot = false;
     protected bool isSkill = false;
     protected Vector3 PrevPos;
+    public Dictionary<int, int> ClusterDamageStack = new Dictionary<int, int>();
 
     public float AISpeed
     {
@@ -82,6 +83,11 @@ public class Friendly : MonoBehaviour
 
     private void Awake()
     {
+        for (int i = 0; i < ResourceManager_Player.ClusterMax; i++)
+        {
+            if(!ClusterDamageStack.ContainsKey(i))
+                ClusterDamageStack.Add(i, 0);
+        }
         Audio = GetComponent<AudioSource>();
         DieClip= Resources.LoadAll<AudioClip>("Audio/Character/Die/Man") as AudioClip[];
         isLeft = true;
@@ -113,19 +119,22 @@ public class Friendly : MonoBehaviour
 
     private void Start()
     {
-        //        targetEnemy = targetEnemy.GroupConductor.GroupFindEnemy();
     }
     private void Update()
     {
         if (isDie)
             return;
-        WeaponChange();
         SetOrder();
         FriendlyAction();
         ChangeAnimation();
     }
 
+    private void LateUpdate() {
+        WeaponChange();
+    }
+
     protected void WeaponChange() {
+        
         if (Level >= 1 && Level <= 34)
         {
             Weapon.sprite = Weapons[0];
@@ -143,6 +152,8 @@ public class Friendly : MonoBehaviour
     {
         GameManager.ParticleGenerate(effectType, targetEnemy.NavObj.position);
 
+        int idx = targetEnemy.myCluster.myIdx;
+        ClusterDamageStack[idx] += AttackDamage;
         if (targetEnemy.Health(AttackDamage))
         {
             if(targetEnemy)
@@ -236,14 +247,15 @@ public class Friendly : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         DisplayObject tmp= GetComponentInParent<DisplayObject>();
-        GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < Enemies.Length; i++) {
-            if (Enemies[i].GetComponentInChildren<Enemy>().
-                myCluster.GroupNearFriend.Contains(this)) {
-                Enemies[i].GetComponentInChildren<Enemy>().myCluster.GroupNearFriend.Remove(this);
-
+        for (int i = 0; i < EnemyClusterManager.clusterList.Count; i++)
+        {
+            EnemyCluster ec = EnemyClusterManager.clusterList[i];
+            if (ec.GroupNearFriend.Contains(this)) {
+                ec.GroupNearFriend.Remove(this);
+                ec.GetPriorFriend();
             }
         }
+        
         tmp.DestroyObj(true);
         Destroy(transform.parent.transform.parent.gameObject);
         //PoolManager.current.PushFriend(NavObj.gameObject);

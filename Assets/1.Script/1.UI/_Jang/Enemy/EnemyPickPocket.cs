@@ -23,13 +23,13 @@ public class EnemyPickPocket : Enemy {
     }
     public override void EnemyInit()
     {
-        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange * 6;
+        scollider.radius = 3.0f;
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].Attack;
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = scollider.radius;
+        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange;
         enemyAI.speed = 1.0f;
     }
 
@@ -39,7 +39,6 @@ public class EnemyPickPocket : Enemy {
         {
             SetStart();
             SetDestination();
-            enemyAI.SetDestination(dest);
             yield return new WaitUntil(CalPath);
             if (isDie || isStolen || isDefeated)
                 break;
@@ -47,7 +46,6 @@ public class EnemyPickPocket : Enemy {
             {
                 if (!targetTrap) {
                     SetDestination2nd();
-                    enemyAI.SetDestination(dest);
                 }
                 yield return new WaitUntil(CalPath);
                 if (isDie || isStolen || isDefeated)
@@ -58,20 +56,14 @@ public class EnemyPickPocket : Enemy {
                     {
                         if (!IsNear(NavObj, targetTrap.transform))
                         {
-                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
                             currentState = EnemyState.Walk;
                             enemyAI.isStopped = false;
                         }
                     }
                     else
                     {
-                        if (!targetFriend && !targetWall)
-                        {
-                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
-                            currentState = EnemyState.Walk;
-                            enemyAI.isStopped = false;
-                        }
-                        else
+                        if ((targetFriend && IsNear(NavObj, targetFriend.NavObj)) || (targetWall && IsNear(NavObj, targetWall.transform)))
                         {
                             if (!isShoot)
                             {
@@ -79,6 +71,11 @@ public class EnemyPickPocket : Enemy {
                                 isShoot = true;
                                 enemyAI.isStopped = true;
                             }
+                        }
+                        else {
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                            currentState = EnemyState.Walk;
+                            enemyAI.isStopped = false;
                         }
                     }
                 }
@@ -93,6 +90,7 @@ public class EnemyPickPocket : Enemy {
                 }
                 else
                 {
+                    enemyAI.SetDestination(dest);
                     currentState = EnemyState.Walk;
                     enemyAI.isStopped = false;
                 }
@@ -108,6 +106,7 @@ public class EnemyPickPocket : Enemy {
             }
             else
             {
+                enemyAI.SetDestination(dest);
                 currentState = EnemyState.Walk;
                 enemyAI.isStopped = false;
             }
@@ -143,7 +142,7 @@ public class EnemyPickPocket : Enemy {
             if (!myCluster.GroupNearFriend.Contains(e))
             {
                 myCluster.GroupNearFriend.Add(e);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
 
@@ -189,7 +188,7 @@ public class EnemyPickPocket : Enemy {
             if (myCluster.GroupNearFriend.Contains(f))
             {
                 myCluster.GroupNearFriend.Remove(f);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
     }

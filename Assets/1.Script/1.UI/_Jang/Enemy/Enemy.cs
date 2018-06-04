@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour {
         if (isSeizure) {
             Hp = (int)Mathf.Ceil( Hp * 0.9f);
             MaxHp = Hp;
-            Attack = (int)Mathf.Ceil(Hp * 0.9f);
+            Attack = (int)Mathf.Ceil(Attack * 0.9f);
         }
         priority = -1;
     }
@@ -150,9 +150,7 @@ public class Enemy : MonoBehaviour {
 
     public IEnumerator DieEvent()
     {
-        Debug.Log("Enemy Die");
         isDie = true;
-        Debug.Log("Is Die right after: " + isDie);
         isStolen = false;
         isDefeated = false;
         anime.SetTrigger("Die");
@@ -165,7 +163,6 @@ public class Enemy : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
-        Debug.Log("Is Die some after: " + isDie);
     }
 
     public IEnumerator EscapeEvent()
@@ -501,7 +498,7 @@ public class Enemy : MonoBehaviour {
 
             if (myCluster.GroupNearFriend.Contains(f)) {
                 myCluster.GroupNearFriend.Remove(f);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
     }
@@ -514,7 +511,7 @@ public class Enemy : MonoBehaviour {
             if (!myCluster.GroupNearFriend.Contains(e))
             {
                 myCluster.GroupNearFriend.Add(e);
-                myCluster.SetOrderFriendly();
+                myCluster.GetPriorFriend();
             }
         }
 
@@ -789,22 +786,13 @@ public class Enemy : MonoBehaviour {
         {
             SetStart();
             SetDestination();
-            enemyAI.SetDestination(dest);
-            if (!Movable)
-                enemyAI.isStopped = true;
-            else
-                enemyAI.isStopped = false;
+
             yield return new WaitUntil(CalPath);
             if (isDie || isStolen || isDefeated)
                 break;
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
             {
                 SetDestination2nd();
-                enemyAI.SetDestination(dest);
-                if (!Movable)
-                    enemyAI.isStopped = true;
-                else
-                    enemyAI.isStopped = false;
                 yield return new WaitUntil(CalPath);
                 if (isDie || isStolen || isDefeated)
                     break;
@@ -812,7 +800,7 @@ public class Enemy : MonoBehaviour {
                 {
                     if (!targetFriend && !targetWall)
                     {
-                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
                         currentState = EnemyState.Walk;
                         if (!Movable)
                             enemyAI.isStopped = true;
@@ -840,11 +828,13 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
-                    currentState = EnemyState.Walk;
+                    enemyAI.SetDestination(dest);
                     if (!Movable)
                         enemyAI.isStopped = true;
                     else
                         enemyAI.isStopped = false;
+
+                    currentState = EnemyState.Walk;
                 }
             }
             else if (targetFriend && IsNear(NavObj, targetFriend.transform))
@@ -858,11 +848,13 @@ public class Enemy : MonoBehaviour {
             }
             else
             {
-                currentState = EnemyState.Walk;
+                enemyAI.SetDestination(dest);
                 if (!Movable)
                     enemyAI.isStopped = true;
                 else
                     enemyAI.isStopped = false;
+
+                currentState = EnemyState.Walk;
             }
         }
     }
