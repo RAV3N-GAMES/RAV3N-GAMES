@@ -255,6 +255,9 @@ public class Friendly : MonoBehaviour
                 ec.GetPriorFriend();
             }
         }
+        if (GroupConductor.friendList.Contains(this)) {
+            GroupConductor.friendList.Remove(this);
+        }
         
         tmp.DestroyObj(true);
         Destroy(transform.parent.transform.parent.gameObject);
@@ -378,16 +381,6 @@ public class Friendly : MonoBehaviour
     }
     private void OnTriggerEnter(Collider col) {
         if (col.CompareTag("Tile")) {
-            List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
-
-            if (!list.Find(
-                delegate (Friendly f) {
-                    return f == this;
-                }))
-            {
-                list.Add(this);
-                GroupConductor = col.GetComponentInParent<FriendlyGroup>();
-            }
             roomidx = int.Parse(col.transform.gameObject.GetComponentInParent<TileManager>().name);
         }
         if (col.CompareTag("EnemyBody")) {

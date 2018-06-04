@@ -8,25 +8,28 @@ public class EnemyDialogue : MonoBehaviour {
     Vector3 targetPos;
     RectTransform rectTransform;
     Text Dialogue;
+    Image BackGround;
+
     bool IsDestroyed;
     // Use this for initialization
     void Start () {
         dialogueObject = Instantiate(UIManager.current.UIDialogue);
         Dialogue = dialogueObject.GetComponent<Text>();
-        Dialogue.color = Color.gray;
+        BackGround = dialogueObject.GetComponentInChildren<Image>();
+        Dialogue.color = Color.white;
         dialogueObject.transform.SetParent(UIManager.current.UIDialogueParent);
         rectTransform = Dialogue.GetComponent<RectTransform>();
         rectTransform.localScale = new Vector3(5, 3, 1);
         IsDestroyed = false;
         dialogueObject.SetActive(false);
+        BackGround.rectTransform.position = Vector3.zero;
+        BackGround.rectTransform.localScale = new Vector3(1.6f, 0.3f, 1.0f);
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (!dialogueObject)
             return;
-        targetPos = Camera.main.WorldToScreenPoint(transform.position);
-        rectTransform.position = targetPos + Vector3.up * 100;
     }
 
     public void doDialogue() {
@@ -50,9 +53,10 @@ public class EnemyDialogue : MonoBehaviour {
 
     IEnumerator ChangePos() {
         while (!IsDestroyed) {
-            if (rectTransform) { 
+            if (rectTransform) {
+                BackGround.rectTransform.localPosition = Vector3.zero;
                 targetPos = Camera.main.WorldToScreenPoint(transform.position);
-                rectTransform.position = targetPos + Vector3.up * 30;
+                rectTransform.position = targetPos + Vector3.up * 230;
             }
             yield return null;
         }

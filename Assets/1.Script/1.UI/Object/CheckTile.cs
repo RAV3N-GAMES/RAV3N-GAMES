@@ -321,6 +321,22 @@ public class CheckTile : MonoBehaviour {
                 if (!EG.Secrets.Contains(s))
                     EG.Secrets.Add(s);
             }
+
+            if (tag.Equals("Friendly")) {
+                try {
+                    Friendly F = GetComponentInChildren<Friendly>(true);
+                    List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
+                    if (!list.Contains(F))
+                    {
+                        Debug.Log("Can't find this on " + col.GetComponentInParent<FriendlyGroup>().GroupIndex);
+                        list.Add(F);
+                        F.GroupConductor = col.GetComponentInParent<FriendlyGroup>();
+                    }
+                }
+                catch {
+
+                }
+            }
         }
     }
 
@@ -343,20 +359,36 @@ public class CheckTile : MonoBehaviour {
                     OnCheckTile();
             }
 
-            //if (tag.Equals("Trap"))
-            //{
-            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-            //    Trap t = GetComponentInChildren<Trap>();
-            //    if (EG.Traps.Contains(t))
-            //        EG.Traps.Remove(t);
-            //}
-            //
-            //if (tag.Equals("Secret")) {
-            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-            //    SecretActs s = GetComponentInChildren<SecretActs>();
-            //    if (EG.Secrets.Contains(s))
-            //        EG.Secrets.Remove(s);
-            //}
+            if (tag.Equals("Trap"))
+            {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                Trap t = GetComponentInChildren<Trap>();
+                if (EG.Traps.Contains(t))
+                    EG.Traps.Remove(t);
+            }
+            
+            if (tag.Equals("Secret")) {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                SecretActs s = GetComponentInChildren<SecretActs>();
+                if (EG.Secrets.Contains(s))
+                    EG.Secrets.Remove(s);
+            }
+
+            if (tag.Equals("Friendly")) {
+                try
+                {
+                    Friendly F = GetComponentInChildren<Friendly>(true);
+                    List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
+
+                    if (list.Contains(F))
+                    {
+                        list.Remove(F);
+                    }
+                }
+                catch {
+
+                }
+            }
         }
     }
 }
