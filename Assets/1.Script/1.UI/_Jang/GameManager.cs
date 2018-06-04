@@ -168,6 +168,7 @@ public class GameManager : MonoBehaviour {
 	{		
 		GameObject obj = PoolManager.current.PopParticle(type);
 		obj.transform.position = new Vector3(point.x, 0.5f, point.z + 0.5f);
+        obj.SetActive(true);
 	}
 
 }
