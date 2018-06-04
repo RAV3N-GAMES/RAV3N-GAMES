@@ -84,6 +84,7 @@ public class CreatePopUp : MonoBehaviour
             {
                 UsingTile(id, price);
 
+                //Obj.GetComponent<ObjectMove>().enabled = false;
                 OnEffectSound_Create(Obj.GetComponent<ObjectInfo>().type);
             }
             else
@@ -124,6 +125,8 @@ public class CreatePopUp : MonoBehaviour
         if (isTutorial)
         {
             tutorialTile.lastColList.Clear();
+
+            taskObject.OnRetrySign();
             taskObject.SetSlotStatus(true);
             taskObject.SetWarpExit();
         }

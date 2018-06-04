@@ -12,6 +12,11 @@ public class TutorialTile : MonoBehaviour {
         lastColList = new List<GameObject>();
     }
 
+    public void OffObjectMove()
+    {
+        lastColList[0].GetComponent<ObjectMove>().enabled = false;
+    }
+
     public bool isSuccess()
     {
         if (lastColList.Count == Cnt)

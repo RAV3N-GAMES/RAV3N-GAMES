@@ -37,17 +37,6 @@ public class CreateObject : MonoBehaviour
         BoxRect.offsetMax = Vector2.zero;
     }
 
-
-    public void MouseUp()
-    {
-        if (taskObject != null)
-            taskObject.OnDisplay(tutorialTile.isSuccess());
-
-        id = "";
-        SetBoxRect(MaxY);
-        isCreate = false;
-    }
-
     void InitObject()
     {
         GameObject newObj = Instantiate(Resources.Load("Object/" + id) as GameObject);
@@ -85,7 +74,6 @@ public class CreateObject : MonoBehaviour
 
                 SetBoxRect(BoxRect.anchorMin.y + 0.02f);
                 isCreate = true;
-                id = "";
             }
         }
     }
@@ -94,8 +82,16 @@ public class CreateObject : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (BoxRect.anchorMax.y != MaxY)
-                MouseUp();
+            if (taskObject != null)//임시
+            {
+                taskObject.OnDisplay(tutorialTile.isSuccess());
+            }
+            if (id != "")
+            {
+                id = "";
+                SetBoxRect(MaxY);
+                isCreate = false;
+            }
         }
     }
 }

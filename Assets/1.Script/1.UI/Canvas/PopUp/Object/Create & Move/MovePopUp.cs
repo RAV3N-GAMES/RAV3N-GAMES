@@ -33,8 +33,6 @@ public class MovePopUp : MonoBehaviour {
         tileManager = movingObj.GetComponent<CheckTile>().tileManager;
         tileManager.SetMatrix(preIdx, -1); //이거 다시 문제임
 
-
-
         //=> 설치가능한 위치로 변경한것
     }
     

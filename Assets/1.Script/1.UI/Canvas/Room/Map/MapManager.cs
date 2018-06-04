@@ -201,10 +201,23 @@ public class MapManager : MonoBehaviour
     {
         int[] objCnt = roomManager.GetObjectCnt(idx);
 
-        BuildingText.text = objCnt[0].ToString();
-        OurForcesText.text = objCnt[1].ToString();
-        TrapText.text = objCnt[2].ToString();
-        SecretText.text = objCnt[3].ToString();
+        if (!AllRepairButton.activeInHierarchy)
+        {
+            BuildingText.text = objCnt[0].ToString();
+            OurForcesText.text = objCnt[1].ToString();
+            TrapText.text = objCnt[2].ToString();
+            SecretText.text = objCnt[3].ToString();
+        }
+        else
+        {
+            DamageBuildingCnt = 0;
+            DamageOurForcesCnt = 0;
+
+            SetAllRepairCost();
+
+            BuildingText.text = DamageBuildingCnt.ToString();
+            OurForcesText.text = DamageOurForcesCnt.ToString();
+        }
     }
 
     public void InitObjectCnt()

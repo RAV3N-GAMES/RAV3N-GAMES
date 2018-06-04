@@ -25,6 +25,8 @@ public class RoomManager : MonoBehaviour {
 
     float touchDistance;
 
+    bool possibleZoom = false;
+
     public static bool isTransparency;
     public MiniMapManager miniMapManager;
     /*private void checkOutside() {
@@ -81,8 +83,9 @@ public class RoomManager : MonoBehaviour {
 
     void Start() {
         //  checkOutside();
+        if (TaskManager.taskManager == null)
+            possibleZoom = true;
         ChangeClickStatus(true);
-
         SoundManager.soundManager.ChangeBGM("7_NIGHT");
     }
 
@@ -326,6 +329,15 @@ public class RoomManager : MonoBehaviour {
 
     void Update()
     {
+        int pointerId = 0;
+        
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+        pointerId = 0;
+#endif
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+        pointerId = -1;
+#endif
+
         if (Input.GetMouseButtonDown(0) && possibleDrag)
         {
             prePos = conPos = GetRay();
@@ -341,11 +353,12 @@ public class RoomManager : MonoBehaviour {
 
         if (Input.touchCount == 2)
         {
-            ZoomInOut();
+            if (possibleDrag && possibleZoom)
+                ZoomInOut();
         }
         //else if (Input.touchCount == 1)
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (!EventSystem.current.IsPointerOverGameObject(pointerId))
             {
                 if (isMove && possibleDrag)
                 {

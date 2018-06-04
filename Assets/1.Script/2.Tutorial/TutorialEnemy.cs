@@ -33,6 +33,7 @@ public class TutorialEnemy : MonoBehaviour {
         GameObject g = GameObject.Find("RecognizeRange").transform.parent.gameObject;
         yield return new WaitUntil( () => g.transform.Find("Friendly_Guard").gameObject.activeSelf);
         F=g.GetComponentInChildren<Friendly>();//가드 외 다른거 할 경우 변경
+        F.Hp = 199;
         E.targetFriend = F;
         EnemyPref.SetActive(true);
         TutorialEnemyAction();

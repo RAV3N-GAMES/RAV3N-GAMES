@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ObjectMove : MonoBehaviour
 {
@@ -153,7 +154,36 @@ public class ObjectMove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (changePos)
+            int pointerId = 0;
+
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+            pointerId = 0;
+#endif
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+            pointerId = -1;
+#endif
+            if (!isMove && !changePos)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(pointerId))
+                {
+                    if (!EventSystem.current.currentSelectedGameObject.name.Equals("Mask"))
+                        return;
+                }
+
+                Vector3 mousePos = Input.mousePosition;
+                mousePos.z = 0;
+                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+                mousePos = mousePos - Camera.main.transform.position;
+                mousePos.y = 0;
+
+                if (mousePos.magnitude < 2f)
+                {
+                    isMove = true;
+                    GetComponent<DisplayObject>().OffDisplay();
+                }
+            }
+            else if (changePos)
             {
                 isMove = true;
                 GetComponent<DisplayObject>().CreateButton.GetComponent<MovePopUp>().InitObject(gameObject);
@@ -174,8 +204,6 @@ public class ObjectMove : MonoBehaviour
         {
             if (isMove)
             {
-                print("isMove : " + isMove);
-
                 isMove = false;
                 changePos = false;
 

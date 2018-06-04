@@ -228,6 +228,7 @@ public class ObjectInfo : MonoBehaviour
         ClickCollider.SetActive(!DayandNight.isDay);
 
         GetComponent<ObjectColor>().OffColor();
+        GetComponent<ObjectMove>().enabled = false;
     }
 
     public void OffDisplay()

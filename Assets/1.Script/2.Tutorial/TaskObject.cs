@@ -104,6 +104,11 @@ public class TaskObject : MonoBehaviour {
         yield break;
     }
 
+    public void OnRetrySign()
+    {
+        TaskManager.taskManager.OnOffSign(TaskManager.Type.Retry, true);
+    }
+
     public void SetSlotStatus(bool isPossible) //설치를 위한 슬롯 세팅
     {
         ClickSlot clickSlot = ButtonList[ButtonIdx].GetComponent<ClickSlot>();
@@ -151,8 +156,9 @@ public class TaskObject : MonoBehaviour {
 
     public void StartDisplay() //워프 엑싯의 경우에는 ClickSlot이 아니라 MouseDown으로 처리
     {
-        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, false);
-        
+        TaskManager.taskManager.OnOffSign(TaskManager.Type.Display, false);
+        TaskManager.taskManager.OnOffSign(TaskManager.Type.Retry, false);
+
         DisplayObject[DisplayIdx].SetActive(false);
         isClick = true;
         SetSlotStatus(false);
@@ -232,7 +238,7 @@ public class TaskObject : MonoBehaviour {
         if (isWarpExit)
             RoomManager.possibleDrag = false;
 
-        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, true);
+        TaskManager.taskManager.OnOffSign(TaskManager.Type.Display, true);
         SetSlotStatus(true);
 
         if (!isWarpExit)
@@ -258,6 +264,8 @@ public class TaskObject : MonoBehaviour {
         else
             yield return new WaitUntil(IsDisplayWarpExit);
 
+
+        TutorialTile[TutorialTileIdx].GetComponent<TutorialTile>().OffObjectMove();
         DisplayIdx++;
 
         InitDisplay(false);
@@ -368,7 +376,7 @@ public class TaskObject : MonoBehaviour {
 
     IEnumerator MoveMap()
     {
-        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, true);
+        TaskManager.taskManager.OnOffSign(TaskManager.Type.MoveMap, true);
 
         for (int i = 0; i < 3; i++)
         {
@@ -381,7 +389,7 @@ public class TaskObject : MonoBehaviour {
 
         yield return new WaitUntil(isMoveMap);
 
-        TaskManager.taskManager.OnOffSign(TaskManager.Type.Slide, false);
+        TaskManager.taskManager.OnOffSign(TaskManager.Type.MoveMap, false);
         DisplayObject[DisplayIdx].SetActive(false);
         DisplayIdx++;
 

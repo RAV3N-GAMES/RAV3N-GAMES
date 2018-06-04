@@ -18,6 +18,7 @@ public class ResultPopUp : MonoBehaviour
     public GameObject Success;
     public GameObject Fail;
 
+    public Animator Star;
     public Image prizePercent;
     public Text Fame;
     public Text Coin;
@@ -322,7 +323,10 @@ public class ResultPopUp : MonoBehaviour
         if (newFame.ToString() != Fame.text)
         {
             if (int.Parse(Fame.text) < newFame)
+            {
+                Star.SetTrigger("Play");
                 SoundManager.soundManager.ChangeBGM("46_SECURITY LEVEL");
+            }
             Fame.text = newFame.ToString();
             SetPlayerReward((int)PlusExp + PlayerExp);
         }
@@ -344,6 +348,7 @@ public class ResultPopUp : MonoBehaviour
 
     IEnumerator TutorialResult()
     {
+        Star.SetTrigger("Play");
         //없앤 적군 표시
         enemyGroupResult[0].isDone = false;
         enemyGroupResult[0].StartCoroutine("SetEnemyActive");
@@ -355,7 +360,6 @@ public class ResultPopUp : MonoBehaviour
         SoundManager.soundManager.OnEffectSound("40_RESULT SIGN");
         enemyGroupResult[0].SetSuccess();
         yield return new WaitForSeconds(1f);
-
         //거점 성공 여부 띄움
         SetSuccess(isSuccess);
         NextButton.enabled = true;

@@ -45,15 +45,19 @@ public class TaskManager : MonoBehaviour
 
     public enum Type
     {
-        Slide,
+        Display,
+        MoveMap,
         Select,
         LongSelect,
-        Slide2,
+        Retry,
         None
     }
 
     public void OnOffSign(Type type, bool isOn)
     {
+        if (type == Type.None)
+            return;
+
         Sign[(int)type].SetActive(isOn);
     }
 
@@ -126,6 +130,7 @@ public class TaskManager : MonoBehaviour
     {
         if (isPossibleClick != ClickObject.isPossibleClick)
             ClickObject.isPossibleClick = isPossibleClick;
+
         if (isMove)
         {
             if (RoomManager.possibleDrag)

@@ -198,9 +198,7 @@ public class SoundManager : MonoBehaviour {
         {
             if (effect.Key == effectName)
             {
-                print(effectName);
                 EffectAudio.clip = effect.Value;
-
                 EffectAudio.Play();
 
                 break;

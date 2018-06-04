@@ -7,6 +7,8 @@ public class DialogManager : MonoBehaviour {
     public TaskManager taskManager;
 
     public DialogText[] dialogText;
+    public GameObject MessageBox1;
+    public GameObject MessageBox2;
 
     string[] dialogs = 
         {
@@ -190,9 +192,17 @@ public class DialogManager : MonoBehaviour {
 
         dialogText[dialogTextIdx].gameObject.SetActive(true);
         dialogText[dialogTextIdx].InitText();
+
+        ChangeMessgeBox();
     }
 
+    void ChangeMessgeBox()
+    {
+        bool active = MessageBox1.activeSelf;
 
+        MessageBox1.SetActive(!active);
+        MessageBox2.SetActive(active);
+    }
 
     public void ClickDiaolg()
     {
