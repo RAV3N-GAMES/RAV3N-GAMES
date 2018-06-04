@@ -31,6 +31,7 @@ public class EnemyPickPocket : Enemy {
         base.EnemyInit();
         enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange;
         enemyAI.speed = 1.0f;
+        Stoppingdistance = enemyAI.stoppingDistance;
     }
 
     protected override IEnumerator EnemyAction()

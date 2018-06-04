@@ -46,7 +46,7 @@ public class FriendlyArmy : Friendly {
 			if (targetEnemy == null)
 			{
 				targetEnemy = other.GetComponent<Enemy>();
-				targetEnemy.GroupConductor.GroupRouteSet(GroupConductor.GetOrderFriendly());
+				//targetEnemy.GroupConductor.GroupRouteSet(GroupConductor.GetOrderFriendly());
 				GroupConductor.GroupRouteCall(targetEnemy);
 			}
 		}
