@@ -163,7 +163,6 @@ public class PoolManager : MonoBehaviour {
 		}
 		else if (EnemyPoolList[(int)type].Count <= 0)
 		{
-            Debug.Log("Pop Enemy when Count under 0 in PoolManager");
             GameObject obj = Instantiate(EnemyPrefabs[(int)type]);
             obj.name = EnemyPrefabs[(int)type].name;
 			obj.transform.SetParent(null);

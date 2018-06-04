@@ -90,8 +90,12 @@ public class EnemyGroup : MonoBehaviour {
                 Group_Special++;
             }
 
-            obj.GetComponentInChildren<Enemy>().isSeizure = (SecretManager.criteria < probability) ? false : true;
-            obj.GetComponentInChildren<Enemy>().Group = GroupId;
+            Enemy PopE = obj.GetComponentInChildren<Enemy>();
+            PopE.isSeizure = (SecretManager.criteria < probability) ? false : true;
+            PopE.Group = GroupId;
+            PopE.isDie = false;
+            PopE.isStolen = false;
+            PopE.isDefeated = false;
             obj.SetActive(false);
             obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
             yield return genDelay;

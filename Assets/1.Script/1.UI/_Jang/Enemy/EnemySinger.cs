@@ -19,13 +19,13 @@ public class EnemySinger : Enemy {
     }
 	public override void EnemyInit()
 	{
-        scollider.radius = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].AttackRange * 2;
+        scollider.radius = 3.0f;
         Hp = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].HP;
         Attack = EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].Attack;
         MaxHp = Hp;
         isHealer = true;
         base.EnemyInit();
-        enemyAI.stoppingDistance = scollider.radius;
+        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].AttackRange;
     }
 
     protected override IEnumerator GiveHeal()
@@ -47,14 +47,12 @@ public class EnemySinger : Enemy {
         {
             SetStart();
             SetDestination();
-            enemyAI.SetDestination(dest);
             yield return new WaitUntil(CalPath);
             if (isDie || isStolen || isDefeated)
                 break;
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
             {
                 SetDestination2nd();
-                enemyAI.SetDestination(dest);
                 yield return new WaitUntil(CalPath);
                 if (isDie || isStolen || isDefeated)
                     break;
@@ -62,7 +60,7 @@ public class EnemySinger : Enemy {
                 {
                     if (!targetFriend && !targetWall)
                     {
-                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
                         currentState = EnemyState.Walk;
                         enemyAI.isStopped = false;
                     }
@@ -80,6 +78,7 @@ public class EnemySinger : Enemy {
                 }
                 else
                 {
+                    enemyAI.SetDestination(dest);
                     currentState = EnemyState.Walk;
                     enemyAI.isStopped = false;
                 }
@@ -99,6 +98,7 @@ public class EnemySinger : Enemy {
             }
             else
             {
+                enemyAI.SetDestination(dest);
                 currentState = EnemyState.Walk;
                 enemyAI.isStopped = false;
             }
