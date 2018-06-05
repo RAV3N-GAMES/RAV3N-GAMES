@@ -240,15 +240,12 @@ public class RoomManager : MonoBehaviour {
         if (touch0.phase == TouchPhase.Moved || touch1.phase == TouchPhase.Moved)
         {
             float dis = Vector3.Distance(touch0.position, touch1.position);
-            //Vector3 camPos = Camera.main.transform.position;
             float camSize = Camera.main.orthographicSize;
 
             if (dis < touchDistance && camSize < 15)
                 Camera.main.orthographicSize = camSize + 0.1f;
-            //Camera.main.transform.position = new Vector3(camPos.x, camPos.y + 0.1f, camPos.z);
             else if (dis > touchDistance && camSize > 3)
                 Camera.main.orthographicSize = camSize - 0.1f;
-            //Camera.main.transform.position = new Vector3(camPos.x, camPos.y - 0.1f, camPos.z);
         }
         touchDistance = Vector3.Distance(touch0.position, touch1.position);
     }
@@ -351,13 +348,39 @@ public class RoomManager : MonoBehaviour {
             miniMapManager.MoveMapRoom(CenterRoomIdx);
         }
 
-        if (Input.touchCount == 2)
+        if (pointerId == 0)
         {
-            if (possibleDrag && possibleZoom)
-                ZoomInOut();
+            if (Input.touchCount == 2)
+            {
+                if (possibleDrag && possibleZoom)
+                    ZoomInOut();
+            }
+            else if (Input.touchCount == 1)
+            {
+                if (!EventSystem.current.IsPointerOverGameObject(pointerId))
+                {
+                    if (isMove && possibleDrag)
+                    {
+                        conPos = GetRay();
+                        if (isCameraInRoom())
+                            Camera.main.transform.position += (prePos - conPos);
+                        prePos = conPos;
+                    }
+                }
+            }
         }
-        //else if (Input.touchCount == 1)
+        else
         {
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            Vector3 pos = Camera.main.gameObject.transform.position;
+            
+            float camSize = Camera.main.orthographicSize;
+
+            if (scroll > 0 && camSize < 15)
+                Camera.main.orthographicSize = camSize + 0.1f;
+            else if (scroll < 0 && camSize > 3)
+                Camera.main.orthographicSize = camSize - 0.1f;
+
             if (!EventSystem.current.IsPointerOverGameObject(pointerId))
             {
                 if (isMove && possibleDrag)

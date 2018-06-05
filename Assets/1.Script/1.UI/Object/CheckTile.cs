@@ -343,20 +343,20 @@ public class CheckTile : MonoBehaviour {
                     OnCheckTile();
             }
 
-            //if (tag.Equals("Trap"))
-            //{
-            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-            //    Trap t = GetComponentInChildren<Trap>();
-            //    if (EG.Traps.Contains(t))
-            //        EG.Traps.Remove(t);
-            //}
-            //
-            //if (tag.Equals("Secret")) {
-            //    EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
-            //    SecretActs s = GetComponentInChildren<SecretActs>();
-            //    if (EG.Secrets.Contains(s))
-            //        EG.Secrets.Remove(s);
-            //}
+            if (tag.Equals("Trap"))
+            {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                Trap t = GetComponentInChildren<Trap>();
+                if (EG.Traps.Contains(t))
+                    EG.Traps.Remove(t);
+            }
+            
+            if (tag.Equals("Secret")) {
+                EnemyGroup EG = col.GetComponentInParent<EnemyGroup>();
+                SecretActs s = GetComponentInChildren<SecretActs>();
+                if (EG.Secrets.Contains(s))
+                    EG.Secrets.Remove(s);
+            }
         }
     }
 }

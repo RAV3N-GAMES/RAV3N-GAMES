@@ -1,0 +1,40 @@
+Initialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce 940MX (ID=0x134d)
+    Vendor:   NVIDIA
+    VRAM:     2020 MB
+    Driver:   23.21.13.8873
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Secret of 51 v1.0\Secretof51_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Secret of 51 v1.0\Secretof51_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.230 seconds
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Secret of 51 v1.0\Secretof51_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.297918 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.842871 ms
+Object reference not set to an instance of an object
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+
+Unloading 596 unused Assets to reduce memory usage. Loaded Objects now: 115652.
+Total: 40.958241 ms (FindLiveObjects: 9.363614 ms CreateObjectMapping: 4.467620 ms MarkObjects: 26.466953 ms  DeleteObjects: 0.659199 ms)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 1900 -> priority: 1 
+  Thread -> id: 2854 -> priority: 1 

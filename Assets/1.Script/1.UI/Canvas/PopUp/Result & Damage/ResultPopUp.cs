@@ -19,6 +19,8 @@ public class ResultPopUp : MonoBehaviour
     public GameObject Fail;
 
     public Animator Star;
+    public ParticleSystem StartEffect;
+
     public Image prizePercent;
     public Text Fame;
     public Text Coin;
@@ -324,6 +326,7 @@ public class ResultPopUp : MonoBehaviour
         {
             if (int.Parse(Fame.text) < newFame)
             {
+                //StartEffect.Play();
                 Star.SetTrigger("Play");
                 SoundManager.soundManager.ChangeBGM("46_SECURITY LEVEL");
             }
@@ -348,6 +351,7 @@ public class ResultPopUp : MonoBehaviour
 
     IEnumerator TutorialResult()
     {
+        //StartEffect.Play();
         Star.SetTrigger("Play");
         //없앤 적군 표시
         enemyGroupResult[0].isDone = false;
@@ -355,7 +359,7 @@ public class ResultPopUp : MonoBehaviour
 
         yield return new WaitUntil(enemyGroupResult[0].GetIsDone);
         yield return new WaitForSeconds(1f);
-
+        //StartEffect.Play();
         //제압 성공한 적군 집단 표시
         SoundManager.soundManager.OnEffectSound("40_RESULT SIGN");
         enemyGroupResult[0].SetSuccess();
