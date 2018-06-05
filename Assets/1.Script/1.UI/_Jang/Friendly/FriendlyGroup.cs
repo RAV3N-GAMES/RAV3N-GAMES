@@ -81,10 +81,7 @@ public class FriendlyGroup : MonoBehaviour {
 	}
 	public Friendly GetLessHpFriendly()
 	{
-		if (friendList.Count <= 0)
-			return null;
-
-		int index = 0;
+        Friendly F=null;
 		int min = int.MaxValue;
 
 		for (int i = 0; i < friendList.Count; ++i)
@@ -92,16 +89,15 @@ public class FriendlyGroup : MonoBehaviour {
 			if (min > friendList[i].Hp)
 			{
 				min = friendList[i].Hp;
-				index = i;
+				F = friendList[i];
 			}
 		}
 
-		if (friendList[index].Hp < friendList[index].MaxHp)
-			return friendList[index];
-		else
-			return null;
+        if (F.Hp >= F.MaxHp)
+            F = null;
 
-	}		//HP가 제일 적은 그룹원을 넘김	
+        return F;
+	}		//HP가 제일 적은 그룹원 중 피가 까인 그룹원을 넘김	
 	public void GroupRouteCall(Enemy target)//그룹원 타겟이 없다면 타겟을 잡아줌
 	{
 		for(int i =0; i<friendList.Count; ++i)

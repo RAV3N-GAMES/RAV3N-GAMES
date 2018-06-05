@@ -183,16 +183,7 @@ public class Enemy : MonoBehaviour {
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
     }
-
-    protected void ClearEnemies()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            enemies[i].GetComponentInChildren<Enemy>().EscapeCoroutine();
-        }
-    }
-
+    
     public IEnumerator StealEvent() {
         GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
         List<Enemy> List = new List<Enemy>();
@@ -239,6 +230,16 @@ public class Enemy : MonoBehaviour {
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
     }
+
+    protected void ClearEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponentInChildren<Enemy>().EscapeCoroutine();
+        }
+    }
+
     public SecretActs FindClosestSecret(Vector3 start)
     {
         SecretActs Closest = null;
@@ -384,7 +385,6 @@ public class Enemy : MonoBehaviour {
         if (Vector3.Distance(SetYZero(NavObj), SetYZero(OriginalPoint.transform)) <= enemyAI.stoppingDistance)
         {
             ClearEnemies();//Find all Enemies and Escape them.
-            DnN.changeState();
         }
         else if (isSeizure && targetSecret && Vector3.Distance(SetYZero(NavObj), SetYZero(targetSecret.transform)) <= enemyAI.stoppingDistance)
         {

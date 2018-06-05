@@ -164,10 +164,19 @@ public class Friendly : MonoBehaviour
                 targetEnemy = null;
         }
     }
+    
     public void Hit()                            //ATTACK 애니메이션 이벤트 
     {
-        if (targetEnemy == null)
+        if (!transform.parent.name.Equals("Friendly_ResearchStudent") && targetEnemy == null)
             return;
+        
+        if (transform.parent.name.Equals("Friendly_ResearchStudent")) {
+            FriendlyResearcher FR = (FriendlyResearcher)this;
+            if (!FR.healTarget)
+            {
+                return;
+            }
+        }
 
         if (AttackCount >= AttackEventMax && !isSkill)
         {
@@ -270,7 +279,11 @@ public class Friendly : MonoBehaviour
         isShoot = false;
     }
 
-    private void FriendlyAction()
+    protected Friendly GetHealTarget() {
+        return GroupConductor.GetLessHpFriendly();
+    }
+
+    protected virtual void FriendlyAction()
     {
         if (targetEnemy != null)
         {
@@ -296,7 +309,7 @@ public class Friendly : MonoBehaviour
         {
             OriginalDest();
         }
-
+        
         //진행 경로에 따라 좌우 변경
         if (PrevPos == Vector3.zero)
         {
@@ -317,7 +330,7 @@ public class Friendly : MonoBehaviour
         }
     }
 
-    private void Flip()
+    protected void Flip()
     {
         faceLeft = !faceLeft;
         Vector3 theScale = transform.localScale;

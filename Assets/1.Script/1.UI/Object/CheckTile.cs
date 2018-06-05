@@ -328,7 +328,6 @@ public class CheckTile : MonoBehaviour {
                     List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
                     if (!list.Contains(F))
                     {
-                        Debug.Log("Can't find this on " + col.GetComponentInParent<FriendlyGroup>().GroupIndex);
                         list.Add(F);
                         F.GroupConductor = col.GetComponentInParent<FriendlyGroup>();
                     }

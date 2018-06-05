@@ -19,13 +19,15 @@ public class GameManager : MonoBehaviour {
 	public Transform CommandPost;	
 	public EnemyGroup[]	enemyGroups;
 	public FriendlyGroup[] friendGroups;
-    
+    public EnemyClusterManager ECM;
 	public CubeObject getRayTrans;
 	private LayerMask tileMask;
 	private bool isFloorClick;
     public static int OppressedEnemy;
+    public DayandNight Curtain;
+
     public static bool GenerateComplete;
-	
+
 	public int GetRoomIndex
 	{
 		get { return roomManager.CenterRoomIdx; }
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour {
 	private void Awake()
 	{
         GenerateComplete = false;
-
+        ECM = GameObject.Find("Managers").GetComponent<EnemyClusterManager>();
         if (current == null)
 			current = this;
 		else
@@ -78,7 +80,6 @@ public class GameManager : MonoBehaviour {
                 break;
             }
         }
-
         EnemyManager.EnemyGroupMax = ResourceManager_Player.Tbl_Player[Data_Player.Fame - 4].enemyClusterNumber;
     }
 	private void RayEvent()
