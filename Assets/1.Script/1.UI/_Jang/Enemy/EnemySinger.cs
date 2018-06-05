@@ -26,6 +26,7 @@ public class EnemySinger : Enemy {
         isHealer = true;
         base.EnemyInit();
         enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 106].AttackRange;
+        Stoppingdistance = enemyAI.stoppingDistance;
     }
 
     protected override IEnumerator GiveHeal()

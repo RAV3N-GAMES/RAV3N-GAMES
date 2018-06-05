@@ -9,6 +9,7 @@ public class ParticleObject : MonoBehaviour {
 	{
 		particle = GetComponent<ParticleSystem>();
 	}
+
 	private void OnEnable()
 	{
 		particle.Play();

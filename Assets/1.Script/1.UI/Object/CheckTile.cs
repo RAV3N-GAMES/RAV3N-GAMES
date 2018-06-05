@@ -321,6 +321,21 @@ public class CheckTile : MonoBehaviour {
                 if (!EG.Secrets.Contains(s))
                     EG.Secrets.Add(s);
             }
+
+            if (tag.Equals("Friendly")) {
+                try {
+                    Friendly F = GetComponentInChildren<Friendly>(true);
+                    List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
+                    if (!list.Contains(F))
+                    {
+                        list.Add(F);
+                        F.GroupConductor = col.GetComponentInParent<FriendlyGroup>();
+                    }
+                }
+                catch {
+
+                }
+            }
         }
     }
 
@@ -356,6 +371,22 @@ public class CheckTile : MonoBehaviour {
                 SecretActs s = GetComponentInChildren<SecretActs>();
                 if (EG.Secrets.Contains(s))
                     EG.Secrets.Remove(s);
+            }
+
+            if (tag.Equals("Friendly")) {
+                try
+                {
+                    Friendly F = GetComponentInChildren<Friendly>(true);
+                    List<Friendly> list = col.GetComponentInParent<FriendlyGroup>().friendList;
+
+                    if (list.Contains(F))
+                    {
+                        list.Remove(F);
+                    }
+                }
+                catch {
+
+                }
             }
         }
     }

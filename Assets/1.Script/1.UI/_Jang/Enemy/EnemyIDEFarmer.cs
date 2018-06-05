@@ -25,5 +25,6 @@ public class EnemyIDEFarmer : Enemy {
         base.EnemyInit();
         enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 62].AttackRange;
         enemyAI.speed = 1.0f;
+        Stoppingdistance = enemyAI.stoppingDistance;
     }
 }

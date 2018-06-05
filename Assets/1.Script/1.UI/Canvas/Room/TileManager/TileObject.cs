@@ -56,7 +56,6 @@ public class TileObject {
                 break;
             case 2:
                 repairCost = Mathf.CeilToInt(damageHP * (float)JsonDataManager.GetOurForcesInfo(objectInfo.id, objectInfo.level).HealCost);
-                Debug.Log("damageHP : " + damageHP + " HealCost : " + (float)JsonDataManager.GetOurForcesInfo(objectInfo.id, objectInfo.level).HealCost + " repairCost : " + repairCost);
                 break;
         }
 

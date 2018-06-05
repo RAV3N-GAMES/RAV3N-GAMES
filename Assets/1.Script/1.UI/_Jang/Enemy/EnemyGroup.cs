@@ -115,9 +115,9 @@ public class EnemyGroup : MonoBehaviour {
             EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
             obj.SetActive(true);
             obj.GetComponentInChildren<Enemy>().EnemyActionStart();
-            GameManager.GenerateComplete = true;
         }
         Count++;
+        GameManager.GenerateComplete = true;
     }
 
     public void GroupMemberInit(float probability, int GroupId, int EnemygroupIdx, int GenerateCount)

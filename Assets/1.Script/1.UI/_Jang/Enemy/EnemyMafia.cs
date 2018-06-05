@@ -26,5 +26,6 @@ public class EnemyMafia : Enemy {
         isHealer = false;
 		base.EnemyInit();
         enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 18].AttackRange;
-	}
+        Stoppingdistance = enemyAI.stoppingDistance;
+    }
 }

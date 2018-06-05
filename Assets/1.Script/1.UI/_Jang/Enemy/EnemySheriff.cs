@@ -23,5 +23,6 @@ public class EnemySheriff : Enemy {
         isHealer = false;
         base.EnemyInit();
         enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 84].AttackRange;
+        Stoppingdistance = enemyAI.stoppingDistance;
     }
 }

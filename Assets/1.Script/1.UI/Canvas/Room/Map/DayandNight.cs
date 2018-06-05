@@ -50,19 +50,45 @@ public class DayandNight : MonoBehaviour
                 break;
         }
     }
-    // Update is called once per frame
-    void Update() {
-        if (EnemyClusterManager.IsStageEnd && isDay) {
-            changeState();
-            GameManager.GenerateComplete = false;
-        }
+
+    public void TurnToDay() {
+        Debug.Log("Turn to day");
+        isDay = true;
+        roomManager.OnOffHitCollider();
+        ReadyButton.SetActive(!isDay);
+        InActReadyButton.SetActive(isDay);
+
+        SoundManager.soundManager.ChangeBGM("4_DAY START");
+        curtain.transform.Rotate(0, 90, 0);
+        ClearEnemyData();
+
+        TrapEnable(isDay);
+        if (FindObjectOfType<TaskManager>() == null)
+            EnemyEnable(isDay);
+        CharacterEnable(isDay);
+    }
+
+    public void TurnToNight() {
+        isDay = false;
+        Debug.Log("Turn to night");
+        roomManager.OnOffHitCollider();
+        ReadyButton.SetActive(!isDay);
+        InActReadyButton.SetActive(isDay);
+
+        resultPopUp.gameObject.SetActive(true);
+        resultPopUp.InitResultPopUp();
+
+        curtain.transform.Rotate(0, -90, 0);
+
+        TrapEnable(isDay);
+        if (FindObjectOfType<TaskManager>() == null)
+            EnemyEnable(isDay);
+        CharacterEnable(isDay);
     }
 
     public void changeState() {
         isDay = !isDay;
-
         roomManager.OnOffHitCollider();
-
         ReadyButton.SetActive(!isDay);
         InActReadyButton.SetActive(isDay);
 

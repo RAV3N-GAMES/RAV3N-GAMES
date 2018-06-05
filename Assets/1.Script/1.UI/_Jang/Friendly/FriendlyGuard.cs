@@ -20,7 +20,7 @@ public class FriendlyGuard : Friendly {
 	{
 		isSkill = true;
 		GroupConductor.GroupSpeedSet(3);
-		targetEnemy.GroupConductor.GroupRouteSet(this);
+//		targetEnemy.GroupConductor.GroupRouteSet(this);
 		StartCoroutine("AggroEvent");
 	}
 	//2초동안 같은 파티원 이동 속도 3배 , 타겟 우선순위 경비병으로 
@@ -30,8 +30,8 @@ public class FriendlyGuard : Friendly {
 		Friendly temp = null; 
 		GroupConductor.GroupSpeedSet(1);
 		temp = GroupConductor.GetOrderFriendly();
-		if(targetEnemy != null)
-			targetEnemy.GroupConductor.GroupRouteSet(temp);
+		/*if(targetEnemy != null)
+			targetEnemy.GroupConductor.GroupRouteSet(temp);*/
 		AttackCount = 0;
 		isSkill = false;
 	}
@@ -46,7 +46,7 @@ public class FriendlyGuard : Friendly {
 			if (targetEnemy == null)
 			{
 				targetEnemy = other.GetComponent<Enemy>();
-				targetEnemy.GroupConductor.GroupRouteSet(GroupConductor.GetOrderFriendly());
+				//targetEnemy.GroupConductor.GroupRouteSet(GroupConductor.GetOrderFriendly());
 				GroupConductor.GroupRouteCall(targetEnemy);
 			}
 		}

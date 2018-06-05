@@ -36,7 +36,8 @@ public class HealthSystem : MonoBehaviour
 			return;
 
 		targetPos = Camera.main.WorldToScreenPoint(transform.position);
-		sliderRect.position = targetPos + Vector3.up * 30;
+		sliderRect.position = targetPos + Vector3.up * 180;
+        sliderRect.localScale = new Vector3(2, 2, 2);
 	}
 	public void ValueInit(int value)
 	{
