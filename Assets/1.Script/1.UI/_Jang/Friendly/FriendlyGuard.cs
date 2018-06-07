@@ -20,21 +20,24 @@ public class FriendlyGuard : Friendly {
 	{
 		isSkill = true;
 		GroupConductor.GroupSpeedSet(3);
+        targetEnemy.myCluster.targetFriend = this;
 //		targetEnemy.GroupConductor.GroupRouteSet(this);
 		StartCoroutine("AggroEvent");
 	}
 	//2초동안 같은 파티원 이동 속도 3배 , 타겟 우선순위 경비병으로 
 	private IEnumerator AggroEvent()
 	{
+        Debug.Log("AggroEvent start");
 		yield return new WaitForSeconds(2f);
-		Friendly temp = null; 
 		GroupConductor.GroupSpeedSet(1);
-		temp = GroupConductor.GetOrderFriendly();
+        targetEnemy.myCluster.GetPriorFriend();
 		/*if(targetEnemy != null)
 			targetEnemy.GroupConductor.GroupRouteSet(temp);*/
 		AttackCount = 0;
 		isSkill = false;
+        Debug.Log("Aggroevent end");
 	}
+
 
 	private void OnTriggerStay(Collider other)
 	{

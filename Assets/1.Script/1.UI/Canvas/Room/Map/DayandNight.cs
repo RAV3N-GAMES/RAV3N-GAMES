@@ -52,7 +52,6 @@ public class DayandNight : MonoBehaviour
     }
 
     public void TurnToDay() {
-        Debug.Log("Turn to day");
         isDay = true;
         roomManager.OnOffHitCollider();
         ReadyButton.SetActive(!isDay);
@@ -70,7 +69,6 @@ public class DayandNight : MonoBehaviour
 
     public void TurnToNight() {
         isDay = false;
-        Debug.Log("Turn to night");
         roomManager.OnOffHitCollider();
         ReadyButton.SetActive(!isDay);
         InActReadyButton.SetActive(isDay);

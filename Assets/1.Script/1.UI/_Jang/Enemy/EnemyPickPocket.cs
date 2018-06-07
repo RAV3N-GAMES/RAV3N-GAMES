@@ -59,7 +59,10 @@ public class EnemyPickPocket : Enemy {
                         {
                             transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
                             currentState = EnemyState.Walk;
-                            enemyAI.isStopped = false;
+                            if (!Movable)
+                                enemyAI.isStopped = true;
+                            else
+                                enemyAI.isStopped = false;
                         }
                     }
                     else
@@ -76,7 +79,10 @@ public class EnemyPickPocket : Enemy {
                         else {
                             transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
                             currentState = EnemyState.Walk;
-                            enemyAI.isStopped = false;
+                            if (!Movable)
+                                enemyAI.isStopped = true;
+                            else
+                                enemyAI.isStopped = false;
                         }
                     }
                 }
@@ -93,7 +99,10 @@ public class EnemyPickPocket : Enemy {
                 {
                     enemyAI.SetDestination(dest);
                     currentState = EnemyState.Walk;
-                    enemyAI.isStopped = false;
+                    if (!Movable)
+                        enemyAI.isStopped = true;
+                    else
+                        enemyAI.isStopped = false;
                 }
             }
             else if (targetFriend && IsNear(NavObj, targetFriend.transform))
@@ -109,7 +118,38 @@ public class EnemyPickPocket : Enemy {
             {
                 enemyAI.SetDestination(dest);
                 currentState = EnemyState.Walk;
-                enemyAI.isStopped = false;
+                if (!Movable)
+                    enemyAI.isStopped = true;
+                else
+                    enemyAI.isStopped = false;
+            }
+
+            enemyAI.stoppingDistance = Stoppingdistance;
+            ChangeAnimation();
+
+            Distance = Vector3.Distance(start, dest);
+            if (Distance <= enemyAI.stoppingDistance)
+            {
+                ArrivedAction();
+            }
+
+            //진행 경로에 따라 좌우 변경
+            if (PrevPos == Vector3.zero)
+            {
+                PrevPos = transform.position;
+            }
+            else
+            {
+                if (transform.position.x - PrevPos.x > 0.01)
+                {
+                    isLeft = false;
+                }
+                else
+                    isLeft = true;
+                if (isLeft != faceLeft)
+                    Flip();
+
+                PrevPos = transform.position;
             }
         }
     }

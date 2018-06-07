@@ -240,6 +240,9 @@ public class Friendly : MonoBehaviour
     public bool Health(int damage)
     {
         Hp -= damage;
+        if (Hp >= MaxHp) { 
+            Hp = MaxHp;
+        }
         UiHealth.ValueDecrease(damage);
         if(damage>=0)
             DamageStack++;
