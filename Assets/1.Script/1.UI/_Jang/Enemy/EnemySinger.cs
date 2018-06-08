@@ -34,6 +34,7 @@ public class EnemySinger : Enemy {
         if (healTarget == null)
             yield break;
 
+        Debug.Log(healTarget + " GiveHeal");
         healTarget.Health(-Attack);
         GameManager.ParticleGenerate(effectType,
             healTarget.NavObj.position);
@@ -61,24 +62,28 @@ public class EnemySinger : Enemy {
                 {
                     if (!targetFriend && !targetWall)
                     {
-                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                         currentState = EnemyState.Walk;
-                        if (!Movable)
-                            enemyAI.isStopped = true;
-                        else
-                            enemyAI.isStopped = false;
+                        enemyAI.isStopped = true;
                     }
                     else
                     {
-                        currentState = EnemyState.Idle;
-                        enemyAI.isStopped = true;
+                        for (int i = 0; i < myCluster.eList.Count; i++) {
+                            if (myCluster.eList[i] != this) {
+                                dest = SetYZero(myCluster.eList[i].transform);
+                                enemyAI.SetDestination(dest);
+                                if (!Movable)
+                                {
+                                    currentState = EnemyState.Idle;
+                                    enemyAI.isStopped = true;
+                                }
+                                else {
+                                    currentState = EnemyState.Walk;
+                                    enemyAI.isStopped = false;
+                                }
+                            }
+                        }
                     }
-                }
-                else if (targetFriend && IsNear(NavObj, targetFriend.transform))
-                {
-                    currentState = EnemyState.Idle;
-                    enemyAI.isStopped = true;
-
                 }
                 else
                 {
@@ -98,19 +103,33 @@ public class EnemySinger : Enemy {
                     StartCoroutine(GiveHeal());
                 }
             }
-            else if (targetFriend && IsNear(NavObj, targetFriend.transform))
+            else if (healTarget && !IsNear(NavObj, healTarget.transform))
             {
-                currentState = EnemyState.Idle;
-                enemyAI.isStopped = true;
+                enemyAI.SetDestination(SetYZero(healTarget.transform));
+                if (!Movable)
+                {
+                    enemyAI.isStopped = true;
+                    currentState = EnemyState.Idle;
+                }
+                else {
+                    enemyAI.isStopped = false;
+                    currentState = EnemyState.Walk;
+                }
             }
             else
             {
                 enemyAI.SetDestination(dest);
                 currentState = EnemyState.Walk;
                 if (!Movable)
+                {
                     enemyAI.isStopped = true;
+                    currentState = EnemyState.Idle;
+                }
                 else
+                {
                     enemyAI.isStopped = false;
+                    currentState = EnemyState.Walk;
+                }
             }
 
             enemyAI.stoppingDistance = Stoppingdistance;

@@ -23,7 +23,7 @@ public class EnemyIDEFarmer : Enemy {
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 62].AttackRange;
+        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 62].AttackRange*2;
         enemyAI.speed = 1.0f;
         Stoppingdistance = enemyAI.stoppingDistance;
     }

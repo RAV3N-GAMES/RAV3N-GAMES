@@ -29,7 +29,7 @@ public class EnemyPickPocket : Enemy {
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange;
+        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange*2;
         enemyAI.speed = 1.0f;
         Stoppingdistance = enemyAI.stoppingDistance;
     }
@@ -57,12 +57,9 @@ public class EnemyPickPocket : Enemy {
                     {
                         if (!IsNear(NavObj, targetTrap.transform))
                         {
-                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                             currentState = EnemyState.Walk;
-                            if (!Movable)
-                                enemyAI.isStopped = true;
-                            else
-                                enemyAI.isStopped = false;
+                            enemyAI.isStopped = true;
                         }
                     }
                     else
@@ -77,12 +74,9 @@ public class EnemyPickPocket : Enemy {
                             }
                         }
                         else {
-                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                             currentState = EnemyState.Walk;
-                            if (!Movable)
-                                enemyAI.isStopped = true;
-                            else
-                                enemyAI.isStopped = false;
+                            enemyAI.isStopped = true;
                         }
                     }
                 }
@@ -98,6 +92,7 @@ public class EnemyPickPocket : Enemy {
                 else
                 {
                     enemyAI.SetDestination(dest);
+                    Debug.Log("destObj: " + DestObj + "dest: " + dest);
                     currentState = EnemyState.Walk;
                     if (!Movable)
                         enemyAI.isStopped = true;

@@ -67,9 +67,10 @@ public class Enemy : MonoBehaviour {
     public bool isShoot;                   //딜레이와 공격을 맞추기위한 
     protected bool isHeal;
     protected Vector3 PrevPos;
-
+    public bool ExitLock;
     public string destname = "";
     public float Stoppingdistance;
+    public GameObject DestObj;
 
     //기능 초기화
     public virtual void EnemyInit()
@@ -205,7 +206,6 @@ public class Enemy : MonoBehaviour {
             List[i].scollider.enabled = false;
             List[i].UIEnemyHealth.HealthActvie(false);
             List[i].GroupConductor.RemoveEnemy(this);
-            List[i].myCluster.eList.Remove(this);
             yield return new WaitForSeconds(0.5f);
             List[i].transform.parent.gameObject.SetActive(false);
             PoolManager.current.PushEnemy(List[i].NavObj.gameObject);
@@ -218,7 +218,7 @@ public class Enemy : MonoBehaviour {
         scollider.enabled = false;
         UIEnemyHealth.HealthActvie(false);
         GroupConductor.RemoveEnemy(this);
-        myCluster.eList.Remove(this);
+        myCluster.eList.Clear();
         yield return new WaitForSeconds(0.5f);
         SecretManager.SecretList.Remove(targetSecret);
         SecretManager.SecretCount--;
@@ -393,6 +393,9 @@ public class Enemy : MonoBehaviour {
         else if (myCluster.isGathered())
         {//next room 출구에 다 모인 경우
             myCluster.MoveToNextRoom(nextIdx, Exitdirection);
+            for (int i = 0; i < myCluster.eList.Count; i++) {
+                myCluster.eList[i].ExitLock = false;
+            }
         }
         else {
             if (IsNearExit()) {
@@ -426,6 +429,7 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
+        ExitLock = false;
         Movable = true;
         Audio = GetComponent<AudioSource>();
         AppearClip= Resources.Load<AudioClip>("Audio/Character/Enemy/All") as AudioClip;
@@ -459,7 +463,7 @@ public class Enemy : MonoBehaviour {
     {
         if (col.CompareTag("Wall"))
         {
-            Wall w = col.GetComponent<Wall>();
+            Wall w = col.GetComponentInParent<Wall>();
             if (myCluster.GroupNearWall.Contains(w))
             {
                 myCluster.GroupNearWall.Remove(w);
@@ -534,18 +538,21 @@ public class Enemy : MonoBehaviour {
         if (targetFriend) {
             dest = SetYZero(targetFriend.transform);
             destname = targetFriend.transform.parent.name;
+            DestObj = targetFriend.gameObject;
         }
         else if (isSeizure && targetSecret)
         {
             dest = SetYZero(targetSecret.transform);
             destname = targetSecret.name;
+            DestObj = targetSecret.gameObject;
         }
         else
         {
             dest = SetYZero(OriginalPoint.transform);
             destname = "OriginalPoint";
+            DestObj = OriginalPoint.gameObject;
         }
-
+        
         if (isHealer)
         {
             Enemy e;
@@ -554,6 +561,7 @@ public class Enemy : MonoBehaviour {
                 healTarget = e;
                 dest = SetYZero(healTarget.NavObj);
                 destname = healTarget.transform.parent.name;
+                DestObj = healTarget.gameObject;
             }
         }
 
@@ -565,13 +573,17 @@ public class Enemy : MonoBehaviour {
             if (NearTrap.Count > 0)
             {
                 epp.targetTrap = NearTrap[0];
-                if (epp.targetTrap) { 
+                if (epp.targetTrap)
+                {
                     dest = SetYZero(epp.targetTrap.transform);
                     destname = epp.targetTrap.name;
+                    DestObj = epp.targetTrap.gameObject;
                 }
             }
             else
+            {
                 epp.targetTrap = null;
+            }
         }
     }
 
@@ -758,15 +770,19 @@ public class Enemy : MonoBehaviour {
         {
             dest = SetYZero(targetFriend.transform);
             destname = targetFriend.transform.parent.name;
+            DestObj = targetFriend.gameObject;
         }
         else if (targetWall) {
             dest = SetYZero(targetWall.transform);
             destname = targetWall.name;
+            DestObj = targetWall.gameObject;
         }
         else if (PresentRoomidx >= 0 && PresentRoomidx <= 24)
         {
             dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
             destname = "ExitPoint " + Exitdirection;
+            ExitLock = true;
+            DestObj = GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject;
         }
 
         if (isHealer)
@@ -777,6 +793,7 @@ public class Enemy : MonoBehaviour {
                 healTarget = e;
                 dest = SetYZero(healTarget.NavObj);
                 destname = healTarget.transform.parent.name;
+                ExitLock = false;
             }
         }
 
@@ -793,6 +810,7 @@ public class Enemy : MonoBehaviour {
                 if (epp.targetTrap) { 
                     dest = SetYZero(epp.targetTrap.transform);
                     destname = epp.targetTrap.name;
+                    ExitLock = false;
                 }
             }
             else
@@ -812,12 +830,14 @@ public class Enemy : MonoBehaviour {
                 break;
             if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
             {
+                Debug.Log("Entering 1st lock");
                 SetDestination2nd();
                 yield return new WaitUntil(CalPath);
                 if (isDie || isStolen || isDefeated)
                     break;
                 if (enemyAI.pathStatus == NavMeshPathStatus.PathInvalid || enemyAI.pathStatus == NavMeshPathStatus.PathPartial)
                 {
+                    Debug.Log("Entering 2nd lock");
                     if (targetFriend && IsNear(NavObj, targetFriend.transform))
                     {
                         if (!isShoot)
@@ -836,14 +856,36 @@ public class Enemy : MonoBehaviour {
                             enemyAI.isStopped = true;
                         }
                     }
+                    else if (targetFriend) {
+                        enemyAI.SetDestination(SetYZero(targetFriend.transform));
+                        if (!Movable)
+                        {
+                            enemyAI.isStopped = true;
+                            currentState = EnemyState.Idle;
+                        }
+                        else {
+                            enemyAI.isStopped = false;
+                            currentState = EnemyState.Walk;
+                        }
+                    }
+                    else if (targetWall) {
+                        enemyAI.SetDestination(SetYZero(targetWall.transform));
+                        if (!Movable)
+                        {
+                            enemyAI.isStopped = true;
+                            currentState = EnemyState.Idle;
+                        }
+                        else
+                        {
+                            enemyAI.isStopped = false;
+                            currentState = EnemyState.Walk;
+                        }
+                    }
                     else
                     {
-                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                         currentState = EnemyState.Walk;
-                        if (!Movable)
-                            enemyAI.isStopped = true;
-                        else
-                            enemyAI.isStopped = false;
+                        enemyAI.isStopped = true;
                     }
                 }
                 else if (targetFriend && IsNear(NavObj, targetFriend.transform))
