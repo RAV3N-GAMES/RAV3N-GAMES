@@ -328,12 +328,6 @@ public class RoomManager : MonoBehaviour {
 
     void Update()
     {
-        if (test != possibleDrag)
-        {
-            print("possibleDrag : " + possibleDrag);
-            test = possibleDrag;
-        }
-
         int pointerId = 0;
         
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE

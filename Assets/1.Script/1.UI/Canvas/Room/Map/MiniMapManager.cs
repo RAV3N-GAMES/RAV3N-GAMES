@@ -109,7 +109,7 @@ public class MiniMapManager : MonoBehaviour
 
                 if (MapManager.isOpen[i][j] == MapManager.Type.CLOSE)
                 {
-                    if (GetOpenRoomCnt() >= MapManager.tempFame)
+                    if (GetOpenRoomCnt() >= Data_Player.Fame)
                         newRoom.SetActive(false);
                     else
                         newRoom.GetComponent<Image>().color = new Color(0, 0, 1, 1);

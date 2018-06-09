@@ -75,7 +75,7 @@ public static class Data_Player
         }
         catch (System.NullReferenceException) {; }
     }
-    public static void addFame(int add_f) { Fame += add_f; }
+    public static void addFame(int add_f) { Fame += add_f; MapManager.mapManager.ChangedFame(); }
     public static void subGold(int sub_g) {
         Gold -= sub_g;
         try
@@ -85,7 +85,7 @@ public static class Data_Player
         }
         catch (System.NullReferenceException) { ; }
     }
-    public static void subFame(int sub_f) { Fame -= sub_f; }
+    public static void subFame(int sub_f) { Fame -= sub_f; MapManager.mapManager.ChangedFame(); }
     public static void addLvExperience(int add_le) { LvExperience += add_le; }
     public static void addExperience(int add_e)
     {//player level이 최대치면 경험치 오르지 않음.

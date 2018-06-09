@@ -26,6 +26,7 @@ public class Map
 
 public class MapManager : MonoBehaviour
 {
+    public static MapManager mapManager;
     public bool isSave;
 
     public Transform MapCameraPos;
@@ -41,8 +42,8 @@ public class MapManager : MonoBehaviour
     //index : Step..? , value : 활성화되는 Fame
     //static int[] Fame = { 0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 8 };
 
-    public static int tempFame = 0;
-    public Text tempFameText;
+    //public static int tempFame = 0;
+    //public Text tempFameText;
 
     static float Edge;
     public static int Step;           //이거 저장해놨다가 불러야함 //Step * Step 개의 방 사용
@@ -84,28 +85,32 @@ public class MapManager : MonoBehaviour
 
     void Awake()
     {
-        Map map = ReadMapInfo();
+        if (mapManager == null)
+        {
+            mapManager = this;
+            Map map = ReadMapInfo();
 
-        Step = map.Step;
-        Edge = (float)map.Edge;
-        tempFame = map.tempFame;
+            Step = map.Step;
+            Edge = (float)map.Edge;
+            //tempFame = map.tempFame;
 
-        tempFameText.text = tempFame.ToString();
+            //tempFameText.text = tempFame.ToString();
 
-        conRoom = 0;
+            conRoom = 0;
 
-        RoomList = new List<GameObject>();
+            RoomList = new List<GameObject>();
 
-        SetRoomParentRect();
+            SetRoomParentRect();
 
-        isOpen = new Type[STEP_MAX][];
-        for (int i = 0; i < STEP_MAX; i++)
-            isOpen[i] = new Type[STEP_MAX];
+            isOpen = new Type[STEP_MAX][];
+            for (int i = 0; i < STEP_MAX; i++)
+                isOpen[i] = new Type[STEP_MAX];
 
-        for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
-            isOpen[i / STEP_MAX][i % STEP_MAX] = (Type)map.isOpen[i];
+            for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
+                isOpen[i / STEP_MAX][i % STEP_MAX] = (Type)map.isOpen[i];
 
-        miniMapManager.InitMiniMap();
+            miniMapManager.InitMiniMap();
+        }
     }
 
     public void InitMapManager()
@@ -114,8 +119,8 @@ public class MapManager : MonoBehaviour
 
         Step = map.Step;
         Edge = (float)map.Edge;
-        tempFame = map.tempFame;
-        tempFameText.text = tempFame.ToString();
+        //tempFame = map.tempFame;
+        //tempFameText.text = tempFame.ToString();
 
         for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
         {
@@ -128,7 +133,20 @@ public class MapManager : MonoBehaviour
     void Start()
     {
         InitMap();
+        InitRoom();
+
         gameObject.SetActive(false);
+    }
+
+    void InitRoom()
+    {
+        for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
+        {
+            if (isOpen[i / STEP_MAX][i % STEP_MAX] == Type.OPEN)
+                roomManager.Room[i].SetActive(true);
+            else
+                roomManager.Room[i].SetActive(false);
+        }
     }
 
     Map InitMapInfo(JsonData data)
@@ -178,7 +196,7 @@ public class MapManager : MonoBehaviour
             for (int i = 0; i < STEP_MAX * STEP_MAX; i++)
                 mapOpen[i] = (int)GetIsOpen(i);
 
-            Map map = new Map(tempFame, Step, Edge, mapOpen);
+            Map map = new Map(0, Step, Edge, mapOpen);
             JsonData newObj = JsonMapper.ToJson(map);
 
             File.WriteAllText(Application.persistentDataPath + "/MapInfo.json", newObj.ToString());
@@ -203,10 +221,15 @@ public class MapManager : MonoBehaviour
 
         if (!AllRepairButton.activeInHierarchy)
         {
-            BuildingText.text = objCnt[0].ToString();
-            OurForcesText.text = objCnt[1].ToString();
-            TrapText.text = objCnt[2].ToString();
-            SecretText.text = objCnt[3].ToString();
+            BuildingCnt = objCnt[0];
+            OurForcesCnt = objCnt[1];
+            TrapCnt = objCnt[2];
+            SecretCnt = objCnt[3];
+
+            BuildingText.text = BuildingCnt.ToString();
+            OurForcesText.text = OurForcesCnt.ToString();
+            TrapText.text = TrapCnt.ToString();
+            SecretText.text = SecretCnt.ToString();
         }
         else
         {
@@ -351,10 +374,10 @@ public class MapManager : MonoBehaviour
 
     public void tempFameUp()
     {
-        tempFame++;
-        tempFameText.text = tempFame.ToString();
+        //tempFame++;
+        //tempFameText.text = tempFame.ToString();
 
-        ChangedFame();
+        //ChangedFame();
     }
 
     public void ChangedFame()
@@ -366,22 +389,22 @@ public class MapManager : MonoBehaviour
 
     public void tempFameDown()
     {
-        tempFame--;
-        tempFameText.text = tempFame.ToString();
+        //tempFame--;
+        //tempFameText.text = tempFame.ToString();
 
-        ChangedFame();
+        //ChangedFame();
     }
 
     public void StepUp()
     {
         if (Edge == 0.5f)
         {
-            if (Step * Step >= tempFame)
+            if (Step * Step >= Data_Player.Fame)
                 return;
             if (Step == STEP_MAX)
                 return;
         }
-        else if (Step * Step > tempFame)
+        else if (Step * Step > Data_Player.Fame)
         {
             return;
         }
@@ -471,7 +494,7 @@ public class MapManager : MonoBehaviour
 
     public void OpenRoom(int idx)
     {
-        if (GetOpenRoomCnt() >= tempFame)
+        if (GetOpenRoomCnt() >= Data_Player.Fame)
             return;
 
         int i = idx / STEP_MAX;
@@ -540,7 +563,7 @@ public class MapManager : MonoBehaviour
 
                 if (isOpen[i][j] == Type.CLOSE)
                 {
-                    if (GetOpenRoomCnt() >= tempFame)
+                    if (GetOpenRoomCnt() >= Data_Player.Fame)
                         newRoom.SetActive(false);
                     else
                         newRoom.GetComponent<Image>().color = new Color(0, 0, 1, 1);

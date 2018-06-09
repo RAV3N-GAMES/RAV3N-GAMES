@@ -94,3 +94,34 @@ D:\Secret of 51 v0.96\Temp\bin\Debug\UnityEngine.VR.xml
 D:\Secret of 51 v0.96\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 D:\Secret of 51 v0.96\obj\Debug\Assembly-CSharp.dll
 D:\Secret of 51 v0.96\obj\Debug\Assembly-CSharp.pdb
+D:\RAV3N-GAMES\Temp\bin\Debug\Assembly-CSharp.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\RAV3N-GAMES\Temp\bin\Debug\nunit.framework.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEditor.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.UI.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.VR.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Mono.Cecil.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Unity.DataContract.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Unity.CecilTools.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEditor.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.UI.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\nunit.framework.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\RAV3N-GAMES\Temp\bin\Debug\UnityEngine.VR.xml
+D:\RAV3N-GAMES\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\RAV3N-GAMES\obj\Debug\Assembly-CSharp.dll
+D:\RAV3N-GAMES\obj\Debug\Assembly-CSharp.pdb
