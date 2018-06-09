@@ -99,8 +99,10 @@ public class CreatePopUp : MonoBehaviour
             LackOfCoin.SetActive(true);
         }
 
-
-        roomManager.SetClickColliderStatus(true);
+        if (!Obj.GetComponent<ObjectInfo>().id.Equals("Warp"))
+            roomManager.SetClickColliderStatus(true);
+        else
+            roomManager.SetClickColliderStatus(false);
         gameObject.SetActive(false);
     }
 

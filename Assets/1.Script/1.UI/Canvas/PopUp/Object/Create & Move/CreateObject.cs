@@ -57,7 +57,6 @@ public class CreateObject : MonoBehaviour
         }
 
         newObj.GetComponent<ObjectMove>().isNewObj = true;
-
         newObj.GetComponent<ObjectMove>().StartCoroutine("ArrayObject");
     }
 
