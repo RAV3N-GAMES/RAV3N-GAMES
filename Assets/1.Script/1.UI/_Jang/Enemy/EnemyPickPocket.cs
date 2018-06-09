@@ -29,7 +29,7 @@ public class EnemyPickPocket : Enemy {
         MaxHp = Hp;
         isHealer = false;
         base.EnemyInit();
-        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange;
+        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame + 40].AttackRange*2;
         enemyAI.speed = 1.0f;
         Stoppingdistance = enemyAI.stoppingDistance;
     }
@@ -57,9 +57,9 @@ public class EnemyPickPocket : Enemy {
                     {
                         if (!IsNear(NavObj, targetTrap.transform))
                         {
-                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                             currentState = EnemyState.Walk;
-                            enemyAI.isStopped = false;
+                            enemyAI.isStopped = true;
                         }
                     }
                     else
@@ -74,9 +74,9 @@ public class EnemyPickPocket : Enemy {
                             }
                         }
                         else {
-                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                            transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.02f);
                             currentState = EnemyState.Walk;
-                            enemyAI.isStopped = false;
+                            enemyAI.isStopped = true;
                         }
                     }
                 }
@@ -92,8 +92,12 @@ public class EnemyPickPocket : Enemy {
                 else
                 {
                     enemyAI.SetDestination(dest);
+                    Debug.Log("destObj: " + DestObj + "dest: " + dest);
                     currentState = EnemyState.Walk;
-                    enemyAI.isStopped = false;
+                    if (!Movable)
+                        enemyAI.isStopped = true;
+                    else
+                        enemyAI.isStopped = false;
                 }
             }
             else if (targetFriend && IsNear(NavObj, targetFriend.transform))
@@ -109,7 +113,38 @@ public class EnemyPickPocket : Enemy {
             {
                 enemyAI.SetDestination(dest);
                 currentState = EnemyState.Walk;
-                enemyAI.isStopped = false;
+                if (!Movable)
+                    enemyAI.isStopped = true;
+                else
+                    enemyAI.isStopped = false;
+            }
+
+            enemyAI.stoppingDistance = Stoppingdistance;
+            ChangeAnimation();
+
+            Distance = Vector3.Distance(start, dest);
+            if (Distance <= enemyAI.stoppingDistance)
+            {
+                ArrivedAction();
+            }
+
+            //진행 경로에 따라 좌우 변경
+            if (PrevPos == Vector3.zero)
+            {
+                PrevPos = transform.position;
+            }
+            else
+            {
+                if (transform.position.x - PrevPos.x > 0.01)
+                {
+                    isLeft = false;
+                }
+                else
+                    isLeft = true;
+                if (isLeft != faceLeft)
+                    Flip();
+
+                PrevPos = transform.position;
             }
         }
     }

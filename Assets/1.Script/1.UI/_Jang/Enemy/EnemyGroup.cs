@@ -96,6 +96,7 @@ public class EnemyGroup : MonoBehaviour {
             PopE.isDie = false;
             PopE.isStolen = false;
             PopE.isDefeated = false;
+            PopE.ExitLock = false;
             obj.SetActive(false);
             obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
             yield return genDelay;

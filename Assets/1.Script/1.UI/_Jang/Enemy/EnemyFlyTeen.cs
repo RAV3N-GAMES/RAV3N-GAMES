@@ -23,7 +23,7 @@ public class EnemyFlyTeen : Enemy
         MaxHp = Hp;
         isHealer = false;
 		base.EnemyInit();
-        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame - 4].AttackRange;
+        enemyAI.stoppingDistance = (float)EnemyManager.Tbl_EnemySetup[Data_Player.Fame - 4].AttackRange*2;
         Stoppingdistance = enemyAI.stoppingDistance;
     }
 }

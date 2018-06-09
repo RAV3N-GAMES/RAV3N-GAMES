@@ -32,21 +32,17 @@ public class HumanTrap : Trap {
         yield return new WaitForSeconds((float)EffectContinuousTime);
         TrapAni.speed = 1;
         FreeEnemy(col);
-        yield return StartCoroutine(CoolTimeDelay(CoolTime));
+        yield return new WaitForSeconds((float)CoolTime);
         isCool = false;
     }
-
-    IEnumerator CoolTimeDelay(double CoolTime) {
-        yield return new WaitForSeconds((float)CoolTime);
-    }
-
+    
     void CatchEnemy(Collider col) {//포획 대상 정지
         Enemy e = col.GetComponentInParent<Enemy>();
-        e.enemyAI.isStopped=true;
+        e.Movable = false;
     }
     void FreeEnemy(Collider col) {//포획 대상 풀어줌
         Enemy e = col.GetComponentInParent<Enemy>();
-        e.enemyAI.isStopped = false;
+        e.Movable = true;
     }
 
 }

@@ -22,19 +22,20 @@ public class FriendlyChemistry : Friendly {
 			return;
 
 		isSkill = true;
-		int temp = targetEnemy.Attack;
+		int OriginalAttack = targetEnemy.Attack;
 		targetEnemy.Attack = 0;
 		GameManager.ParticleGenerate
 			(EFFECT_TYPE.Invisible, targetEnemy.NavObj.position);
 
-		StartCoroutine("SkillDelayEvent", temp);
+		StartCoroutine(EyePokeEvent(OriginalAttack));
 	}
-	private IEnumerator SkillDelayEvent(int temp)
+
+	private IEnumerator EyePokeEvent(int OriginalAttack)
 	{				
 		yield return new WaitForSeconds(3);
 		AttackCount = 0;
 		if (targetEnemy != null)
-			targetEnemy.Attack = temp;
+			targetEnemy.Attack = OriginalAttack;
 		isSkill = false;
 	}
 	private void OnTriggerStay(Collider other)

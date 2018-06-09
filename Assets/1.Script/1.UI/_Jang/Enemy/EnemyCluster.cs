@@ -169,40 +169,6 @@ public class EnemyCluster : MonoBehaviour {
             eList[i].enemyAI.SetDestination(eList[i].SetYZero(GameManager.current.enemyGroups[nextidx].ExitPoint[nextroomEnterPoint]));
         }
     }
-
-    public void SetOrderFriendly()
-    {
-        if (GroupNearFriend.Count > 1)
-        {
-            GroupNearFriend.Sort(
-                delegate (Friendly f1, Friendly f2)
-                {
-                    if (f1 == null)
-                        return 1;
-                    else if (f2 == null)
-                        return -1;
-                    else
-                    {
-                        float d1, d2;
-                        d1 = Vector3.Distance(f1.transform.position, transform.position);
-                        d2 = Vector3.Distance(f2.transform.position, transform.position);
-                        if (d1 > d2)
-                            return 1;
-                        else if (d1 < d2)
-                            return -1;
-                        else
-                            return 0;
-                    }
-                });
-        }
-        if (GroupNearFriend.Count > 0)
-        {
-            targetFriend = GroupNearFriend[0];
-        }
-        else
-            targetFriend = null;
-    }
-    
     public void SetOrderTrap()
     {
         for (int i = 0; i < GroupNearTrap.Count; i++)
