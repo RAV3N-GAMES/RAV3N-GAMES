@@ -111,7 +111,13 @@ public class ChangePopUp : MonoBehaviour {
         if (isDestroy)
         {
             DestroyWarp();
-
+            string Id = Obj.GetComponent<ObjectInfo>().id;
+            if (Id.Equals("UFOCore") || Id.Equals("SpaceVoiceRecordingFile") || Id.Equals("AlienBloodStorage") || Id.Equals("AlienStorageCapsule"))
+            {
+                SecretActs s = Obj.GetComponentInChildren<SecretActs>(true);
+                SecretManager.SecretList.Remove(s);
+                SecretManager.SecretCount--;
+            }
             Data_Player.addGold(price);
             RoomManager.ChangeClickStatus(true);
             Destroy(Obj);

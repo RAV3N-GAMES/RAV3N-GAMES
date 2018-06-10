@@ -133,6 +133,8 @@ public class CreatePopUp : MonoBehaviour
             taskObject.SetWarpExit();
         }
 
+        string Id = Obj.GetComponent<ObjectInfo>().id;
+
         if (Obj.GetComponent<ObjectInfo>().id.Equals("Warp_Exit"))
         {
             GameObject Warp = Obj.transform.parent.gameObject;
@@ -140,6 +142,7 @@ public class CreatePopUp : MonoBehaviour
 
             Destroy(Warp);
         }
+        
         else
         {
             Destroy(Obj);

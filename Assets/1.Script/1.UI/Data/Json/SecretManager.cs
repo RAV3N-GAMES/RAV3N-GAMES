@@ -23,6 +23,7 @@ public class SecretManager : JsonReadWrite
     const string Path4 = "Data/Secret_SpaceVoiceRecordingFile";
     public static List<SecretObject> Tbl_SecretSetup = new List<SecretObject>();
     public static List<SecretActs> SecretList;
+    public List<SecretActs> viewList;
     public static Dictionary<string, int> SecretFame = new Dictionary<string, int>(); //첫 등장 Fame
     public static float criteria = 0.5f;//랜덤값이 이보다 크면 명예집단 / 작으면 기밀탈취집단.
 
@@ -36,6 +37,7 @@ public class SecretManager : JsonReadWrite
         ReadMain(Path3);
         ReadMain(Path4);
         SecretList = new List<SecretActs>();
+        viewList = SecretList;
         /*입력값 확인용 코드입니다. 지우지 마세요. 
                 for (int i = 0; i < 22 * 4; i++)
                 {
@@ -47,6 +49,7 @@ public class SecretManager : JsonReadWrite
     // Update is called once per frame
     void Update()
     {
+        viewList = SecretList;
     }
 
     public override void ParsingJson(JsonData data)

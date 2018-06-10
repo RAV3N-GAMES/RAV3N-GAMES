@@ -38,8 +38,9 @@ public class EnemyCluster : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (targetFriend)
+        if (targetFriend) { 
             clusterSetNextTargetFriend(targetFriend);
+        }
         if (targetTrap)
             clusterSetNextTargetTrap(targetTrap);
         if (targetWall)
@@ -59,6 +60,7 @@ public class EnemyCluster : MonoBehaviour {
         for (int i = 0; i < eList.Count; i++)
         {
             eList[i].targetFriend= f;
+            eList[i].chaseFriendEvent();
         }
     }
 
@@ -70,6 +72,7 @@ public class EnemyCluster : MonoBehaviour {
         {
             eList[i].targetSecret = targetSecret;
         }
+
     }
 
     public void clusterSetNextTargetTrap(Trap t) {
@@ -79,6 +82,7 @@ public class EnemyCluster : MonoBehaviour {
             {
                 EnemyPickPocket ep = (EnemyPickPocket)eList[i];
                 ep.targetTrap = t;
+                ep.chaseTrapEvent();
             }
         }
     }
@@ -86,8 +90,10 @@ public class EnemyCluster : MonoBehaviour {
     public void clusterSetNextTargetWall(Wall w) {
         for (int i = 0; i < eList.Count; i++)
         {
-            if (!eList[i].name.Equals("MonsterPickPocket2D"))
+            if (!eList[i].name.Equals("MonsterPickPocket2D")) { 
                 eList[i].targetWall = w;
+                eList[i].chaseWallEvent();
+            }
         }
     }
 
@@ -130,6 +136,24 @@ public class EnemyCluster : MonoBehaviour {
             }
         }
         return result;
+    }
+
+    public void MoveToNextEnter(int nextidx, int ExitDirection) {
+        int nextroomEnterPoint = -1;
+        if (ExitDirection == 1)
+        {
+            nextroomEnterPoint = 3;
+        }
+        else
+        {
+            nextroomEnterPoint = Mathf.Abs(ExitDirection - 2);
+        }
+
+        for (int i = 0; i < eList.Count; i++)
+        {
+            eList[i].enemyAI.SetDestination(eList[i].SetYZero(GameManager.current.enemyGroups[nextidx].ExitPoint[nextroomEnterPoint]));
+            eList[i].enemyAI.isStopped = false;
+        }
     }
 
     public void MoveToNextRoom(int nextidx, int ExitDirection) {
@@ -305,6 +329,13 @@ public class EnemyCluster : MonoBehaviour {
          */
 
         targetFriend= target;
+        if (!targetFriend) {
+            for (int i = 0; i < eList.Count; i++) {
+                eList[i].OriginalDestinationMain();
+                eList[i].Movable = true;
+                eList[i].currentState = EnemyState.Walk;
+            }
+        }
         return;
     }
 }

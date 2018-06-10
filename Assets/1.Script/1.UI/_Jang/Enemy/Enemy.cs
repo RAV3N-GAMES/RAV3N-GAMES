@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour {
     public string destname = "";
     public float Stoppingdistance;
     public GameObject DestObj;
+    public NavMeshPathStatus TotalStatus, roomStatus;
 
     //기능 초기화
     public virtual void EnemyInit()
@@ -227,6 +228,8 @@ public class Enemy : MonoBehaviour {
             targetSecret.GetComponentInParent<DisplayObject>().DestroyObj(true);
             Destroy(targetSecret.transform.parent.gameObject);
         }
+        yield return null;
+        StartCoroutine(OriginalDestination());
         transform.parent.gameObject.SetActive(false);
         PoolManager.current.PushEnemy(NavObj.gameObject);
     }
@@ -457,6 +460,44 @@ public class Enemy : MonoBehaviour {
 
     protected void Update()
     {
+        if (enemyAI.isOnNavMesh) { 
+            if (Movable)
+            {
+                enemyAI.isStopped = false;
+            }
+            else
+                enemyAI.isStopped= true;
+        }
+        SetStart();
+        if (DestObj) { 
+            Distance = Vector3.Distance(start, SetYZero(DestObj.transform));
+            if (Distance <= enemyAI.stoppingDistance)
+            {
+                //ArrivedAction();
+                NearAction();
+            }
+        }
+        
+        ChangeAnimation();
+
+        //진행 경로에 따라 좌우 변경
+        if (PrevPos == Vector3.zero)
+        {
+            PrevPos = transform.position;
+        }
+        else
+        {
+            if (transform.position.x - PrevPos.x > 0.01)
+            {
+                isLeft = false;
+            }
+            else
+                isLeft = true;
+            if (isLeft != faceLeft)
+                Flip();
+
+            PrevPos = transform.position;
+        }
     }
 
     private void OnTriggerExit(Collider col)
@@ -755,12 +796,16 @@ public class Enemy : MonoBehaviour {
 
     public void EnemyActionStart()
     {
-        StartCoroutine(EnemyAction());
+        //StartCoroutine(EnemyAction());
+        EnemyActionMain();
     }
 
     protected bool CalPath()
     {
-        enemyAI.CalculatePath(dest, enemyAI.path);
+        if (enemyAI.isOnNavMesh)
+        {
+            enemyAI.CalculatePath(dest, enemyAI.path);
+        }
         return true;
     }
     
@@ -962,6 +1007,217 @@ public class Enemy : MonoBehaviour {
                     Flip();
 
                 PrevPos = transform.position;
+            }
+        }
+    }
+
+    protected void OnEnable() {
+        targetSecret = FindClosestSecret(transform.position);
+    }
+
+    protected void SetOriginalDestination()
+    {
+        Debug.Log("secret: " + targetSecret + " is: " + isSeizure);
+        if (isSeizure && targetSecret)
+        {
+            dest = SetYZero(targetSecret.transform);
+            destname = targetSecret.name;
+            DestObj = targetSecret.gameObject;
+        }
+        else
+        {
+            dest = SetYZero(OriginalPoint.transform);
+            destname = "OriginalPoint";
+            DestObj = OriginalPoint.gameObject;
+        }
+    }
+
+    public void EnemyActionMain() {
+        StartCoroutine(OriginalDestination());
+        StartCoroutine(roomMovement());
+    }
+
+    public void OriginalDestinationMain() {
+        StartCoroutine(OriginalDestination());
+    }
+
+    protected IEnumerator OriginalDestination() {
+        SetStart();
+        SetOriginalDestination();
+        Debug.Log("Original calpath start");
+        CalPath();
+        yield return new WaitUntil(CalPath);
+        Debug.Log("Original calpath end. result: " + enemyAI.pathStatus);
+        TotalStatus = enemyAI.pathStatus;
+        if (enemyAI.isOnNavMesh) { 
+            enemyAI.SetDestination(dest);
+        }
+        if (TotalStatus == NavMeshPathStatus.PathComplete)
+        {
+            currentState = EnemyState.Walk;
+        }
+    }
+
+    protected IEnumerator roomMovement()
+    {
+        while ( !(isDie || isDefeated || isStolen) )
+        {
+            if (TotalStatus!= NavMeshPathStatus.PathComplete)
+            {
+                Debug.Log("Exitpoint Entered");
+                Exitdirection = FindExit();
+                dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+                destname = "ExitPoint " + Exitdirection;
+                ExitLock = true;
+                DestObj = GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject;
+                
+                yield return new WaitUntil(CalPath);
+                roomStatus = enemyAI.pathStatus;
+                TotalStatus= NavMeshPathStatus.PathComplete;
+                if (enemyAI.isOnNavMesh) { 
+                    enemyAI.SetDestination(dest);
+                }
+                if (roomStatus == NavMeshPathStatus.PathComplete)
+                {
+                    currentState = EnemyState.Walk;
+                }
+            }
+            yield return null;//프레임마다 호출
+        }
+    }
+
+    public void chaseFriendEvent() {
+        StartCoroutine(chaseFriendly());
+    }
+
+    public void chaseWallEvent() {
+        StartCoroutine(chaseWall());
+    }
+
+    public void chaseTrapEvent() {
+        StartCoroutine(chaseTrap());
+    }
+
+    protected IEnumerator chaseFriendly()
+    {
+        dest = SetYZero(targetFriend.transform);
+        destname = targetFriend.name;
+        DestObj = targetFriend.gameObject;
+        yield return new WaitUntil(CalPath);
+
+        if (enemyAI.isOnNavMesh) { 
+            if (enemyAI.pathStatus== NavMeshPathStatus.PathComplete)
+            {
+                enemyAI.SetDestination(dest);
+                currentState = EnemyState.Walk;   
+            }
+            else
+            {//벽으로 막혀서 못가는 경우
+                StartCoroutine(chaseWall());
+            }
+        }
+    }
+
+    protected IEnumerator chaseWall() {
+        dest = SetYZero(targetWall.transform);
+        destname = targetWall.name;
+        DestObj = targetWall.gameObject;
+        yield return new WaitUntil(CalPath);
+        if (enemyAI.isOnNavMesh) { 
+            enemyAI.SetDestination(dest);
+            currentState = EnemyState.Walk;
+        }
+    }
+
+    protected IEnumerator chaseTrap() {
+        EnemyPickPocket EP = (EnemyPickPocket)this;
+        dest = SetYZero(EP.targetTrap.transform);
+        destname = EP.targetTrap.name;
+        DestObj = EP.targetTrap.gameObject;
+        yield return new WaitUntil(CalPath);
+        if (enemyAI.isOnNavMesh) { 
+            enemyAI.SetDestination(dest);
+            currentState = EnemyState.Walk;
+        }
+    }
+
+    protected void NearAction() {
+        try
+        {
+            Debug.Log("NearAction Starts");
+            Debug.Log("DestObj: "+DestObj.name);
+        }
+        catch { }
+        if (isSeizure && (DestObj.name.Equals("AlienBloodStorage" )|| DestObj.name.Equals("SpaceVoiceRecordingFile") || DestObj.name.Equals("UFOCore") || DestObj.name.Equals("AlienStorageCapsule")))
+        {
+            Debug.Log("StealEvent Call");
+            StartCoroutine(StealEvent());
+            return;
+        }
+        else if (DestObj.name.Equals("10"))//Base의 경우
+        {
+            ECM.EscapeClusters();
+            return;
+        }
+        else if (name.Equals("MonsterPickPocket2D"))
+        {
+            EnemyPickPocket epp = (EnemyPickPocket)this;
+            if (epp.targetTrap == DestObj)
+            {
+                if (!epp.IsDisassemble)
+                {
+                    StartCoroutine(epp.DisassemblyTrap());
+                }
+            }
+        }
+        else if (isHealer)
+        {
+            EnemySinger ES = (EnemySinger)this;
+
+            if (!ES.isHeal)
+            {
+                currentState = EnemyState.Heal;
+                enemyAI.isStopped = true;
+                isHeal = true;
+                StartCoroutine(ES.GiveHeal());
+            }
+        }
+        else if (DestObj.name.Equals("Human"))
+        {
+            if (!isShoot)
+            {
+                isShoot = true;
+                Movable = false;
+                currentState = EnemyState.Attack;
+            }
+            else {
+                currentState = EnemyState.Idle;
+            }
+        }
+        else if (DestObj.name.Equals("OldBuilding") || DestObj.name.Equals("NewBuilding") || DestObj.name.Equals("FunctionalBuilding") || DestObj.name.Equals("CoreBuilding"))
+        {
+            if (!isShoot)
+            {
+                isShoot = true;
+                Movable = false;
+                currentState = EnemyState.Attack;
+            }
+        }
+        else if (DestObj == GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject) {
+            if (myCluster.isGathered())
+            {//next room 출구에 다 모인 경우
+                myCluster.MoveToNextEnter(nextIdx, Exitdirection);
+                for (int i = 0; i < myCluster.eList.Count; i++)
+                {
+                    myCluster.eList[i].ExitLock = false;
+                }
+            }
+            else
+            {
+                if (IsNearExit())
+                {
+                    enemyAI.isStopped = true;
+                }
             }
         }
     }

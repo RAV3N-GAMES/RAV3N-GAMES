@@ -257,20 +257,21 @@ public class Friendly : MonoBehaviour
     }
     private IEnumerator DieEvent()
     {
-        yield return new WaitForSeconds(0.5f);
-        DisplayObject tmp= GetComponentInParent<DisplayObject>();
         for (int i = 0; i < EnemyClusterManager.clusterList.Count; i++)
         {
             EnemyCluster ec = EnemyClusterManager.clusterList[i];
-            if (ec.GroupNearFriend.Contains(this)) {
+            if (ec.GroupNearFriend.Contains(this))
+            {
                 ec.GroupNearFriend.Remove(this);
                 ec.GetPriorFriend();
             }
         }
-        if (GroupConductor.friendList.Contains(this)) {
+        if (GroupConductor.friendList.Contains(this))
+        {
             GroupConductor.friendList.Remove(this);
         }
-        
+        yield return new WaitForSeconds(0.5f);
+        DisplayObject tmp= GetComponentInParent<DisplayObject>();
         tmp.DestroyObj(true);
         Destroy(transform.parent.transform.parent.gameObject);
         //PoolManager.current.PushFriend(NavObj.gameObject);

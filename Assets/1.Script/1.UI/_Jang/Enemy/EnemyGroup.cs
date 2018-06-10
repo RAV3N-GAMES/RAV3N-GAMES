@@ -99,6 +99,7 @@ public class EnemyGroup : MonoBehaviour {
             PopE.ExitLock = false;
             obj.SetActive(false);
             obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
+            PopE.targetSecret = PopE.FindClosestSecret(obj.transform.position);
             yield return genDelay;
 
             obj.transform.SetParent(null);
