@@ -13,8 +13,10 @@ public class Wall : MonoBehaviour {
     public int RepairCost;
     public int ActiveCost;
     public int compensation;
+    public bool isBraek;
     public ObjectInfo info;
     public DisplayObject displayObject;
+    public EnemyClusterManager ECM;
     protected virtual void WallInit() {
         info = GetComponentInParent<ObjectInfo>();
         displayObject = GetComponentInParent<DisplayObject>();
@@ -22,8 +24,10 @@ public class Wall : MonoBehaviour {
         id = info.id;
         Level = info.level;
         HP = info.presentHP;
+        isBraek = false;
         //그 외 정보는 각각 Builidng 스크립트에서 override 해서 사용
     }
+
 
     protected virtual void LevelSync() {
         MaxHP = BuildingManager.Tbl_BuildingSetup[Level + compensation].HP;
@@ -52,6 +56,7 @@ public class Wall : MonoBehaviour {
     public bool IsDestroyed() {
         if (HP < 0)
         {
+            isBraek = true;
             return true;//벽 깨지면 true 반환
         }
         return false;
@@ -60,6 +65,10 @@ public class Wall : MonoBehaviour {
     public virtual void DestoryWall() {
         displayObject.DestroyObj(true);
         Destroy(transform.parent.gameObject);
+    }
+
+    void Awake() {
+        ECM = GameObject.Find("Managers").GetComponent<EnemyClusterManager>();
     }
 
     void Start() {

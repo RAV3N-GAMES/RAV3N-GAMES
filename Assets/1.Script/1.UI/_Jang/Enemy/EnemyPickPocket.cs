@@ -34,6 +34,7 @@ public class EnemyPickPocket : Enemy {
         Stoppingdistance = enemyAI.stoppingDistance;
     }
 
+    /*
     protected override IEnumerator EnemyAction()
     {
         while (!(isDie || isStolen || isDefeated))
@@ -148,7 +149,7 @@ public class EnemyPickPocket : Enemy {
             }
         }
     }
-
+    */
     public IEnumerator DisassemblyTrap() {
         IsDisassemble = true;
         yield return new WaitForSeconds(5.0f);
@@ -185,7 +186,7 @@ public class EnemyPickPocket : Enemy {
         if (col.CompareTag("Wall"))
         {
             Wall w = col.GetComponentInParent<Wall>();
-            if (!myCluster.GroupNearWall.Contains(w)) { 
+            if (!myCluster.GroupNearWall.Contains(w) && !w.isBraek) { 
                 myCluster.GroupNearWall.Add(w);
                 myCluster.SetOrderWall();
             }

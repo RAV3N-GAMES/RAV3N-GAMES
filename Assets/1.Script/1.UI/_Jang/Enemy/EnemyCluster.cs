@@ -38,13 +38,17 @@ public class EnemyCluster : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (targetFriend) { 
+        if (targetFriend)
+        {
             clusterSetNextTargetFriend(targetFriend);
         }
+        else if (targetWall) { 
+            clusterSetNextTargetWall(targetWall);
+        }
+        
         if (targetTrap)
             clusterSetNextTargetTrap(targetTrap);
-        if (targetWall)
-            clusterSetNextTargetWall(targetWall);
+
         clusterSetNextTargetSecret();
         EnterCheck();
     }
@@ -92,7 +96,10 @@ public class EnemyCluster : MonoBehaviour {
         {
             if (!eList[i].name.Equals("MonsterPickPocket2D")) { 
                 eList[i].targetWall = w;
-                eList[i].chaseWallEvent();
+                if (eList[i].roomStatus != UnityEngine.AI.NavMeshPathStatus.PathComplete && !eList[i].targetFriend) {
+                    Debug.Log("chaseWall: findwall. roomstatus: "+eList[i].roomStatus);
+                    eList[i].chaseWallEvent();
+                }
             }
         }
     }
@@ -247,14 +254,18 @@ public class EnemyCluster : MonoBehaviour {
                     else
                     {
                         float d1, d2;
-                        d1 = Vector3.Distance(w1.transform.position, transform.position);
-                        d2 = Vector3.Distance(w2.transform.position, transform.position);
-                        if (d1 > d2)
-                            return 1;
-                        else if (d1 < d2)
-                            return -1;
-                        else
-                            return 0;
+                        if (eList.Count > 0) { 
+                            d1 = Vector3.Distance(w1.transform.position, eList[0].transform.position);
+                            d2 = Vector3.Distance(w2.transform.position, eList[0].transform.position);
+                        
+                            if (d1 > d2)
+                                return 1;
+                            else if (d1 < d2)
+                                return -1;
+                            else
+                                return 0;
+                        }
+                        return 0;
                     }
                 });
         }
@@ -331,11 +342,13 @@ public class EnemyCluster : MonoBehaviour {
         targetFriend= target;
         if (!targetFriend) {
             for (int i = 0; i < eList.Count; i++) {
-                eList[i].OriginalDestinationMain();
+                eList[i].EnemyActionMain();
                 eList[i].Movable = true;
                 eList[i].currentState = EnemyState.Walk;
             }
         }
         return;
     }
+
+
 }

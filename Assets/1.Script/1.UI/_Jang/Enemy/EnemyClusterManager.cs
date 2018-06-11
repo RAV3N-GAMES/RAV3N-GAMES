@@ -54,4 +54,17 @@ public class EnemyClusterManager : MonoBehaviour {
             clusterList[i].clusterEscape();
         }
     }
+
+    public void RemoveWall(Wall w) {
+        for (int i = 0; i < ResourceManager_Player.ClusterMax; i++) {
+            EnemyCluster EC = clusterList[i];
+            if (EC.GroupNearWall.Contains(w)) {
+                EC.GroupNearWall.Remove(w);
+            }
+            if (EC.GroupNearWall.Count > 0) { 
+                EC.targetWall = EC.GroupNearWall[0];
+            }
+
+        }
+    }
 }

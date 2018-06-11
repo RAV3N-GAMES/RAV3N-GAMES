@@ -57,9 +57,6 @@ public class Enemy : MonoBehaviour {
     public NavMeshAgent enemyAI;         //NevMeshAgent 
     protected Animator anime;               //애니메이션
     protected SphereCollider scollider;     //2D캐릭터에 붙어있는 콜라이더
-    public Vector3 dest;                 //목적지 좌표
-    protected int destType;                 //목적지 타입. enum ObjectType을 따름.
-    public Vector3 start;                //시작 좌표
     protected WaitForSeconds attackDelay;   //코루틴에서
     public EnemyState currentState;      //현재 캐릭터에 상태를 나타내는 
     protected EFFECT_TYPE effectType;       //캐릭터가 사용하는 이펙트 타입
@@ -67,11 +64,23 @@ public class Enemy : MonoBehaviour {
     public bool isShoot;                   //딜레이와 공격을 맞추기위한 
     protected bool isHeal;
     protected Vector3 PrevPos;
-    public bool ExitLock;
-    public string destname = "";
     public float Stoppingdistance;
-    public GameObject DestObj;
     public NavMeshPathStatus TotalStatus, roomStatus;
+    public bool roomSequenceEnter;
+    public IEnumerator PrevroomMovement;
+    protected NavMeshHit hitCheck;
+    public bool isSample;
+    public int CalPathMode;
+
+    public Vector3 start;                //시작 좌표
+
+    public Vector3 dest;                 //목적지 좌표
+    public GameObject DestObj;
+    public string destname = "";
+
+    public Vector3 Prevdest;                 //목적지 좌표
+    public GameObject PrevDestObj;
+    public string Prevdestname = "";
 
     //기능 초기화
     public virtual void EnemyInit()
@@ -105,6 +114,7 @@ public class Enemy : MonoBehaviour {
             {
                 GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
                 targetFriend.Die();
+                EnemyActionMain();
             }
         }
         else if (targetWall)
@@ -114,9 +124,22 @@ public class Enemy : MonoBehaviour {
             if (targetWall.IsDestroyed())
             {
                 NearWall.Remove(targetWall);
+                StartCoroutine(BreakWall(targetWall));
                 targetWall.DestoryWall();
             }
         }
+    }
+
+    IEnumerator BreakWall(Wall w) {
+        ECM.RemoveWall(w);
+        
+        for (int i = 0; i < myCluster.eList.Count; i++)
+        {
+            Debug.Log("Wall Destroyed. Call Actionmain");
+            myCluster.eList[i].EnemyActionMain();
+        }
+        yield return null;
+
     }
     public void Die()
     {
@@ -271,6 +294,7 @@ public class Enemy : MonoBehaviour {
         currentState = EnemyState.Idle;
         yield return attackDelay;
         isShoot = false;
+        currentState = EnemyState.Walk;
     }
     
     public bool IsNear(Transform NavObjPos, Transform targetPos) {
@@ -396,9 +420,6 @@ public class Enemy : MonoBehaviour {
         else if (myCluster.isGathered())
         {//next room 출구에 다 모인 경우
             myCluster.MoveToNextRoom(nextIdx, Exitdirection);
-            for (int i = 0; i < myCluster.eList.Count; i++) {
-                myCluster.eList[i].ExitLock = false;
-            }
         }
         else {
             if (IsNearExit()) {
@@ -432,7 +453,6 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
-        ExitLock = false;
         Movable = true;
         Audio = GetComponent<AudioSource>();
         AppearClip= Resources.Load<AudioClip>("Audio/Character/Enemy/All") as AudioClip;
@@ -471,10 +491,29 @@ public class Enemy : MonoBehaviour {
         SetStart();
         if (DestObj) { 
             Distance = Vector3.Distance(start, SetYZero(DestObj.transform));
-            if (Distance <= enemyAI.stoppingDistance)
-            {
-                //ArrivedAction();
-                NearAction();
+            if((DestObj.name.Equals("OldBuilding") || DestObj.name.Equals("NewBuilding") || DestObj.name.Equals("FunctionalBuilding") || DestObj.name.Equals("CoreBuilding"))){
+                if (name == "MonsterFlyTeen2D" || name == "MonsterIDEFarmer2D" || name == "MonsterPickPocket2D")
+                {
+                    if (Distance <= enemyAI.stoppingDistance * 2)
+                    {
+                        //ArrivedAction();
+                        NearAction();
+                    }
+                }
+                else {
+                    if (Distance <= enemyAI.stoppingDistance)
+                    {
+                        //ArrivedAction();
+                        NearAction();
+                    }
+                }
+            }
+            else { 
+                if (Distance <= enemyAI.stoppingDistance)
+                {
+                    //ArrivedAction();
+                    NearAction();
+                }
             }
         }
         
@@ -537,7 +576,7 @@ public class Enemy : MonoBehaviour {
         if (col.CompareTag("Wall"))
         {
             Wall w = col.GetComponentInParent<Wall>();
-            if (!myCluster.GroupNearWall.Contains(w)) { 
+            if (!myCluster.GroupNearWall.Contains(w) && !w.isBraek) { 
                 myCluster.GroupNearWall.Add(w);
                 myCluster.SetOrderWall();
             }
@@ -802,11 +841,37 @@ public class Enemy : MonoBehaviour {
 
     protected bool CalPath()
     {
-        if (enemyAI.isOnNavMesh)
-        {
-            enemyAI.CalculatePath(dest, enemyAI.path);
+        isSample = false;
+        while (true) {
+            if (enemyAI.isOnNavMesh)
+            {
+                NavMeshPath navpath=new NavMeshPath();
+                enemyAI.CalculatePath(dest, navpath);
+                enemyAI.SetPath(navpath);
+                if (NavMesh.SamplePosition(dest, out hitCheck, 0.25f, NavMesh.AllAreas))
+                {
+                    isSample = true;
+                }
+                else
+                {
+                    isSample = false;
+                }
+                if (CalPathMode == 1)
+                {
+                    TotalStatus = navpath.status;
+                    if (navpath.status != NavMeshPathStatus.PathComplete)
+                    {
+                        roomSequenceEnter = true;
+                    }
+                }
+                else if (CalPathMode == 2) {
+                    roomStatus = navpath.status;
+                }
+                Debug.Log("path calculated. status: "+enemyAI.pathStatus+ " isSample: " + isSample+" navpath: "+navpath.status);
+                return true;
+            }
         }
-        return true;
+
     }
     
     protected void SetDestination2nd() {
@@ -826,7 +891,6 @@ public class Enemy : MonoBehaviour {
         {
             dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
             destname = "ExitPoint " + Exitdirection;
-            ExitLock = true;
             DestObj = GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject;
         }
 
@@ -838,7 +902,6 @@ public class Enemy : MonoBehaviour {
                 healTarget = e;
                 dest = SetYZero(healTarget.NavObj);
                 destname = healTarget.transform.parent.name;
-                ExitLock = false;
             }
         }
 
@@ -855,7 +918,6 @@ public class Enemy : MonoBehaviour {
                 if (epp.targetTrap) { 
                     dest = SetYZero(epp.targetTrap.transform);
                     destname = epp.targetTrap.name;
-                    ExitLock = false;
                 }
             }
             else
@@ -1033,28 +1095,30 @@ public class Enemy : MonoBehaviour {
     }
 
     public void EnemyActionMain() {
-        StartCoroutine(OriginalDestination());
-        StartCoroutine(roomMovement());
-    }
-
-    public void OriginalDestinationMain() {
+        TotalStatus = NavMeshPathStatus.PathComplete;
+        roomStatus = NavMeshPathStatus.PathComplete;
         StartCoroutine(OriginalDestination());
     }
-
     protected IEnumerator OriginalDestination() {
         SetStart();
         SetOriginalDestination();
-        Debug.Log("Original calpath start");
-        CalPath();
+        roomSequenceEnter = false ;
+        Debug.Log("Originaldestination calpath");
+        CalPathMode = 1;
         yield return new WaitUntil(CalPath);
-        Debug.Log("Original calpath end. result: " + enemyAI.pathStatus);
-        TotalStatus = enemyAI.pathStatus;
-        if (enemyAI.isOnNavMesh) { 
-            enemyAI.SetDestination(dest);
+        if (PrevroomMovement != null) {
+            StopCoroutine(PrevroomMovement);
         }
-        if (TotalStatus == NavMeshPathStatus.PathComplete)
+        PrevroomMovement = roomMovement();
+        StartCoroutine(PrevroomMovement);
+        if (enemyAI.isOnNavMesh)
         {
+            Debug.Log("go to destination");
+            enemyAI.SetDestination(dest);
             currentState = EnemyState.Walk;
+        }
+        else {
+            Debug.Log("enemyAi is not on navmesh");
         }
     }
 
@@ -1062,26 +1126,33 @@ public class Enemy : MonoBehaviour {
     {
         while ( !(isDie || isDefeated || isStolen) )
         {
-            if (TotalStatus!= NavMeshPathStatus.PathComplete)
+            if (roomSequenceEnter)
             {
                 Debug.Log("Exitpoint Entered");
                 Exitdirection = FindExit();
                 dest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
                 destname = "ExitPoint " + Exitdirection;
-                ExitLock = true;
                 DestObj = GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject;
-                
+                CalPathMode = 2;
                 yield return new WaitUntil(CalPath);
-                roomStatus = enemyAI.pathStatus;
-                TotalStatus= NavMeshPathStatus.PathComplete;
-                if (enemyAI.isOnNavMesh) { 
+                roomSequenceEnter = false;
+                if (enemyAI.isOnNavMesh) {
                     enemyAI.SetDestination(dest);
-                }
-                if (roomStatus == NavMeshPathStatus.PathComplete)
-                {
                     currentState = EnemyState.Walk;
                 }
+                Debug.Log("roomstatus: " + roomStatus);
+                if (roomStatus != NavMeshPathStatus.PathComplete && targetWall)
+                {
+                    Debug.Log("ChaseWall Activated");
+                    //chaseWallEvent();
+                }
             }
+
+            if (roomStatus != NavMeshPathStatus.PathComplete && !IsNear(NavObj, DestObj.transform)) {
+//                transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, dest, 0.01f);
+                currentState = EnemyState.Walk;
+            }
+
             yield return null;//프레임마다 호출
         }
     }
@@ -1100,9 +1171,12 @@ public class Enemy : MonoBehaviour {
 
     protected IEnumerator chaseFriendly()
     {
+        if (!targetFriend)
+            yield break;
         dest = SetYZero(targetFriend.transform);
         destname = targetFriend.name;
         DestObj = targetFriend.gameObject;
+        Debug.Log("chaseFriendly Calpath");
         yield return new WaitUntil(CalPath);
 
         if (enemyAI.isOnNavMesh) { 
@@ -1113,6 +1187,7 @@ public class Enemy : MonoBehaviour {
             }
             else
             {//벽으로 막혀서 못가는 경우
+                Debug.Log("Chase friendly: wall break case");
                 StartCoroutine(chaseWall());
             }
         }
@@ -1122,10 +1197,16 @@ public class Enemy : MonoBehaviour {
         dest = SetYZero(targetWall.transform);
         destname = targetWall.name;
         DestObj = targetWall.gameObject;
+        Debug.Log("chaseWall Calpath");
         yield return new WaitUntil(CalPath);
+        Debug.Log("chase Wall status: " + enemyAI.pathStatus);
         if (enemyAI.isOnNavMesh) { 
             enemyAI.SetDestination(dest);
             currentState = EnemyState.Walk;
+        }
+        else
+        {
+            Debug.Log("chaseWall : Not on navmesh");
         }
     }
 
@@ -1134,8 +1215,9 @@ public class Enemy : MonoBehaviour {
         dest = SetYZero(EP.targetTrap.transform);
         destname = EP.targetTrap.name;
         DestObj = EP.targetTrap.gameObject;
+        Debug.Log("chaseTrap Calpath");
         yield return new WaitUntil(CalPath);
-        if (enemyAI.isOnNavMesh) { 
+        if (enemyAI.isOnNavMesh) {
             enemyAI.SetDestination(dest);
             currentState = EnemyState.Walk;
         }
@@ -1154,7 +1236,7 @@ public class Enemy : MonoBehaviour {
             StartCoroutine(StealEvent());
             return;
         }
-        else if (DestObj.name.Equals("10"))//Base의 경우
+        else if (DestObj.layer==14)//Base의 경우
         {
             ECM.EscapeClusters();
             return;
@@ -1190,9 +1272,6 @@ public class Enemy : MonoBehaviour {
                 Movable = false;
                 currentState = EnemyState.Attack;
             }
-            else {
-                currentState = EnemyState.Idle;
-            }
         }
         else if (DestObj.name.Equals("OldBuilding") || DestObj.name.Equals("NewBuilding") || DestObj.name.Equals("FunctionalBuilding") || DestObj.name.Equals("CoreBuilding"))
         {
@@ -1207,10 +1286,6 @@ public class Enemy : MonoBehaviour {
             if (myCluster.isGathered())
             {//next room 출구에 다 모인 경우
                 myCluster.MoveToNextEnter(nextIdx, Exitdirection);
-                for (int i = 0; i < myCluster.eList.Count; i++)
-                {
-                    myCluster.eList[i].ExitLock = false;
-                }
             }
             else
             {

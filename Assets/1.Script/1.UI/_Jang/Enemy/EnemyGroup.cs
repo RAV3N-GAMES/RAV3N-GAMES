@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyGroup : MonoBehaviour {
     public int GroupIndex;
@@ -96,7 +97,9 @@ public class EnemyGroup : MonoBehaviour {
             PopE.isDie = false;
             PopE.isStolen = false;
             PopE.isDefeated = false;
-            PopE.ExitLock = false;
+            PopE.TotalStatus = NavMeshPathStatus.PathComplete;
+            PopE.roomStatus = NavMeshPathStatus.PathComplete;
+            PopE.PrevroomMovement = null;
             obj.SetActive(false);
             obj.transform.position = new Vector3(pos.position.x, 0, pos.position.z);
             PopE.targetSecret = PopE.FindClosestSecret(obj.transform.position);
