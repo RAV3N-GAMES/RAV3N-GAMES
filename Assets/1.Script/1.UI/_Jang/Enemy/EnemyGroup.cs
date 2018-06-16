@@ -79,9 +79,10 @@ public class EnemyGroup : MonoBehaviour {
             }
 
             GameObject obj = PoolManager.current.PopEnemy((ENEMY_TYPE)rand);
-            if (i == 0)
+            if (i == 0) {
+                obj.GetComponentInChildren<Enemy>().PresentRoomidx = EnemyGroupIdx;
                 idx = obj.GetComponentInChildren<Enemy>().CheckAdjacentCount();
-
+            }
             if (rand <= (int)(ENEMY_TYPE.Sheriff))
             {
                 Group_Normal++;
@@ -113,10 +114,10 @@ public class EnemyGroup : MonoBehaviour {
             info.GroupConductor = this;
             info.UIEnemyHealth.HealthActvie(true);
             info.EnemyInit();
-            info.PresentRoomidx = EnemyGroupIdx;
             info.myCluster = EnemyClusterManager.clusterList[GenerateCount];
             enemyList.Add(info);
             info.nextIdx = idx;
+            info.PresentRoomidx = EnemyGroupIdx;
             EnemyClusterManager.clusterList[GenerateCount].eList.Add(info);
             obj.SetActive(true);
             obj.GetComponentInChildren<Enemy>().EnemyActionStart();

@@ -135,8 +135,8 @@ public class EnemySinger : Enemy {
             enemyAI.stoppingDistance = Stoppingdistance;
             ChangeAnimation();
 
-            Distance = Vector3.Distance(start, dest);
-            if (Distance <= enemyAI.stoppingDistance)
+            distanceTotal = Vector3.Distance(start, dest);
+            if (distanceTotal <= enemyAI.stoppingDistance)
             {
                 ArrivedAction();
             }

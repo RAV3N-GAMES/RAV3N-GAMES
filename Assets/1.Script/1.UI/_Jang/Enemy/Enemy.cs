@@ -40,6 +40,17 @@ public class Enemy : MonoBehaviour {
     public bool faceLeft;
     public bool isSurrounded;// 목적지(Secret / Base)까지의 경로가 막혔을 때 true
     public bool InnerSurrounded;//방 내부에서 Exitpoint까지의 경로가 막혔을 때 true
+    public bool [] SubDestinations=new bool [7];
+    /*
+     * 0 : 건물
+     * 1 : 적군
+     * 2 : 아군
+     * 3 : 함정
+     * 4 : 기밀
+     * 5 : Base
+     * 6 : Exitpoint
+     */
+    public bool moveNextRoom;
     public int priority;
     public int Group;                       //4명으로 묶인 한 그룹. 그룹의 개수에 따라 1~3의 값을 가짐.
     public int Level;
@@ -47,7 +58,6 @@ public class Enemy : MonoBehaviour {
     public int Attack;                      //공격력
     public int MaxHp;                       //최대 체력
     public float Speed;                     //이동 속도
-    public float Distance;                  //거리 체크 
     public bool isDie;						//현재 죽은 상태 체크
     public bool isDefeated;                 // 거점 들어온 경우
     public bool isStolen;                 //기밀 들고 튄 경우
@@ -65,7 +75,7 @@ public class Enemy : MonoBehaviour {
     protected bool isHeal;
     protected Vector3 PrevPos;
     public float Stoppingdistance;
-    public NavMeshPathStatus TotalStatus, roomStatus;
+    public NavMeshPathStatus TotalStatus, roomStatus, friendStatus;
     public bool roomSequenceEnter;
     public IEnumerator PrevroomMovement;
     protected NavMeshHit hitCheck;
@@ -74,13 +84,28 @@ public class Enemy : MonoBehaviour {
 
     public Vector3 start;                //시작 좌표
 
-    public Vector3 dest;                 //목적지 좌표
+    public Vector3 dest;                 //목적지 좌표(Base / secret만 저장)
     public GameObject DestObj;
     public string destname = "";
 
-    public Vector3 Prevdest;                 //목적지 좌표
-    public GameObject PrevDestObj;
-    public string Prevdestname = "";
+    public Vector3 roomDest;                 //목적지 좌표(Exitpoint만 저장)
+    public GameObject roomDestObj;
+    public string roomDestname = "";
+
+    public Vector3 friendDest;                 //목적지 좌표(Friendly만 저장)
+    public GameObject friendDestObj;
+    public string friendDestname = "";
+
+    public Vector3 wallDest;                 //목적지 좌표(Wall만 저장)
+    public GameObject wallDestObj;
+    public string wallDestname = "";
+
+    public NavMeshPath navpathTotal;
+    public NavMeshPath navpathRoom;
+    public NavMeshPath navpathFriend;
+    
+    public float distanceTotal, distanceRoom, distanceFriend, distanceWall;                  //거리 체크 
+
 
     //기능 초기화
     public virtual void EnemyInit()
@@ -114,7 +139,10 @@ public class Enemy : MonoBehaviour {
             {
                 GameManager.ParticleGenerate(effectType, targetFriend.NavObj.position);
                 targetFriend.Die();
-                EnemyActionMain();
+                for (int i = 0; i < myCluster.eList.Count; i++) {
+                    myCluster.eList[i].Movable = true;
+                }
+                //EnemyActionMain();
             }
         }
         else if (targetWall)
@@ -126,18 +154,16 @@ public class Enemy : MonoBehaviour {
                 NearWall.Remove(targetWall);
                 StartCoroutine(BreakWall(targetWall));
                 targetWall.DestoryWall();
+                for (int i = 0; i < myCluster.eList.Count; i++)
+                {
+                    myCluster.eList[i].Movable = true;
+                }
             }
         }
     }
 
     IEnumerator BreakWall(Wall w) {
-        ECM.RemoveWall(w);
-        
-        for (int i = 0; i < myCluster.eList.Count; i++)
-        {
-            Debug.Log("Wall Destroyed. Call Actionmain");
-            myCluster.eList[i].EnemyActionMain();
-        }
+        ECM.RemoveWall(w);        
         yield return null;
 
     }
@@ -351,14 +377,14 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
-        int random = Random.Range(0, AdjacentList.Count);
+        int random = Random.Range(0, AdjacentList.Count*2) % AdjacentList.Count;
         int result = AdjacentList[random];
         return result;
     }
 
     public int FindExit()
     {
-        int result = -1;
+        int result = 0;
         int row = PresentRoomidx / 5;
         int col = PresentRoomidx % 5;
         int nRow = nextIdx / 5;
@@ -426,17 +452,7 @@ public class Enemy : MonoBehaviour {
                 enemyAI.isStopped = true;
             }
         }
-        
-        /*else
-        {
-            if (nextIdx == -1)
-                return;
-            if (!(isHealer && healTarget))
-            {
-                Transform nextRoom = GameManager.current.enemyGroups[nextIdx].ExitPoint[Exitdirection];
-                enemyAI.SetDestination(nextRoom.position);
-            }
-        }*/
+
     }
 
     protected void Flip()
@@ -453,6 +469,9 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
+        navpathTotal = new NavMeshPath();
+        navpathRoom = new NavMeshPath();
+        navpathFriend = new NavMeshPath();
         Movable = true;
         Audio = GetComponent<AudioSource>();
         AppearClip= Resources.Load<AudioClip>("Audio/Character/Enemy/All") as AudioClip;
@@ -489,34 +508,84 @@ public class Enemy : MonoBehaviour {
                 enemyAI.isStopped= true;
         }
         SetStart();
-        if (DestObj) { 
-            Distance = Vector3.Distance(start, SetYZero(DestObj.transform));
-            if((DestObj.name.Equals("OldBuilding") || DestObj.name.Equals("NewBuilding") || DestObj.name.Equals("FunctionalBuilding") || DestObj.name.Equals("CoreBuilding"))){
-                if (name == "MonsterFlyTeen2D" || name == "MonsterIDEFarmer2D" || name == "MonsterPickPocket2D")
+
+        if (friendDestObj && IsNear(NavObj, friendDestObj.transform))
+        {
+            if (!isShoot)
+            {
+                isShoot = true;
+                Movable = false;
+                currentState = EnemyState.Attack;
+            }
+        }
+        else if (wallDestObj && roomStatus != NavMeshPathStatus.PathComplete) {
+            distanceWall = Vector3.Distance(SetYZero(NavObj), wallDest);
+            if (name == "MonsterFlyTeen2D" || name == "MonsterIDEFarmer2D" || name == "MonsterPickPocket2D")
+            {
+                if (distanceWall <= enemyAI.stoppingDistance * 2)
                 {
-                    if (Distance <= enemyAI.stoppingDistance * 2)
+                    if (!isShoot)
                     {
-                        //ArrivedAction();
-                        NearAction();
-                    }
-                }
-                else {
-                    if (Distance <= enemyAI.stoppingDistance)
-                    {
-                        //ArrivedAction();
-                        NearAction();
+                        isShoot = true;
+                        Movable = false;
+                        currentState = EnemyState.Attack;
                     }
                 }
             }
-            else { 
-                if (Distance <= enemyAI.stoppingDistance)
+            else
+            {
+                if (distanceWall <= enemyAI.stoppingDistance)
                 {
-                    //ArrivedAction();
-                    NearAction();
+                    if (!isShoot)
+                    {
+                        isShoot = true;
+                        Movable = false;
+                        currentState = EnemyState.Attack;
+                    }
                 }
             }
         }
-        
+        else if (SubDestinations[5] && targetSecret && IsNear(NavObj, targetSecret.transform)) {
+            StartCoroutine(StealEvent());
+        }
+        else if (SubDestinations[5] && IsNear(NavObj, OriginalPoint)) {
+            //Base에 닿는 경우
+            ECM.EscapeClusters();
+        }
+        else if (roomDestObj == GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject)
+        {
+            if (myCluster.isGathered())
+            {//next room 출구에 다 모인 경우
+                Debug.Log("All gathered");
+                moveNextRoom = true;
+
+                int nextroomEnterPoint = -1;
+                if (Exitdirection == 1)
+                {
+                    nextroomEnterPoint = 3;
+                }
+                else
+                {
+                    nextroomEnterPoint = Mathf.Abs(Exitdirection - 2);
+                }
+
+                if (enemyAI.isOnNavMesh) { 
+                    enemyAI.SetDestination(SetYZero(GameManager.current.enemyGroups[nextIdx].transform.GetChild(10).transform.GetChild(10)));
+                    enemyAI.isStopped = false;
+                }
+                //transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, SetYZero(GameManager.current.enemyGroups[nextIdx].ExitPoint[nextroomEnterPoint]), 0.01f);
+                //                myCluster.MoveToNextEnter(nextIdx, Exitdirection);
+            }
+            else
+            {
+                Debug.Log("Else case");
+                if (IsNearExit())
+                {
+                    Debug.Log("IsNearExit()");
+                    enemyAI.isStopped = true;
+                }
+            }
+        }
         ChangeAnimation();
 
         //진행 경로에 따라 좌우 변경
@@ -1046,8 +1115,8 @@ public class Enemy : MonoBehaviour {
             enemyAI.stoppingDistance = Stoppingdistance;
             ChangeAnimation();
 
-            Distance = Vector3.Distance(start, dest);
-            if (Distance <= enemyAI.stoppingDistance)
+            distanceTotal = Vector3.Distance(start, dest);
+            if (distanceTotal <= enemyAI.stoppingDistance)
             {
                 ArrivedAction();
             }
@@ -1079,7 +1148,6 @@ public class Enemy : MonoBehaviour {
 
     protected void SetOriginalDestination()
     {
-        Debug.Log("secret: " + targetSecret + " is: " + isSeizure);
         if (isSeizure && targetSecret)
         {
             dest = SetYZero(targetSecret.transform);
@@ -1097,7 +1165,9 @@ public class Enemy : MonoBehaviour {
     public void EnemyActionMain() {
         TotalStatus = NavMeshPathStatus.PathComplete;
         roomStatus = NavMeshPathStatus.PathComplete;
-        StartCoroutine(OriginalDestination());
+        friendStatus = NavMeshPathStatus.PathComplete;
+        FollowerInit();
+//        StartCoroutine(OriginalDestination());
     }
     protected IEnumerator OriginalDestination() {
         SetStart();
@@ -1232,7 +1302,6 @@ public class Enemy : MonoBehaviour {
         catch { }
         if (isSeizure && (DestObj.name.Equals("AlienBloodStorage" )|| DestObj.name.Equals("SpaceVoiceRecordingFile") || DestObj.name.Equals("UFOCore") || DestObj.name.Equals("AlienStorageCapsule")))
         {
-            Debug.Log("StealEvent Call");
             StartCoroutine(StealEvent());
             return;
         }
@@ -1264,7 +1333,7 @@ public class Enemy : MonoBehaviour {
                 StartCoroutine(ES.GiveHeal());
             }
         }
-        else if (DestObj.name.Equals("Human"))
+        else if (friendDestObj.name.Equals("Human"))
         {
             if (!isShoot)
             {
@@ -1298,7 +1367,251 @@ public class Enemy : MonoBehaviour {
     }
 
     public bool IsNearExit() {
-        bool result = Vector3.Distance(GetComponentInChildren<EnemyBody>().transform.position, GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].transform.position) > 0.5f;
+        bool result = Vector3.Distance(GetComponentInChildren<EnemyBody>().transform.position, GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].transform.position) > 0.3f;
         return (result)? false:true;
     }
+
+
+    protected bool CalculatePath()
+    {
+        while (true)
+        {
+            if (enemyAI.isOnNavMesh)
+            {
+                switch (CalPathMode) {
+                    case 1:
+                        enemyAI.CalculatePath(dest, navpathTotal);
+                        TotalStatus = navpathTotal.status;
+                        break;
+                    case 2:
+                        enemyAI.CalculatePath(roomDest, navpathRoom);
+                        roomStatus = navpathRoom.status;
+                        break;
+                    case 3:
+                        enemyAI.CalculatePath(friendDest, navpathFriend);
+                        friendStatus = navpathFriend.status;
+                        break;
+                }
+                return true;
+            }
+        }
+
+    }
+
+
+    protected void totalDestination() {
+        if (isSeizure && targetSecret)
+        {
+            dest = SetYZero(targetSecret.transform);
+            destname = targetSecret.transform.parent.name;
+            DestObj = targetSecret.gameObject;
+        }
+        else
+        {
+            dest = SetYZero(OriginalPoint.transform);
+            destname = OriginalPoint.name;
+            DestObj = OriginalPoint.gameObject;
+        }
+    }
+
+    protected void roomDestination() {
+        if (PresentRoomidx != 0)
+        {
+            roomDest = SetYZero(GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection]);
+            roomDestname = "ExitPoint " + Exitdirection;
+            roomDestObj = GameManager.current.enemyGroups[PresentRoomidx].ExitPoint[Exitdirection].gameObject;
+        }
+        else {
+            if (isSeizure && targetSecret)
+            {
+                roomDest = SetYZero(targetSecret.transform);
+                roomDestname= targetSecret.transform.parent.name;
+                roomDestObj= targetSecret.gameObject;
+            }
+            else
+            {
+                roomDest = SetYZero(OriginalPoint.transform);
+                roomDestname = OriginalPoint.name;
+                roomDestObj= OriginalPoint.gameObject;
+            }
+        }
+    }
+
+    protected void friendDestination() {
+        friendDest = SetYZero(targetFriend.transform);
+        friendDestname = targetFriend.transform.parent.name;
+        friendDestObj = targetFriend.gameObject;
+    }
+
+    protected void FollowerInit() {
+        StartCoroutine(FollowTotalPath());
+        StartCoroutine(FollowRoomPath());
+        StartCoroutine(FollowWall());
+        StartCoroutine(FollowFriendly());
+    }
+
+    protected IEnumerator FollowTotalPath() {
+        while ((!isDie && !isStolen && !isDefeated)) {
+            if (moveNextRoom) {
+                yield return null;
+                continue;
+            }
+
+            totalDestination();
+            CalPathMode = 1;
+            yield return new WaitUntil(CalculatePath);
+            
+            if (TotalStatus == NavMeshPathStatus.PathComplete && (!SubDestinations[2]))
+            {
+                if (enemyAI.isOnNavMesh) { 
+                    SubDestinations[5] = true;
+                    currentState = EnemyState.Walk;
+                    enemyAI.SetDestination(dest);
+                    Debug.Log("totalpath setdest");
+                }
+            }
+            else {
+                SubDestinations[5] = false;
+            }
+
+            yield return null;
+        }
+    }
+    
+    protected IEnumerator FollowRoomPath()
+    {
+        Exitdirection = FindExit();
+        while ((!isDie && !isStolen && !isDefeated))
+        {
+            if (moveNextRoom)
+            {
+                yield return null;
+                continue;
+            }
+            if (isEntered)
+            {
+                Exitdirection = FindExit();
+            }
+            roomDestination();
+            CalPathMode = 2;
+            yield return new WaitUntil(CalculatePath);
+
+            if (TotalStatus == NavMeshPathStatus.PathComplete || SubDestinations[2])
+            {
+                SubDestinations[6] = false;
+            }
+            else
+            {
+                CalPathMode = 2;
+                yield return new WaitUntil(CalculatePath);
+
+                if (!SubDestinations[0] && !SubDestinations[2])
+                {
+                    Debug.Log("Enter the gungeon. roomstatus: " + roomStatus);
+                    if (roomStatus == NavMeshPathStatus.PathComplete)
+                    {
+                        if (enemyAI.isOnNavMesh)
+                        {
+                            Debug.Log("setdestination moving");
+                            enemyAI.SetDestination(roomDest);
+                        }
+                    }
+                    else {
+                        Debug.Log("MoveToward moving");
+                        transform.parent.transform.position = Vector3.MoveTowards(enemyAI.transform.position, roomDest, 0.03f);
+                    }
+                    currentState = EnemyState.Walk;
+                    SubDestinations[6] = true;
+                }
+                else {
+                    SubDestinations[6] = false;
+                }
+            }
+            yield return null;
+        }
+    }
+
+    protected IEnumerator FollowWall() {
+        while ((!isDie && !isStolen && !isDefeated))
+        {
+            if (moveNextRoom)
+            {
+                yield return null;
+                continue;
+            }
+            if (!targetWall)
+            {
+                wallDest = new Vector3(0, 0, 0);
+                wallDestname = null;
+                wallDestObj = null;
+                SubDestinations[0] = false;
+                yield return null;
+            }
+            else {
+                wallDest = SetYZero(targetWall.transform);
+                wallDestname = targetWall.name;
+                wallDestObj = targetWall.gameObject;
+
+                if (TotalStatus != NavMeshPathStatus.PathComplete && roomStatus != NavMeshPathStatus.PathComplete && !SubDestinations[2])
+                {
+                    if (enemyAI.isOnNavMesh)
+                    {
+                        SubDestinations[0] = true;
+                        enemyAI.SetDestination(SetYZero(targetWall.transform));
+                        currentState = EnemyState.Walk;
+                        Debug.Log("wallpath setdest");
+                    }
+                }
+                else {
+                    SubDestinations[0] = false;
+                }
+            }
+            yield return null;
+        }
+    }
+
+    protected IEnumerator FollowFriendly()
+    {
+        while ((!isDie && !isStolen && !isDefeated))
+        {
+            if (moveNextRoom)
+            {
+                yield return null;
+                continue;
+            }
+            if (!targetFriend)
+            {
+                friendDest = new Vector3 (0, 0, 0);
+                friendDestname = null;
+                friendDestObj = null;
+                SubDestinations[2] = false;
+                yield return null;
+            }
+            else
+            {
+                friendDestination();
+                CalPathMode = 3;
+                yield return new WaitUntil(CalculatePath);
+
+                if (friendStatus == NavMeshPathStatus.PathComplete)
+                {
+                    SubDestinations[2] = true;
+                    if (enemyAI.isOnNavMesh)
+                    {
+                        if (targetFriend) { 
+                            enemyAI.SetDestination(SetYZero(targetFriend.transform));
+                            currentState = EnemyState.Walk;
+                            Debug.Log("friendpath setdest");
+                        }
+                    }
+                }
+                else
+                {
+                    SubDestinations[2] = false;
+                }
+            }
+            yield return null;
+        }
+    }
+
 }

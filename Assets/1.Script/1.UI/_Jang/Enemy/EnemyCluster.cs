@@ -64,7 +64,6 @@ public class EnemyCluster : MonoBehaviour {
         for (int i = 0; i < eList.Count; i++)
         {
             eList[i].targetFriend= f;
-            eList[i].chaseFriendEvent();
         }
     }
 
@@ -86,7 +85,7 @@ public class EnemyCluster : MonoBehaviour {
             {
                 EnemyPickPocket ep = (EnemyPickPocket)eList[i];
                 ep.targetTrap = t;
-                ep.chaseTrapEvent();
+//                ep.chaseTrapEvent();
             }
         }
     }
@@ -96,10 +95,6 @@ public class EnemyCluster : MonoBehaviour {
         {
             if (!eList[i].name.Equals("MonsterPickPocket2D")) { 
                 eList[i].targetWall = w;
-                if (eList[i].roomStatus != UnityEngine.AI.NavMeshPathStatus.PathComplete && !eList[i].targetFriend) {
-                    Debug.Log("chaseWall: findwall. roomstatus: "+eList[i].roomStatus);
-                    eList[i].chaseWallEvent();
-                }
             }
         }
     }
@@ -137,7 +132,7 @@ public class EnemyCluster : MonoBehaviour {
 
         for (int i = 0; i < eList.Count; i++) {
             Enemy e = eList[i];
-            if (Vector3.Distance(e.GetComponentInChildren<EnemyBody>().transform.position, GameManager.current.enemyGroups[e.PresentRoomidx].ExitPoint[e.Exitdirection].transform.position) > e.enemyAI.stoppingDistance) { 
+            if (Vector3.Distance(e.GetComponentInChildren<EnemyBody>().transform.position, GameManager.current.enemyGroups[e.PresentRoomidx].ExitPoint[e.Exitdirection].transform.position) > 3.0f) { 
                 result = false;
                 break;
             }
@@ -158,6 +153,7 @@ public class EnemyCluster : MonoBehaviour {
 
         for (int i = 0; i < eList.Count; i++)
         {
+            Debug.Log("Move to next room start");
             eList[i].enemyAI.SetDestination(eList[i].SetYZero(GameManager.current.enemyGroups[nextidx].ExitPoint[nextroomEnterPoint]));
             eList[i].enemyAI.isStopped = false;
         }
@@ -319,13 +315,13 @@ public class EnemyCluster : MonoBehaviour {
          연구원 먼저 서치
          */
         for (int i = 0; i < GroupNearFriend.Count; i++) {
-            if (GroupNearFriend[i].transform.parent.name.Equals("Friendly_ResearchStudent")) {
+            if (GroupNearFriend[i] && GroupNearFriend[i].transform.parent.name.Equals("Friendly_ResearchStudent")) {
                 target = GroupNearFriend[i];
                 targetFriend= target;
                 return;
             }
 
-            if (GroupNearFriend[i].ClusterDamageStack[myIdx] > DamageMax)
+            if (GroupNearFriend[i] && GroupNearFriend[i].ClusterDamageStack[myIdx] > DamageMax)
             {
                 target = GroupNearFriend[i];
                 DamageMax = GroupNearFriend[i].ClusterDamageStack[myIdx];
